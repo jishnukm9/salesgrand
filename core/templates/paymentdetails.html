@@ -1,0 +1,80 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom pb-3 mb-4">
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;" href="{% url 'payment' %}">Payment List</a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;" href="{% url 'paymentform' %}">Payment Entry</a>
+                     <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color: #4555B9; border-bottom:2px solid #4555B9;" href="#">Payment Details</a>
+                  </nav>
+               </div>
+
+               <!-- Payment Details Card -->
+               <div class="card shadow-sm mb-4" style="border-radius:5px;">
+                  <div class="card-header" style="border-radius:5px 5px 0 0;background-color: #d7d9e7;">
+                     <h5 class="m-0 fw-bold">Payment Details</h5>
+                  </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Payment ID:</label>
+                           <p>{{data.paymentid}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Reference Number:</label>
+                           <p>{{data.referenceno}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Payment Date:</label>
+                           <p>{{data.paymentdate}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Credit Account:</label>
+                           <p>{{data.creditaccount}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Debit Account:</label>
+                           <p>{{data.debitaccount}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Narration:</label>
+                           <p>{{data.narration}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Amount:</label>
+                           <p>{{data.amount}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Branch:</label>
+                           <p>{{data.branch}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Description:</label>
+                           <p>{{data.description}}</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <label class="fw-bold text-muted">Payment Mode:</label>
+                           <p>{{data.paymentmode}}</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Print Button -->
+               <div class="text-center">
+                  <a href="{% url 'paymentprint' paymentid=data.paymentid %}" target="_blank" class="btn btn-outline-primary" >
+                     <i class="fas fa-print"></i> Print
+                  </a>
+               </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

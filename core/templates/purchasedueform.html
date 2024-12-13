@@ -1,0 +1,275 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+
+                <!-- <ul class="nav nav-tabs" role="tablist">
+                  <li  class="nav-item"  >
+                     <a class="nav-link active text-white" style="background-color: #1f3bb3;border-radius: 5px;" id="home-tab"  href="#" role="tab" aria-controls="Overview" aria-selected="true">Billing</a> 
+                  </li>
+                  <li  class="nav-item"  >
+                     <a class="nav-link" id="contact-tab"  href="{% url 'purchaseform' %}">Purchase Entry</a>
+                  </li>
+                  <li  class="nav-item"  >
+                     <a class="nav-link" id="contact-tab"  href="#">Purchase Return</a>
+                  </li>
+         
+                  <li  class="nav-item">
+                     <a class="nav-link border-0" id="contact-tab"  href="#">Purchase Settlement</a>
+                  </li>
+
+              </ul> -->
+
+              <nav class="nav nav-borders">
+                <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Billing Summary  </a>
+                <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'purchase' %}">Purchase List</a>
+                
+
+               
+            </nav>
+
+
+
+
+
+               </div>
+               <br>
+             
+           
+              <!-- <div class="btn-wrapper d-flex justify-content-between mt-4 pt-3">
+                <div>
+                    <h4 class="card-title card-title-dash fs-4 nunito-font" style="color:#444;"><strong>Billing Summary</strong></h4>
+                </div>
+
+                <a href="{% url 'purchase' %}" class="btn back-btn me-0" style="border-width: 1px; background-color: white; border-color: #1f3bb3; color: #1f3bb3;">
+                    <strong> <i class="fa-solid fa-rotate-left"></i>Back</strong>
+                </a>
+            </div> -->
+
+
+            
+               <!-- <div class="row"> -->
+                  <div class="row">
+                     <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- Card content -->
+                       <div class="card card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                         <div class="card-body" >
+                           <h3 class="nunito-font " style="color:#444;" ><strong>Cash Payment</strong></h3>
+                           <!-- <hr class="horizontal-line" /> -->
+                           <div class="horizontal-line-dark mb-2 mt-4"></div>
+                           <br />
+         
+                           <form
+                           id="purchaseDueForm"
+                             action="{% url 'addpurchasedue' %}"
+                             method="post"
+                             enctype="multipart/form-data"
+                           >
+                             {% csrf_token %}
+
+                             <input type="text" name="purchaseid" value="{{purchasedata.purchaseid}}" hidden>
+         
+                             <div class="form-row row">
+                               <div class="form-group col-lg-4">
+                                 <label for="paymentdate" class="fs-6"
+                                   >Payment Date</label
+                                 >
+                                
+                               </div>
+                               <div class="form-group col-lg-8">
+                               
+                                 <input
+                                   type="text"
+                                   name="paymentdate"
+                                   id="paymentdate"
+                                   class="form-control cmp-input"
+                                   value="{{datetoday}}"
+                                   
+                                   readonly
+                                 />
+                               </div>
+                             </div>
+                             <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="paymentmode" class="fs-6"
+                                  >Payment Mode</label
+                                >
+                               
+                              </div>
+                              <div class="form-group col-lg-8">
+
+                                <select style="" class="form-control selectizefield" name="paymentmode" id="paymentmode" required>
+
+                                  <option value="" selected>Select Payment Mode</option>
+                                  {% for mode in paymentmodes %}
+                                  <option value="{{mode.name}}">{{mode.name}}</option>
+                                  {% endfor %}
+                                </select>
+                              
+                                <!-- <input
+                                  type="text"
+                                  name="paymentmode"
+                                  id="paymentmode"
+                                  class="form-control cmp-input"
+                                  value="Cash"
+                                  
+                                /> -->
+                              </div>
+                            </div>
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="prevdue" class="fs-6"
+                                  >Previous Due</label
+                                >
+                               
+                              </div>
+                              <div class="form-group col-lg-8">
+                              
+                                <input
+                                  type="text"
+                                  name="prevdue"
+                                  id="prevdue"
+                                  class="form-control cmp-input due"
+                                  value="{{purchasedata.duebalance}}"
+                              
+
+                                  style="background-color:rgb(1, 128, 101);color:white;"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                             <div class="form-row row">
+                               <div class="form-group col-lg-4">
+                                 <label for="amountrecieved" class="fs-6"
+                                   >Amount Paid</label
+                                 >
+                              
+                               </div>
+                               <div class="form-group col-lg-8">
+                              
+                                 <input
+                                   type="number"
+                                   step="0.01"
+                                   min="0"
+                                   name="amountrecieved"
+                                   id="amountrecieved"
+                                   class="form-control cmp-input amount purchaseamountrecieveddue"
+                                   value="{{0}}"
+
+                                   style="background-color:#fffaa0;"
+                                 />
+                               </div>
+                             </div>
+                             <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="duebalance" class="fs-6"
+                                  >Final Due</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8">
+                         
+                                <input
+                                  type="text"
+                                  name="aduebalance"
+                                  id="duebalance"
+                                  class="form-control cmp-input finaldue"
+                                  value="{{purchasedata.duebalance}}"
+                                  style="background-color:#ea4f4e;color:white"
+                                  readonly
+                                />
+                              </div>
+                            </div>
+                            <div class="horizontal-line-dark mt-2"></div>
+                            
+         
+                             <button
+                               type="submit"
+                               class="btn btn-primary text-white mb-1 mt-3 fs-6"
+                             >
+                               Pay
+                             </button>
+                           </form>
+                         </div>
+                       </div>
+                     </div>
+                     <div class="col-lg-6 col-md-6 col-sm-12">
+                       <div class="card card-rounded p-3" style="border:0.5px solid #cfcfcf;border-radius:5px;background-color: #fef4d2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                         <div class="card-body">
+    
+
+                           <div class="row mb-2">
+                            <div class="col">
+                            Invoice Number
+                            </div>
+                            <div class="col">
+                              {{purchasedata.invoicenumber}}
+                            </div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col">
+                              Invoice Date
+                            </div>
+                            <div class="col">
+                              {{purchasedata.invoicedate}}
+                            </div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col">
+                              Supplier
+                            </div>
+                            <div class="col">
+                              {{purchasedata.supplier}}
+                            </div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col">
+                             Total Billing Amount
+                            </div>
+                            <div class="col">
+                              {{purchasedata.totalbillingamount}}
+                            </div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col">
+                              Amount Paid
+                            </div>
+                            <div class="col">
+                              {{purchasedata.amountrecieved}}
+                          </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              Due Amount
+                            </div>
+                            <div class="col">
+                              {{purchasedata.duebalance}}
+                            </div>
+                          </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+
+
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

@@ -1,0 +1,178 @@
+<html lang="ar">
+  <head>
+    <title>Service Invoice</title>
+  </head>
+  <body>
+    <div>
+      <div>
+        <table>
+          <thead>
+            <th class="w20">
+            
+                     <img style="width:100%;" src="{{logo}}"  alt="logo">
+            </th>
+
+            <th class="w25"></th>
+            <th class="w55">
+              <div class="text-right">
+                <h4 class="company-name">
+                  <strong>{{company_name}}</strong>
+                </h4>
+                {% if current_user.is_superuser %}
+                <p class="address-1">{{address_line1}}</p>
+                <p class="address-2">{{address_line2}}</p>
+                <p class="address-3">{{address_line3}}</p>
+                {% else %}
+                <p class="address-1">{{address_line1}}</p>
+                <p class="phone">{{phone}}</p>
+
+                {% endif %}
+                {% if branch.gstin %}
+                <p class="gst">GSTIN : {{branch.gstin}}</p>
+                {% endif %}
+              </div>
+            </th>
+          </thead>
+        </table>
+      </div>
+      <hr />
+
+      <div class="text-center">
+        <h2>INVOICE #{{serviceref}}</h2>
+        <p>{{currentdate}}</p>
+      </div>
+      <table class="table-1">
+        <tr>
+          <th class="th-left bg-grey ">Customer Name <br> اسم الزبون </th>
+          <th class="th-right">{{firstname}} {{lastname}}</th>
+          <th class="th-left bg-grey">Customer Id <br>  هوية الزبون </th>
+          <th class="th-right">{{customerid}}</th>
+        </tr>
+        <tr>
+          <th class="th-left bg-grey">Phone <br>  رقم الهاتف</th>
+          <th class="th-right">{{phone_customer}}</th>
+          <th class="th-left bg-grey">Address <br> العنوان</th>
+          <th class="th-right">{{address_customer}}</th>
+        </tr>
+      </table>
+
+      <table class="table-1">
+        <tr>
+          <th class="tr-left">
+            <strong>Device اسم الجها : </strong>
+            <span class="grey">{{brand}} {{modal}}</span> <br /><br />
+            <strong>IMEI :</strong> 
+            <span class="grey">{{imei}}</span>
+          </th>
+          <th class="tr-left">
+            <strong>Invoice Number رقم الفاتورة : </strong>
+            <span class="grey">{{serviceref}}</span> <br /><br />
+            <strong>Invoice Date تاريخ الفاتورة : </strong>
+            <span class="grey">{{currentdate}}</span>
+          </th>
+        </tr>
+      </table>
+
+      <table class="table-2">
+        <tr>
+          <th class="table-2-th bg-grey">Product <br> منتج</th>
+          <th class="table-2-th bg-grey">Brand  <br> ماركة</th>
+          <th class="table-2-th bg-grey">Modal <br>  موديل</th>
+          <th class="table-2-th bg-grey">IMEI  <br> الايميل</th>
+          <!-- <th class="table-2-th bg-grey">Charge</th> -->
+        </tr>
+        <tr>
+          <td class="table-2-th">{{product}}</td>
+          <td class="table-2-th">{{brand}}</td>
+          <td class="table-2-th">{{modal}}</td>
+          <td class="table-2-th">{{imei}}</td>
+          <!-- <td class="table-2-th">{{servicecharge}}</td> -->
+        </tr>
+      </table>
+      
+       
+
+       
+        <table class="table-2">
+        <tr>
+    
+          <td class="w20"></td>
+          <td class="w20"></td>
+          <th class="table-2-th bg-grey"> {% if totaltax != 0 %} Total Excluding VAT {% else %} Total Amount  {% endif %}<br>{% if totaltax != 0 %}لإجمالي باستثناء الضریبة {% else %} المبلغ الإجمالي  {% endif %}</th>
+          <td class="table-2-th">{{totalamount|floatformat:2}}</td>
+        </tr>
+        {% if totaltax != 0 %}
+        <tr>
+       
+          <td class="w20"></td>
+          <td class="w20"></td>
+          <th class="table-2-th bg-grey">VAT {{servicetax}}% <br> ضريبة </th>
+          <td class="table-2-th">{{totaltax|floatformat:2}}</td>
+        </tr>
+        {% endif %}
+        {% if discount != 0 %}
+        <tr>
+        
+          <td class="w20"></td>
+          <td class="w20"></td>
+          <th class="table-2-th bg-grey">Discount <br> تخفيض</th>
+
+          <td class="table-2-th">{{discount|floatformat:2}}</td>
+        </tr>
+        {% endif %}
+        <tr>
+     
+          <td class="w20"></td>
+          <td class="w20"></td>
+          <th class="table-2-th bg-grey">Final Amount <br> لقيمة النهائية </th>
+          <td class="table-2-th">{{finalamount|floatformat:2}}</td>
+        </tr>
+        <tr>
+       
+          <td class="w20"></td>
+          <td class="w20"></td>
+          <th class="table-2-th bg-grey">Amount Recieved <br> استلام المبلغ</th>
+          <td class="table-2-th">{{amountrecieved|floatformat:2}}</td>
+        </tr>
+        <tr>
+       
+          <td class="w20"></td>
+          <td class="w20"></td>
+          <th class="table-2-th bg-grey">Due Balance <br> الرصيد المستحق  </th>
+          <td class="table-2-th">{{duebalance|floatformat:2}}</td>
+        </tr>
+      </table>
+
+      
+
+      <div>
+        <p>
+          Thank you for your bussiness, The work is complete, and your payment
+          is due upon pickup. Don't hesitate to contact us promptly if you have
+          any questions about anything we did.
+        </p>
+        <p>Phone : {{phone}}</p>
+      </div>
+      <br />
+      <br /><br />
+    </div>
+
+    <table>
+      <thead>
+        <th class="w25">
+          <div class="text-left">
+            <p>Manager Signature <br> توقيع المدير </p>
+          </div>
+        </th>
+
+        <th class="w25"></th>
+        <th class="w25"></th>
+        <th class="w25">
+          <div class="text-right">
+            <p>Customer Signature <br> توقيع العميل </p>
+          </div>
+        </th>
+      </thead>
+    </table>
+  </body>
+</html>

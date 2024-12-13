@@ -1,0 +1,116 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+               
+
+                  <nav class="nav nav-borders">
+                     {% if user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' or user.userprofile.role == 'TRC Front Desk' %}
+                      <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'servicecnp' %}">My Service</a>
+                      <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                     {% else %}
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                     {% endif %}
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'serviceform' %}">Service Entry</a>
+                    
+                     {% if user.userprofile.role == "TRC Front Desk" or request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" or request.user.is_superuser  %}
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                     {% endif %}
+                     
+       
+                      {% if user.userprofile.role == 'TRC Front Desk' %}
+                      <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                      {% endif %}
+       
+                      {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" or request.user.is_superuser  %}
+                      <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"    href="{% url 'sparerequests' %}">Spare Requested</a>
+         
+                                  <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="{% url 'servicechargeestimationlist' %}">Service Charge</a>
+                                
+                                  {% endif %}
+       
+                    
+                 </nav>
+               </div>
+               <br>
+            
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                     <div class="card-header py-3 bg-white" >
+                         <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Service Charge Estimation List </strong> </h5>
+                     </div>
+                     <div class="card-body">
+                    
+                           <div class="mt-3">
+                              <div class="table-responsive">
+                                 <table class="add-pagination  table ">
+                                    <thead style="background-color: #E8E1D7;">
+                                       <tr>
+                                           <th>sl</th>
+                                           <th>Service Ref</th>
+                                           <th>Requested By</th>
+                                           <th>Service Age</th>
+                                          <th>Problem Reported</th>
+                                           <th>Date</th>
+                                          
+                                           <!-- <th>Action</th> -->
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in servicecharges %}
+
+                                        {% if item.status == 'Requested' %}
+                          <tr class="clickable-row cursor-pointer" data-href="{% url 'servicechargeestimationdetails' serviceref=item.servicerefnumber %}" style="background-color: #ffa8a8;border:solid 1px #999;">
+                            {% elif item.status == "Estimated" %}
+                            <tr class="clickable-row cursor-pointer" data-href="{% url 'servicechargeestimationdetails' serviceref=item.servicerefnumber %}" style="background-color: #8ce99a;border:solid 1px #999;">
+                              {% else %}
+                              <tr class="clickable-row cursor-pointer" data-href="{% url 'servicechargeestimationdetails' serviceref=item.servicerefnumber %}">
+                                {% endif %}
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{item.servicerefnumber}}</td>
+                                            <td>{{item.requested_by}}</td>
+                                           
+                                            {% if item.status == "Requested" %}
+                                            <td>{{item.service_age}} days</td>
+                                            {% else %}
+                                            <td>__</td>
+                                            {% endif %}
+                                            <td>{{item.issue}}</td>
+                                            <td>{{item.created_date}}</td>
+                                          
+                                            <!-- <td>
+                                                <a href="{% url 'servicechargeestimationdetails' serviceref=item.servicerefnumber %}" class="btn btn-primary text-white pt-2 pb-2">View</a>
+                                            </td>                                    -->
+                                        </tr>
+
+                                        {% endfor %}
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- </div> -->
+            </div>
+         </div>
+         <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

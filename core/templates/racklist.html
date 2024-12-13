@@ -1,0 +1,138 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+            <!-- <ul class="nav nav-tabs" role="tablist">
+              <li  class="nav-item" >
+                <a
+                  class="nav-link active text-white"
+                  id="home-tab"
+                  href="{% url 'purchase' %}"
+                  role="tab"
+                  aria-controls="Overview"
+                  aria-selected="true"
+                  style="background-color: #1f3bb3;border-radius: 5px;"
+                  >Sale List</a
+                >
+              </li>
+              <li  class="nav-item" >
+                <a
+                  class="nav-link"
+                  id="home-tab"
+                  href="{% url 'saleform' %}"
+                  role="tab"
+                  aria-controls="Overview"
+                  aria-selected="true"
+                  >Sale Entry</a
+                >
+              </li>
+              <li  class="nav-item">
+                <a class="nav-link" id="profile-tab" href="#">Sale Return</a>
+              </li>
+              <li  class="nav-item" >
+                <a class="nav-link border-0" id="contact-tab" href="#"
+                  >Sale Settlement</a
+                >
+              </li>
+            </ul> -->
+
+
+
+
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Rack List  </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'service' %}">Service List</a>
+
+
+             
+          </nav>
+
+
+
+
+
+          </div>
+          <br>
+          <!-- <div class="btn-wrapper d-flex justify-content-between mt-4 pt-3">
+            <div>
+                <h4 class="card-title card-title-dash fs-4 nunito-font" style="color:#444;"><strong>Sale List</strong></h4>
+            </div>
+
+            <a href="{% url 'purchase' %}" class="btn back-btn me-0" style="border-width: 1px; background-color: white; border-color: #1f3bb3; color: #1f3bb3;">
+                <strong> <i class="fa-solid fa-rotate-left"></i>Back</strong>
+            </a>
+        </div> -->
+
+
+
+
+
+
+
+
+
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3">
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Rack Items</strong> </h5>
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+
+
+
+
+                <table class="table table-striped add-pagination">
+                  <thead>
+                    <tr>
+                      <th scope="col">Sl</th>
+                      <th scope="col">Rack Number</th>
+                      <th scope="col">Service Item</th>
+                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for rack in rack_list %}
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{rack.name}}</td>
+                      {% if rack.serviceref == None or rack.serviceref == ''  %}
+                      <td>Empty</td>
+                      {% else %}
+                      <td>{{rack.serviceref}}</td>
+                      {% endif %}
+                    
+                    </tr>
+                    {% endfor %}
+                    </tr>
+                  </tbody>
+                </table>
+                
+
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <div class="row flex-grow">
+          <div class="col-12 grid-margin stretch-card"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

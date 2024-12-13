@@ -1,0 +1,468 @@
+<html>
+  <head>
+    <title>Job Sheet</title>
+
+    <style>
+      .logo {
+  width: 100%;
+}
+
+.logo-container {
+  width: 20%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  /* font-size: 16px; */
+}
+
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: "border-box";
+  
+}
+.grey {
+  color: #444;
+}
+
+.text-right {
+  text-align: right;
+  /* font-size: 13px; */
+}
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+  /* font-size: 13px; */
+}
+
+.company-name {
+  /* font-size: 16px; */
+  border-bottom: none;
+  padding-bottom: 0;
+  margin: 0;
+  margin-bottom: 6px;
+ 
+}
+
+.address-1 {
+  /* font-size: 12px; */
+  color: #111;
+  margin: 0;
+  padding-bottom: 0;
+  margin-bottom: 3px;
+}
+.address-2 {
+  /* font-size: 12px; */
+  color: #111;
+  margin: 0;
+  margin-bottom: 3px;
+}
+.address-3 {
+  /* font-size: 12px; */
+  color: #111;
+  margin: 0;
+  margin-bottom: 3px;
+}
+.phone {
+  /* font-size: 12px; */
+  color: #111;
+  margin: 0;
+  margin-bottom: 3px;
+}
+.gst {
+  /* font-size: 12px; */
+  color: #111;
+  margin: 0;
+  margin-bottom: 3px;
+}
+
+.table-1 {
+  border-collapse: collapse;
+  border: 0.3px solid #444;
+  width: 100%;
+}
+
+.th-left {
+  border: 0.3px solid #444;
+  padding: 10px;
+  text-align: left;
+  /* font-size: 13px; */
+}
+.th-right {
+  border: 0.3px solid #444;
+  padding: 10px;
+  text-align: left;
+  color: #111;
+  /* font-size: 13px; */
+}
+
+.tr-left {
+  border: 0.3px solid #444;
+  padding: 10px;
+  /* font-size: 13px; */
+}
+
+.tr-right {
+  border: 0.3px solid #444;
+  padding: 10px;
+  /* font-size: 13px; */
+}
+
+.bcode-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.w15 {
+  width: 15%;
+}
+
+.w30 {
+  width: 30%;
+}
+.w33 {
+  width: 33%;
+}
+
+.w40 {
+  width: 40%;
+}
+
+
+.w45 {
+  width: 45%;
+}
+
+
+.w25 {
+  width: 25%;
+}
+.w20 {
+  width: 20%;
+}
+.w55 {
+  width: 55%;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.sign-box {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.serv-ref{
+  /* font-size: 15px; */
+}
+
+.date{
+  /* font-size: 13px; */
+}
+
+.underlined {
+  text-decoration: underline;
+}
+
+.sr-div{
+  position:relative;
+}
+
+.qr-code{
+  position:absolute;
+  right:0;
+  top:0;
+}
+
+.terms-cond li{
+margin-bottom:5px;
+}
+
+
+    </style>
+  </head>
+  <body style="">
+    <div>
+      <div>
+        <table>
+          <thead>
+            <th style="width:22%">
+              <img style="width:100%;" src="{{logo}}"  alt="logo">
+           
+            </th>
+
+   
+            <th style="width:78%;">
+              <div class="text-right">
+                <h4 class="company-name"  style="font-size:24px;">
+              
+                  <strong >مؤسسة اي لون الدولية للتجارة</strong>
+                </h4>
+                <p class="company-name" style="font-size:13px;">
+                  <strong>EYE LON AL-DAWLIYA EST
+                  </strong>
+                </p>
+                <P class="address-2" style="font-size:14px"> CR no: 4030167181 : ت س</P>
+                <P class="address-2" style="font-size:14px"> VAT : 300115306700003: الرقم الضريبي</P>
+               
+               
+              </div>
+            </th>
+          </thead>
+        </table>
+      </div>
+      <hr />
+
+      <div style="">
+
+        <table style="width:100%;">
+          <!-- <div></div> -->
+          <thead style="width:100%;">
+  
+            <tr>
+  
+              <th colspan="3" style="text-align:left">
+                <h5 >Service Reference Number : {{serviceref}}</h4>
+          <h5  >{{currentdate}}</h5>
+              </th>
+  
+              <th colspan="3" style="text-align:right">
+                <img  width="120px;" src="data:image/png;base64,{{ barcode }}" />
+              </th>
+  
+            </tr>
+           
+          </thead>
+        </table>
+
+
+        <!-- <div class="text-center">
+          
+        </div>
+
+        <div>
+          <img  width="150px;" src="data:image/png;base64,{{ barcode }}" />
+        </div> -->
+
+      
+      </div>
+
+      
+
+      
+      
+      <table class="table-1">
+        <thead>
+          <tr>
+            <th colspan="3" class="th-left" style="font-size:14px;">Customer Name (اسم الزبون)</th>
+            <th colspan="3" class="th-right"  style="font-size:14px;">{{firstname}} {{lastname}}</th>
+            <th colspan="3" class="th-left"  style="font-size:14px;">Due Date (تاريخ الاستحقاق)</th>
+            <th colspan="3" class="th-right"  style="font-size:14px;">{{estimateddate}}</th>
+          </tr>
+          <tr>
+            <th colspan="3" class="th-left"  style="font-size:14px;">Phone (رقم الهاتف) </th>
+            <th colspan="3" class="th-right"  style="font-size:14px;">{{phone_customer}}</th>
+            <th colspan="3" class="th-left"  style="font-size:14px;">Estimated Price (السعر المقدر) </th>
+            <th colspan="3" class="th-right"  style="font-size:14px;">{{price}}</th>
+          </tr>
+
+          <tr>
+            <td colspan="6" class="tr-left"  style="font-size:14px;">
+              <p style="margin:0;padding:0;margin-bottom:3px;">  <strong>Device (اسم الجهاز): </strong>{{brand}} {{modal}} </p> 
+                <p style="margin:0;padding:0;"><strong>IMEI : </strong>{{imei}}</p> 
+            </td>
+            <td colspan="6" class="tr-right"  style="font-size:14px;">
+             <p style="margin:0;padding:0;margin-bottom:3px;"><strong>Malfunction (عطل/مشكلة) : </strong>{{malfunction}}</p> 
+             <p style="margin:0;padding:0;"><strong>Service ref No : </strong>{{serviceref}}</p> 
+            </td>
+          </tr>
+        </thead>
+      </table>
+
+  
+
+      <div class="sign-box">
+        <div class="w100">
+          {% if image1 %}
+  
+         
+                     <img class="w15" src="{{image1}}"  alt="">
+                     {% endif %}
+          
+          {% if image2 %}
+          
+          <img class="w15" src="{{image2}}"  alt="">
+          
+          {% endif %} 
+          
+          {% if image3 %}
+
+          <img class="w15" src="{{image3}}"  alt="">
+          {% endif %}
+      
+          {% if image4 %}
+
+          <img class="w15" src="{{image4}}"  alt="">
+
+          {% endif %}
+          
+          {% if image5 %}
+       
+
+          <img class="w15" src="{{image5}}"  alt="">
+
+          {% endif %} 
+          
+          {% if image6 %}
+          <img class="w15" src="{{image6}}"  alt="">
+
+          {% endif %}
+        </div>
+      </div>
+
+      
+
+      <div>
+     
+
+        <p style="direction: rtl;list-style:none;margin-top:20px;">
+          من خلال تقديم جهازك المحمول للإصلاح إلى ماغنس للرعایة، فإنك توافق على الشروط والأحكام التالي :
+        </p>
+
+        <ol style="direction: rtl;list-style:none;margin-top:50px;padding:0;margin:0">
+          <li>
+            ١. تظل أي بيانات أو معلومات قد تكون قمت بتخزينها على الجهاز مسؤوليتك وحدك ولا نتحمل ماغنس أي مسؤولية عن فقدان هذه البيانات أو تلفها أيًا كان السبب، ولذلك نوصي بشدة بعمل نسخة احتياطية لجهازك على محرك أقراص خارجي قبل تسليمة قسم الصيانة. وتقع على عاتقك مسؤولية الاحتفاظ بسجل لهذه البيانات. لن يكون مركز خدمة ماغنس مسؤولاً عن فقدان أي بيانات
+          </li>
+          <li>٢. في حالة حدوث أي تأخير في الخدمة أو تغيير في تكلفة الإصلاح المقررة، سيتم إخطار العميل بذلك في الوقت المناسب. و إذا لم تتم الموافقةعلى تكلفة الإصلاح من قبل العميل، فسيتم إرجاع الجهاز دون إصلاح </li>
+          <li>
+            ٣. مركز ماغنس غير مسؤول عن أي نوع من الأضرار التي قد تحدث عند إصلاح الأجهزة في حالة  دخول الماء او السوائل الأخرى الى الجهاز  اثناء استكشاف الاعطال. وذلك لأنه لم يتم التحقق من الحالة الفعلية للجهاز في وقت إدخال ورقة العمل. ولكن إذا تمت ملاحظة أي ضرر من هذا القبيل، فسيتم إبلاغ العميل به في الوقت المناسب
+          </li>
+          <li>
+            ٤. قد تصبح الأجهزة ذات الميزات مثل مقاومة الماء ومقاومة وكذلك مقاومة الغبار غير قابلة للتشغيل بعد الخدمة. وذلك لأنه بمجرد فتح بعض الأجهزة للإصلاحات، لا تتوقع نفس النوع من الاداء كما هو الحال عند شراء جهاز جديد. ويُطلب من العميل فهم الواقع لأنه قد تكون هناك تغييرات عن الوضع الأصلي بسبب العطل والصدمات المختلفة أثناء الاستخدام
+          </li>
+          <li>
+            ٥. يجب استعادة الأجهزة التي تم تسليمها لمركز صيانة ماغنس خلال 30 يومًا سواء تم إصلاحها  أو لم يتم اصلاحها. لن تكون ماغنس مسؤولة عن أي نوع من المسؤولية بعد 30 يومًا من استلام الجهاز 
+          </li>
+          <li>
+            ٦. التأكد من اصلاح الجهاز قبل مغادرة مركز ماغنس للصيانة . واستلام جمع وثائق الضمان المناسبة إن وجدت
+          </li>
+          <li>
+            ٧. يجب التأكد من قبل العميل عن مدة الضمان ونوع القطعة قبل مغادرة مركز ماغنس للصيانة
+          </li>
+          <li>
+            ٨. للتحقق من حالة للجهاز، عند دخول تسليمة الي ماغنس ، سيتم التقاط صورلجميع أجزاء الجهاز عن طريق موظف الاستقبال، لذا يرجى طلب هذه الصورة من مركز ماغنس في حالة الرغبة . وهذا سوف يساعد على تجنب سوء الفهم
+          </li>
+          <li>
+            ٩. يجب الاحتفاظ بنسخة من الفاتورة في حالة مراجعة مركز ماغنس 
+          </li>
+          <li>
+            ١٠. جميع الشكاوى والمنازعات القانونية تكون ضمن النظام المعمول به في المملكة العربية السعودية 
+          </li>
+        </ol>
+      </div>
+      <br /><br>
+     
+
+      <table style="width:100%;">
+        <!-- <div></div> -->
+        <thead style="width:100%;">
+
+          <tr>
+
+            <th colspan="3">
+              <p style="text-align:left;font-size:14px;"> توقيع المدير <br> Manager Signature </p>
+            </th>
+
+            <th colspan="3">
+              <p style="text-align:right;font-size:14px"> توقيع العميل  <br>Customer Signature</p>
+            </th>
+
+          </tr>
+         
+        </thead>
+      </table>
+
+ 
+     
+     
+      <div >
+        <h4 class="text-center underlined" style="font-size:12px" >Delivery (توصيل)</h4>
+        <p style="font-size:14px">
+         I have collected my product in good condition (
+         استلمت الجهاز بحالة سليمة دون اي ملاحظة)
+        </p>
+        <br><br>
+      <table style="width:100%;">
+        <!-- <div></div> -->
+        <thead style="width:100%;">
+
+          <tr>
+
+            <th colspan="3">
+              <p style="text-align:left;font-size:14px"> توقيع المدير <br>Manager Signature</p>
+            </th>
+
+            <th colspan="3">
+              <p style="text-align:right;font-size:14px"> توقيع العميل  <br> Customer Signature</p>
+            </th>
+
+          </tr>
+         
+        </thead>
+      </table>
+      <div>
+        <h4 class="text-center" style="padding-top:0px;font-size:12px">Thank you! (!شكرا)</h4>
+      </div>
+    </div>
+    <hr>
+    <table style="width:100%;">
+      <thead style="background-color:#fff;margin:0;margin-top:0px;width:100%;">
+        <tr>
+          
+            <th colspan="1" >
+
+              <div style="">
+                <p style="direction: rtl;text-align:right;font-size:14px;font-weight:bold;margin:0;padding:0;margin-bottom:5px;">
+                  يرجى الاتصال بنا على الجوال: ٤۷٤٥۹۹٥٤٥۰, ٥٥٦۳٦۳۰٥٥
+              </p>
+              <p style="text-align:left;font-size:14px;font-weight:bold;margin:0;padding:0;line-height: 1.3;">
+                 Please Contact us on Mob: 504595474, 550363655, Email: info@magnusksa.com
+              </p>
+
+              </div>
+            
+            
+
+            </th>
+            <th colspan="5" class="" style="">
+              
+
+              <div>
+                <img width="75px" src="https://media.publit.io/file/Screenshot-2024-08-19-120811-removebg-preview.png" alt="">
+              </div>
+             
+            </th>
+            
+            
+          
+
+        </tr>
+</thead>
+</table>
+<hr>
+    <div>
+      <p style="text-align:center;font-size:14px;font-weight:bold;margin:0;padding:0;color:#292929"> Address - SHOP NO 143 Shamal Market Abdul Qader AI Jabali, AI Salamah – Jeddah / عنوان : - جدة - شارع الحراء،سوق الشمال مقابل سوق حراء الدولى ،ومحل رقم 143</p>
+    </div>
+    
+    <hr>
+
+   
+
+      
+    </div>
+  </body>
+</html>

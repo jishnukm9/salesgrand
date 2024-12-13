@@ -1,0 +1,184 @@
+{% extends "navbar.html" %} {% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="home-tab">
+                    <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                      
+
+                        <nav class="nav nav-borders">
+                            <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="">Privileged Customers </a>
+                            <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'customerform' %}">Customer Entry</a>
+                            <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'addmultiplecustomersform' %}">Mulitiple Entries</a>
+                         
+                           
+                        </nav>
+       
+       <!-- <hr class="mt-0 mb-4"> -->
+                    </div>
+                    <br>
+
+                   
+
+
+
+                    <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                        
+
+
+
+
+
+                        <div class="card-header bg-white py-3 d-flex justify-content-between">
+                            <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Privileged Customers </strong> </h5>
+                        
+                            {% if user.is_superuser or user.userprofile.role == "Branch Admin" or user.userprofile.role == "Franchise Admin" %}
+                            <div class="d-flex align-items-center gap-3">
+                                <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#customerssearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                <a class="moneyreciept-clear" href="{% url 'customers' %}">Clear</a>
+                             </div>
+                             {% endif %}
+                        </div>
+                    
+                        
+                     
+                        <div class="card-body">
+                     
+
+
+
+
+                                <div >
+                                    <div class="table-responsive customer-table-responsive">
+                                        <table class="add-pagination table table-striped table-bordered table-hover customer-list">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%;">Sl</th>
+                                                    <th>Customer Id</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Contact</th>
+                                                    <th>Phone Modal</th>
+                                                    <th>Purchase Date</th>
+                                                    <th>Added By</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in data reversed %}
+                                                <tr class="search_results  {{ item.branch }} {{ item.addedby }} clickable-row" data-href="../customerview/{{ item.id }}">
+                                                    <td class="p-2">{{ forloop.counter }}</td>
+                                                    <td>{{ item.unique_id }}</td>
+                                                    <td>{{ item.firstname }}</td>
+                                                    <td>{{ item.lastname }}</td>
+                                                    <td>{{ item.phone }}</td>
+                                                    <td>{{ item.phonemodel }}</td>
+                                                    {% if item.purchasedate != None%}
+                                                    <td>{{ item.purchasedate }}</td>
+                                                    {% else %}
+                                                    <td></td>
+                                                    {% endif %}
+                                                    <td>{{ item.addedby }}</td>
+
+                                            
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                                <!-- </div> -->
+                                <div>
+
+                                </div>
+
+
+
+
+
+
+                    <div class="row flex-grow">
+                        <div class="col-12 grid-margin stretch-card"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="customerssearch">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center "
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title text-white"><strong>Search Customers</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'search_customers' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+            {% if user.is_superuser %}
+             
+               <div class="form-group">
+                 <label for="customer_list_branch"  class="fw-bold">Select Branch</label>
+                <select class="selectizefield" name="customer_list_branch" id="customer_list_branch">
+                   <option value="">Select Branch</option>
+                   {% for b in branch %}
+                    <option value="{{b}}">{{b}}</option>
+                    {% endfor %}
+                </select>
+               </div>
+               {% endif %}
+               {% if user.is_superuser or user.userprofile.role == "Branch Admin" or user.userprofile.role == "Franchise Admin" %}
+               <div class="form-group">
+                 <label for="customer_list_fieldengineer" class="fw-bold">Select User</label>
+                 <select class="selectizefield"  name="customer_list_fieldengineer" id="customer_list_fieldengineer">
+                   <option value="">Select User</option>
+                   {% for ad in addedby %}
+                   <option value="{{ad}}">{{ad}}</option>
+                   {% endfor %}
+                   
+                 </select>
+               </div>
+               {% endif %}
+               
+
+
+             
+           </div>
+           <div class="modal-footer">
+ 
+ 
+ 
+          
+             <button type="submit" class="btn btn-primary">Search</button>
+           </div>
+        </form>
+        
+       
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

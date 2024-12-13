@@ -1,0 +1,208 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="">Edit Customer  </a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'customers' %}">Privileged Customers</a>
+                    
+       
+                    
+                 </nav>
+               </div>
+               <br>
+
+               <div>
+
+                  {% if messages %}
+                                    {% for message in messages %}
+                                    <span class="text-danger" style="font-size:13px;">{{message}}</span>
+                                    {% endfor %}
+                                    {% endif %}
+
+               </div>
+
+
+
+
+               <form  action="{% url 'updatecustomer' id=data.id %}" method="POST">
+                  {% csrf_token %}
+                <div class="row p-0"  >
+
+                 
+                  <div class="col-lg-6 col-md-6 col-sm-12" >
+                
+                    <div class="card card-rounded  mb-4 card-border-dark" style="border:0.5px solid #cfcfcf;border-radius:5px;box-shadow: rgba(31, 59, 179, 0.08) 0px 1px 4px 0px; ">
+                      <div class="card-header py-3">
+                        <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>{{ data.firstname }} {{ data.lastname }} </strong> </h5>
+                    </div>
+                     
+                      <div class="card-body" >
+                        <div class="form-group col-lg-12"  >
+
+                          <label for="firstname"
+                          ><strong>First Name</strong></label
+                        >
+                        <input  class="form-control" type="text" name="firstname" placeholder="First Name" value="{{ data.firstname }}" required>
+                        <!-- <input  class="form-control" type="text" name="firstname" placeholder="First Name" required> -->
+                       
+                      </div>
+                      <div class="form-group col-lg-12">
+
+                        <label for="lastname"
+                          ><strong>Last Name</strong></label
+                        >
+                        <input class="form-control" type="text" name="lastname" placeholder="Last Name" value="{{ data.lastname }}" >
+                        <!-- <input style=" border: 0.0625rem solid #b7bcbf;" class="form-control" type="text" name="lastname" placeholder="Last Name" required> -->
+                    </div>
+
+                    <div class="form-group col-lg-12">
+
+                      <label for="dob"
+                        ><strong>Date Of Birth</strong></label
+                      >
+                      <input class="form-control" type="date" onfocus="(this.type='date')" name="dob" value="{{ data.dob |date:'Y-m-d'}}" placeholder="Date Of Birth">
+                    <!-- <input  class="form-control" type="date" onfocus="(this.type='date')" name="dob" value="" placeholder="Date Of Birth"> -->
+                  </div>
+
+
+
+                  <div class="form-group col-lg-12">
+
+                    <label for="phone"
+                    ><strong>Mobile Number</strong></label
+                  >
+                  <input  class="form-control" type="number" name="phone" placeholder="Mobile Number" value="{{ data.phone }}" required>
+                  <!-- <input  class="form-control" type="number" name="phone" placeholder="Mobile Number" required> -->
+                 
+                </div>
+
+
+
+                <div class="form-group col-lg-12">
+
+                  <label for="vat"
+                  ><strong>VAT Number</strong></label
+                >
+                <input  class="form-control" type="text" name="vatnumber" placeholder="VAT Number" value="{{ data.vatnumber }}">
+               
+              </div>
+
+
+              <div class="form-group col-lg-12">
+
+                <label for="customertype"
+                ><strong>Customer Type</strong></label
+              >
+
+              <select required name="customertype" id="customertype" class="form-control border">
+                <option selected value="{{data.customertype}}">{{data.customertype}}</option>
+                <option value="B2C">B2C</option>
+                <option value="B2B">B2B</option>
+
+
+
+              </select>
+             
+             
+            </div>
+
+
+
+
+                <div class="form-group col-lg-12">
+
+                  <label for="lastname"
+                    ><strong>Address</strong></label
+                  >
+           
+
+                  <textarea  class="ps-4 pt-2" name="address" rows="4" cols="40"  style="width: 100%; max-width: 100%;" value="{{ data.address }}">{{ data.address }}</textarea>
+                  <!-- <textarea name="address" rows="4" cols="35" placeholder="Customer Address" style="width: 100%; max-width: 100%;" value="{{ data.address }}">{{ data.address }}</textarea> -->
+               </div>
+
+                      </div>
+                    </div>
+                    
+                  </div>
+
+
+
+      
+      
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="card card-rounded  mb-4 card-border-dark" style="border:0.5px solid #cfcfcf;border-radius:5px;box-shadow: rgba(31, 59, 179, 0.08) 0px 1px 4px 0px; ">
+                      
+                      <div class="card-header py-3">
+                        <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong></strong> </h5>
+                    </div>
+                      
+                      <div class="card-body">
+                        
+
+                        <div class="form-group col-lg-12">
+
+                          <label for="phonemodal"
+                            ><strong>Phone Modal</strong></label
+                          >
+                          <input  class="form-control" type="text" name="phonemodel" value="{{ data.phonemodel }}"  placeholder="Phone Model">
+                          <!-- <input class="form-control" type="text" name="phonemodel" value="" placeholder="Phone Model"> -->
+                      </div>
+                        <div class="form-group col-lg-12">
+
+                          <label for="purchasedate"
+                            ><strong>Purchase Date</strong></label
+                          >
+                          <input  class="form-control" type="date" onfocus="(this.type='date')" name="purchasedate" value="{{ data.purchasedate |date:'Y-m-d' }}"  placeholder="Purchase Date">
+                          <!-- <input style=" border: 0.0625rem solid #b7bcbf;" class="form-control" type="date" onfocus="(this.type='date')" value="" name="purchasedate" placeholder="Purchase Date"> -->
+                      </div>
+
+
+                    </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                     <button type="submit" class="btn btn-primary text-white me-0">Save Change</button>
+                    </div>
+                  </div>
+                </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

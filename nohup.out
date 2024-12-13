@@ -1,0 +1,136 @@
+Watching for file changes with StatReloader
+[11/May/2023 14:23:17] "GET / HTTP/1.1" 200 29469
+[11/May/2023 14:23:28] "GET /register/ HTTP/1.1" 200 15883
+[11/May/2023 14:24:15] "GET /register/ HTTP/1.1" 200 15873
+[11/May/2023 14:24:16] "GET /register/ HTTP/1.1" 200 15873
+[11/May/2023 14:24:24] "GET / HTTP/1.1" 200 29469
+[11/May/2023 14:25:10] "GET /register/ HTTP/1.1" 200 16061
+[11/May/2023 14:25:10] "GET /register/ HTTP/1.1" 200 16061
+[11/May/2023 14:25:26] "GET /register/ HTTP/1.1" 200 16066
+[11/May/2023 14:25:26] "GET /register/ HTTP/1.1" 200 16066
+[11/May/2023 14:27:14] "GET /register/ HTTP/1.1" 200 16037
+[11/May/2023 14:27:14] "GET /register/ HTTP/1.1" 200 16037
+[11/May/2023 14:27:40] "GET /register/ HTTP/1.1" 200 15855
+[11/May/2023 14:27:41] "GET /register/ HTTP/1.1" 200 15855
+[11/May/2023 14:27:42] "GET /register/ HTTP/1.1" 200 15855
+[11/May/2023 14:27:42] "GET /register/ HTTP/1.1" 200 15855
+[11/May/2023 14:27:42] "GET /register/ HTTP/1.1" 200 15855
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:23:15
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "/usr/lib64/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/usr/lib64/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/utils/autoreload.py", line 53, in wrapper
+    fn(*args, **kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 118, in inner_run
+    self.check(display_num_errors=True)
+  File "/usr/local/lib/python3.6/site-packages/django/core/management/base.py", line 396, in check
+    databases=databases,
+  File "/usr/local/lib/python3.6/site-packages/django/core/checks/registry.py", line 70, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "/usr/local/lib/python3.6/site-packages/django/core/checks/urls.py", line 13, in check_url_config
+    return check_resolver(resolver)
+  File "/usr/local/lib/python3.6/site-packages/django/core/checks/urls.py", line 23, in check_resolver
+    return check_method()
+  File "/usr/local/lib/python3.6/site-packages/django/urls/resolvers.py", line 408, in check
+    for pattern in self.url_patterns:
+  File "/usr/local/lib/python3.6/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python3.6/site-packages/django/urls/resolvers.py", line 589, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/usr/local/lib/python3.6/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/usr/local/lib/python3.6/site-packages/django/urls/resolvers.py", line 582, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib64/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/myscript/sensefrog/sensefrog/urls.py", line 18, in <module>
+    from core.views import *
+  File "/myscript/sensefrog/core/views.py", line 16
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+Watching for file changes with StatReloader
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:30:43
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:34:38
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:53:13
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:54:27
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:55:05
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/myscript/sensefrog/core/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:56:53
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/myscript/sensefrog/sensefrog/urls.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 11, 2023 - 14:57:34
+Django version 3.1.13, using settings 'sensefrog.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader

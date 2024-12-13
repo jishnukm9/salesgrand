@@ -1,0 +1,1272 @@
+
+{% extends "navbar.html" %} {% block content %}
+{% load static %}
+<style>
+  
+.pattern-lock {
+  display: flex;
+  flex-direction: column;
+}
+
+.lock-row {
+  display: flex;
+}
+
+.lock-btn {
+  /* width: 30px;
+  height: 30px;
+  margin: 5px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  background-color: #fff;
+  outline: none; */
+
+
+width: 50px;
+    height: 50px;
+    margin: 5px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background-color: #f7f7f7;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+
+.lock-btn:hover, .lock-btn.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.lock-btn.active {
+  background-color: #4CAF50; /* Green background to indicate selection */
+}
+.lock-btn:active {
+    transform: scale(0.95);
+}
+
+</style>
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+
+
+
+
+         {% if messages %}
+         
+      
+         {% for message in messages %}
+         <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between " role="alert">
+          <p> <strong>{{ message }}</strong> </p> 
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background:none;border:1px solid #444;">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         {% endfor %}
+         
+        {% endif %}
+
+
+        
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+ 
+
+
+            <nav class="nav nav-borders">
+              {% if user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' or user.userprofile.role == 'TRC Front Desk' %}
+               <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'servicecnp' %}">My Service</a>
+               <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+              
+               {% elif request.user.userprofile.role == "Field Engineer"  %}
+               <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'service' %}">My Service</a>
+               {% else %}
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+              {% endif %}
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'serviceform' %}">Service Entry</a>
+             
+              {% if user.userprofile.role == "TRC Front Desk" or request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" or request.user.is_superuser %}
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+              {% endif %}
+              
+
+               {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" or request.user.is_superuser %}
+               <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'sparerequests' %}">Spare Requested</a>
+  
+                           <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicechargeestimationlist' %}">Service Charge</a> -->
+                 
+
+
+                           {% endif %}
+
+             
+          </nav>
+
+<!-- <hr class="mt-0 mb-4"> -->
+
+
+          </div>
+
+
+
+          <br>
+
+
+
+         
+  
+
+
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3 bg-white" >
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Service Entry </strong> </h5>
+          </div>
+          <div class="card-body">
+
+
+            
+    
+
+                <form id="serviceForm" class="serviceForm" action="{% url 'addservice' %}"  method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+
+                <div class="row service-customer-section my-4" >
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-4 ">
+
+                      <div class="form-group col-lg-12 mb-4 "  >
+                        
+
+                        <label class="mb-1" for="mobileservice"
+                        ><strong>Customer</strong></label
+                      >
+      
+                      <div class="d-flex gap-2">
+                      <select  class="form-control selectizefield"  style="border:1px solid #cccccc;" name="mobileservice" id="mobileservice" >
+                        <option value=""></option>
+      
+                        {% for num in phone %}
+                        <option value="{{num.phone}}">{{num.firstname}} - {{num.phone}}</option>
+                        {% endfor %}
+                        
+      
+      
+      
+                      </select>
+                     <div class=" d-flex justify-content-center align-items-center">
+                       <a href="{% url 'customerform' %}" class="text-decoration-none">
+                      <span class="servicecustomerbtn d-flex justify-content-center align-items-center "   ><i class="fa-solid fa-plus"></i></span>
+                    </a>
+                    </div>
+                      
+                    </div>
+                    </div>
+
+
+                    <div class="form-group col-lg-12 mb-4 "  >
+                     <label for="status"> <strong>Customer Booking</strong> </label>
+              <select class="form-control selectizefield mb-3" name="customerbooking" id="customerbooking" style="border:1px solid #cccccc;">
+                  
+                <option value="" >Select Booking</option>
+                
+                {% for bk in customerbooking %}
+<option value="{{bk.id}}">{{bk.bookingid}} - {{bk.phone}} - {{bk.name}}</option>
+{% endfor %}
+
+
+              </select>
+            </div>
+                    
+
+                    
+                    
+
+
+
+                 
+
+                        <div class="form-group col-lg-12 mb-4"  >
+
+                            <label class="mb-1" for="firstnameservice"
+                            ><strong>First Name</strong></label
+                          >
+                         
+                          <input autocomplete="off"  class="form-control " type="text" name="firstnameservice" id="firstnameservice" >
+                         
+                        </div>
+
+                        <div class="form-group col-lg-12"  >
+
+                            <label class="mb-1" for="lastnameservice"
+                            ><strong>Last Name</strong></label
+                          >
+                         
+                          <input autocomplete="off" class="form-control " type="text" id="lastnameservice" name="lastnameservice" >
+                         
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                
+
+
+                        <div class="form-group col-lg-12 mb-4"  >
+
+                            <label class="mb-1" for="addressservice"
+                            ><strong>Address</strong></label
+                          >
+                         
+                          <textarea autocomplete="off"  class="form-control " style="height:67px;" name="addressservice" id="addressservice"  rows="10"></textarea>
+                         
+                        </div>
+
+                        <div class="form-group col-lg-12 mb-4"  >
+
+                          <label class="mb-1" for="mobilenumber"
+                          ><strong>Mobile Number</strong></label
+                        >
+
+                        <input type="number" hidden name="phone_number_digit" id="phone_number_digit" value="{{request.user.userprofile.company.country.phone_number_digit}}" >
+           
+                       
+                        <input autocomplete="off"   class="form-control " type="number" id="mobilenumber" name="mobilenumber"  >
+                       
+                      </div>
+
+                        
+
+                        <div class="form-group col-lg-12"  >
+
+                            <label class="" for="refnumber"
+                            ><strong>Service Ref No <span class="ms-3 text-primary">{{servicenumber}}</span></strong></label
+                          >
+                         
+                          <input  hidden   class="form-control" type="text" name="refnumber" value="{{servicenumber}}" >
+                          <input  hidden   class="form-control" type="text" name="invoicenumber" value="{{invoicenumber}}" >
+                         
+                        </div>
+
+
+                        <div class="form-group  col-lg-12">
+                          <label for="customertypeservice" class="fw-bold">Customer Type</label>
+                          
+
+                          <select required name="customertypeservice" id="customertypeservice" class="form-control border customertypeservice">
+                            <option value=""></option>
+                            <option value="B2C">B2C</option>
+                            <option value="B2B">B2B</option>
+                          </select>
+                
+                        </div>
+              
+        
+
+
+                        
+
+                    </div>
+
+
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        
+
+                        <div class="form-group col-lg-12 mb-4"  >
+
+                          <label class="mb-1" for="customeridservice"
+                          ><strong>Customer Id</strong></label
+                        >
+                       
+                        <input autocomplete="off" readonly  style="border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;" class="form-control" type="text" id="customeridservice" name="customeridservice" >
+                       
+                      </div>
+
+                        <div class="form-group col-lg-12 mb-4"  >
+                          
+
+                            <label class="mb-1" for="serviceentrydate"
+                            ><strong>Memo Date</strong></label
+                          >
+
+                          <div id="datepicker" 
+                          name="serviceentrydate"
+             class="input-group date datepicker-current-new " 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control  " 
+            name="serviceentrydate"
+            autocomplete="off" 
+                          
+                   type="text"    />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+                         
+                          <!-- <input   style="border:1px solid #cccccc;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;" class="form-control" type="date" value="{{today}}" id="serviceentrydate" name="serviceentrydate" placeholder="Expected Date" required> -->
+                         
+                        </div>
+                        <div class="form-group col-lg-12"  >
+
+                            <label class="mb-1" for="expecteddate"
+                            ><strong>Estimated Date</strong></label
+                          >
+
+                            <div id="datepicker" 
+                          
+             class="input-group date datepicker-field-min-today" 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control " 
+            name="expecteddate"
+            autocomplete="off" 
+            
+                   type="text"  />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+                         
+                         
+                         
+                        </div>
+
+                        <div class="form-group  col-lg-12">
+                          <label for="customergst" class="fw-bold">VAT Number</label>
+                          
+
+                           <input class="form-control" type="text" name="customergst" id="customergst">
+                
+                        </div>
+
+
+                    </div>
+
+           
+
+              </div>
+
+
+
+              <hr class=" dark-line">
+
+
+
+
+  
+              <div class="row mb-4 d-flex justify-content-center service-photo-section">
+
+                <div class="row my-2">
+
+                  <div class="col-lg-4 col-md-6"></div>
+                  <div class="col-lg-4 col-md-6"></div>
+                  <div class="col-lg-4 col-md-6 d-flex justify-content-end pe-0">
+              <div class="d-flex gap-1 align-items-center justify-content-between" >
+                    <h5 class="mt-1"><strong>Select :</strong></h5>
+                    <select class="form-control border select-picture-count no-spinner" name="" id="" style="width:50%;">
+                      <option value="">Pictures</option>
+                      <!-- <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option> -->
+                      <option value="6">6</option>
+                    </select>
+                  </div>
+                  </div>
+
+
+                
+                </div>
+
+
+
+                <div class="col-lg-4 col-md-6 col-sm-4">
+                  <div class="contentarea photo-one" style="display:none;">
+                    
+                    <div class="Input">
+                    
+                            <div id="camera" class="camera">
+                                <video id="video">Video stream not available.</video>
+                                <button id="startbutton" type="button">Take photo</button>
+                                <input name="image1" id="webimg" value="" type="text" style="display: none;">
+                                <canvas id="canvas">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo" alt="your image">
+                            </div>
+                            <br>
+                           
+                       
+                    </div>
+                   
+                </div>
+
+                
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-4">
+
+
+                  <div class="contentarea photo-two" style="display:none;">
+                    <div class="Input">
+                       
+                            <div id="camera1" class="camera">
+                                <video id="video1">Video stream not available.</video>
+                                <button id="startbutton1" type="button">Take photo</button>
+                                <input name="image2" id="webimg1" value=""  type="text" style="display: none;">
+                                <canvas id="canvas1">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo1" alt="your image">
+                            </div>
+                            <br>
+                           
+                       
+                    </div>
+                
+                </div>
+
+             
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-4 d-flex justify-content-center">
+
+
+                  <div class="contentarea photo-three" style="display:none;">
+                    <div class="Input">
+                       
+                            <div id="camera2" class="camera">
+                                <video id="video2">Video stream not available.</video>
+                                <button id="startbutton2" type="button">Take photo</button>
+                                <input name="image3" id="webimg2" value="" type="text" style="display: none;">
+                                <canvas id="canvas2">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo2" alt="your image">
+                            </div>
+                            <br>
+                           
+                      
+                    </div>
+                
+                </div>
+
+               
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-4 d-flex justify-content-center">
+
+
+                  <div class="contentarea photo-four" style="display:none;">
+                    <div class="Input">
+                       
+                            <div id="camera3" class="camera">
+                                <video id="video3">Video stream not available.</video>
+                                <button id="startbutton3" type="button">Take photo</button>
+                                <input name="image4" id="webimg3" value="" type="text" style="display: none;">
+                                <canvas id="canvas3">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo3" alt="your image">
+                            </div>
+                            <br>
+                           
+                      
+                    </div>
+                
+                </div>
+
+               
+                </div>
+
+
+
+
+                <div class="col-lg-4 col-md-6 col-sm-4 d-flex justify-content-center">
+
+
+                  <div class="contentarea photo-five" style="display:none;">
+                    <div class="Input">
+                       
+                            <div id="camera4" class="camera">
+                                <video id="video4">Video stream not available.</video>
+                                <button id="startbutton4" type="button">Take photo</button>
+                                <input name="image5" id="webimg4" value="" type="text" style="display: none;">
+                                <canvas id="canvas4">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo4" alt="your image">
+                            </div>
+                            <br>
+                           
+                      
+                    </div>
+                
+                </div>
+
+               
+                </div>
+
+
+
+
+                <div class="col-lg-4 col-md-6 col-sm-4 d-flex justify-content-center">
+
+
+                  <div class="contentarea photo-six" style="display:none;">
+                    <div class="Input">
+                       
+                            <div id="camera5" class="camera">
+                                <video id="video5">Video stream not available.</video>
+                                <button id="startbutton5" type="button">Take photo</button>
+                                <input name="image6" id="webimg5" value="" type="text" style="display: none;">
+                                <canvas id="canvas5">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo5" alt="your image">
+                            </div>
+                            <br>
+                           
+                      
+                    </div>
+                
+                </div>
+
+               
+                </div>
+
+
+
+
+              </div>
+            <!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <hr class=" dark-line">
+
+
+
+
+
+
+              <div class="my-5 " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="border py-1 d-flex justify-content-between" style="background-color: rgba(89, 99, 158, 0.24);">
+                    <h5 class="m-0 font-weight-bold p-1" style="color:#2c2e2f">Service Entries </h5>
+
+                    <!-- <span class="addsalebtnservice me-2 ps-2 pe-2 mt-1 mb-1"   >Add Spare Parts</span> -->
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" >
+
+
+
+
+
+                      <table
+                      class="table  service-entry-table"
+                      
+                
+                    >
+                      <thead style="background-color:white;"  >
+                        <tr>
+                          <th width="2%"></th>
+                          <th width="8%;">Product<span style="color:#fff;">---------------</span> </th>
+                          <th width="15%;" >Brand<span style="color:#fff;">---------------</span></th>
+                          <th width="15%;">Model<span style="color:#fff;">---------------</span></th>
+                          <th width="10%;">Series<span style="color:#fff;">---------------</span></th>
+                         <th width="10%" >Problem Reported<span style="color:#fff;">-----</span> </th>
+                          <th width="5%;">IMEI No<span style="color:#fff;">------------------</span></th>
+                       
+                          <th width="10%;" class="puchase-qty-right"  >Estimated Charge<span style="color:#fff;"></span></th>
+                          <th class="puchase-qty-left"></th>
+                        </tr>
+                      </thead>
+                      <tbody >
+                        <tr style="background-color:#fff;">
+                          <td>1</td>
+
+
+
+                          <td width="20%;"> 
+                            
+
+
+
+
+                     
+                           
+
+                                     <select class="form-control border" required name="product1" id="sale-search-input-product1">
+                                       <option selected  value="">Select Product</option>
+                                       {% for item in products %}
+                                      <option data-id="{{item.id}}" value="{{item.name}}">{{item.name}}</option>
+                                      {% endfor %}
+                                     </select>
+
+
+
+
+                          </td>
+
+
+
+                          <td>
+
+                            <select required class="form-control border no-spinner serviceentrybrands"  name="brand1" id="brand1">
+                              
+                            </select>
+                        
+                          </td>
+                          <td>
+
+                            <select required class="form-control border no-spinner"  name="model1" id="model1">
+                              <option value=""></option>
+                             
+                            </select>
+
+
+                            
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                            
+                              name="series1"
+                              class="form-control no-spinner"
+                              autocomplete="off"
+                           
+                            />
+                          </td>
+                          <td>
+                            <select required class="form-control border no-spinner"  name="problem" id="problem">
+                              <option value=""></option>
+                              {% for item in problems %}
+                              <option data-id="{{item.id}}" value="{{item.name}}">{{item.name}}</option>
+                              {% endfor %}
+                            </select>
+                          </td>
+                      
+                          <td >
+                            <input
+                              type="text"
+                           
+                              name="imei1"
+                              class="form-control no-spinner"
+                              autocomplete="off"
+                             value="NA"
+                             
+                            />
+                          </td>
+                         
+                          <td class="puchase-qty-right">
+                            <input
+                              type="number"
+                              step="0.01"
+                             
+                              name="serviceprice1"
+                              id="serviceprice1"
+                              min="0"
+                              class="form-control no-spinner"
+                              autocomplete="off"
+                        
+                            />
+                          </td>
+                          <td class="puchase-qty-left">
+
+                            <!-- <span class="addrowbtnservice"   ><i class="fa-solid fa-plus"></i> Add Row</span> -->
+
+
+                            
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+
+
+                    </div>
+                    </div>
+              </div>
+
+
+
+
+      
+
+
+              
+
+
+              <hr class=" dark-line">
+            
+
+
+
+
+
+              <div class="row my-5">
+
+
+                
+
+                <div class="col-lg-4 col-md-4 col-sm-4 ">
+
+            
+
+
+                    <div class="form-group col-lg-12 mb-3"  >
+
+                       
+
+                      <label for="warrentystatus"> <strong>Warranty Status</strong> </label>
+
+              <select class="form-control selectizefield" name="warrentystatus" id="warrentystatus" style=" border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;">
+                <!-- <option value="" ></option> -->
+<option value="Out Of Warrenty" >Out Of Warranty</option>
+<option value="Under Warrenty">Under Warranty</option>
+
+              </select>
+
+              
+
+
+                    </div>
+
+                   
+
+
+                    
+
+                </div>
+
+
+
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+
+
+                   <div class="form-group col-lg-12 mb-2"  >
+
+                        <label class="mb-1" for="remarks"
+                        ><strong>Remarks</strong></label
+                      >
+                     
+                      <textarea class="form-control " style="height:106px;" name="remarks" id="remarks"  rows="10"></textarea>
+                     
+                    </div>
+
+
+                </div>
+
+                
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="form-group col-lg-12"  >
+
+                  <label class="mb-1" for="accessories"
+                  ><strong>Accessories Attached</strong></label
+                >
+
+                <div class=" row-fluid" >
+
+                  <div class="p-1 " style="border-radius:3px;border:1px solid #dee2e6;" >
+                
+                      <input type="checkbox" name="accessory[battery]" style=" margin:0 5px 0 10px;" id="accessory" value="Battery"> <span style="font-size:14px;">Battery </span>                                                             
+                            <input type="checkbox" name="accessory[charger]" style=" margin:0 5px 0 10px;" id="accessory" value="Charger"> <span style="font-size:14px;">Charger </span>                                  
+                           <input type="checkbox" name="accessory[SIM]" style=" margin:0 5px 0 10px;" id="accessory" value="SIM"><span style="font-size:14px;">SIM   </span>  
+                               <input type="checkbox" name="accessory[memory]" style=" margin:0 5px 0 10px;" id="accessory" value="Memory Card">  <span style="font-size:14px;">Memory Card  </span>   
+                                                                    </div>
+
+
+
+                </div>
+               
+                <!-- <input   style="border:1px solid #cccccc;" class="form-control" type="text" name="refnumber" placeholder="Service Ref No" required> -->
+               
+              </div>
+            </div>
+
+       
+
+          </div>
+
+          <hr class=" dark-line">
+
+
+
+
+
+
+
+
+
+          <div class="row my-5">
+
+
+
+
+            <div class="form-group col-lg-4 col-md-4 ">
+
+
+           
+             
+
+              <input type="text" name="status" id="status" value="Unassigned" hidden>
+              <!-- <input type="text" name="paymentmode" id="paymentmode" value="" hidden> -->
+
+              <label for="status"> <strong>Payment Mode</strong> </label>
+             
+
+              <select class="form-control selectizefield mb-5" name="paymentmode" id="paymentmode" style="border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;">   
+                <option value="" selected>Select Payment Mode</option>
+                {% for mode in paymentmode %}
+                <option  value="{{mode.name}}">{{mode.name}}</option>
+                {% endfor %}
+
+              </select>
+
+
+
+
+
+
+     
+
+
+
+
+
+              <div class="border p-3 mt-0">
+                <div class="d-flex justify-content-between align-items-center">
+                <div id="patternLock" class="pattern-lock">
+                  <svg class="lock-lines" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></svg>
+                  <div class="lock-row">
+                    <button class="lock-btn" data-num="1">1</button>
+                    <button class="lock-btn" data-num="2">2</button>
+                    <button class="lock-btn" data-num="3">3</button>
+                  </div>
+                  <div class="lock-row">
+                    <button class="lock-btn" data-num="4">4</button>
+                    <button class="lock-btn" data-num="5">5</button>
+                    <button class="lock-btn" data-num="6">6</button>
+                  </div>
+                  <div class="lock-row">
+                    <button class="lock-btn" data-num="7">7</button>
+                    <button class="lock-btn" data-num="8">8</button>
+                    <button class="lock-btn" data-num="9">9</button>
+                  </div>
+                </div>
+                <button type="button" class="patternclear btn btn-danger text-white">Clear</button>
+              </div>
+              <div class="d-flex align-items-center justify-content-between  mt-3">
+                <p class="mt-3 p-0 text-center fw-bold">Pattern Order</p>
+                <input type="text" class="p-2  w-50 mt-2 border fs-7" id="patternDisplay" name="pattern" id="patterns">
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between   mt-3">
+                <p class="mt-3 p-0 text-center fw-bold">Screen Password</p>
+                <input type="text" class="p-2  w-50 mt-2 border fs-7"  name="phonepassword" id="phonepassword">
+              </div>
+                
+              </div>
+
+                
+          
+
+
+
+
+            </div>
+            
+
+            <div class="form-group col-lg-3 col-md-2 ">
+
+
+            </div>
+
+            <div class="form-group  col-lg-5 col-md-6 ">
+
+
+                <div class=" mb-1 p-2" style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+
+                    <div class="row">
+                    <div class="col-6"> <strong>  Total Amount </strong> </div>
+                    <div class="col-6">
+                      <input readonly class="border-0 w-100" type="number" min="0" step="0.01" id="totalamount" name="totalamount" value="0.00">
+                    </div>
+                  </div>
+
+                    
+                </div>
+
+                <!-- <div class=" mb-1 p-2" style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+
+                  <div class="row">
+                  <div class="col-6"> <strong>  Total Tax</strong> </div>
+                  <div class="col-6"> -->
+                    <input readonly hidden class="border-0 w-100" type="number" min="0" step="0.01" id="totaltax" name="totaltax" value="0.00">
+                  <!-- </div>
+                </div>
+
+                  
+              </div> -->
+
+
+                <!-- <div class=" mb-1 p-2" style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                  <div class="row">
+                  <div class="col-6"> <strong>Discount</strong> </div>
+                  <div class="col-6"> -->
+                    <input disabled hidden  class="border-0 p-1 w-100 " type="number" step="0.01" min="0" id="discount" name="discountservice" value="0.00">
+                  <!-- </div>
+                </div>
+                </div> -->
+                <!-- <div class=" mb-1 p-2" style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                  <div class="row">
+                  <div class="col-6"> <strong>Final Amount</strong> </div>
+                  <div class="col-6"> -->
+                    <input readonly hidden class="border-0 w-100 finalamountservice" type="number" step="0.01" min="0" id="finalamount" name="finalamount" value="0.00">
+                  <!-- </div>
+                </div>
+              </div> -->
+                <div class=" mb-1 p-2 " style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                   
+                  <div class="row">
+                    <div class="col-6"> <strong>Advance Amount</strong> </div>
+                  <div class="col-6">
+                    <input required class="border p-1 w-100 amountrecievedservice" type="number" step="0.01" min="0"  id="amountrecievedservice" name="amountrecievedservice" value="0.00">
+                  </div>
+                </div>
+                </div>
+                <div class=" mb-1 p-2" style="border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                  <div class="row">
+                    <div class="col-6"> <strong>Due Balance Amount</strong>  </div>
+                  <div class="col-6">
+                    <input readonly class="border-0 w-100" type="number" step="0.01" min="0" id="duebalance" name="duebalance" value="0.00">
+                  </div>
+                </div>
+              </div>
+
+                <div class="mt-3 text-end">
+
+                  <button class="btn btn-primary text-white ps-4 pe-4 mt-3 float-right" type="submit">Save</button>
+                </div>
+            </div>
+
+
+            <!-- </div> -->
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <div>
+
+              </div>
+
+              
+
+
+
+
+
+
+            </form>
+
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card"></div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="technicianmodal">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Work Status</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <table class="table table-bordered ">
+         
+{% for key,value in technician_status.items %}
+              <tr>
+                <th rowspan="5">{{key}}</th>
+                <td>Pending : {{value.Pending}}</td>
+              </tr>
+              <tr>
+                <td>In Progress : {{value.InProgress}}</td>
+              </tr>
+              <tr>
+                <td>Completed : {{value.Completed}}</td>
+              </tr>
+              <tr>
+                <td>Delivered : {{value.Delivered}}</td>
+              </tr>
+             
+              <tr>
+                <td>Rejected : {{value.Rejected}}</td>
+              </tr>
+
+{% endfor %}
+
+          </table>
+            
+             
+
+
+           
+         </div>
+         <!-- <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div> -->
+   
+     
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="stockmodal">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Available Stocks</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <table class="table add-pagination-modal table-bordered w-100 m-0">
+            <thead>
+              <tr>
+                <td>Product</td>
+                <td>Quantity</td>
+              </tr>
+            </thead>
+         <tbody>
+{% for key,value in stock_list.items %}
+              <tr>
+                <td >{{key}}</td>
+                <td>{{value}}</td>
+              </tr>
+             
+
+{% endfor %}
+</tbody>
+
+          </table>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const lockButtons = document.querySelectorAll('.lock-btn');
+    const patternDisplay = document.getElementById('patternDisplay');
+    const svg = document.querySelector('.lock-lines');
+    let pattern = [];
+    let isMouseDown = false;
+    let lastBtn = null;
+
+    lockButtons.forEach(btn => {
+        btn.addEventListener('mousedown', handleMouseDown);
+        btn.addEventListener('mouseover', handleMouseOver);
+    });
+
+    document.addEventListener('mouseup', handleMouseUp); 
+
+    function handleMouseDown(event) {
+        isMouseDown = true;
+        const num = event.target.getAttribute('data-num');
+        if (!pattern.includes(num)) {
+            pattern.push(num);
+            event.target.classList.add('active');
+            lastBtn = event.target;
+        }
+    }
+
+    function handleMouseOver(event) {
+        if (isMouseDown && !pattern.includes(event.target.getAttribute('data-num'))) {
+            const num = event.target.getAttribute('data-num');
+            pattern.push(num);
+            event.target.classList.add('active');
+            drawLine(lastBtn, event.target);
+            lastBtn = event.target;
+        }
+    }
+
+    function handleMouseUp() {
+        if (isMouseDown) {
+            isMouseDown = false;
+            patternDisplay.value = pattern.join(' > ');
+            lastBtn = null;
+        }
+    }
+
+    function drawLine(fromBtn, toBtn) {
+        const fromRect = fromBtn.getBoundingClientRect();
+        const toRect = toBtn.getBoundingClientRect();
+        const svgRect = svg.getBoundingClientRect();
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", fromRect.left + fromRect.width / 2 - svgRect.left);
+        line.setAttribute("y1", fromRect.top + fromRect.height / 2 - svgRect.top);
+        line.setAttribute("x2", toRect.left + toRect.width / 2 - svgRect.left);
+        line.setAttribute("y2", toRect.top + toRect.height / 2 - svgRect.top);
+        line.setAttribute("stroke", "#4CAF50");
+        line.setAttribute("stroke-width", "2");
+        svg.appendChild(line);
+    }
+
+    document.querySelector('.patternclear').addEventListener('click', function(){
+        pattern = [];
+        lockButtons.forEach(btn => btn.classList.remove('active'));
+        patternDisplay.value = '';
+        while (svg.firstChild) {
+            svg.removeChild(svg.firstChild);
+        }
+    })
+});
+
+
+
+</script>
+
+
+  <script type="module" src="{% static 'js/index.js' %}"></script> 
+
+
+{% endblock %}

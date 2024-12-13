@@ -1,0 +1,90 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <!-- <ul class="nav nav-tabs" role="tablist">
+                     <li class="nav-item">
+                        <a class="nav-link active ps-0" id="home-tab"  href="{% url 'stock' %}" role="tab" aria-controls="Overview" aria-selected="true">All Stock</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link border-0" id="profile-tab"  href="{% url 'branchstock' %}">My Stock</a>
+                     </li>
+                  </ul> -->
+
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="#"> Single ledger List</a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'singleledgerform' %}">Single Ledger Form</a>
+
+             
+                 </nav>
+               </div>
+               <br>
+               <!-- <div class="row"> -->
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                     <div class="card-header py-3" style="background-color: #fff;">
+                         <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Single Ledger List </strong> </h5>
+                     </div>
+                     <div class="card-body">
+                    
+                           <div class="mt-3">
+                              <div class="table-responsive">
+                                 <table class="add-pagination table-bordered table table-striped">
+                                    <thead>
+                                       <tr>
+                                          <th>Sl</th>
+                                          <th>Date</th>
+                                          <th>Account Head</th>
+                                          <th>Narration</th>
+                                          <th>Amount</th>
+                                          {% if request.user.is_superuser %}
+                                          <th> Branch</th>
+                                          {% endif %}
+                                          <th>Cr/Dr</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for item in data reversed %}
+                                       <tr>
+                                           <td>{{ forloop.counter }}</td>
+                                           <td>{{ item.date }}</td>
+                                           <td>{{ item.account_head }}</td>
+                                           <td>{{ item.narration }}</td>
+                                           <td>{{ item.amount }}</td>
+                                           {% if request.user.is_superuser %}
+                                           <td>{{ item.branch }}</td>
+                                           {% endif %}
+                                           <td>{{ item.account_type }}</td>
+                                       </tr>
+                                       {% endfor %}
+
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- </div> -->
+            </div>
+         </div>
+         <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

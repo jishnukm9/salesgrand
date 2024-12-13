@@ -1,0 +1,173 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+            
+
+
+          <nav class="nav nav-borders">
+           
+           
+         
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3"  style="color:#444;"  href="{% url 'stock' %}"> Warehouse Stocks </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'branchstock' %}">Branch Stocks</a>
+
+              {% if request.user.is_superuser  %}
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'stocktransfer' %}">Stock Transfer</a>
+              {% endif %}
+
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'stocktransferlist' %}">Stock Transfer List</a>
+              <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"href="{% url 'transferedstocklist' %}"> Transfered Stock List </a>
+              <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="#"> Bulk Stock Entry  </a>
+       
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'bulkstocklist' %}">Bulk Stock List</a>
+       
+       
+       
+       
+                 
+       
+       
+                </nav>
+
+
+
+
+          </div>
+          <br>
+        
+
+
+
+
+
+
+
+
+
+
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3" style="background-color:#fff;">
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Bulk Stock Entry</strong> </h5>
+          </div>
+          <div class="card-body">
+            
+
+
+                <div class="row   mt-3">
+                  <div class="col-lg-6 col-md-6 col-sm-12 d-flex align-items-center">
+                    <div>
+                      
+                  <ul class="no-bullet">
+                    <li>
+                      <p>Step 1: Download the CSV file <a href="{% url 'downloadbulkstockformcsv' %}">here</a></p>
+                    </li>
+                    <li>
+                      <p>Step 2: Populate the CSV file (Replace the sample data added in the CSV)</p>
+                    </li>
+                    <li>
+                      <p>Step 3: Select the populated CSV file</p>
+                    </li>
+                    <li>
+                      <p>Step 4: Click on import</p>
+                    </li>
+                  </ul>
+                </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="row">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <form action="{% url 'addbulkstockform' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" name="multipurchase" id="multipurchase" class="form-control multicustomers center-file-input-text">
+                            
+                           
+                            <br>
+                            <button type="submit" class="btn btn-primary text-white ;">Import</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                  {% if error %}
+                  <div style="padding-left:14px;">
+                    <strong><p style="font-size:16px;color:red;">Import errors</p></strong>
+                  <ul>
+                    {% for err in error %}
+                    <li>
+                      <p>  {{err}}</p>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  </div>
+                {% endif %}
+                {% if saved %}
+                <div style="padding-left:14px;">
+                  <strong><p style="font-size:16px;color:green;">Successfull !</p></strong>
+                <ul>
+                  {% for svd in saved %}
+                  <li>
+                    <p>{{svd}}</p>
+                  </li>
+                  {% endfor %}
+                </ul>
+                </div>
+              {% endif %}
+                {% if response %}
+                  <div style="padding-left:14px;">
+                    <strong><p style="font-size:16px;color:green;">Successfull !</p></strong>
+                  <ul>
+                    {% for err in response %}
+                    <li>
+                      <p>{{err}}</p>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  </div>
+                {% endif %}
+
+
+                <!-- </div> -->
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,735 @@
+
+
+{% extends "navbar.html" %} 
+{% load custom_filters %}
+{% block content %}
+
+<style>
+.custom-header {
+    background-color: #f8f9fa;
+}
+
+.section-content {
+    display: none;
+}
+
+.section-header {
+    cursor: pointer;
+}
+
+.section-header i {
+    transition: transform 0.3s;
+}
+
+.section-header.expanded i {
+    transform: rotate(90deg);
+}
+
+.checkbox-container {
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+}
+</style>
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom pb-3">
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9; border-bottom:2px solid #4555B9; font-weight: 500;" href="">
+                Balancesheet
+              </a>
+            </nav>
+          </div>
+          <br />
+
+          <div class="card shadow-sm mb-4" style="border-radius:8px; border:1px solid #e9ecef;">
+            <div class="card-header py-3 d-flex justify-content-between bg-white">
+              <h5 class="m-0 font-weight-bold" style="color:#2c2e2f"> <strong>Balance Sheet</strong> </h5>
+              <div class="d-flex align-items-center gap-3">
+                <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#balancesheetsearch" class="fa-solid fa-magnifying-glass fs-4"></i>
+                <a class="moneyreciept-clear" href="{% url 'balancesheet_new' %}">Clear</a>
+              </div>
+            </div>
+
+           
+
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between">
+                <p> <strong>Date</strong> : {{enddate_text}} </p>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="expandAllSections">
+                  <label class="form-check-label p-0 m-0 fw-bold" style="padding-top:16px" for="expandAllSections">
+                    Expand All
+                  </label>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Liabilities and Equity Tables -->
+                <div class="col-md-6">
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered">
+                      <thead class="custom-header">
+                        <tr>
+                          <th class="py-3 px-4 fs-5" style="width: 70%; color: #2c2e2f; font-weight: 600;">
+                            Liabilities
+                          </th>
+                          <th class="py-3 px-4 text-end" style="width: 30%; color: #2c2e2f; font-weight: 600;">
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Account Payable Section -->
+                        <tr class="section-header" data-section="accountPayable">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            Account Payable
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ accounts_payable_total }}</td>
+                        </tr>
+                        {% for item in account_payable_list %}
+                        {% for key, value in item.items %}
+                        <tr class="section-content" data-section="accountPayable">
+                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+                        <!-- Tax Payable Section -->
+                        <tr class="section-header" data-section="taxPayable">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            Tax Payable
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ total_tax_payable }}</td>
+                        </tr>
+                        <tr class="section-content" data-section="taxPayable">
+                          <td class="py-3 px-4 align-middle">Sale Tax Payable</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ sale_tax_payable | floatformat:2 }}</td>
+                        </tr>
+                        <tr class="section-content" data-section="taxPayable">
+                          <td class="py-3 px-4 align-middle">Less: Tax on Sales Returns</td>
+                          <td class="py-3 px-4 text-end align-middle">({{ sale_return_tax | floatformat:2 }})</td>
+                        </tr>
+                        <tr class="section-content" data-section="taxPayable">
+                          <td class="py-3 px-4 align-middle">Service Tax Payable</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ service_tax_payable | floatformat:2 }}</td>
+                        </tr>
+
+
+
+
+<!-- {% merge_keys receipt_list_liability payment_list_liability journal_list_liability as merged_keys %}
+                        {% for key in merged_keys %}
+                          <tr class="section-header" data-section="{{ key }}">
+                            <td class="fw-bold fs-7 py-3">
+                              <i class="fas fa-chevron-right me-2"></i>
+                              {{ key | replaceunderscore }}
+                            </td>
+                            {% for itemt in list_liability_total %}
+                            {% for keyt,valuet in itemt.items %}
+                            {% if key == keyt %}
+                            <td class="py-3 px-4 text-end align-middle">{{valuet}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                          </tr>
+                          
+                          {% with receipt_value=receipt_list_liability|get_value:key %}
+                            {% if receipt_value != 0 %}
+                              <tr class="section-content" data-section="{{ key }}">
+                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                <td class="py-3 px-4 text-end align-middle">{{ receipt_value|floatformat:2 }}</td>
+                              </tr>
+                            {% endif %}
+                          {% endwith %}
+                          
+                          {% with payment_value=payment_list_liability|get_value:key %}
+                            {% if payment_value != 0 %}
+                              <tr class="section-content" data-section="{{ key }}">
+                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                <td class="py-3 px-4 text-end align-middle">({{ payment_value|floatformat:2 }})</td>
+                              </tr>
+                            {% endif %}
+                          {% endwith %}
+                        
+                          {% with journal_value=journal_list_liability|get_value:key %}
+                            {% if journal_value != 0 %}
+                              <tr class="section-content" data-section="{{ key }}">
+                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                <td class="py-3 px-4 text-end align-middle">
+                                  {% if journal_value < 0 %}
+                                  ({{ journal_value|floatformat:2|slice:"1:" }})
+                                  {% else %}
+                                    {{ journal_value|floatformat:2 }}
+                                  {% endif %}
+                                </td>
+                              </tr>
+                            {% endif %}
+                          {% endwith %}
+                        {% endfor %} -->
+                    
+                        
+
+                        {% for head_root, group in grouped_liabilities.items %}
+                        <tr class="section-header" data-section="{{ head_root|lower|cut:' ' }}">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            {{ head_root }}
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ group.total }}</td>
+                        </tr>
+                        
+                        {% for item in group.data %}
+                          <tr class="section-content" data-section="{{ head_root|lower|cut:' ' }}">
+                            <td class="py-3 px-4 align-middle">{{ item.title }}</td>
+                            <td class="py-3 px-4 text-end align-middle">
+                              {% if item.value|first == "(" %}
+                                {{ item.value }}
+                              {% else %}
+                                {{ item.value|floatformat:2 }}
+                              {% endif %}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      {% endfor %}
+
+
+
+
+
+
+
+
+                        <tr class="table-light fw-bold">
+                          <td class="py-3 px-4 align-middle">Total Liabilities</td>
+                          <td class="py-3 px-4 text-end align-middle">{{total_liability | floatformat:2}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Rest of your Equity table remains the same -->
+                    <!-- Equity Table -->
+                  <div class="table-responsive">
+                    <table class="table table-bordered" >
+                      <thead  class="custom-header">
+                        <tr >
+                          <th class="py-3 px-4 fs-5" style="width: 70%; color: #2c2e2f; font-weight: 600;">
+                            Equity
+                          </th>
+                          <th class="py-3 px-4 text-end" style="width: 30%; color: #2c2e2f; font-weight: 600;">
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+
+                      
+                      <!-- {% merge_keys receipt_list_equity payment_list_equity journal_list_equity as merged_keys %}
+                      {% for key in merged_keys %}
+                          
+                            <tr class="section-header" data-section="{{ key }}">
+                              <td class="fw-bold fs-7 py-3">
+                                <i class="fas fa-chevron-right me-2"></i>
+                                {{ key | replaceunderscore }}
+                              </td>
+                              {% for itemt in list_equity_total %}
+                              {% for keyt,valuet in itemt.items %}
+                              {% if key == keyt %}
+                              <td class="py-3 px-4 text-end align-middle">{{valuet}}</td>
+                              {% endif %}
+                              {% endfor %}
+                              {% endfor %}
+                            </tr>
+                            
+                       
+                            {% with receipt_value=receipt_list_equity|get_value:key %}
+                              {% if receipt_value != 0 %}
+                                <tr class="section-content" data-section="{{ key }}">
+                                  <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                  <td class="py-3 px-4 text-end align-middle">{{ receipt_value|floatformat:2 }}</td>
+                                </tr>
+                              {% endif %}
+                            {% endwith %}
+                            
+                         
+                            {% with payment_value=payment_list_equity|get_value:key %}
+                              {% if payment_value != 0 %}
+                                <tr class="section-content" data-section="{{ key }}">
+                                  <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                  <td class="py-3 px-4 text-end align-middle">({{ payment_value|floatformat:2 }})</td>
+                                </tr>
+                              {% endif %}
+                            {% endwith %}
+
+                         
+                            {% with journal_value=journal_list_equity|get_value:key %}
+                              {% if journal_value != 0 %}
+                                <tr class="section-content" data-section="{{ key }}">
+                                  <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                  <td class="py-3 px-4 text-end align-middle">
+                                    {% if journal_value < 0 %}
+                                    ({{ journal_value|floatformat:2|slice:"1:" }})
+                                    {% else %}
+                                      {{ journal_value|floatformat:2 }}
+                                    {% endif %}
+                                  </td>
+                                </tr>
+                              {% endif %}
+                            {% endwith %}
+                          {% endfor %} -->
+                      
+                          {% for head_root, group in grouped_equity.items %}
+                          <tr class="section-header" data-section="{{ head_root|lower|cut:' ' }}">
+                            <td class="fw-bold fs-7 py-3">
+                              <i class="fas fa-chevron-right me-2"></i>
+                              {{ head_root }}
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ group.total }}</td>
+                          </tr>
+                          
+                          {% for item in group.data %}
+                            <tr class="section-content" data-section="{{ head_root|lower|cut:' ' }}">
+                              <td class="py-3 px-4 align-middle">{{ item.title }}</td>
+                              <td class="py-3 px-4 text-end align-middle">
+                                {% if item.value|first == "(" %}
+                                  {{ item.value }}
+                                {% else %}
+                                  {{ item.value|floatformat:2 }}
+                                {% endif %}
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <tr class="section-header" data-section="retEarning">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            Retained Earnings ({{retained_earnings.pnl}})
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ retained_earnings.balance }}</td>
+                        </tr>
+                        <tr class="section-content" data-section="retEarning">
+                          <td class="py-3 px-4 align-middle">Retained Earnings ({{retained_earnings.pnl}})</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ retained_earnings.balance }}</td>
+                        </tr>
+
+                        <tr class="table-light fw-bold">
+                          <td class="py-3 px-4 align-middle">Total Equity</td>
+                          <td class="py-3 px-4 text-end align-middle">{{total_equity | floatformat:2}}</td>
+                        </tr>
+                        <tr class="table-secondary fw-bold">
+                          <td class="py-3 px-4 align-middle">Total Liabilities and Equity</td>
+                          <td class="py-3 px-4 text-end align-middle">{{total_liability_equity | floatformat:2}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Assets Table -->
+                <div class="col-md-6">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead class="custom-header">
+                        <tr>
+                          <th class="py-3 px-4 fs-5" style="width: 70%; color: #2c2e2f; font-weight: 600;">
+                            Assets
+                          </th>
+                          <th class="py-3 px-4 text-end" style="width: 30%; color: #2c2e2f; font-weight: 600;">
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Cash in Hand Section -->
+                        <tr class="section-header" data-section="cashInHand">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            Cash and Cash Equivalents
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ total_cash_in_hand }}</td>
+                        </tr>
+                        {% for item in asset %}
+                        {% for key, value in item.items %}
+                        <tr class="section-content" data-section="cashInHand">
+                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+                        <!-- Account Receivable Section -->
+                        <tr class="section-header" data-section="accountReceivable">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            Account Receivable
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ accounts_receivable_total | floatformat:2 }}</td>
+                        </tr>
+                        {% for item in account_receivable %}
+                        {% for key, value in item.items %}
+                        <tr class="section-content" data-section="accountReceivable">
+                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+                        <!-- Tax Receivable Section -->
+                        <tr class="section-header" data-section="taxReceivable">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            Tax Receivable
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ total_tax_receivable }}</td>
+                        </tr>
+                        <tr class="section-content" data-section="taxReceivable">
+                          <td class="py-3 px-4 align-middle">Purchase Tax Receivable</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ purchase_tax_receivable | floatformat:2 }}</td>
+                        </tr>
+                        <tr class="section-content" data-section="taxReceivable">
+                          <td class="py-3 px-4 align-middle">Less: Tax on Purchase Returns</td>
+                          <td class="py-3 px-4 text-end align-middle">({{ purchase_return_tax | floatformat:2 }})</td>
+                        </tr>
+
+
+
+
+                        {% for head_root, group in grouped_assets.items %}
+                        <tr class="section-header" data-section="{{ head_root|lower|cut:' ' }}">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-right me-2"></i>
+                            {{ head_root }}
+                          </td>
+                          <td class="py-3 px-4 text-end align-middle">{{ group.total }}</td>
+                        </tr>
+                        
+                        {% for item in group.data %}
+                          <tr class="section-content" data-section="{{ head_root|lower|cut:' ' }}">
+                            <td class="py-3 px-4 align-middle">{{ item.title }}</td>
+                            <td class="py-3 px-4 text-end align-middle">
+                              {% if item.value|first == "(" %}
+                                {{ item.value }}
+                              {% else %}
+                                {{ item.value|floatformat:2 }}
+                              {% endif %}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      {% endfor %}
+
+
+
+      
+
+<!-- 
+                        {% merge_keys receipt_list_asset payment_list_asset journal_list_asset as merged_keys %}
+                        {% for key in merged_keys %}
+                          <tr class="section-header" data-section="{{ key }}">
+                            <td class="fw-bold fs-7 py-3">
+                              <i class="fas fa-chevron-right me-2"></i>
+                              {{ key | replaceunderscore }}
+                            </td>
+                            {% for itemt in list_asset_total %}
+                            {% for keyt,valuet in itemt.items %}
+                            {% if key == keyt %}
+                            <td class="py-3 px-4 text-end align-middle">{{valuet}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                          </tr>
+                          
+                          {% with payment_value=payment_list_asset|get_value:key %}
+                            {% if payment_value != 0 %}
+                              <tr class="section-content" data-section="{{ key }}">
+                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                <td class="py-3 px-4 text-end align-middle">{{ payment_value|floatformat:2 }}</td>
+                              </tr>
+                            {% endif %}
+                          {% endwith %}
+                          
+                          {% with receipt_value=receipt_list_asset|get_value:key %}
+                            {% if receipt_value != 0 %}
+                              <tr class="section-content" data-section="{{ key }}">
+                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                <td class="py-3 px-4 text-end align-middle">({{ receipt_value|floatformat:2 }})</td>
+                              </tr>
+                            {% endif %}
+                          {% endwith %}
+                        
+                          {% with journal_value=journal_list_asset|get_value:key %}
+                            {% if journal_value != 0 %}
+                              <tr class="section-content" data-section="{{ key }}">
+                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                                <td class="py-3 px-4 text-end align-middle">
+                                  {% if journal_value < 0 %}
+                                  ({{ journal_value|floatformat:2|slice:"1:" }})
+                                  {% else %}
+                                    {{ journal_value|floatformat:2 }}
+                                  {% endif %}
+                                </td>
+                              </tr>
+                            {% endif %}
+                          {% endwith %}
+                        {% endfor %} -->
+                      
+
+
+
+                        
+                          <tr class="section-header" data-section="closeStock">
+                            <td class="fw-bold fs-7 py-3">
+                              <i class="fas fa-chevron-right me-2"></i>
+                              Closing Stock
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ closing_stock_value | floatformat:2 }}</td>
+                          </tr>
+                          <tr class="section-content" data-section="closeStock">
+                            <td class="py-3 px-4 align-middle">Closing Stock</td>
+                            <td class="py-3 px-4 text-end align-middle">{{ closing_stock_value | floatformat:2 }}</td>
+                          </tr>
+                      
+
+
+
+
+                        <tr class="table-light fw-bold">
+                          <td class="py-3 px-4 align-middle">Total Assets</td>
+                          <td class="py-3 px-4 text-end align-middle">{{total_asset | floatformat:2}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- <div class="text-end mt-4">
+                <button id="downloadExcel" class="btn btn-primary text-white">
+                  <i class="fas fa-file-excel me-2 "></i>Download Excel
+                </button>
+              </div> -->
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="balancesheetsearch">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search Balance Sheet</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'balancesheet_new' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+           
+       
+
+            <div class="form-group">
+              <label class=" mb-2" for="">  <strong>As of Date</strong>      </label>
+              <div id="datepicker" 
+                        
+           class="input-group date datepicker-field" 
+           data-date-format="dd-mm-yyyy">
+          <input class="form-control " 
+          name="enddate"
+          autocomplete="off" 
+          required
+                 type="text"  />
+          <span class="input-group-addon">
+              <i class="glyphicon glyphicon-calendar"></i>
+          </span>
+      </div>
+            </div>
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Your existing modal code remains the same -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const expandAllCheckbox = document.getElementById('expandAllSections');
+    const sectionHeaders = document.querySelectorAll('.section-header');
+    const sectionContents = document.querySelectorAll('.section-content');
+
+    // Handle expand all checkbox
+    expandAllCheckbox.addEventListener('change', function() {
+        const isExpanded = this.checked;
+        sectionHeaders.forEach(header => {
+            header.classList.toggle('expanded', isExpanded);
+        });
+        sectionContents.forEach(content => {
+            content.style.display = isExpanded ? 'table-row' : 'none';
+        });
+    });
+
+    // Handle individual section toggles
+    sectionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const sectionName = this.dataset.section;
+            const contents = document.querySelectorAll(`.section-content[data-section="${sectionName}"]`);
+            this.classList.toggle('expanded');
+            contents.forEach(content => {
+                content.style.display = this.classList.contains('expanded') ? 'table-row' : 'none';
+            });
+        });
+    });
+});
+</script>
+
+
+<!-- Add this script at the bottom of your file -->
+<script>
+document.getElementById('downloadExcel').addEventListener('click', function() {
+
+
+  
+    // Create a new workbook
+    let tableData = [];
+    
+    // Add Assets table data
+    tableData.push(['Assets', 'Amount']); // Header
+    
+    // Function to extract data from a section
+    function extractSectionData(sectionHeader, sectionContent) {
+        let rows = [];
+        rows.push([
+            sectionHeader.querySelector('td:first-child').textContent.trim(),
+            sectionHeader.querySelector('td:last-child').textContent.trim()
+        ]);
+        
+        sectionContent.forEach(row => {
+            rows.push([
+                row.querySelector('td:first-child').textContent.trim(),
+                row.querySelector('td:last-child').textContent.trim()
+            ]);
+        });
+        return rows;
+    }
+    
+    // Get all asset sections
+    const assetSections = document.querySelectorAll('.table:last-child tbody tr');
+    assetSections.forEach(row => {
+        if (row.classList.contains('section-header')) {
+            const sectionName = row.dataset.section;
+            const sectionContent = document.querySelectorAll(`.section-content[data-section="${sectionName}"]`);
+            tableData.push(...extractSectionData(row, sectionContent));
+        } else if (row.classList.contains('table-light')) {
+            tableData.push([
+                row.querySelector('td:first-child').textContent.trim(),
+                row.querySelector('td:last-child').textContent.trim()
+            ]);
+        }
+    });
+    
+    // Add some spacing
+    tableData.push(['', '']);
+    tableData.push(['', '']);
+    
+    // Add Liabilities table data
+    tableData.push(['Liabilities', 'Amount']); // Header
+    const liabilitySections = document.querySelectorAll('.table:first-child tbody tr');
+    liabilitySections.forEach(row => {
+        if (row.classList.contains('section-header')) {
+            const sectionName = row.dataset.section;
+            const sectionContent = document.querySelectorAll(`.section-content[data-section="${sectionName}"]`);
+            tableData.push(...extractSectionData(row, sectionContent));
+        } else if (row.classList.contains('table-light')) {
+            tableData.push([
+                row.querySelector('td:first-child').textContent.trim(),
+                row.querySelector('td:last-child').textContent.trim()
+            ]);
+        }
+    });
+    
+    // Add some spacing
+    tableData.push(['', '']);
+    
+    // Add Equity table data
+    tableData.push(['Equity', 'Amount']); // Header
+    const equitySections = document.querySelectorAll('.table:nth-child(2) tbody tr');
+    equitySections.forEach(row => {
+        if (row.classList.contains('section-header')) {
+            const sectionName = row.dataset.section;
+            const sectionContent = document.querySelectorAll(`.section-content[data-section="${sectionName}"]`);
+            tableData.push(...extractSectionData(row, sectionContent));
+        } else if (row.classList.contains('table-light') || row.classList.contains('table-secondary')) {
+            tableData.push([
+                row.querySelector('td:first-child').textContent.trim(),
+                row.querySelector('td:last-child').textContent.trim()
+            ]);
+        }
+    });
+
+    // Create Excel workbook
+    let ws = XLSX.utils.aoa_to_sheet(tableData);
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Balance Sheet");
+
+    // Set column widths
+    ws['!cols'] = [{ wch: 40 }, { wch: 15 }];
+
+    // Download file
+    let fileName = `Balance_Sheet_${document.querySelector('p strong:first-child').nextSibling.textContent.trim()}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+});
+</script>
+
+<!-- Add this in your head section or before closing body tag -->
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+{% endblock %}

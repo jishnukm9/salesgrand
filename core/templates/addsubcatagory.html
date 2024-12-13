@@ -1,0 +1,172 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3"  style="color:#444;" href="{% url 'subcatagories' %}">Sub Category List </a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="{% url 'subcatagoryform' %}">Sub Category Entry</a>  
+                 </nav>
+               </div>
+               <br>
+
+
+
+
+               <div class="card-body d-flex justify-content-center">
+                                                                                           
+                  <div class="col-lg-9 col-md-6 col-sm-12">
+              
+                      <div class="card card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                        <div class="card-body" >
+                          
+                          <div class="d-flex justify-content-between align-items-center">
+                           <h3 class="nunito-font " style="color:#444;" ><strong>Sub Category Entry</strong></h3>
+       
+                           <div>
+                             {% if messages %}
+                               {% for message in messages %}
+                                 <span class="text-danger" style="font-size: 13px; ">{{ message }}</span>
+                               {% endfor %}
+                             {% endif %}
+                           </div>
+                         </div>
+
+
+                          <div class="horizontal-line-dark mb-2 mt-4"></div>
+                          <br />
+        
+                          <form action="{% url 'addsubcatagory' %}" method="POST">
+                            {% csrf_token %}
+      
+                            <div class="form-row row">
+                             <div class="form-group col-lg-4">
+                               <label for="name" class="fs-6"
+                                 >Name</label
+                               >
+                            
+                             </div>
+                             <div class="form-group col-lg-8">
+      
+                              <input class="form-control " type="text" name="name">
+                             
+                             </div>
+                           </div>
+
+                           <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="name" class="fs-6"
+                                  >Category</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8">
+       
+                                 <select style=""  class="form-control selectizefield" name="catagory">
+                                    <option value="" selected>Select Category</option>
+                                    {% for item in catagory_list %}
+                                    <option value="{{ item.id }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                 </select>
+                              
+                              </div>
+                            </div>
+
+
+
+
+
+                         
+                           <div class="horizontal-line-dark mt-2"></div>
+                           
+        
+                            <button
+                              type="submit"
+                              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+                            >
+                              Save
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+
+
+
+
+
+
+
+               <!-- <div class="row flex-grow">
+                  <div class="col-12 grid-margin stretch-card">
+                     <div class="card card-rounded">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-lg-12">
+                                 <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="table-main-heading">
+                                       <h4 class="card-title card-title-dash">Add Subcategory</h4>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="mt-3">
+                              <form action="{% url 'addsubcatagory' %}" method="POST">
+                                 {% csrf_token %}
+                                 <div class="table-responsive">
+                                    <table class="table table-bordered" >
+                                       <thead>
+                                          <tr class="table-primary">
+                                             <th width="50%"> Name</th>
+                                             <th width="50%">Catagory</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td> 
+                                                <input class="form-control" type="text" name="name">
+                                             </td>
+                                             <td>
+                                                <select  class="form-control" name="catagory">
+                                                   <option value="" selected>---------</option>
+                                                   {% for item in catagory_list %}
+                                                   <option value="{{ item.id }}">{{ item.name }}</option>
+                                                   {% endfor %}
+                                                </select>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <button type="submit" class="btn btn-primary text-white mb-2">Add</button>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div> -->
+
+
+
+
+
+
+
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

@@ -1,0 +1,1022 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                    
+        
+                    <nav class="nav nav-borders">
+                       <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'stock' %}"> Warehouse Stocks </a>
+                       <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'branchstock' %}">Branch Stocks</a>
+                       {% if request.user.is_superuser  %}
+                       <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"   href="{% url 'stocktransfer' %}">Stock Transfer</a>
+                      {% endif %}
+                       <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color: #4555B9 ; border-bottom:2px solid #4555B9;"    href="{% url 'stocktransferlist' %}">Stock Transfer List</a>
+                       <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'transferedstocklist' %}">Transfered Stock List</a>
+               
+                       <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a>
+                       <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'bulkstocklist' %}">Bulk Stock List</a>
+                   </nav>
+                 </div>
+                 <br>
+      
+            
+                 {% if messages %}
+         
+      
+                 {% for message in messages %}
+                 <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between " role="alert">
+                  <p> <strong>{{ message }}</strong> </p> 
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background:none;border:1px solid #444;">
+                     <span aria-hidden="true">&times;</span>
+                   </button>
+                 </div>
+                 {% endfor %}
+                 
+                {% endif %}
+               
+
+
+                                 <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                                    <div class="card-header bg-white py-3">
+                                        <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Stock Transfer List </strong> </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+
+
+                                 <table class="supplier_list stock-transfer-receive-list add-pagination table-bordered table table-striped">
+                                    <thead>
+                                       <tr>
+                                          <th width="5%">Sl</th>
+                                          <th >From</th>
+                                          <th >To</th>
+                                          <th >Product</th>
+                                          <th >Quantity</th>
+                                          <th>Status</th>
+                                          <th>Date</th>
+                                          <th>Action</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in transfer_list %}
+                                       <tr>
+                                          <td>{{forloop.counter}}</td>
+                                          <td>{{item.frombranch.name}}</td>
+                                          <td>{{item.tobranch.name}}</td>
+                                          <td>{{item.product.name}}</td>
+                                          
+                                          <td>{{item.quantity}}</td>
+                                         
+                                          
+                                          {% if item.status == 'Pending' %}
+                                            <td>
+                                            <span class="label-saleview label-saleview-pending"> Pending</span>
+                                            </td>
+                                            {% elif item.status == 'In Transit' %}
+                                            <td>
+                                            <span class="label-saleview label-saleview-intransit">In Transit</span>
+                                            </td>
+                                            {% elif item.status == 'Recieved' %}
+                                            <td>
+                                            <span class="label-saleview label-saleview-recieved">Recieved</span>
+                                            </td>
+                                            {% elif item.status == 'Not Recieved' %}
+                                            <td>
+                                            <span class="label-saleview label-saleview-notrecieved">Not Recieved</span>
+                                            </td>
+                                            {% else %}
+                                            <td></td>
+                                            {% endif %}
+                                            <td>{{item.createddate}}</td>
+
+                                        {% if item.tobranch == request.user.userprofile.branch and item.status == 'Pending'  %}
+                                          <td >
+                                             
+                                              <!-- <a class=" stock-recieved-btn" href="{% url 'stockrecieved' id=item.id %}">Recieved</a> -->
+                                              
+                                              <a class=" stock-recieved-btn fw-bold cursor-pointer" data-id="{{item.product.id}}" data-transferid="{{item.id}}" >Recieve</a>
+                                              <a class=" stock-notrecieved-btn fw-bold" href="{% url 'stocknotrecieved' id=item.id %}">Reject</a>
+                                              <!-- <a class=" stock-notrecieved-btn" href="{% url 'stocknotrecieved' id=item.id %}">Reject</a> -->
+                                         
+                                            </td>
+                                          {% else %}
+                                          <td></td>
+                                          {% endif %}
+                                       </tr>
+
+                                       {% endfor %}
+                             
+                                    </tbody>
+                                 </table>
+                              </div>
+                           <!-- </div>
+                        </div> -->
+                     </div>
+                  </div>
+               </div>
+               <!-- </div> -->
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+
+<div class="modal fade" tabindex="-1" id="stockmodal">
+   <div class="modal-dialog">
+     <div class="modal-content w-100 p-0">
+       <div
+         class="modal-header d-flex justify-content-between align-items-center m"
+        
+         >
+         <h5 class="modal-title"><strong>Add Product</strong></h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!-- <span class="text-white close-stock-modal" aria-hidden="true">&times;</span> -->
+            <div class="form-check form-switch">
+             
+              
+              <input class="form-check-input " type="checkbox" role="switch" id="existingproduct">
+              <label class="form-check-label ms-0 fw-bold" for="existingproduct">Existing Product</label>
+            </div>
+          </button>
+       </div>
+     
+       
+         <div class="modal-body ">
+
+          <div class="add-product-stocktransfer">
+
+          
+           <form id="" action="{% url 'addProductStockTransfer' %}" method="POST">
+             {% csrf_token %}
+ 
+             <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="name" class="fw-bold"  style="font-size:14px;"
+                  >Name</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+ 
+               <input required class="form-control stocktransfername text-center" type="text" name="name">
+              
+              </div>
+            </div>
+ 
+ 
+            <div class="form-row row">
+               <div class="form-group col-lg-4">
+                
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                  >Category</label
+                >
+              
+               </div>
+               <div class="form-group col-lg-8 d-flex align-items-center gap-1">
+ 
+                  <!-- <input required  class="form-control stocktransfercatagory" type="text" name="catagory"> -->
+                  <select required class="form-control selectizefield stocktransfercatagory2 registrationcategory" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="catagory" id="category">
+                    <option value="">Select Category</option>
+                    {% for item in catagory %}
+                    <option value="{{ item.name }}">{{ item.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <a href="#" data-toggle="modal" data-target="#addcat"><i class="fa-solid fa-plus addcatbtn addfield"></i></a>
+               </div>
+             </div>
+
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                 
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Sub Category</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8  d-flex justify-content-center align-items-center gap-2">
+ 
+                  <!-- <input required  class="form-control stocktransfersubcatagory" type="text" name="subcatagory"> -->
+                  <select required class="form-control selectizefield stocktransfersubcatagory2 registrationsubcategory" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="subcatagory" id="subcategory">
+                    <option value="" selected>Select Sub Category</option>
+                  
+                  </select>
+                  <a href="#" data-toggle="modal" data-target="#addsubcat"><i class="fa-solid fa-plus addsubcatbtn addfield"></i></a>
+               </div>
+              
+             </div>
+
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                 
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Brand</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+ 
+                  <!-- <input required  class="form-control stocktransferbrand" type="text" name="brand"> -->
+                  <select required class="form-control selectizefield stocktransferbrand2 registrationbrand" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="brand">
+                    <option value="" selected>Select Brand</option>
+                    {% for item in brand %}
+                    <option value="{{ item.name }}">{{ item.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <a href="#" data-toggle="modal" data-target="#addbr"><i class="fa-solid fa-plus addbrandbtn addfield"></i></a>
+               </div>
+             </div>
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                 
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Product Type</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+ 
+                  <!-- <input required  class="form-control stocktransfertype" type="text" name="type"> -->
+                  <select required class="form-control selectizefield stocktransfertype2 registrationtype" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="type">
+                    <option value="" selected>Select Product Type</option>
+                    {% for item in type %}
+                    <option value="{{ item.name }}">{{ item.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <a href="#" data-toggle="modal" data-target="#addtype"><i class="fa-solid fa-plus addtypebtn addfield"></i></a>
+               </div>
+             </div>
+
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Packing</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+ 
+                  <!-- <input required  class="form-control stocktransferpacking" type="text" name="packing"> -->
+                  <select required class="form-control selectizefield stocktransferpacking registrationpacking"  name="packing">
+                    <option value="" selected>Select Packing</option>
+                    {% for item in packing %}
+                    <option value="{{ item.name }}">{{ item.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <a href="#" data-toggle="modal" data-target="#addpacking"><i class="fa-solid fa-plus addpackingrbtn addfield"></i></a>
+               </div>
+             </div>
+
+
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                 
+                 <label for="name" class="fw-bold "  style="font-size:14px;"
+                 >HSN</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8">
+ 
+                  <input   class="form-control stocktransferhsn text-center" type="text" name="hsn">
+               
+               </div>
+             </div>
+
+
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Purchase Price</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8">
+ 
+                  <input required  class="form-control stocktransferprice text-center" type="number" name="price">
+               
+               </div>
+             </div>
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                 
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Purchase GST</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8   d-flex justify-content-center align-items-center gap-2">
+                  <select required  class="form-control selectizefield stocktransferpurchasegst2  registrationpurchasetax" name="purchasegst" >
+                    <option value="">Select Tax</option>
+                    {% for tx in taxes %}
+                    <option value="{{tx.id}}">{{tx}}</option>
+                    {% endfor %}
+                  </select>
+                  <a href="#" data-toggle="modal" data-target="#addpurchasetax"><i class="fa-solid fa-plus addgstrbtn addfield"></i></a>
+               </div>
+             </div>
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Selling Price</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8">
+ 
+                  <input required  class="form-control stocktransfersellingprice text-center" type="number" name="sellingprice">
+               
+               </div>
+             </div>
+
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >Sales GST</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8  d-flex justify-content-center align-items-center gap-2">
+ 
+                  <!-- <input class="form-control stocktransfersalesgst" type="text" name="salesgst"> -->
+               
+                  <select required  class="form-control selectizefield stocktransfersalesgst2 registrationsaletax" name="salegst">
+                    <option value="">Select Tax</option>
+                    {% for tx in taxes %}
+                    <option value="{{tx.id}}">{{tx}}</option>
+                    {% endfor %}
+                  </select>
+                  <a href="#" data-toggle="modal" data-target="#addsaletax"><i class="fa-solid fa-plus addgstrbtn addfield"></i></a>
+               </div>
+             </div>
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >MRP</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8">
+ 
+                  <input required  class="form-control stocktransfermrp text-center" type="number" name="mrp">
+               
+               </div>
+             </div>
+
+
+
+             <div class="form-row row">
+               <div class="form-group col-lg-4">
+                 
+                 <label for="name" class="fw-bold"  style="font-size:14px;"
+                 >MOP</label
+               >
+              
+               </div>
+               <div class="form-group col-lg-8">
+ 
+                  <input required  class="form-control stocktransfermop text-center" type="number" name="mop">
+               
+               </div>
+             </div>
+
+
+             <input class="stocktransferid" type="text" hidden name="transferid">
+            
+            <div class="horizontal-line-dark mt-2"></div>
+            
+ 
+            
+
+              <button
+               type="submit"
+               class="btn btn-primary text-white mb-1 mt-3 fs-6"
+             >
+               Save
+             </button>
+
+        
+             
+           </form>
+          </div>
+              
+          <div class="add-stock-stocktransfer"  >
+
+
+            <form action="{% url 'addStockStockTransfer' %}" method="post">
+              {% csrf_token %}
+
+
+            <div class="d-flex gap-1 align-items-center">
+                                                   
+              <select required  name="stock" class="form-control selectizefield" id="stock">
+                
+                  <option value="" selected>Select Stock</option>
+                  
+                  {% for inv in stocks %}
+                  <option value="{{inv.id}}">{{inv}}</option>
+                  {% endfor %}
+              </select>
+
+
+              <input class="stocktransferid" type="text" hidden name="transferid">
+              <button type="submit" class="btn btn-primary text-white fw-bold ">Save</button>
+          
+          </div>
+
+        </form>
+
+            </div>
+ 
+            
+          </div>
+ 
+     </div>
+   </div>
+ </div>
+
+
+
+
+ <div class="modal fade" tabindex="-1" id="addcat">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#fff;"
+        >
+        <h5 class="modal-title "><strong>Add Category</strong></h5>
+        <button type="button" class="close closecat" data-dismiss="modal" aria-label="Close">
+           <span class="closecat close" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addcatform" action="{% url 'addcatagorymodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control catname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 float-right save"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addsubcat">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#fff;"
+        >
+        <h5 class="modal-title "><strong>Add Sub Category</strong></h5>
+        <button type="button" class="close closecat" data-dismiss="modal" aria-label="Close">
+           <span class=" close closecat" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addsubcatform" action="{% url 'addsubcatagorymodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control subcatname" type="text" name="name">
+             
+             </div>
+           </div>
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="name" class="fs-6"
+                  >Category</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <select  class="form-control selectizefield catid registrationcatinsubcat" name="catagory">
+                    <option value="" selected>Select Category</option>
+                    {% for item in catagory %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                    {% endfor %}
+                 </select>
+              
+              </div>
+            </div>
+
+
+
+
+
+         
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 save"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addbr">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#fff;"
+        >
+        <h5 class="modal-title "><strong>Add Brand</strong></h5>
+        <button type="button" class="close closecat" data-dismiss="modal" aria-label="Close">
+           <span class=" close closecat"  aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addbrandform" action="{% url 'addbrandmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control brandname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 save"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addtype">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#fff;"
+        >
+        <h5 class="modal-title "><strong>Add Product Type</strong></h5>
+        <button type="button" class="close closecat" data-dismiss="modal" aria-label="Close">
+           <span class="closecat" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          
+          <form id="addtypeform" action="{% url 'addtypemodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control typename" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 save"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addpacking">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#fff;"
+        >
+        <h5 class="modal-title "><strong>Add Packing</strong></h5>
+        <button type="button" class="close closecat" data-dismiss="modal" aria-label="Close">
+           <span class="closecat" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addpackingform" action="{% url 'addpackingmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control packingname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 save"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addpurchasetax">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#fff;"
+        >
+        <h5 class="modal-title "><strong>Add Tax</strong></h5>
+        <button type="button" class="close closecat" data-dismiss="modal" aria-label="Close">
+           <span class="closecat" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+    
+          <form id="addpurchasetaxform" action="{% url 'addtaxmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control purchasetaxname" type="text" name="name">
+             
+             </div>
+           </div>
+
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="percentage" class="fs-6"
+                  >Percentage</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <input class="form-control purchasetaxnumber" type="number" name="percentage">
+              
+              </div>
+            </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 save"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addsaletax">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#fff;"
+        >
+        <h5 class="modal-title "><strong>Add Tax</strong></h5>
+        <button type="button" class="close closecat" data-dismiss="modal" aria-label="Close">
+           <span class="closecat" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addsaletaxform" action="{% url 'addtaxmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control saletaxname" type="text" name="name">
+             
+             </div>
+           </div>
+
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="percentage" class="fs-6"
+                  >Percentage</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <input class="form-control saletaxnumber" type="number" name="percentage">
+              
+              </div>
+            </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 save"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+<script>
+
+  
+ 
+
+
+  let body = document.body
+
+
+
+  let stockModal = document.querySelector("#stockmodal");
+
+  stockModal.addEventListener("click", function(e) {
+    if (e.target.classList.contains('addfield')) {
+      $("#stockmodal").modal('hide');
+    }
+  });
+
+  body.addEventListener("click", function(e) {
+
+    console.log("clicked")
+
+    console.log(e.target)
+    if (e.target.classList.contains('save')) {
+      $("#stockmodal").modal('show');
+    }
+    if (e.target.classList.contains('closecat')) {
+    
+      $("#stockmodal").modal('show');
+    }
+  });
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+ 
+
+
+{% endblock %}

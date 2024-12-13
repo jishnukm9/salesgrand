@@ -1,0 +1,266 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  
+
+                  <nav class="nav nav-borders">
+                    {% if user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' or user.userprofile.role == 'TRC Front Desk' %}
+                    <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'servicecnp' %}">My Service</a>
+                    <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                   {% else %}
+                   <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                   {% endif %}
+                   <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'serviceform' %}">Service Entry</a>
+                  
+                   {% if user.userprofile.role == "TRC Front Desk" or request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}
+                   <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                   {% endif %}
+                   
+     
+                    {% if user.userprofile.role == 'TRC Front Desk' %}
+                    <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                    {% endif %}
+     
+                    {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}
+                    <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"    href="{% url 'sparerequests' %}">Spare Requested</a>
+       
+                                <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicechargeestimationlist' %}">Service Charge</a>
+                              
+                                {% endif %}
+                     <a class="nav-link active ps-0 pe-0 ms-3 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href=""> Service Charge Estimation Details</a>
+                
+                     <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'stocktransferlist' %}">Stock Transfer List</a> -->
+                    
+                 </nav>
+               </div>
+               <br>
+               <!-- <div class="row"> -->
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                     <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                        <div class="d-flex align-items-center justify-content-between">
+                         <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Service Charge Estimation Details ({{serviceref}})</strong> </h5>
+                     <a href="{% url 'serviceupdateform' servicerefnumber=serviceref %}" class="fs-4 "><i class="fa-solid fa-screwdriver-wrench servicebtns"></i></a>
+                    </div>
+                        </div>
+                     <div class="card-body">
+                    
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3">
+
+                                <div class="mb-5">
+                                    <p  class="text-grey ">Brand</p>
+                                    
+                                    {% if brand == None or brand == '' %}
+                                    <p class="fs-6">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;" >{{brand}}</p>
+                                    {% endif %}
+                                </div>
+
+                                <div class="mb-5">
+                                    <p  class="text-grey ">Status</p>
+                                    
+                                    {% if status == None or status == '' %}
+                                    <p class="text-dark fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{status}}</p>
+                                    {% endif %}
+                                </div>
+                                <!-- <div class="">
+                                    <p  class="text-grey ">Problem Reported</p>
+                                    
+                                    {% if problem == None or problem == '' %}
+                                    <p class="fw-bold fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="fw-bold" style="font-family:Roboto;font-size:15px;color:#444;">{{problem}}</p>
+                                    {% endif %}
+                                </div> -->
+                                
+
+
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+                                <div class="mb-5">
+                                    <p class="text-grey ">Modal</p>
+                                    
+                                    {% if model == None or model == '' %}
+                                    <p class="text-dark fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{model}}</p>
+                                    {% endif %}
+                                </div>
+
+
+                                <div class="">
+                                    <p  class="text-grey ">Estimated Amount</p>
+                                    
+                                    {% if finalamount == None or finalamount == '' %}
+                                    <p class="text-dark fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{finalamount}}</p>
+                                    {% endif %}
+                                </div>
+
+                                
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+
+                                <div class="mb-5">
+                                    <p class="text-grey ">IMEI</p>
+                                    
+                                    {% if imei == None or imei == '' %}
+                                    <p class="text-dark fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{imei}}</p>
+                                    {% endif %}
+                                </div>
+
+                                <div class="">
+                                    <p  class="text-grey ">Amount Recieved</p>
+                                
+                                    {% if amountrecieved == None or amountrecieved == '' %}
+                                    <p class="text-dark fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{amountrecieved}}</p>
+                                    {% endif %}
+                                </div>
+
+                                
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+
+                                <div class="mb-5">
+                                    <p class="text-grey ">Service ref No.</p>
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{serviceref}}</p>
+                                   
+                                   
+                                </div>
+
+                                <div class="">
+                                    <p  class="text-grey ">Estimated Date</p>
+                                    
+                                    {% if expecteddate == None or expecteddate == '' %}
+                                    <p class="text-dark fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{expecteddate}}</p>
+                                    {% endif %}
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                
+                                    <p  class="text-grey ">Problem Reported</p>
+                                    
+                                    {% if problem == None or problem == '' %}
+                                    <p class="fs-6 ">_______</p>
+                                    {% else %}
+                                    <p class="text-dark" style="font-size:15px;font-weight: 500;">{{problem}}</p>
+                                    {% endif %}
+                               
+                            </div>
+                        </div>
+                        </div>
+                     </div>
+
+
+                     <div class="row">
+
+                        <div class="col-lg-6 col-md-6">
+
+
+                            <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                                <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                                    <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Total</strong> </h5>
+                                </div>
+                                <div class="card-body">
+
+
+                                    <form action="{% url 'servicechargeestimationupdate' %}" method="post">
+                                        {% csrf_token %}
+
+                                        <input type="text" value="{{serviceref}}" name="serviceref" hidden>
+
+                                    <div class="form-group">
+<label for="" class="fw-bold">Remark</label>
+                                        <input type="text" name="serviceremark" class="form-control border-0 mb-4 border-bottom" >
+                                    </div>
+
+                                    
+<div class="form-group">
+    <label for="" class="fw-bold">Service charge</label>
+    <input type="number" class="form-control mb-3 border-0 border-bottom" min="0" name="spareservicecharge" value="{{service_charge}}" step="0.01">
+</div>
+
+<input type="number" min="0" step="0.01" class="form-control" name="sparetotaltax" hidden>
+                                        <input type="number" min="0" step="0.01" class="form-control" name="grandtotalfinal" hidden>
+                                    <button type="submit" class="btn mb-5 btn-primary fw-bold text-white">Save</button>
+                                </form>
+                                
+                                <!-- <div class="row mb-4">
+                                    <div class="col-lg-3 col-md-3 d-flex align-items-center">
+                                        <h6 class="fw-bold mt-1">Grand Total : </h6>
+                                    </div> -->
+                                <!-- <div class="col-lg-9 col-md-9"> -->
+                                    <input type="text" class="form-control" name="grandtotal" value="{{grandtotal}}" readonly hidden>
+                                <!-- </div> -->
+                                
+                            <!-- </div> -->
+                        </form>
+
+                                </div>
+                                    </div>
+
+
+
+
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            
+                        </div>
+                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+               </div>
+               <!-- </div> -->
+            </div>
+         </div>
+         <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

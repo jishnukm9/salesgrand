@@ -1,0 +1,264 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  
+
+                  <nav class="nav nav-borders">
+                    <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Transfered Stock Details </a>
+                    <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'transferedstocklist' %}">Transfered Stock List</a>
+   
+  
+                   
+                </nav>
+                </div>
+                <br>
+          
+              
+
+                        <!-- <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body"> -->
+
+                                <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                                  <div class="card-header py-3">
+                                      <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Transfered Stock Details </strong> </h5>
+                                  </div>
+                                  <div class="card-body">
+                                      <div class="table-responsive">
+                   
+                               
+
+                                    <div class="mt-3">
+                                      <div class="table-responsive">
+                                      <table class="table table-bordered" >
+                                        <thead >
+                                     <tr >
+                                      <th> Purchase Id</th>
+                                      <th> Invoice Number</th>
+                                      <th> Invoice Date</th>
+                                      <!-- <th> Payment Mode</th> -->
+                                      <th> Supplier</th>
+                                      <th> Branch</th>
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                      <tr> 
+                                      <td>{{ purchaseid }}</td>
+                                      <td>{{ invoicenumber }}</td>
+                                      <td>{{ invoicedate }}</td>
+                                      <!-- <td>{{ paymentmode }}</td> -->
+                                      <td>{{ supplier }}</td>
+                                      <td> {{ branch }}</td>
+                                    </tr>
+                                  </tbody>
+                                  </table>
+                                  </div>
+                                </div>
+                       
+                                  
+
+                                      <!-- <div > -->
+                                        <div class="table-responsive mt-3">
+                                          
+                                        <table class="table table-bordered" >
+                                          <thead>
+                                       <tr >
+                                        <th>Sl</th>
+                                        <th> Name </th>
+                                        <th> Barcode</th>
+                                        <th> Unit Price</th>
+                                        <th> Purchase GST</th>
+                
+                                        <th> Sale GST</th>
+                                        <th>Selling Price</th>
+                                        <th> MRP</th>
+                                        <th> MOP</th>
+                                        <th> Quantity</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody >
+
+                                        {% for item in data %}
+                                        <tr > 
+                                          <td>{{forloop.counter}}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.barcodenumber }} <span><a data-barcode="{{ item.barcodenumber }}" class="print-purchase-barcode mt-5 text-decoration-none" href="{% url 'print_purchase_barcode_new' barcode_number=item.barcodenumber purchaseid=purchaseid %}" target="_blank" >Print</a></span></td>
+                                        <td>{{ item.price }}</td>
+                                        <td>{{ item.purchasegst }}</td>
+                                        <td>{{ item.salegst }}</td>
+                                        <td>{{ item.sellingprice|default:'' }}</td>
+                                        <td>{{ item.mrp|default:'' }}</td>
+                                        <td>{{ item.mop|default:'' }}</td>
+                                        <td>{{ item.totalquantity }}</td> 
+                                        
+                                      </tr>
+                                      {% endfor %}
+                                    </tbody>
+                                  </table>
+                                  </div>
+                                <!-- </div> -->
+
+
+
+
+
+<!-- 
+                                <div class="row my-4">
+
+
+                                  <div class="col-lg-6"></div>
+
+                                  <div class="col-lg-6">
+
+                                    <ul class="list-group list-group-flush">
+                                      <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                          <p class="fw-bold">Total Amount</p>
+                                          <p>{{ totalamount }}</p>
+
+                                        </div>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                          <p class="fw-bold">Total Tax</p>
+                                          <p>{{ totaltax }}</p>
+
+                                        </div>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                              <p class="fw-bold">Discount </p>
+                                              <p>
+                                                  {% if discountmethod == 'percentage' %}
+                                                 {{ discount }}%
+                                                  {% else  %}
+                                                 {{ discount }} 
+                                                  {% endif %}
+                                              </p>
+                                        </div>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+<p class="fw-bold">Final Amount</p>
+<p>
+  {{tatalbillingamount}}
+</p>
+                                        </div>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                          <p class="fw-bold">Amount Paid</p>
+                                          <p>{{ amountrecieved }}</p>
+                                        </div>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                          <p class="fw-bold">Due Balance</p>
+                                          <p> {{ duebalance }}</p>
+
+                                        </div>
+                                      </li>
+                                    </ul>
+
+
+<div class="d-flex justify-content-end my-3">
+  <a href="{% url 'generate_purchase_pdf' id=purchaseid action='view' %}" target="_blank" class="btn btn-primary text-white me-0">Print</a>
+  <a href="{% url 'generate_purchase_pdf' id=purchaseid action='download' %}" class="btn btn-primary text-white me-0"  >Download Pdf</a>
+  <a href="{% url 'print_purchase_barcode' id=purchaseid %}" class="btn btn-primary text-white me-0" target="_blank"  >Print Barcode</a>
+  {% if invoice_copy %}
+
+                                   <a href="{{invoice_copy}}" class="btn btn-primary text-white " target="_blank">View Invoice Copy </a>
+
+                                   {% endif %}
+ 
+
+                            </div>
+                                  </div>
+
+
+                                 
+                                  
+
+                              </div> -->
+
+
+
+                          
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <!-- </div> -->
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                          </div>
+                        </div>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="modal" tabindex="-1" id="saleconfirmationModal">
+          <div class="modal-dialog">
+            <div class="modal-content w-100">
+              <div
+                class="modal-headerr d-flex justify-content-between align-items-center m"
+              >
+                <h5 class="modal-title"><strong>Change Status</strong></h5>
+                <button
+                  type="button"
+                  id="cancelButton"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <hr class="horizontal-line" />
+              <form action="{% url 'branchpurchasestatusupdate' %}" method="POST">
+                {% csrf_token %}
+                <div
+                  class="modal-body d-flex align-items-center justify-content-between mt-2 mb-2"
+                >
+                  <input type="text"  name="saleid" hidden  value="{{saleid}}" />
+                  <select style=""  name="status" id="status" class="form-control me-2 selectizefield">
+                    <option value="">Change Status...</option>
+                    <option value="Pending">Pending</option>
+                    <option value="In Transit">In Transit</option>
+                    <option value="Recieved">Recieved</option>
+                    <option value="Not Recieved">Not Recieved</option>
+        
+                  </select>
+                  <button type="submit" class="btn btn-primary p-2 ps-3 pe-3">
+                    Save
+                  </button>
+                 
+                </div>
+                <hr class="horizontal-line" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+      
+        {% endblock %}
+

@@ -1,0 +1,1020 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'products' %}"> Product List </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="">Product Entry</a>
+
+
+             
+          </nav>
+          </div>
+          <br>
+
+
+
+
+
+
+
+          <div class="card-body  d-flex justify-content-center">
+                                                                                           
+            <div class="col-lg-9 col-md-6 col-sm-12">
+        
+                <div class="card  card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                  <div class="card-body" >
+                    <h3 class="nunito-font " style="color:#444;" ><strong>Product Entry</strong></h3>
+                   
+                    <div>
+                      {% if messages %}
+                        {% for message in messages %}
+                          <span class="text-danger" style="font-size: 13px; ">{{ message }}</span>
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                    
+                    <div class="horizontal-line-dark mb-2 mt-4"></div>
+                    <br />
+  
+                    <form action="{% url 'addproduct' %}" method="POST">
+                      {% csrf_token %}
+
+                      
+  
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="name" class="fs-6"
+                            >Name</label
+                          >
+                         
+                        </div>
+                        <div class="form-group col-lg-8">
+                        
+                          <input class="form-control no-spinner-pad" type="text" name="name" id="name" required>
+                        </div>
+                      </div>
+
+
+
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="category" class="fs-6"
+                            >Category</label
+                          >
+                         
+                        </div>
+                        <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+                        
+                          <select required class="form-control selectizefield registrationcategory" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="catagory" id="category">
+                            <option value="">Select Category</option>
+                            {% for item in catagory %}
+                            <option value="{{ item.name }}">{{ item.name }}</option>
+                            {% endfor %}
+                          </select>
+
+                          <a href="#" data-toggle="modal" data-target="#addcat"><i class="fa-solid fa-plus addcatbtn"></i></a>
+                        </div>
+                      </div>
+
+
+
+
+
+
+                      
+                     <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="subcategory" class="fs-6"
+                            >Sub Category</label
+                          >
+                         
+                        </div>
+                        <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+
+                          <select required class="form-control selectizefield registrationsubcategory" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="subcatagory" id="subcategory">
+                            <option value="" selected>Select Sub Category</option>
+                          
+                          </select>
+                        
+                          <a href="#" data-toggle="modal" data-target="#addsubcat"><i class="fa-solid fa-plus addsubcatbtn"></i></a>
+                        </div>
+                      </div>
+
+
+
+
+
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="brand" class="fs-6"
+                            >Brand</label
+                          >
+                         
+                        </div>
+                        <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+
+                          <select required class="form-control selectizefield registrationbrand" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="brand">
+                            <option value="" selected>Select Brand</option>
+                            {% for item in brand %}
+                            <option value="{{ item.name }}">{{ item.name }}</option>
+                            {% endfor %}
+                          </select>
+                          <a href="#" data-toggle="modal" data-target="#addbr"><i class="fa-solid fa-plus addbrandbtn"></i></a>
+                   
+                        </div>
+                      </div>
+
+
+
+
+
+
+                     <div class="form-row row">
+                       <div class="form-group col-lg-4">
+                         <label for="type" class="fs-6"
+                           >Product Type</label
+                         >
+                        
+                       </div>
+                       <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+                       
+                        <select required class="form-control selectizefield registrationtype" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="type">
+                          <option value="" selected>Select Product Type</option>
+                          {% for item in type %}
+                          <option value="{{ item.name }}">{{ item.name }}</option>
+                          {% endfor %}
+                        </select>
+                        <a href="#" data-toggle="modal" data-target="#addtype"><i class="fa-solid fa-plus addtypebtn"></i></a>
+                       </div>
+                     </div>
+
+
+
+
+
+                     <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="packing" class="fs-6"
+                            >Packing</label
+                          >
+                         
+                        </div>
+                        <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+
+                          <select required class="form-control selectizefield registrationpacking"  name="packing">
+                            <option value="" selected>Select Packing</option>
+                            {% for item in packing %}
+                            <option value="{{ item.name }}">{{ item.name }}</option>
+                            {% endfor %}
+                          </select>
+                          <a href="#" data-toggle="modal" data-target="#addpacking"><i class="fa-solid fa-plus addpackingrbtn"></i></a>
+                       
+                        </div>
+                      </div>
+
+
+
+
+
+
+                      <div class="form-row row">
+                       <div class="form-group col-lg-4">
+                         <label for="hsn" class="fs-6"
+                           >HSN</label
+                         >
+                      
+                       </div>
+                       <div class="form-group col-lg-8">
+
+                        <input class="form-control no-spinner-pad" type="text" name="hsn" id="hsn">
+                       
+                       </div>
+                     </div>
+
+
+
+
+                   
+
+
+
+
+                    <div class="form-row row">
+                      <div class="form-group col-lg-4">
+                        <label for="price" class="fs-6"
+                          >Purchase Price</label
+                        >
+                     
+                      </div>
+                      <div class="form-group col-lg-8">
+
+                       <input required  class="form-control no-spinner-pad" type="number"
+                       step="0.01"
+                       min="0" name="price" id="price">
+                      
+                      </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-row row">
+                      <div class="form-group col-lg-4">
+                        <label for="purchasegst" class="fs-6"
+                          >Purchase VAT</label
+                        >
+                     
+                      </div>
+                      <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+
+                     <select required class="form-control selectizefield  registrationpurchasetax" name="purchasegst" id="purchasegst">
+
+                      <option value="" selected>Select Purchase VAT</option>
+                                {% for gst in tax %}
+                                <option
+                                  data-purchasegst="{{ gst.percentage }}"
+                                  value="{{ gst.id }}"
+                                >
+                                  {{ gst.name }}
+                                </option>
+                                {% endfor %}
+                     </select>
+                     <a href="#" data-toggle="modal" data-target="#addpurchasetax"><i class="fa-solid fa-plus addgstrbtn"></i></a>
+                      </div>
+                    </div>
+
+
+
+                    <div class="form-row row">
+                      <div class="form-group col-lg-4">
+                        <label for="sellingprice" class="fs-6"
+                          >Selling Price</label
+                        >
+                     
+                      </div>
+                      <div class="form-group col-lg-8">
+
+                       <input required  class="form-control no-spinner-pad" type="number"
+                       step="0.01"
+                       min="0" name="sellingprice" id="sellingprice">
+                      
+                      </div>
+                    </div>
+
+
+                    <div class="form-row row">
+                      <div class="form-group col-lg-4">
+                        <label for="salesgst" class="fs-6"
+                          >Sales VAT</label
+                        >
+                     
+                      </div>
+                      <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+
+                        <select required class="form-control selectizefield registrationsaletax" name="salesgst" id="salesgst">
+
+                          <option value="" selected>Select Sales VAT</option>
+                                    {% for gst in tax %}
+                                    <option
+                                      data-purchasegst="{{ gst.percentage }}"
+                                      value="{{ gst.id }}"
+                                    >
+                                      {{ gst.name }}
+                                    </option>
+                                    {% endfor %}
+                         </select>
+                         <a href="#" data-toggle="modal" data-target="#addsaletax"><i class="fa-solid fa-plus addgstrbtn"></i></a>
+                      </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-row row">
+                      <div class="form-group col-lg-4">
+                        <label for="mrp" class="fs-6"
+                          >MRP</label
+                        >
+                     
+                      </div>
+                      <div class="form-group col-lg-8">
+
+                       <input required class="form-control no-spinner-pad" type="number"
+                       step="0.01"
+                       min="0" name="mrp" id="mrp">
+                      
+                      </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-row row">
+                      <div class="form-group col-lg-4">
+                        <label for="mop" class="fs-6"
+                          >MOP</label
+                        >
+                     
+                      </div>
+                      <div class="form-group col-lg-8">
+
+                       <input required class="form-control no-spinner-pad" type="number"
+                       step="0.01"
+                       min="0" name="mop" id="mop">
+                      
+                      </div>
+                    </div>
+
+
+
+
+
+
+                     <div class="horizontal-line-dark mt-2"></div>
+                     
+  
+                      <button
+                        type="submit"
+                        class="btn btn-primary text-white mb-1 mt-3 fs-6"
+                      >
+                        Save
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card card-rounded">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="table-main-heading">
+                          <h4 class="card-title card-title-dash">Add Product</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <form action="{% url 'addproduct' %}" method="POST">
+                      {% csrf_token %}
+                      <div class="mt-3">
+                        <div class="table-responsive">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr class="table-primary">
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Subcategory</th>
+                                <th>Brand</th>
+                                <th>Type</th>
+                                <th>Packing</th>
+                                <th>HSN</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <input class="form-control" type="text" name="name">
+                                </td>
+                                <td>
+                                  <select class="form-control" name="catagory">
+                                    <option value="" selected>---------</option>
+                                    {% for item in catagory %}
+                                    <option value="{{ item.name }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                                <td>
+                                  <select class="form-control" name="subcatagory">
+                                    <option value="" selected>---------</option>
+                                    {% for item in subcatagory %}
+                                    <option value="{{ item.name }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                                <td>
+                                  <select class="form-control" name="brand">
+                                    <option value="" selected>---------</option>
+                                    {% for item in brand %}
+                                    <option value="{{ item.name }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                                <td>
+                                  <select class="form-control" name="type">
+                                    <option value="" selected>---------</option>
+                                    {% for item in type %}
+                                    <option value="{{ item.name }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                                <td>
+                                  <select class="form-control" name="packing">
+                                    <option value="" selected>---------</option>
+                                    {% for item in packing %}
+                                    <option value="{{ item.name }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </td>
+                                <td>
+                                  <input class="form-control" type="text" name="hsn">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <button type="submit" class="btn btn-primary text-white mb-2">Add</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addcat">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Category</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addcatform" action="{% url 'addcatagorymodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control catname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 float-right"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addsubcat">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Sub Category</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addsubcatform" action="{% url 'addsubcatagorymodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control subcatname" type="text" name="name">
+             
+             </div>
+           </div>
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="name" class="fs-6"
+                  >Category</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <select  class="form-control selectizefield catid registrationcatinsubcat" name="catagory">
+                    <option value="" selected>Select Category</option>
+                    {% for item in catagory %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                    {% endfor %}
+                 </select>
+              
+              </div>
+            </div>
+
+
+
+
+
+         
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addbr">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Brand</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addbrandform" action="{% url 'addbrandmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control brandname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addtype">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Product Type</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          
+          <form id="addtypeform" action="{% url 'addtypemodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control typename" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addpacking">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Packing</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addpackingform" action="{% url 'addpackingmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control packingname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addpurchasetax">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Tax</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+    
+          <form id="addpurchasetaxform" action="{% url 'addtaxmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control purchasetaxname" type="text" name="name">
+             
+             </div>
+           </div>
+
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="percentage" class="fs-6"
+                  >Percentage</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <input class="form-control purchasetaxnumber" type="number" name="percentage">
+              
+              </div>
+            </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addsaletax">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Tax</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addsaletaxform" action="{% url 'addtaxmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control saletaxname" type="text" name="name">
+             
+             </div>
+           </div>
+
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="percentage" class="fs-6"
+                  >Percentage</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <input class="form-control saletaxnumber" type="number" name="percentage">
+              
+              </div>
+            </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

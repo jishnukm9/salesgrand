@@ -1,0 +1,552 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  
+
+
+               
+
+
+
+
+
+
+                 <nav class="nav nav-borders">
+                    {% if user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' or user.userprofile.role == 'TRC Front Desk' %}
+                    <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"   href="{% url 'servicecnp' %}">My Service</a>
+                    <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                    {% elif user.userprofile.role == 'Branch Admin' or user.userprofile.role == 'Franchise Admin' %}
+                    <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;" href="{% url 'service' %}">All Service List </a>
+                    <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'serviceform' %}">Service Entry</a>
+                    <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                    <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'sparerequests' %}">Spare Requested</a>
+       
+                    <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicechargeestimationlist' %}">Service Charge</a> -->
+                    {% endif %}
+                    
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Packing View</a>
+                 
+
+    
+                 
+              </nav>
+
+               </div>
+               <br>
+
+
+
+               {% if messages %}
+         
+      
+          {% for message in messages %}
+          <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between " role="alert">
+           <p> <strong>{{ message }}</strong> </p> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background:none;border:1px solid #444;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+          
+         {% endif %}
+
+
+
+
+
+
+         <div class="servicerefdiv p-4 mb-3" style="background-color:#d7d9e7;border-radius:5px;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;">
+
+
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-3">
+                <h5 class="mb-0 serviceheading"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Service Details : <span>{{servicerefnumber}}</span></h5>
+  
+    
+  
+  
+  
+                {% if status == 'QC Passed(Ok)' or status == 'QC Passed(NotOk)' or status == 'CNP Pending(Ok)' or status == 'CNP Pending(NotOk)' %}
+           <div class="">
+  
+              <!-- <h5 class="fw-bold mb-3">Choose an Action</h5> -->
+  
+              <div class="d-flex">
+              
+  
+              <button data-toggle="modal" data-target=".bd-example-modal-sm2" class="service-accept me-1" type="submit">Acknowledge</button>
+  
+                          </div>
+           </div>
+  
+           <!-- <br> -->
+           {% endif %}
+ 
+  
+  
+  <div class="modal fade bd-example-modal-sm2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="exampleModalLabel">Are You Sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body d-flex gap-3">
+            <form action="{% url 'serviceacknoledgecnp' %}" method="post">
+                {% csrf_token %}
+                
+                                <input type="text"  name="product1" value="{{item.product}}"  hidden>
+                                <input hidden type="text" class="form-control text-center" value="{{servicerefnumber}}"  name="refnumber" id="refnumber" readonly>
+                            {% if status == 'QC Passed(Ok)' or status == 'CNP Pending(Ok)' %}
+                <input type="text" value="CNP Inprogress(Ok)" name="status" hidden>
+                {% elif status == 'QC Passed(NotOk)' or status == 'CNP Pending(NotOk)'  %}
+                <input type="text" value="CNP Inprogress(NotOk)" name="status" hidden>
+                {% endif %}
+                                <button class="service-accept me-1" type="submit">Acknowledge</button>
+                            </form>
+  
+                      <button type="button" class="btn btn-light me-1 close fw-bold" data-dismiss="modal" aria-label="Close">Cancel</button>
+      </div>
+    </div>
+  
+   
+    </div>
+  </div>
+  
+  
+  
+              </div>
+              <div>
+                <a href="{% url 'servicecalllogs' serviceref=servicerefnumber %}"><i class="fa-solid fa-phone-volume servicecall servicebtns" ></i></a>
+              </div>
+            </div>
+           </div>
+
+
+
+
+
+
+
+
+               <div class="card mb-4 " style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+
+                    <div class="d-flex justify-content-between text-align">
+                        <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Service Details</strong> </h5>
+
+                        
+                    </div>
+                    
+                </div>
+                <div class="card-body ">
+
+                <div class="row">
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="mb-5">
+                                <p  class="text-grey ">Brand</p>
+                                
+                                {% if item.brand == None or item.brand == '' %}
+                                <p class="text-dark  ">_______</p>
+                                {% else %}
+                                <p class="text-dark " style="font-size:15px;font-weight: 500;">{{item.brand}}</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-5">
+                                <p  class="text-grey ">Status</p>
+                                
+                                {% if item.status == None or item.status == '' %}
+                                <p class="text-dark  ">_______</p>
+                                {% else %}
+                                <p class="text-dark " style="font-size:15px;font-weight: 500;">{{item.status}}</p>
+                                {% endif %}
+                            </div>
+                            
+                            
+
+
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+                            <div class="mb-5">
+                                <p class="text-grey ">Modal</p>
+                                
+                                {% if item.model == None or item.model == '' %}
+                                <p class="text-dark  ">_______</p>
+                                {% else %}
+                                <p class="text-dark  " style="font-size:15px;font-weight: 500;">{{item.model}}</p>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="">
+                                <p  class="text-grey ">Servicer Name</p>
+                                
+                                {% if technician == None or technician  == '' %}
+                                <p class="text-dark  ">_______</p>
+                                {% else %}
+                                <p class="text-dark " style="font-size:15px;font-weight: 500;">{{technician}}</p>
+                                {% endif %}
+                            </div>
+
+                            
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="mb-5">
+                                <p class="text-grey ">IMEI</p>
+                                
+                                {% if item.imei == None or item.imei == '' %}
+                                <p class="text-dark  ">_______</p>
+                                {% else %}
+                                <p class="text-dark " style="font-size:15px;font-weight: 500;">{{item.imei}}</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="">
+                                <p  class="text-grey ">QC</p>
+                                
+                                {% if qc == None or qc == '' %}
+                                <p class="text-dark ">_______</p>
+                                {% else %}
+                                <p class="text-dark " style="font-size:15px;font-weight: 500;">{{qc}}</p>
+                                {% endif %}
+                            </div>
+
+                            
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="mb-5">
+                                <p class="text-grey ">Product</p>
+                                <p class="text-dark " style="font-size:15px;font-weight: 500;">{{item.product}}</p>
+                               
+                               
+                            </div>
+
+                            <div class="mb-5">
+                                <p class="text-grey ">Service ref No.</p>
+                                <p class="text-dark " style="font-size:15px;font-weight: 500;">{{servicerefnumber}}</p>
+                               
+                               
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    </div>
+
+            </div>
+
+
+
+
+
+<div class="row">
+    
+
+
+
+    <div class="col-lg-6 col-md-6">
+
+
+       
+
+            <div class="card mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;">
+                <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                    
+                    <div class="d-flex justify-content-between text-align">
+                        <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong><i class="fa-solid fa-headphones-simple me-2"></i>Accessories Attached</strong> </h5>
+        
+                        {% if user.userprofile.role == 'Franchise Admin' or user.userprofile.role == 'Branch Admin' or user.userprofile.role == 'TRC Front Desk' or user.is_superuser %}
+                        <a class="text-dark" data-toggle="modal" data-target="#serviceaccessoriesinfo" href=""><i class="fa-solid fa-pen-to-square"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+        
+                    <ul>
+                        {% for item in accessories %}
+                        <li class="text-black" style="font-size:13px;font-weight: 500;">{{item}}</li>
+                        {% endfor %}
+                    </ul>
+        
+        
+        
+                    </div>
+        
+              
+                </div>
+
+        {% if status == "CNP Inprogress(Ok)" or 'CNP Pending(Ok)' or 'CNP Pending(NotOk)' or status == "CNP Inprogress(NotOk)" or user.userprofile.role == 'Franchise Admin' or user.userprofile.role == 'Branch Admin' or user.is_superuser  %}
+
+        <div class="card mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;">
+          <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+              
+
+              <div class="d-flex justify-content-between text-align">
+                  <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Service Informations</strong> </h5>
+
+
+                  <!-- <a class="text-dark" data-toggle="modal" data-target="#serviceremarksinfo" href=""><i class="fa-solid fa-pen-to-square"></i></a> -->
+                  
+              </div>
+          </div>
+          <div class="card-body ">
+
+            <ul class="list-group list-group-flush mb-4">
+              {% for inf in service_info %}
+              <li class="list-group-item ps-0">
+
+                <p class="text-muted" style="font-family:Roboto;">{{inf.user.username}} ({{inf.user.userprofile.role}}) added a comment on {{inf.created_date}}</p>
+               <p class="fs-6" style="font-family:Roboto;">{{inf.info}}</p>
+              
+              </li>
+              {% endfor %}
+
+
+             
+            </ul>
+           
+
+              <form action="{% url 'addserviceinfo' %}" method="post">
+
+                  {% csrf_token %}
+                <div class="form-group">
+                  <label for="info" class="fw-bold">Enter Information</label>
+                  <input type="text" hidden value="{{servicerefnumber}}" name="servicereff">
+  <textarea class="form-control" style="height:106px;" name="info" id="info"  cols="30" rows="10"></textarea>
+                  
+                </div>
+
+            
+
+
+<button class="btn btn-primary text-white fw-bold" type="submit">Save Information</button>
+
+
+
+              </form>
+
+
+              </div>
+
+              </div>
+
+{% endif %}
+
+
+    </div>
+    <div class="col-lg-6 col-md-6">
+
+{% if status == "CNP Inprogress(Ok)" or status == "CNP Inprogress(NotOk)" %}
+
+            <div class="card mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+
+                    <div class="d-flex justify-content-between text-align">
+                        <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Assign Rack</strong> </h5>
+
+                        
+                    </div>
+                    
+                </div>
+                <div class="card-body ">
+
+                    <form action="{% url 'servicecompleterack'  %}" method="POST">
+                        {% csrf_token %}
+
+<div class="row">
+    <div class="col-lg-9 col-md-9 mb-3">
+
+        <div class="form-group">
+        <label class="mb-3 " for="accessories2"
+         ><strong>Accessories Attached</strong></label
+       >
+                        <div class="" style="border-radius:5px;" >
+        
+                            <input type="checkbox" class="ms-0" name="2accessory[battery]" style=" margin:0 5px 0 10px;" id="accessory2" value="Battery"> <span style="font-size:14px;">Battery </span>                                                             
+                                  <input type="checkbox" name="2accessory[charger]" style=" margin:0 5px 0 10px;" id="accessory2" value="Charger"> <span style="font-size:14px;">Charger </span>                                  
+                                 <input type="checkbox" name="2accessory[SIM]" style=" margin:0 5px 0 10px;" id="accessory2" value="SIM"><span style="font-size:14px;">SIM   </span>  
+                                     <input type="checkbox" name="2accessory[memory]" style=" margin:0 5px 0 10px;" id="accessory2" value="Memory Card">  <span style="font-size:14px;">Memory Card  </span>   
+                                    </div>                                         
+                                
+                                
+                                
+                                
+                                </div>
+                            </div>
+                                    <!-- <div class="col-lg-3 col-md-3 mb-3"></div> -->
+                                    <div class="col-lg-3 col-md-3 mb-3"></div>
+</div>
+
+<div class="form-group">
+<label class="mb-3 mt-5" for="accessories2"
+><strong>Select Rack Number</strong></label
+>
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 mb-3">
+                           
+                            <input type="text"  name="product1" value="{{item.product}}"  hidden>
+                            {% if status == "CNP Inprogress(Ok)" %}
+                            <input type="text" class="form-control text-center" value="CNP completed(OK)"  name="status" id="status" hidden>
+                            {% elif status == "CNP Inprogress(NotOk)" %}
+                            <input type="text" class="form-control text-center" value="CNP completed(NotOK)"  name="status" id="status" hidden>
+                           
+                            {% endif %}
+                            <input hidden type="text" class="form-control text-center" value="{{servicerefnumber}}"  name="refnumber" id="refnumber" hidden>
+                            <select class="form-control border-bottom" name="rackno" id="rackno" required>
+<option value=""></option>
+                               {% for r in rack %}
+
+                               <option value="{{r.name}}">{{r.name}}</option>
+
+                               {% endfor %}
+                            </select>
+
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+
+<button type="submit" class="btn btn-primary w-100 text-white fw-bold">Save</button>
+                            
+                        </div>
+                     
+                        <div class="col-lg-4 col-md-4">
+
+                        </div>
+                    </div>
+                </div>
+                    </form>
+
+
+
+                   
+
+
+
+
+
+                    </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="card mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                        <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+        
+                            <div class="d-flex justify-content-between text-align">
+                                <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>CNP Pending</strong> </h5>
+        
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="card-body ">
+
+
+                            <form action="{% url 'servicecnppending' %}" method="post">
+{% csrf_token %}
+<input hidden type="text" class="form-control text-center" value="{{servicerefnumber}}"  name="refnumber" id="refnumber" hidden>
+                                <div class="form-group d-flex align-items-center gap-2">
+
+                                   {% if status == "CNP Inprogress(Ok)" %}
+                                    <input type="checkbox" name="pending" value="CNP Pending(Ok)" id="pending" checked>
+                                    {% elif status == "CNP Inprogress(NotOk)" %}
+                                    <input type="checkbox" name="pending" value="CNP Pending(NotOk)" id="pending" checked>
+                                    {% endif %}
+                                    <label for="pending" class="mt-2"><strong>CNP Pending</strong></label>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><strong>Remark</strong></label>
+                                    <input type="text" class="form-control border-0 border-bottom" name="cnpremark" id="cnpremark">
+                                </div>
+
+
+
+<button type="submit" class="btn btn-primary fw-bold text-white">Save</button>
+
+
+                            </form>
+
+
+
+
+
+
+
+                            </div>
+                            </div>
+               
+       
+     {% endif %}
+
+
+
+
+
+
+
+
+
+    </div>
+    </div>
+
+                          
+
+
+
+
+
+
+
+
+               
+          
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

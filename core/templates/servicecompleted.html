@@ -1,0 +1,194 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+              
+
+               
+
+
+
+                 <nav class="nav nav-borders">
+                  <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="{% url 'service' %}"> Service List </a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'serviceform' %}">Service Entry</a>
+
+
+                 
+              </nav>
+
+              
+
+
+
+               </div>
+               <br>
+           
+           
+
+
+
+ 
+
+
+
+
+              <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+               <div class="card-header py-3">
+                   <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Service Completed List </strong> </h5>
+               </div>
+               <div class="card-body">
+                   <!-- <div class="table-responsive"> -->
+
+
+
+                     <div class="mt-3">
+                        <div class="table-responsive">
+                           <table class="  add-pagination table-hover table-bordered  table table-striped purchase-list" >
+                              <thead >
+                                 <tr>
+                                    <th>Sl</th>
+                                    <th>Ref No</th>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <!-- <th>Product</th> -->
+                                    <th>Device</th>
+                                    <th>Due Date</th>
+                                    <th>Total</th>
+                                   
+                                    <th>Technician</th>
+                                    <!-- <th>Branch</th> -->
+                                    <th>Status</th>
+                                    <th>Rack</th>
+                                    <th>Call Scheduled</th>
+                                    <th>Action</th>
+                                    
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for item in data %}
+                                 <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.servicerefnumber }}</td>
+                                    <td>{{ item.firstname }} {{ item.lastname }}</td>
+                                    <td>{{ item.phone }}</td>
+                                    <!-- <td>{{ item.product }}</td> -->
+                                    <td>{{ item.brand }} {{ item.model }}</td>
+                                    <td>
+                                       <div class="d-flex justify-content-between">
+
+                                          <p>
+                                          {% if item.expecteddate  != None and item.expecteddate != '' %}
+                                          {{ item.expecteddate }}
+                                          {% else %}
+                                          {% endif %}
+                                       </p>
+   <p>
+                                          {% if item.datedifferencecolor == 'red' %}
+                                          <span class="label-user label-important" >  {{item.datedifference}}</span> 
+                                          {% elif item.datedifferencecolor == 'orange' %}
+                                          <span  class="label-user label-warning" >  {{item.datedifference}}</span> 
+                                          {% elif item.datedifferencecolor == 'green' %}
+                                          <span class="label-user label-success" >  {{item.datedifference}}</span> 
+                                          {% endif %}
+                                       </p>
+                                       </div>
+                                    </td>
+                                    <td>{{ item.finalamount | floatformat:2 }}</td>
+                                    
+                                  
+                                    <td>
+                                       {% if item.technician != None and tem.technician != ''  %}
+                                       {{ item.technician }}
+                                       {% endif %}
+                                    </td>
+                                    <!-- <td>{{ item.branch }}</td> -->
+
+                                    {% if item.status == 'Pending' %}
+                                    <td>
+                                       <span class="label-service label-service-pending">Pending</span>
+                                       <!-- <label class="badge badge-danger">Pending</label> -->
+                                    </td>
+                                    {% elif item.status == 'Completed' %}
+                                    <td>
+                                       <span class="label-service label-service-completed">Completed</span>
+                                       <!-- <label class="badge badge-success">Completed</label> -->
+                                    </td>
+                                    {% elif item.status == 'In Progress' %}
+                                    <td>
+                                       <span class="label-service label-service-inprogress">In Progress</span>
+                                       <!-- <label class="badge badge-info">In Progress</label> -->
+                                    </td>
+                                    {% elif item.status == 'Rejected' %}
+                                    <td>
+                                       <span class="label-service label-service-beyondrepair"> Rejected</span>
+                                       <!-- <label class="badge badge-secondary">Rejected</label> -->
+                                    </td>
+                                    {% else %}
+                                    <td>{{item.status}}</td>
+                                    {% endif %}
+
+
+                                    <td>
+
+                                       {% if item.rack_no != None and item.rack_no != '' %}
+                                      
+                                       {{item.rack_no}}
+                                       {% endif %}
+                                      
+                                       
+                                    </td>
+                                    
+                                    <td>
+                                       {% if item.shedule_call != None and item.shedule_call != '' %}
+                                      
+                                       {{item.shedule_call}}
+
+                                       {% endif %}
+                                      
+                                       
+                                    </td>
+
+                                    <td>
+                                       
+                                       <a class="me-2" href="../serviceupdateform/{{ item.servicerefnumber }}/"><i class="fa-solid fa-eye label-purchase-view"></i></a>
+                                    <a href="{% url 'servicecalllogs' serviceref=item.servicerefnumber %}"><i class="fa-solid fa-phone-volume label-purchase-view"></i></a>
+                                    </td>
+                                    
+                                 </tr>
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+
+
+                   </div>
+                  </div>
+               </div>
+
+
+
+
+
+
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

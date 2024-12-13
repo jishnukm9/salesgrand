@@ -1,0 +1,596 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+
+           <nav class="nav nav-borders">
+            <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color: #444 ; " href="{% url 'accounts' %}">Transactions</a>
+            <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#4555B9; border-bottom:2px solid #4555B9;"  href="">Cash book</a>
+            <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'generalledger' %}">General Ledger</a>
+
+        </nav>
+          </div>
+       <br>
+     
+
+       <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+        <div class="card-header py-3 d-flex justify-content-between bg-white">
+            <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Cash Book</strong> </h5>
+            <div class="d-flex align-items-center gap-3">
+
+                      
+              <i id="fa-magnifying-glass-moneyreciept"   data-toggle="modal" data-target="#cashbooksearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+
+              <a class="moneyreciept-clear" href="{% url 'cashbook' %}">Clear</a>
+           </div> 
+       
+          </div>
+
+           <div class="card-body">
+             <div class="table-responsive">
+              <p> Date Range: <b>{{ startdate }} - {{ enddate }}</b></p>
+              <p> Branch : <b>{{ branch }}</b> </p>
+              <hr>
+                      <table class="add-pagination-cashbook branch_list table-bordered table table-striped">
+                        <thead>
+                          <tr>
+                            <th width="2%">Date</th>
+                            <th width="1%">Title</th>
+                            <th width="5%">Description</th>
+                            <th width="5%">Receipt</th>
+                            <th width="5%">Payment</th>
+                          </tr>
+                        </thead>
+                        
+                        <tbody>
+                          <tr>
+                            <td width="2%">{{ startdate }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">OPENING BALANCE</td>
+                            {% if opening_cash_balance_type == "receipt" %}
+                            <td width="5%">{{opening_cash_balance | default:0 |floatformat:2}}</td>
+                            <td width="5%">0</td>
+                            {% else %}
+                            <td width="5%">0</td>
+                            <td width="5%">{{opening_cash_balance | default:0 |floatformat:2}}</td>
+                            {%endif %}
+                          </tr>
+                          {% for item in sale_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">SALE</td>
+                            <td width="5%">{{ item.receipt }}</td>
+                            <td width="5%">0</td>
+                          </tr>
+                          {% endfor %}
+                          {% for item in purchase_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">PURCHASE</td>
+                            <td width="5%">0</td>
+                            <td width="5%">{{ item.payment }}</td>
+                          </tr>
+                          {% endfor %}
+
+                          {% for item in service_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">SERVICE</td>
+                            <td width="5%">{{ item.receipt }}</td>
+                            <td width="5%">0</td>
+                          </tr>
+                          {% endfor %}
+
+                          {% for item in salereturn_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">SALE RETURN</td>
+                            <td width="5%">0</td>
+                            <td width="5%">{{ item.payment }}</td>
+                          </tr>
+                          {% endfor %}
+                          
+                          {% for item in purchasereturn_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">PURCHASE RETURN</td>
+                            <td width="5%">{{ item.receipt }}</td>
+                            <td width="5%">0</td>
+                          </tr>
+                          {% endfor %}
+
+                          {% for item in payments_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">PAYMENT</td>
+                            <td width="5%">0</td>
+                            <td width="5%">{{ item.payment }}</td>
+                          </tr>
+                          {% endfor %}
+
+                          {% for item in receipts_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">RECEIPT</td>
+                            <td width="5%">{{ item.receipt }}</td>
+                            <td width="5%">0</td>
+                          </tr>
+                          {% endfor %}
+
+                          <tr>
+                            <td width="2%">{{ enddate }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">CLOSING BALANCE</td>
+                            {% if balancetype_cash == "receipt" %}
+                            <td width="5%"><b>{{ closingbalance_cash | default:0 |floatformat:2 }}</b></td>
+                            <td width="5%"></td>
+                            {% else %}
+                            <td width="5%"></td>
+                            <td width="5%"><b>{{ closingbalance_cash | default:0 |floatformat:2 }}</b></td>
+                            {% endif %}
+                          </tr>
+
+                        </tbody>
+                      </table>
+
+
+
+
+
+
+                      
+
+                      <div class="table-responsive">
+
+                                <table class="add-pagination-cashbook branch_list table-bordered table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th width="2%">Date</th>
+                                      <th width="1%">Title</th>
+                                      <th width="5%">Description</th>
+                                      <th width="5%">Receipt</th>
+                                      <th width="5%">Payment</th>
+                                    </tr>
+                                  </thead>
+                                  
+                                  <tbody>
+                                    <tr>
+                                      <td width="2%">{{ startdate }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">OPENING BALANCE</td>
+                                      {% if opening_upi_balance_type == "receipt" %}
+                                      <td width="5%">{{opening_upi_balance | default:0 |floatformat:2}}</td>
+                                      <td width="5%">0</td>
+                                      {% else %}
+                                      <td width="5%">0</td>
+                                      <td width="5%">{{opening_upi_balance | default:0 |floatformat:2}}</td>
+                                      {%endif %}
+                                    </tr>
+                                    {% for item in sale_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">SALE</td>
+                                      <td width="5%">{{ item.receipt }}</td>
+                                      <td width="5%">0</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% for item in purchase_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">PURCHASE</td>
+                                      <td width="5%">0</td>
+                                      <td width="5%">{{ item.payment }}</td>
+                                    </tr>
+                                    {% endfor %}
+          
+                                    {% for item in service_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">SERVICE</td>
+                                      <td width="5%">{{ item.receipt }}</td>
+                                      <td width="5%">0</td>
+                                    </tr>
+                                    {% endfor %}
+          
+                                    {% for item in salereturn_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">SALE RETURN</td>
+                                      <td width="5%">0</td>
+                                      <td width="5%">{{ item.payment }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                    {% for item in purchasereturn_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">PURCHASE RETURN</td>
+                                      <td width="5%">{{ item.receipt }}</td>
+                                      <td width="5%">0</td>
+                                    </tr>
+                                    {% endfor %}
+          
+                                    {% for item in payments_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">PAYMENT</td>
+                                      <td width="5%">0</td>
+                                      <td width="5%">{{ item.payment }}</td>
+                                    </tr>
+                                    {% endfor %}
+          
+                                    {% for item in receipts_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">RECEIPT</td>
+                                      <td width="5%">{{ item.receipt }}</td>
+                                      <td width="5%">0</td>
+                                    </tr>
+                                    {% endfor %}
+          
+                                    <tr>
+                                      <td width="2%">{{ enddate }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">CLOSING BALANCE</td>
+                                      {% if balancetype_upi == "receipt" %}
+                                      <td width="5%"><b>{{ closingbalance_upi | default:0 |floatformat:2 }}</b></td>
+                                      <td width="5%"></td>
+                                      {% else %}
+                                      <td width="5%"></td>
+                                      <td width="5%"><b>{{ closingbalance_upi | default:0 |floatformat:2 }}</b></td>
+                                      {% endif %}
+                                    </tr>
+          
+                                  </tbody>
+                                </table>
+
+                                <div class="table-responsive">
+
+                                          <table class="add-pagination-cashbook branch_list table-bordered table table-striped">
+                                            <thead>
+                                              <tr>
+                                                <th width="2%">Date</th>
+                                                <th width="1%">Title</th>
+                                                <th width="5%">Description</th>
+                                                <th width="5%">Receipt</th>
+                                                <th width="5%">Payment</th>
+                                              </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                              <tr>
+                                                <td width="2%">{{ startdate }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">OPENING BALANCE</td>
+                                                {% if opening_bank_balance_type == "receipt" %}
+                                                <td width="5%">{{opening_bank_balance| default:0 |floatformat:2}}</td>
+                                                <td width="5%">0</td>
+                                                {% else %}
+                                                <td width="5%">0</td>
+                                                <td width="5%">{{opening_bank_balance| default:0 |floatformat:2}}</td>
+                                                {%endif %}
+                                              </tr>
+                                              {% for item in sale_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">SALE</td>
+                                                <td width="5%">{{ item.receipt }}</td>
+                                                <td width="5%">0</td>
+                                              </tr>
+                                              {% endfor %}
+                                              {% for item in purchase_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">PURCHASE</td>
+                                                <td width="5%">0</td>
+                                                <td width="5%">{{ item.payment }}</td>
+                                              </tr>
+                                              {% endfor %}
+                    
+                                              {% for item in service_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">SERVICE</td>
+                                                <td width="5%">{{ item.receipt }}</td>
+                                                <td width="5%">0</td>
+                                              </tr>
+                                              {% endfor %}
+                    
+                                              {% for item in salereturn_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">SALE RETURN</td>
+                                                <td width="5%">0</td>
+                                                <td width="5%">{{ item.payment }}</td>
+                                              </tr>
+                                              {% endfor %}
+                                              
+                                              {% for item in purchasereturn_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">PURCHASE RETURN</td>
+                                                <td width="5%">{{ item.receipt }}</td>
+                                                <td width="5%">0</td>
+                                              </tr>
+                                              {% endfor %}
+                    
+                                              {% for item in payments_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">PAYMENT</td>
+                                                <td width="5%">0</td>
+                                                <td width="5%">{{ item.payment }}</td>
+                                              </tr>
+                                              {% endfor %}
+                    
+                                              {% for item in receipts_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">RECEIPT</td>
+                                                <td width="5%">{{ item.receipt }}</td>
+                                                <td width="5%">0</td>
+                                              </tr>
+                                              {% endfor %}
+                    
+                                              <tr>
+                                                <td width="2%">{{ enddate }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">CLOSING BALANCE</td>
+                                                {% if balancetype_bank == "receipt" %}
+                                                <td width="5%"><b>{{ closingbalance_bank| default:0 |floatformat:2 }}</b></td>
+                                                <td width="5%"></td>
+                                                {% else %}
+                                                <td width="5%"></td>
+                                                <td width="5%"><b>{{ closingbalance_bank| default:0 |floatformat:2 }}</b></td>
+                                                {% endif %}
+                                              </tr>
+                    
+                                            </tbody>
+                                          </table>
+
+                                          <div class="table-responsive">
+
+                                                    <table class="add-pagination-cashbook branch_list table-bordered table table-striped">
+                                                      <thead>
+                                                        <tr>
+                                                          <th width="2%">Date</th>
+                                                          <th width="1%">Title</th>
+                                                          <th width="5%">Description</th>
+                                                          <th width="5%">Receipt</th>
+                                                          <th width="5%">Payment</th>
+                                                        </tr>
+                                                      </thead>
+                                                      
+                                                      <tbody>
+                                                        <!-- <tr>
+                                                          <td width="2%">{{startdate}}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">OPENING BALANCE</td>
+                                                          <td width="5%">0</td>
+                                                          <td width="5%">0</td>
+                                                        </tr> -->
+                                                        <tr>
+                                                          <td width="2%">{{ startdate }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">OPENING BALANCE</td>
+                                                          {% if opening_card_balance_type == "receipt" %}
+                                                          <td width="5%">{{opening_card_balance | default:0 |floatformat:2}}</td>
+                                                          <td width="5%">0</td>
+                                                          {% else %}
+                                                          <td width="5%">0</td>
+                                                          <td width="5%">{{opening_card_balance | default:0 |floatformat:2}}</td>
+                                                          {%endif %}
+                                                        </tr>
+                                                        {% for item in sale_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">SALE</td>
+                                                          <td width="5%">{{ item.receipt }}</td>
+                                                          <td width="5%">0</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        {% for item in purchase_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">PURCHASE</td>
+                                                          <td width="5%">0</td>
+                                                          <td width="5%">{{ item.payment }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                              
+                                                        {% for item in service_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">SERVICE</td>
+                                                          <td width="5%">{{ item.receipt }}</td>
+                                                          <td width="5%">0</td>
+                                                        </tr>
+                                                        {% endfor %}
+                              
+                                                        {% for item in salereturn_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">SALE RETURN</td>
+                                                          <td width="5%">0</td>
+                                                          <td width="5%">{{ item.payment }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        
+                                                        {% for item in purchasereturn_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">PURCHASE RETURN</td>
+                                                          <td width="5%">{{ item.receipt }}</td>
+                                                          <td width="5%">0</td>
+                                                        </tr>
+                                                        {% endfor %}
+                              
+                                                        {% for item in payments_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">PAYMENT</td>
+                                                          <td width="5%">0</td>
+                                                          <td width="5%">{{ item.payment }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                              
+                                                        {% for item in receipts_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">RECEIPT</td>
+                                                          <td width="5%">{{ item.receipt }}</td>
+                                                          <td width="5%">0</td>
+                                                        </tr>
+                                                        {% endfor %}
+                              
+                                                        <tr>
+                                                          <td width="2%">{{ enddate }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">CLOSING BALANCE</td>
+                                                          {% if balancetype_card == "receipt" %}
+                                                          <td width="5%"><b>{{ closingbalance_card | default:0 |floatformat:2 }}</b></td>
+                                                          <td width="5%"></td>
+                                                          {% else %}
+                                                          <td width="5%"></td>
+                                                          <td width="5%"><b>{{ closingbalance_card | default:0 |floatformat:2 }}</b></td>
+                                                          {% endif %}
+                                                        </tr>
+                              
+                                                      </tbody>
+                                                    </table>
+          
+                                        
+
+                    </div>
+
+            </div>
+          </div>
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="cashbooksearch">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search Cashbook</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+           
+             <div class="form-group">
+               <label for="supplier_customer"  class="fw-bold">Start Date</label>
+               <div id="datepicker" 
+                          
+               class="input-group date datepicker-field" 
+               data-date-format="dd-mm-yyyy">
+              <input class="form-control " 
+              name="startdate"
+              autocomplete="off" 
+              
+                     type="text"  />
+              <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-calendar"></i>
+              </span>
+          </div>
+             </div>
+             <div class="form-group">
+              <label for="supplier_customer"  class="fw-bold">End Date</label>
+              <div id="datepicker" 
+                          
+              class="input-group date datepicker-field" 
+              data-date-format="dd-mm-yyyy">
+             <input class="form-control " 
+             name="enddate"
+             autocomplete="off" 
+             
+                    type="text"  />
+             <span class="input-group-addon">
+                 <i class="glyphicon glyphicon-calendar"></i>
+             </span>
+         </div>
+            </div>
+             <div class="form-group">
+               <label for="branch" class="fw-bold">Branch</label>
+               <select class="selectizefield" name="branch" id="branch">
+                 {% if request.user.is_superuser %}
+                 <option value="">Select Branch</option>
+                 {% for branch in branch_list %}
+                 <option value="{{branch}}">{{branch}}</option>
+                 {% endfor %}
+                 {% else %}
+                
+                 <option selected value="{{request.user.userprofile.branch}}">{{request.user.userprofile.branch}}</option>
+                 
+                 {% endif %}
+               </select>
+             </div>
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

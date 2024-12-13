@@ -1,0 +1,928 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+              
+
+               
+
+
+
+                 <nav class="nav nav-borders">
+                  {% if user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' or user.userprofile.role == 'TRC Front Desk' %}
+                  <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'servicecnp' %}">My Service</a>
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                 {% else %}
+                 <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                 {% endif %}
+                 <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'serviceform' %}">Service Entry</a>
+                
+                 {% if user.userprofile.role == "TRC Front Desk" or request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}
+                 <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"    href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                 {% endif %}
+                 
+   
+                 
+   
+                  {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}
+                  <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'sparerequests' %}">Spare Requested</a>
+     
+                              <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicechargeestimationlist' %}">Service Charge</a> -->
+                            
+                              {% endif %}
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="#"> Service Checkout </a>
+                  
+
+                  
+
+
+                 
+              </nav>
+
+
+
+               </div>
+               <br>
+
+
+
+               <div class="div">
+
+                  <ul>
+                     {% for message in messages %}
+
+                  <li class="text-danger fw-bold">{{message}}</li>
+
+
+                     {% endfor %}
+                  </ul>
+                  
+               </div>
+           
+           
+<div class="row">
+   <div class="col-lg-6 col-md-6">
+               <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                  <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                      <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Invoice Details ({{serviceref}})</strong> </h5>
+                  </div>
+                  <div class="card-body p-5">
+
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 " >
+                           <p class="fw-bold">Customer :</p>
+                              
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{firstname}} {{lastname}}</p>
+                           
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Phone :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{customer_phone}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Address :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{address}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Rack No :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{rack_no}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Technician :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{technician}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Service Ref Number :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{serviceref}}</p>
+                        
+                        </div>
+                     </div>
+
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Received Date :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{receiveddate}}</p>
+                        
+                        </div>
+                     </div>
+
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Status :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{status}}</p>
+                        
+                        </div>
+                     </div>
+                    
+<a href="{% url 'servicecalllogs' serviceref=serviceref %}" class="btn btn-success text-white fw-bold mb-0 pb-2">Call logs</a>
+                     
+
+                     </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                     <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                        <div class="card-header d-flex justify-content-between align-items-center py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                            <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Billing Details</strong> </h5>
+
+                          
+                        </div>
+                        <div class="card-body p-5">
+                           <form action="{% url 'servicebillingcheckout' servicerefnumber=serviceref %}" method="post">
+                              {% csrf_token %}
+
+
+                            
+
+                               
+
+                              <div class="row mb-2">
+                                 <div class="col-lg-6 col-md-6 " >
+                                    <p class="fw-bold">Service Charge Incl Tax :</p>
+                                       
+                                 </div>
+                                 <div class="col-lg-6 col-md-6">
+                              
+                                    <input readonly  type="number"  value="{{service_charge}}" min="0" id="servicecost2" name="servicecost2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                                    
+                                 </div>
+                              </div>
+                              
+
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 " >
+                                 <p class="fw-bold">Total Incl Tax :</p>
+                                    
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input type="text" name="firstname2" value="{{firstname}}" hidden>
+                              <input type="text" name="lastname2" value="{{lastname}}" hidden>
+                                 <input readonly type="number"  value="{{totalamount}}" min="0" id="finaltotal2" name="finaltotal2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                                 
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Service Tax {{servicetax}}% :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input readonly type="number"  min="0" value="{{totaltax}}" id="totaltaxcheckout2"  name="totaltaxcheckout2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                              
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Spare Tax :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input readonly type="number"  min="0" value="{{spare_tax|floatformat:2}}" id="sparetx2"  name="sparetx2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                              
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Discount ({{discountmethod_selected}}) :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 {% if discountmethod_selected == 'Percentage' %}
+                                 <input readonly type="number"  min="0" value="{{discountperc}}" id="finaldiscount2"  name="finaldiscount2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc"style="background:none;" >
+                                 {% else %}
+                                 <input readonly type="number"  min="0" value="{{discount}}" id="finaldiscount2"  name="finaldiscount2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc"style="background:none;" >
+                                 {% endif %}
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Final Amount :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input readonly type="number" readonly value="{{finalamount}}" id="finalfinalamount2"   min="0" name="finalfinalamount2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;">
+                              
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Amount Received :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input type="number" min="0" value="{{amountrecieved}}" id="finalamountreceivedold2"  hidden  step="0.01" class="form-control border-0 border-bottom " >
+                                 <input readonly type="number" min="0" value="{{amountrecieved}}" id="finalamountreceived2"  name="finalamountreceived2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc " style="background:none;" >
+                              
+                              </div>
+                           </div>
+                           <div class="row" style="margin-bottom:38px;">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Due Balance:</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input readonly type="number" readonly min="0" value="{{duebalance}}" id="finalduebalance2"  name="finalduebalance2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                              
+                              </div>
+                           </div>
+                           <!-- <button class="btn btn-primary mt-1 mb-1 text-white fw-bold" type="submit">Save</button> -->
+                        </form>
+
+                        {% if duebalance == 0 and  status == 'Delivered(Ok)' or status == 'Delivered(NotOk)'  %}
+                        <a data-toggle="modal" data-target="#serviceprintmodal"  class="btn btn-primary mt-1 mb-1 text-white fw-bold">Invoice</a>
+                        <!-- <button  class="btn btn-primary mt-1 mb-1 text-white fw-bold" >Invoice</button> -->
+                        
+                        {% else %}
+
+                        <button data-toggle="modal" data-target="#servicecheckoutmodal" class="btn btn-primary mt-1 mb-1 text-white fw-bold" >Checkout</button>
+                        
+                        {% endif %}
+
+                           </div>
+                           </div>
+                  </div>
+                  </div>
+
+     
+
+
+
+
+              <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+               <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                   <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Invoice</strong> </h5>
+               </div>
+               <div class="card-body">
+               
+
+
+
+                     <div class=" p-5">
+
+
+
+
+
+
+
+
+
+
+                        <html style="padding:0;margin:0;box-sizing:border-box;">
+   <head>
+      <title>Purchase Details</title>
+   </head>
+   <body style="font-family:Arial, Helvetica, sans-serif;">
+      <div >
+         <div class="table-responsive">
+            <table>
+               <thead>
+                  <th style="width:20%;">
+                     <img style="width:100%;" src="{{logo}}"  alt="logo">
+                     <!-- {% if current_host == '127.0.0.1:8000' %}
+                     <img style="width:100%;" src="http://{{current_host}}{{logo}}"  alt="logo">
+                     {% else %}
+                     <img style="width:100%;" src="https://magnus.salesgrand.com{{logo}}"  alt="logo">
+                     {% endif %} -->
+                  </th>
+
+                  <th style="width:25%;">
+            
+                  </th>
+                  <th style="width:55%;">
+                     <div style="text-align: right;">
+                        <h4 style="font-size: 15px; border-bottom: none; padding-bottom: 0; margin: 0;margin-bottom:10px;"><strong>{{company_name}}</strong></h4>
+                        {% if current_user.is_superuser %}
+                        <p style="font-size: 13px; margin: 0; padding-bottom: 0;margin-bottom:3px;">{{address_line1}} </p>
+                        <p style="font-size: 13px; margin: 0;margin-bottom:3px;">{{address_line2}}</p>
+                        <p style="font-size: 13px; margin: 0;margin-bottom:3px;">{{address_line3}}</p>
+                     {% else %}
+                     <p style="font-size: 13px;  margin: 0; padding-bottom: 0;margin-bottom:3px;">{{address_line1}} </p>
+                     <p style="font-size: 13px;  margin: 0;margin-bottom:3px;">Phone : {{phone}}</p>
+
+                  {% endif %}
+                  <p style="font-size: 13px;  margin: 0;margin-bottom:3px;">GSTIN : {{branch.gstin}}</p>
+                       
+                     </div>
+                  </th>
+               </thead>
+            </table>
+         </div>
+         <hr>
+
+         <div style="text-align: center;">
+            <h2 >INVOICE #{{serviceref}}</h2>
+        <p>{{currentdate}}</p>
+         </div>
+         <table style="border-collapse: collapse; border:0.3px solid #444;width:100%">
+           
+               <tr >
+                  <th  style="border:0.3px solid #444;padding:10px;text-align: left;width:25%;background-color: #dee2e6;" class="fw-bold">Customer Name</th>
+                  <th   style="border:0.3px solid #444;padding:10px;text-align: left;color:#444;width:25%;background-color: #dee2e6;" class="fw-bold"> Phone</th>
+                  <th style="border:0.3px solid #444;padding:10px;text-align: left;width:25%;background-color: #dee2e6;" class="fw-bold">Customer Id</th>
+                  <th   style="border:0.3px solid #444;padding:10px;text-align: left;color:#444;width:25%;background-color: #dee2e6;" class="fw-bold">Address</th>
+                </tr>
+                  <tr >
+                  <th  style="border:0.3px solid #444;padding:10px;text-align: left;width:25%;" >{{firstname}} {{lastname}}</th>
+                  <th   style="border:0.3px solid #444;padding:10px;text-align: left;color:#444;width:25%;">{{phone}}</th>
+                  <th  style="border:0.3px solid #444;padding:10px;text-align: left;width:25%;" >{{customerid}}</th>
+                  <th   style="border:0.3px solid #444;padding:10px;text-align: left;color:#444;width:25%;">{{address}}</th>
+               
+               </tr>
+
+            </table>
+
+            <table style="border-collapse: collapse; border:0.3px solid #444;width:100%">
+<tr>
+                  <th  style="border:0.3px solid #444;padding:10px;width:50%;text-align: left;">
+                     <strong>Device :   </strong> <span style="color:#444;">{{brand}} {{modal}}</span>  <br><br>
+                     <strong>IMEI   :   </strong> <span style="color:#444;">{{imei}}</span> 
+                  </th>
+                  <th  style="border:0.3px solid #444;padding:10px;width:50%;text-align: left">
+                     <strong>Invoice Number    :   </strong> <span style="color:#444;">{{serviceref}}</span> <br><br>
+                     <strong>Invoice Date   :   </strong> <span style="color:#444;">{{currentdate}}</span> 
+                  </th>
+               </tr>
+                </table>
+
+
+            <table style="border-collapse: collapse; border:0.3px solid #444;width:100%">
+
+              <tr >
+    
+                  <th  style="border:0.3px solid #444;width:25%;padding:8px;background-color: #dee2e6;" class="fw-bold">Product</th>
+                  <th  style="border:0.3px solid #444;width:25%;padding:8px;background-color: #dee2e6;" class="fw-bold">Brand</th>
+                  <th  style="border:0.3px solid #444;width:25%;padding:8px;background-color: #dee2e6;" class="fw-bold">Modal</th>
+                  <th  style="border:0.3px solid #444;width:25%;padding:8px;background-color: #dee2e6;" class="fw-bold">IMEI</th>
+                  <!-- <th  style="border:0.3px solid #444;width:20%;padding:8px;background-color: #dee2e6;" class="fw-bold">Charge</th> -->
+
+    
+    
+                </tr>
+                <tr >
+    
+                    <td  style="border:0.3px solid #444;width:25%;padding:8px;">{{product}}</td>
+                    <td  style="border:0.3px solid #444;width:25%;padding:8px;">{{brand}}</td>
+                    <td  style="border:0.3px solid #444;width:25%;padding:8px;">{{modal}}</td>
+                    <td  style="border:0.3px solid #444;width:25%;padding:8px;">{{imei}}</td>
+                    <!-- <td  style="border:0.3px solid #444;width:20%;padding:8px;">{{service_charge}}</td> -->
+  
+      
+      
+                  </tr>
+
+                 
+
+                  <tr>
+                    <td style="width:25%;" ></td>
+                    <!-- <td style="width:20%;" ></td> -->
+                    <td style="width:25%;" ></td>
+                    <th style="border:0.3px solid #444;padding:8px;width:25%;background-color: #dee2e6;" class="fw-bold">Total</th>
+                    <td  style="border:0.3px solid #444;padding:8px;width:25%;">{{totalamount}}</td>
+                  </tr>
+                  <tr>
+                     <td style="width:25%;" ></td>
+                    <!-- <td style="width:20%;" ></td> -->
+                    <td style="width:25%;" ></td>
+                     <th style="border:0.3px solid #444;padding:8px;width:25%;background-color: #dee2e6;" class="fw-bold">GST {{servicetax}}%</th>
+                     <td  style="border:0.3px solid #444;padding:8px;width:25%;">{{totaltax}}</td>
+                   </tr>
+                  <tr>
+                     <td style="width:25%;" ></td>
+                     <!-- <td style="width:20%;" ></td> -->
+                     <td style="width:25%;" ></td>
+                    <th style="border:0.3px solid #444;padding:8px;width:25%;background-color: #dee2e6;" class="fw-bold">Discount</th>
+                   
+                    <td  style="border:0.3px solid #444;padding:8px;width:25%;">{{discount}}</td>
+                   
+                 
+                  </tr>
+                  <tr>
+                     <td style="width:25%;" ></td>
+                    <!-- <td style="width:20%;" ></td> -->
+                    <td style="width:25%;" ></td>
+                     <th style="border:0.3px solid #444;padding:8px;width:25%;background-color: #dee2e6;" class="fw-bold">Final Amount</th>
+                     <td  style="border:0.3px solid #444;padding:8px;width:25%;">{{finalamount}}</td>
+                   </tr>
+                  <tr>
+                     <td style="width:25%;" ></td>
+                     <!-- <td style="width:20%;" ></td> -->
+                     <td style="width:25%;" ></td>
+                    <th  style="border:0.3px solid #444;padding:8px;width:25%;background-color: #dee2e6;" class="fw-bold">Amount Recieved</th>
+                    <td  style="border:0.3px solid #444;padding:8px;width:25%;">{{amountrecieved}}</td>
+                  </tr>
+                  <tr>
+                     <td style="width:25%;" ></td>
+                     <!-- <td style="width:20%;" ></td> -->
+                     <td style="width:25%;" ></td>
+                    <th  style="border:0.3px solid #444;padding:8px;width:25%;background-color: #dee2e6;" class="fw-bold">Due Balance</th>
+                    <td  style="border:0.3px solid #444;padding:8px;width:25%;">{{duebalance}}</td>
+                  </tr> 
+        </table>
+        <div style="margin-top:20px;width:100%;">
+      
+            
+         <div style="width:100%;">
+           {% if image1 %}
+<img style="width:33%;"  src="{{image1}}" alt="">
+          {% endif %}
+          {% if image2 %}
+              <img style="width:33%;"  src="{{image2}}" alt="">
+              {% endif %}
+              {% if image3 %}
+              <img style="width:33%;"  src="{{image3}}" alt="">
+              {% endif %}
+           </div>
+   
+
+           <div style="width:100%;">
+              {% if image4 %}
+              <img style="width:33%;"  src="{{image4}}" alt="">
+              {% endif %}
+              {% if image5 %}
+              <img style="width:33%;"  src="{{image5}}" alt="">
+              {% endif %}
+              {% if image6 %}
+              <img style="width:33%;"   src="{{image6}}" alt="">
+              {% endif %}
+           </div>
+          
+      
+
+        </div>
+              
+        <br><br>
+        
+
+        <div >
+
+          
+
+           <p style="font-size:13px;" >Thank you for your bussiness, The work is complete, and your payment is due upon pickup. Don't hesitate to contact us promptly if you have any questions about anything we did.</p>
+           <p style="font-size:13px;">Phone : {{phone}} </p>
+
+        </div>
+        <br>
+        <br><br>
+        <table style="width:100%;">
+         <thead>
+            <th style="width:25%;">
+            <div style="text-align: left;">
+                  <p style="font-size:13px;" class="fw-bold">Manager Signature   </p>
+               </div>
+               
+            </th>
+
+            <th style="width:25%;">
+      
+            </th>
+            <th style="width:25%;">
+      
+            </th>
+            <th style="width:25%;">
+               <div style="text-align: right;">
+                 
+                  <p style="font-size:13px;" class="fw-bold"m>Client Signature</p>
+               </div>
+            </th>
+         </thead>
+      </table>
+         <!-- <br><br> -->
+        
+<br>
+<br>
+      
+
+         <!-- <a data-toggle="modal" data-target="#serviceprintmodal"  class="btn fw-bold btn-success float-right text-white  ps-4 pe-4 mt-3" >Print</i></a> -->
+
+      </div>
+
+     
+
+     
+   </body>
+</html>
+
+
+
+
+
+
+ 
+
+
+
+
+
+                     </div>
+
+
+                   </div>
+                  </div>
+
+
+
+
+
+
+               
+
+
+
+
+               </div>
+
+
+
+
+
+
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="serviceprintmodal">
+   <div class="modal-dialog">
+     <div class="modal-content p-0 w-100">
+       <div
+         class="modal-header   d-flex justify-content-between align-items-center m"
+         style="background-color:#4555B9"
+       >
+         <h5 class="modal-title text-white"><strong>Print</strong></h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="text-white" aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <!-- <hr class="horizontal-line" /> -->
+       <div class="modal-body">
+       <form action="{% url 'serviceprint' serviceref=serviceref %}" id="serivceorderivoiceform" target="_blank" method="POST">
+         {% csrf_token %}
+        
+
+         <div
+                          class="modal-body mt-3 mb-3 "
+                          style="
+                          padding-top: 0px;
+                          padding-bottom: 0px;
+                      " >
+
+                        
+                
+              
+                        <div class="form-check d-flex justify-content-center align-items-center">
+                           <div class="w-50">
+                          <input class="form-check-input" type="radio" name="flexRadioDefault" value="invoice" id="flexRadioDefault1" checked >
+                          <label class="form-check-label text-left" for="flexRadioDefault1" style="text-align:left;">
+                            Invoice
+                          </label>
+                        </div>
+                        </div>
+                       
+
+
+                
+                    
+
+                        
+                         
+                         
+
+                       
+                         
+                        </div>
+                    
+       
+      </div>
+
+      <div class="modal-footer ">
+         <button type="submit"  class="btn btn-primary border-0 p-2 ps-3 pe-3" style="background-color:#4555B9">
+            Print
+          </button>
+      </div>
+      </form>
+
+     </div>
+   </div>
+ </div>
+
+
+
+
+
+ <div class="modal fade" tabindex="-1" id="servicecheckoutmodal">
+   <div class="modal-dialog">
+     <div class="modal-content p-0 w-100">
+       <div
+         class="modal-header d-flex justify-content-between align-items-center m"
+         style="background-color:#4555B9;"
+       >
+         <h5 class="modal-title text-white"><strong>Service Checkout</strong></h5>
+        
+
+         {% if status == 'CNP Completed(Ok)' %} 
+          <div class="d-flex align-items-center">
+            {% if servicetax == 0 %}
+            <input type="checkbox"  class=" me-1" name="servicetaxcheck" id="servicetaxcheck" checked>
+            {% else %}
+            <input type="checkbox"  class=" me-1" name="servicetaxcheck" id="servicetaxcheck" >
+            {% endif %}
+            <label for="servicetaxcheck" ><p class="p-0 m-0 text-white" >No Service Tax</p></label>
+          </div>
+          {% endif %}
+       </div>
+     
+       <form action="{% url 'servicebillingcheckout' servicerefnumber=serviceref %}" method="post">
+         {% csrf_token %}
+
+
+       <div class="modal-body">
+
+          <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 fw-bold">
+               <p class="fw-bold">Payment Mode :</p>
+               
+            </div>
+            <div class="col-lg-6 col-md-6">
+               <select class="form-control border-0 bg-white {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} " name="paymentmode" id="paymentmode" required>
+                 <option  value="">Select Payment Mode</option>
+                  {% for mode in paymentmode %}
+                  <option value="{{mode.name}}">{{mode.name}}</option>
+                  {% endfor %}
+              </select>
+            
+            </div>
+         </div>
+
+         <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 " >
+               <p class="fw-bold">Service Charge Incl Tax :</p>
+                  
+            </div>
+            <div class="col-lg-6 col-md-6">
+
+               <input type="number" min="0" step="0.01" value="{{service_charge}}" id="servicecost_old" hidden>
+               <input  required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %}  type="number"  value="{{service_charge}}" min="0" id="servicecost" name="servicecost" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %}  no-spinner-pad-sc " style="background:none;" >
+            </div>
+         </div>
+
+      <div class="row mb-2">
+         <div class="col-lg-6 col-md-6 " >
+            <p class="fw-bold">Total Incl Tax :</p>
+               
+         </div>
+         <div class="col-lg-6 col-md-6">
+            <input type="text" name="firstname" value="{{firstname}}" hidden>
+         <input type="text" name="lastname" value="{{lastname}}" hidden>
+            <input readonly type="number"  value="{{totalamount}}" min="0" id="finaltotal" name="finaltotal" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+            <input readonly type="number" hidden  value="{{totalamount}}" min="0" id="finaltotal_old"  step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+         </div>
+      </div>
+      <div class="row mb-2">
+         <div class="col-lg-6 col-md-6 fw-bold">
+            <p class="fw-bold">Service Tax {{servicetax}}% :</p>
+            
+         </div>
+         <div class="col-lg-6 col-md-6">
+            <input readonly type="number"  min="0" value="{{totaltax}}" id="totaltaxcheckout"  name="totaltaxcheckout" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+         
+         </div>
+      </div>
+      <div class="row mb-2">
+         <div class="col-lg-6 col-md-6 fw-bold">
+            <p class="fw-bold">Spare Tax :</p>
+            
+         </div>
+         <div class="col-lg-6 col-md-6">
+            <input readonly type="number"  min="0" value="{{spare_tax|floatformat:2}}" id="sparetx2"  name="sparetx2" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;" >
+         
+         </div>
+      </div>
+      <div class="row mb-2">
+         <div class="col-lg-6 col-md-6 fw-bold">
+            <p class="fw-bold">Discount :</p>
+            
+         </div>
+         <div class="col-lg-6 col-md-6">
+            <div class="row">
+               <div class="col-sm-4 col-md-4 col-lg-4">
+                  <select name="finaldiscountmethod" id="finaldiscountmethod" class="form-control border-0 border-bottom">
+                     <option value="{{discountmethod_selected}}" selected>{% if discountmethod_selected == 'Percentage' %}%{% else %}{{discountmethod_selected}}{% endif %}</option>
+                     <option value="Flat">Flat</option>
+                     <option value="Percentage">%</option>
+                  </select>
+               </div>
+               <div class="col-sm-8 col-md-8 col-lg-8">
+                 
+               
+               
+                  {% if discountmethod_selected == 'Percentage' %}
+                  <input  required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number"  min="0" value="{{discountperc}}" id="finaldiscount"  name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc " style="background:none;" >
+                  {% else %}
+                  <input  required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number"  min="0" value="{{discount}}" id="finaldiscount"  name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc " style="background:none;" >
+                  {% endif %}
+               </div>
+               
+             
+            </div>
+          
+         
+         </div>
+      </div>
+      <div class="row mb-2">
+         <div class="col-lg-6 col-md-6 fw-bold">
+            <p class="fw-bold">Final Amount :</p>
+            
+         </div>
+         <div class="col-lg-6 col-md-6">
+            <input type="number" readonly value="{{finalamount}}" id="finalfinalamount"   min="0" name="finalfinalamount" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;">
+         
+         </div>
+      </div>
+      <div class="row mb-2">
+         <div class="col-lg-6 col-md-6 fw-bold">
+            <p class="fw-bold">Amount Received :</p>
+            
+         </div>
+         <div class="col-lg-6 col-md-6">
+            <input  type="number" min="0" value="{{amountrecieved}}" id="finalamountreceivedold"  hidden  step="0.01" class="form-control border-0 border-bottom" >
+            <input required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number" min="0" value="{{amountrecieved}}" id="finalamountreceived"  name="finalamountreceived" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc" style="background:none;" >
+         
+         </div>
+      </div>
+      <div class="row" style="margin-bottom:38px;">
+         <div class="col-lg-6 col-md-6 fw-bold">
+            <p class="fw-bold">Due Balance:</p>
+            
+         </div>
+         <div class="col-lg-6 col-md-6">
+            <input type="number" readonly min="0" value="{{duebalance}}" id="finalduebalance"  name="finalduebalance" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+         
+         </div>
+      </div>
+
+      <div class="modal-footer">
+         <button type="submit" class="btn btn-primary">Save</button>
+       </div>
+     
+   </form>
+          
+    
+     </div>
+   </div>
+ </div>
+
+
+
+
+
+ <!-- <div class="modal fade" tabindex="-1" id="servicecheckoutmodal">
+   <div class="modal-dialog modal-lg">
+       <div class="modal-content p-0 w-50">
+           <div class="modal-header text-white" style="background-color:#4555B9;>
+               <h5 class="modal-title">Service Checkout</h5>
+               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+           <div class="modal-body">
+               <div class="mb-3 row">
+                   <label for="paymentMode" class="col-sm-4 col-form-label">Payment Mode:</label>
+                   <div class="col-sm-8">
+                       <select class="form-select" id="paymentMode">
+                           <option>Select Payment Mode</option>
+                       </select>
+                   </div>
+               </div>
+
+               <h6 class="mt-4 mb-1 fw-bold text-left ">Spare Parts</h6>
+               <div class="table-responsive">
+                   <table class="table table-striped">
+                       <thead>
+                           <tr>
+                               <th>Name</th>
+                               <th class="text-end">Price (ex. tax)</th>
+                               <th class="text-end">Tax</th>
+                               <th class="text-end">Quantity</th>
+                               <th class="text-end">Total</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <tr>
+                               <td>Spare Part 1</td>
+                               <td class="text-end">100.00</td>
+                               <td class="text-end">15.00</td>
+                               <td class="text-end">1</td>
+                               <td class="text-end">115.00</td>
+                           </tr>
+                           <tr>
+                               <td>Spare Part 2</td>
+                               <td class="text-end">200.00</td>
+                               <td class="text-end">30.00</td>
+                               <td class="text-end">2</td>
+                               <td class="text-end">460.00</td>
+                           </tr>
+                       </tbody>
+                   </table>
+               </div>
+
+               <div class="row mt-4">
+                   <div class="col-lg-12 ">
+                       <ul class="list-group">
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Service Charge Incl Tax:</span>
+                               <strong>200.00</strong>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Total Incl Tax:</span>
+                               <strong>775.00</strong>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Service Tax 15.0%:</span>
+                               <strong>26.09</strong>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Spare Tax:</span>
+                               <strong>75.00</strong>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Discount:</span>
+                               <strong>Flat 0.0</strong>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Final Amount:</span>
+                               <strong>775.00</strong>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between align-items-center">
+                               <span>Amount Received:</span>
+                               <input type="number" class="form-control w-50 text-end" value="0.00">
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Due Balance:</span>
+                               <strong>775.00</strong>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-primary w-100">Save</button>
+           </div>
+       </div>
+   </div>
+</div> -->
+
+
+
+{% endblock %}

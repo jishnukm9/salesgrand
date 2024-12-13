@@ -1,0 +1,400 @@
+DEBUG 2024-09-19 00:03:47,078 views 16528 6788 Service entry form submission start SR24
+DEBUG 2024-09-19 00:03:51,830 views 16528 6788 Service entry form submission end
+DEBUG 2024-09-19 00:03:51,831 views 16528 6788 Form submission took 4.75 seconds.
+WARNING 2024-09-19 00:03:51,832 custom_middleware 16528 6788 Slow request: /addservice/ took 4.76 seconds.
+WARNING 2024-09-19 00:04:37,323 custom_middleware 16528 4356 Slow request: /serviceupdateform/SR23/ took 1.28 seconds.
+DEBUG 2024-09-19 00:07:00,072 views 16528 14976 Service entry form submission start SR25
+DEBUG 2024-09-19 00:07:06,052 views 16528 14976 Service entry form submission end
+DEBUG 2024-09-19 00:07:06,053 views 16528 14976 Form submission took 5.98 seconds.
+WARNING 2024-09-19 00:07:06,055 custom_middleware 16528 14976 Slow request: /addservice/ took 6.01 seconds.
+WARNING 2024-09-19 00:22:36,764 custom_middleware 11912 3828 Slow request: / took 1.66 seconds.
+WARNING 2024-09-19 00:22:38,893 custom_middleware 11912 17556 Slow request: /get_customers_monthly/ took 1.01 seconds.
+WARNING 2024-09-19 00:22:40,299 custom_middleware 11912 9252 Slow request: /get_sales_monthly/ took 1.05 seconds.
+WARNING 2024-09-19 00:22:41,961 custom_middleware 11912 4616 Slow request: / took 2.86 seconds.
+WARNING 2024-09-19 00:22:44,350 custom_middleware 11912 4616 Slow request: /get_call_schedule_notifications/ took 1.36 seconds.
+WARNING 2024-09-19 00:22:44,402 custom_middleware 11912 17556 Slow request: /get_notifications/ took 1.17 seconds.
+WARNING 2024-09-19 00:22:44,601 custom_middleware 11912 9252 Slow request: /get_customers_monthly/ took 1.18 seconds.
+WARNING 2024-09-19 00:22:44,635 custom_middleware 11912 16192 Slow request: /get_technician_performance/ took 1.12 seconds.
+WARNING 2024-09-19 00:22:44,676 custom_middleware 11912 15944 Slow request: /get_purchase_monthly/ took 1.06 seconds.
+WARNING 2024-09-19 00:22:47,302 custom_middleware 11912 3828 Slow request: / took 2.42 seconds.
+WARNING 2024-09-19 00:22:49,918 custom_middleware 11912 15944 Slow request: /get_customers_monthly/ took 1.22 seconds.
+WARNING 2024-09-19 00:22:49,953 custom_middleware 11912 9252 Slow request: /get_technician_performance/ took 1.17 seconds.
+WARNING 2024-09-19 00:22:49,982 custom_middleware 11912 16192 Slow request: /get_purchase_monthly/ took 1.12 seconds.
+WARNING 2024-09-19 00:22:52,575 custom_middleware 11912 4616 Slow request: / took 2.43 seconds.
+WARNING 2024-09-19 00:22:55,610 custom_middleware 11912 16192 Slow request: /get_purchase_monthly/ took 1.11 seconds.
+WARNING 2024-09-19 00:22:55,642 custom_middleware 11912 3828 Slow request: /get_customers_monthly/ took 1.24 seconds.
+WARNING 2024-09-19 00:22:55,693 custom_middleware 11912 9252 Slow request: /get_technician_performance/ took 1.24 seconds.
+WARNING 2024-09-19 00:22:57,402 custom_middleware 11912 15944 Slow request: /get_service_booking_count/ took 1.10 seconds.
+WARNING 2024-09-19 00:22:57,645 custom_middleware 11912 4616 Slow request: /get_sales_monthly/ took 1.71 seconds.
+WARNING 2024-09-19 00:22:59,186 custom_middleware 11912 17556 Slow request: / took 3.46 seconds.
+WARNING 2024-09-19 00:23:03,811 custom_middleware 11912 11544 Slow request: /get_purchase_monthly/ took 1.21 seconds.
+WARNING 2024-09-19 00:23:03,838 custom_middleware 11912 14416 Slow request: /get_technician_performance/ took 1.53 seconds.
+WARNING 2024-09-19 00:23:03,998 custom_middleware 11912 15800 Slow request: /get_customers_monthly/ took 1.72 seconds.
+DEBUG 2024-09-19 13:41:04,002 views 20012 11360 Service entry form submission start SN26
+DEBUG 2024-09-19 13:41:06,402 views 20012 11360 Service entry form submission end
+DEBUG 2024-09-19 13:41:06,402 views 20012 11360 Form submission took 2.40 seconds.
+WARNING 2024-09-19 13:41:06,403 custom_middleware 20012 11360 Slow request: /addservice/ took 2.41 seconds.
+WARNING 2024-09-19 13:47:51,017 custom_middleware 20012 19332 Slow request: /service_print/SR25/ took 2.38 seconds.
+WARNING 2024-09-19 14:31:31,951 custom_middleware 20012 6940 Slow request: /service_print/SN26/ took 2.43 seconds.
+DEBUG 2024-09-19 14:33:43,232 views 12436 15012 Service entry form submission start SN27
+DEBUG 2024-09-19 14:33:51,463 views 12436 15012 Service entry form submission end
+DEBUG 2024-09-19 14:33:51,464 views 12436 15012 Form submission took 8.23 seconds.
+WARNING 2024-09-19 14:33:51,465 custom_middleware 12436 15012 Slow request: /addservice/ took 8.25 seconds.
+WARNING 2024-09-19 14:38:49,764 custom_middleware 12436 9932 Slow request: /service_print/SN27/ took 2.34 seconds.
+WARNING 2024-09-19 14:40:30,394 custom_middleware 12436 9824 Slow request: /service_print/SN27/ took 2.16 seconds.
+WARNING 2024-09-19 16:49:43,765 custom_middleware 2768 23024 Slow request: /servicebillingcheckout/SR25/ took 2.73 seconds.
+WARNING 2024-09-19 16:49:58,123 custom_middleware 2768 6664 Slow request: /servicebillingcheckout/SR1/ took 2.20 seconds.
+WARNING 2024-09-19 21:48:49,107 custom_middleware 8212 15428 Slow request: /service_print/SR25/ took 2.87 seconds.
+WARNING 2024-09-19 21:49:04,944 custom_middleware 8212 12536 Slow request: /service_print/SN27/ took 3.20 seconds.
+DEBUG 2024-09-20 07:07:36,067 views 7884 10328 Service entry form submission start SN28
+DEBUG 2024-09-20 07:07:38,092 views 7884 10328 Service entry form submission end
+DEBUG 2024-09-20 07:07:38,092 views 7884 10328 Form submission took 2.02 seconds.
+WARNING 2024-09-20 07:07:38,093 custom_middleware 7884 10328 Slow request: /addservice/ took 2.04 seconds.
+DEBUG 2024-09-20 07:10:26,298 views 3828 16488 Service entry form submission start SN29
+DEBUG 2024-09-20 07:10:32,177 views 3828 16488 Service entry form submission end
+DEBUG 2024-09-20 07:10:32,178 views 3828 16488 Form submission took 5.88 seconds.
+WARNING 2024-09-20 07:10:32,180 custom_middleware 3828 16488 Slow request: /addservice/ took 5.89 seconds.
+DEBUG 2024-09-20 07:14:00,511 views 9344 8884 Service entry form submission start SN30
+DEBUG 2024-09-20 07:14:05,614 views 9344 8884 Service entry form submission end
+DEBUG 2024-09-20 07:14:05,614 views 9344 8884 Form submission took 5.10 seconds.
+WARNING 2024-09-20 07:14:05,615 custom_middleware 9344 8884 Slow request: /addservice/ took 5.11 seconds.
+DEBUG 2024-09-20 07:16:02,102 views 9344 8364 Service entry form submission start SN31
+DEBUG 2024-09-20 07:16:07,633 views 9344 8364 Service entry form submission end
+DEBUG 2024-09-20 07:16:07,633 views 9344 8364 Form submission took 5.53 seconds.
+WARNING 2024-09-20 07:16:07,634 custom_middleware 9344 8364 Slow request: /addservice/ took 5.54 seconds.
+DEBUG 2024-09-20 07:37:11,789 views 17280 8224 Service entry form submission start SN32
+DEBUG 2024-09-20 07:37:17,390 views 17280 8224 Service entry form submission end
+DEBUG 2024-09-20 07:37:17,390 views 17280 8224 Form submission took 5.60 seconds.
+WARNING 2024-09-20 07:37:17,391 custom_middleware 17280 8224 Slow request: /addservice/ took 5.61 seconds.
+DEBUG 2024-09-20 07:38:15,943 views 17280 2228 Service entry form submission start SN33
+DEBUG 2024-09-20 07:38:20,521 views 17280 2228 Service entry form submission end
+DEBUG 2024-09-20 07:38:20,521 views 17280 2228 Form submission took 4.58 seconds.
+WARNING 2024-09-20 07:38:20,522 custom_middleware 17280 2228 Slow request: /addservice/ took 4.58 seconds.
+WARNING 2024-09-23 11:37:14,888 custom_middleware 851 123145573007360 Slow request: /service_print/SN26/ took 5.96 seconds.
+WARNING 2024-09-23 11:37:50,318 custom_middleware 851 123145555681280 Slow request: /service_print/SR22/ took 4.61 seconds.
+WARNING 2024-09-23 11:39:43,446 custom_middleware 851 123145505312768 Slow request: /service_print/SR22/ took 4.83 seconds.
+WARNING 2024-09-23 11:40:18,008 custom_middleware 851 123145505312768 Slow request: /service_print/SR22/ took 5.96 seconds.
+WARNING 2024-09-23 11:57:15,971 custom_middleware 2640 123145655574528 Slow request: /servicebillingcheckout/SR24/ took 8.27 seconds.
+WARNING 2024-09-24 13:37:35,892 custom_middleware 6240 6132 Slow request: /addsale/ took 29.43 seconds.
+WARNING 2024-09-24 14:01:54,378 custom_middleware 14200 11456 Slow request: /addsale/ took 9.44 seconds.
+WARNING 2024-09-24 15:30:08,555 custom_middleware 8812 13540 Slow request: /detailed_sales_report/ took 2.27 seconds.
+WARNING 2024-09-24 16:05:57,882 custom_middleware 4336 10000 Slow request: /servicebillingcheckout/SN29/ took 5.55 seconds.
+WARNING 2024-09-24 16:24:43,546 custom_middleware 12976 15684 Slow request: /servicebillingcheckout/SR22/ took 8.48 seconds.
+WARNING 2024-09-25 08:03:48,864 custom_middleware 955 123145554186240 Slow request: /generate_purchase_pdf/PR21/view/ took 7.04 seconds.
+WARNING 2024-09-25 08:18:02,552 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 6.42 seconds.
+WARNING 2024-09-25 08:19:18,191 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 6.59 seconds.
+WARNING 2024-09-25 08:19:39,141 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 4.18 seconds.
+WARNING 2024-09-25 08:20:01,509 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 3.93 seconds.
+WARNING 2024-09-25 08:20:59,621 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 6.06 seconds.
+WARNING 2024-09-25 08:21:52,600 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 4.58 seconds.
+WARNING 2024-09-25 08:22:09,960 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 4.25 seconds.
+WARNING 2024-09-25 08:22:29,165 custom_middleware 955 123145553649664 Slow request: /generate_sale_pdf/SL12/view/ took 4.43 seconds.
+WARNING 2024-09-25 08:23:34,625 custom_middleware 955 123145620807680 Slow request: /service_print/SN31/ took 6.85 seconds.
+WARNING 2024-09-25 08:23:57,970 custom_middleware 955 123145587228672 Slow request: /service_print/SN29/ took 5.61 seconds.
+WARNING 2024-09-25 08:24:36,053 custom_middleware 955 123145587228672 Slow request: /service_print/SN29/ took 5.67 seconds.
+WARNING 2024-09-25 08:28:24,662 custom_middleware 955 123145604018176 Slow request: /servicebillingcheckout/SR23/ took 9.42 seconds.
+WARNING 2024-09-25 08:29:05,308 custom_middleware 955 123145570439168 Slow request: /service_print/SR23/ took 5.04 seconds.
+WARNING 2024-09-25 08:40:53,301 custom_middleware 4104 123145359282176 Slow request: /service_print/SR23/ took 7.33 seconds.
+WARNING 2024-09-25 08:41:25,136 custom_middleware 4104 123145376071680 Slow request: /service_print/SN29/ took 4.74 seconds.
+WARNING 2024-09-25 08:42:44,417 custom_middleware 4216 123145399214080 Slow request: /service_print/SN29/ took 6.66 seconds.
+WARNING 2024-09-25 08:43:01,768 custom_middleware 4216 123145399214080 Slow request: /generate_sale_pdf/SL12/view/ took 4.56 seconds.
+WARNING 2024-09-25 09:25:44,607 custom_middleware 5699 123145524436992 Slow request: /payment_print/PY2/ took 6.77 seconds.
+WARNING 2024-09-25 09:27:50,832 custom_middleware 5753 123145435136000 Slow request: /payment_print/PY2/ took 6.04 seconds.
+WARNING 2024-09-25 11:08:55,935 custom_middleware 6742 123145521078272 Slow request: /payment_print/PY2/ took 7.00 seconds.
+WARNING 2024-09-25 11:09:44,427 custom_middleware 6742 123145521078272 Slow request: /payment_print/PY2/ took 6.48 seconds.
+WARNING 2024-09-25 11:10:09,640 custom_middleware 6742 123145588236288 Slow request: /payment_print/PY2/ took 4.58 seconds.
+WARNING 2024-09-25 11:11:09,950 custom_middleware 6857 123145457090560 Slow request: /payment_print/PY2/ took 5.21 seconds.
+WARNING 2024-09-25 11:12:33,963 custom_middleware 6891 123145397694464 Slow request: /payment_print/PY2/ took 4.58 seconds.
+WARNING 2024-09-25 11:13:45,482 custom_middleware 6891 123145397694464 Slow request: /payment_print/PY2/ took 4.79 seconds.
+WARNING 2024-09-25 11:16:42,980 custom_middleware 7057 123145423261696 Slow request: /payment_print/PY2/ took 4.81 seconds.
+WARNING 2024-09-25 11:23:37,499 custom_middleware 7224 123145370689536 Slow request: /payment_print/PY2/ took 4.94 seconds.
+WARNING 2024-09-25 11:25:27,957 custom_middleware 7224 123145370689536 Slow request: /payment_print/PY2/ took 4.72 seconds.
+WARNING 2024-09-25 11:26:58,740 custom_middleware 7224 123145370689536 Slow request: /payment_print/PY2/ took 4.87 seconds.
+WARNING 2024-09-25 11:27:38,515 custom_middleware 7224 123145370689536 Slow request: /payment_print/PY2/ took 4.36 seconds.
+WARNING 2024-09-25 11:29:49,013 custom_middleware 7582 123145365561344 Slow request: /payment_print/PY2/ took 4.47 seconds.
+WARNING 2024-09-25 12:45:17,111 custom_middleware 7582 123145415393280 Slow request: /payment_print/PY2/ took 6.14 seconds.
+WARNING 2024-09-25 12:57:36,897 custom_middleware 9109 123145554513920 Slow request: /receipt_print/RC2/ took 4.22 seconds.
+WARNING 2024-09-25 12:58:50,615 custom_middleware 9174 123145567784960 Slow request: /receipt_print/RC2/ took 3.81 seconds.
+WARNING 2024-09-25 13:02:09,025 custom_middleware 9174 123145567248384 Slow request: /receipt_print/RC2/ took 5.11 seconds.
+WARNING 2024-09-25 13:02:52,834 custom_middleware 9174 123145567248384 Slow request: /service_print/SN29/ took 4.98 seconds.
+DEBUG 2024-09-27 07:01:42,742 views 3495 123145454743552 Service entry form submission start SN34
+DEBUG 2024-09-27 07:01:50,760 views 3495 123145454743552 Service entry form submission end
+DEBUG 2024-09-27 07:01:50,760 views 3495 123145454743552 Form submission took 8.01 seconds.
+WARNING 2024-09-27 07:01:50,762 custom_middleware 3495 123145454743552 Slow request: /addservice/ took 8.03 seconds.
+WARNING 2024-09-27 07:10:18,724 custom_middleware 3495 123145421164544 Slow request: /servicebillingcheckout/SN34/ took 5.63 seconds.
+DEBUG 2024-09-27 07:47:10,465 views 3495 123145387585536 Service entry form submission start SN35
+DEBUG 2024-09-27 07:47:17,446 views 3495 123145387585536 Service entry form submission end
+DEBUG 2024-09-27 07:47:17,447 views 3495 123145387585536 Form submission took 6.98 seconds.
+WARNING 2024-09-27 07:47:17,449 custom_middleware 3495 123145387585536 Slow request: /addservice/ took 7.00 seconds.
+WARNING 2024-09-27 08:43:07,732 custom_middleware 6044 123145448927232 Slow request: /addsale/ took 7.50 seconds.
+DEBUG 2024-09-27 08:47:41,474 views 6044 123145415348224 Service entry form submission start SN36
+DEBUG 2024-09-27 08:47:47,627 views 6044 123145415348224 Service entry form submission end
+DEBUG 2024-09-27 08:47:47,628 views 6044 123145415348224 Form submission took 6.14 seconds.
+WARNING 2024-09-27 08:47:47,629 custom_middleware 6044 123145415348224 Slow request: /addservice/ took 6.20 seconds.
+WARNING 2024-09-27 08:52:37,723 custom_middleware 6044 123145415348224 Slow request: /servicebillingcheckout/SN36/ took 6.38 seconds.
+WARNING 2024-09-28 04:33:56,971 custom_middleware 926 123145548013568 Slow request: /receipt_print/RC2/ took 5.32 seconds.
+WARNING 2024-09-28 04:34:31,948 custom_middleware 926 123145548013568 Slow request: /service_print/SN36/ took 4.34 seconds.
+WARNING 2024-10-01 10:55:40,324 custom_middleware 3006 123145525272576 Slow request: /addsale/ took 6.36 seconds.
+DEBUG 2024-10-02 07:22:44,924 views 984 123145495183360 Service entry form submission start SR1
+DEBUG 2024-10-02 07:22:51,270 views 984 123145495183360 Service entry form submission end
+DEBUG 2024-10-02 07:22:51,273 views 984 123145495183360 Form submission took 6.34 seconds.
+WARNING 2024-10-02 07:22:51,275 custom_middleware 984 123145495183360 Slow request: /addservice/ took 6.38 seconds.
+WARNING 2024-10-02 13:36:00,756 custom_middleware 5607 123145505546240 Slow request: /addsale/ took 11.55 seconds.
+WARNING 2024-10-02 19:59:52,353 custom_middleware 48509 123145527119872 Slow request: /addsale/ took 7.23 seconds.
+WARNING 2024-10-02 20:18:16,067 custom_middleware 48509 123145611067392 Slow request: /addsale/ took 5.00 seconds.
+DEBUG 2024-10-03 07:22:03,869 views 1123 123145379012608 Service entry form submission start SR1
+DEBUG 2024-10-03 07:22:13,170 views 1123 123145379012608 Service entry form submission end
+DEBUG 2024-10-03 07:22:13,171 views 1123 123145379012608 Form submission took 9.30 seconds.
+WARNING 2024-10-03 07:22:13,173 custom_middleware 1123 123145379012608 Slow request: /addservice/ took 9.31 seconds.
+DEBUG 2024-10-03 07:22:41,591 views 1123 123145378476032 Service entry form submission start SR2
+DEBUG 2024-10-03 07:22:46,642 views 1123 123145378476032 Service entry form submission end
+DEBUG 2024-10-03 07:22:46,643 views 1123 123145378476032 Form submission took 5.05 seconds.
+WARNING 2024-10-03 07:22:46,643 custom_middleware 1123 123145378476032 Slow request: /addservice/ took 5.08 seconds.
+WARNING 2024-10-03 07:25:19,755 custom_middleware 1123 123145378476032 Slow request: /servicebillingcheckout/SR2/ took 6.33 seconds.
+WARNING 2024-10-03 07:28:43,018 custom_middleware 1123 123145445634048 Slow request: /servicebillingcheckout/SR1/ took 4.91 seconds.
+DEBUG 2024-10-03 08:09:29,911 views 2270 123145427398656 Service entry form submission start SR3
+DEBUG 2024-10-03 08:09:36,915 views 2270 123145427398656 Service entry form submission end
+DEBUG 2024-10-03 08:09:36,917 views 2270 123145427398656 Form submission took 7.00 seconds.
+WARNING 2024-10-03 08:09:36,920 custom_middleware 2270 123145427398656 Slow request: /addservice/ took 7.03 seconds.
+DEBUG 2024-10-03 08:16:47,937 views 2604 123145421078528 Service entry form submission start SR1
+DEBUG 2024-10-03 08:16:53,128 views 2604 123145421078528 Service entry form submission end
+DEBUG 2024-10-03 08:16:53,128 views 2604 123145421078528 Form submission took 5.19 seconds.
+WARNING 2024-10-03 08:16:53,132 custom_middleware 2604 123145421078528 Slow request: /addservice/ took 5.21 seconds.
+WARNING 2024-10-03 08:19:29,490 custom_middleware 2604 123145404289024 Slow request: /servicebillingcheckout/SR1/ took 4.78 seconds.
+WARNING 2024-10-03 08:33:03,609 custom_middleware 2604 123145387499520 Slow request: /receipt_print/RC2/ took 4.38 seconds.
+WARNING 2024-10-03 08:34:23,240 custom_middleware 2604 123145421078528 Slow request: /addsale/ took 5.03 seconds.
+WARNING 2024-10-03 13:03:23,655 custom_middleware 2388 15664 Slow request: /accounts/login/ took 2.87 seconds.
+WARNING 2024-10-03 15:25:13,709 custom_middleware 3404 123145596887040 Slow request: /addsale/ took 5.89 seconds.
+WARNING 2024-10-03 15:26:22,114 custom_middleware 3404 123145563308032 Slow request: /addsale/ took 4.53 seconds.
+DEBUG 2024-10-04 07:38:19,810 views 3414 123145464172544 Service entry form submission start SR1
+DEBUG 2024-10-04 07:38:31,547 views 3414 123145464172544 Service entry form submission end
+DEBUG 2024-10-04 07:38:31,548 views 3414 123145464172544 Form submission took 11.63 seconds.
+WARNING 2024-10-04 07:38:31,550 custom_middleware 3414 123145464172544 Slow request: /addservice/ took 11.77 seconds.
+WARNING 2024-10-04 07:43:43,542 custom_middleware 3414 123145497751552 Slow request: /servicebillingcheckout/SR1/ took 6.10 seconds.
+WARNING 2024-10-04 07:45:15,050 custom_middleware 3414 123145464172544 Slow request: /addsale/ took 6.80 seconds.
+WARNING 2024-10-04 07:46:50,816 custom_middleware 3414 123145497751552 Slow request: /addsale/ took 6.08 seconds.
+WARNING 2024-10-04 07:50:59,946 custom_middleware 3414 123145531330560 Slow request: /addsale/ took 6.97 seconds.
+WARNING 2024-10-04 09:19:16,567 custom_middleware 5343 123145437995008 Slow request: /addsale/ took 5.64 seconds.
+WARNING 2024-10-04 09:19:38,593 custom_middleware 5343 123145437995008 Slow request: /addsale/ took 4.24 seconds.
+DEBUG 2024-10-04 11:44:55,311 views 7107 123145476452352 Service entry form submission start SR1
+DEBUG 2024-10-04 11:45:00,780 views 7107 123145476452352 Service entry form submission end
+DEBUG 2024-10-04 11:45:00,781 views 7107 123145476452352 Form submission took 5.47 seconds.
+WARNING 2024-10-04 11:45:00,783 custom_middleware 7107 123145476452352 Slow request: /addservice/ took 5.48 seconds.
+WARNING 2024-10-04 11:46:33,701 custom_middleware 7107 123145476452352 Slow request: /servicebillingcheckout/SR1/ took 4.97 seconds.
+WARNING 2024-10-04 12:25:49,940 custom_middleware 7107 123145459126272 Slow request: /payment_print/PY2/ took 4.67 seconds.
+WARNING 2024-10-04 12:30:26,772 custom_middleware 7107 123145475915776 Slow request: /generate_sale_pdf/SL3/view/ took 4.93 seconds.
+WARNING 2024-10-07 09:59:21,931 custom_middleware 2904 123145389826048 Slow request: /addsale/ took 6.08 seconds.
+WARNING 2024-10-07 11:05:44,735 custom_middleware 3465 123145472249856 Slow request: /addsale/ took 5.32 seconds.
+WARNING 2024-10-07 13:40:58,743 custom_middleware 6909 123145501376512 Slow request: /addsale/ took 5.57 seconds.
+WARNING 2024-10-07 13:44:24,796 custom_middleware 6909 123145501376512 Slow request: /addsale/ took 5.03 seconds.
+DEBUG 2024-10-07 13:50:29,101 views 7231 123145556041728 Service entry form submission start SR2
+DEBUG 2024-10-07 13:50:34,295 views 7231 123145556041728 Service entry form submission end
+DEBUG 2024-10-07 13:50:34,295 views 7231 123145556041728 Form submission took 5.19 seconds.
+WARNING 2024-10-07 13:50:34,296 custom_middleware 7231 123145556041728 Slow request: /addservice/ took 5.21 seconds.
+DEBUG 2024-10-07 13:50:51,968 views 7231 123145589620736 Service entry form submission start SR3
+DEBUG 2024-10-07 13:50:56,233 views 7231 123145589620736 Service entry form submission end
+DEBUG 2024-10-07 13:50:56,233 views 7231 123145589620736 Form submission took 4.26 seconds.
+WARNING 2024-10-07 13:50:56,234 custom_middleware 7231 123145589620736 Slow request: /addservice/ took 4.28 seconds.
+DEBUG 2024-10-07 13:51:16,077 views 7231 123145606410240 Service entry form submission start SR4
+DEBUG 2024-10-07 13:51:20,673 views 7231 123145606410240 Service entry form submission end
+DEBUG 2024-10-07 13:51:20,674 views 7231 123145606410240 Form submission took 4.60 seconds.
+WARNING 2024-10-07 13:51:20,675 custom_middleware 7231 123145606410240 Slow request: /addservice/ took 4.62 seconds.
+DEBUG 2024-10-07 13:51:39,345 views 7231 123145589620736 Service entry form submission start SR5
+DEBUG 2024-10-07 13:51:43,878 views 7231 123145589620736 Service entry form submission end
+DEBUG 2024-10-07 13:51:43,879 views 7231 123145589620736 Form submission took 4.53 seconds.
+WARNING 2024-10-07 13:51:43,880 custom_middleware 7231 123145589620736 Slow request: /addservice/ took 4.55 seconds.
+DEBUG 2024-10-07 13:52:02,472 views 7231 123145539252224 Service entry form submission start SR6
+DEBUG 2024-10-07 13:52:06,920 views 7231 123145539252224 Service entry form submission end
+DEBUG 2024-10-07 13:52:06,920 views 7231 123145539252224 Form submission took 4.45 seconds.
+WARNING 2024-10-07 13:52:06,921 custom_middleware 7231 123145539252224 Slow request: /addservice/ took 4.47 seconds.
+DEBUG 2024-10-07 13:52:26,168 views 7231 123145589620736 Service entry form submission start SR7
+DEBUG 2024-10-07 13:52:30,919 views 7231 123145589620736 Service entry form submission end
+DEBUG 2024-10-07 13:52:30,920 views 7231 123145589620736 Form submission took 4.75 seconds.
+WARNING 2024-10-07 13:52:30,921 custom_middleware 7231 123145589620736 Slow request: /addservice/ took 4.77 seconds.
+DEBUG 2024-10-07 13:52:48,909 views 7231 123145539252224 Service entry form submission start SR8
+DEBUG 2024-10-07 13:52:53,418 views 7231 123145539252224 Service entry form submission end
+DEBUG 2024-10-07 13:52:53,418 views 7231 123145539252224 Form submission took 4.51 seconds.
+WARNING 2024-10-07 13:52:53,419 custom_middleware 7231 123145539252224 Slow request: /addservice/ took 4.54 seconds.
+DEBUG 2024-10-07 13:53:10,897 views 7231 123145539252224 Service entry form submission start SR9
+DEBUG 2024-10-07 13:53:15,698 views 7231 123145539252224 Service entry form submission end
+DEBUG 2024-10-07 13:53:15,699 views 7231 123145539252224 Form submission took 4.80 seconds.
+WARNING 2024-10-07 13:53:15,700 custom_middleware 7231 123145539252224 Slow request: /addservice/ took 4.82 seconds.
+DEBUG 2024-10-07 13:53:35,218 views 7231 123145606410240 Service entry form submission start SR10
+DEBUG 2024-10-07 13:53:40,229 views 7231 123145606410240 Service entry form submission end
+DEBUG 2024-10-07 13:53:40,229 views 7231 123145606410240 Form submission took 5.01 seconds.
+WARNING 2024-10-07 13:53:40,230 custom_middleware 7231 123145606410240 Slow request: /addservice/ took 5.03 seconds.
+DEBUG 2024-10-07 13:53:59,787 views 7231 123145589620736 Service entry form submission start SR11
+DEBUG 2024-10-07 13:54:04,222 views 7231 123145589620736 Service entry form submission end
+DEBUG 2024-10-07 13:54:04,222 views 7231 123145589620736 Form submission took 4.43 seconds.
+WARNING 2024-10-07 13:54:04,223 custom_middleware 7231 123145589620736 Slow request: /addservice/ took 4.45 seconds.
+DEBUG 2024-10-07 14:02:21,982 views 7231 123145556041728 Service entry form submission start SR12
+DEBUG 2024-10-07 14:02:27,064 views 7231 123145556041728 Service entry form submission end
+DEBUG 2024-10-07 14:02:27,064 views 7231 123145556041728 Form submission took 5.08 seconds.
+WARNING 2024-10-07 14:02:27,065 custom_middleware 7231 123145556041728 Slow request: /addservice/ took 5.09 seconds.
+DEBUG 2024-10-08 09:22:12,838 views 3725 123145462996992 Service entry form submission start SR1
+DEBUG 2024-10-08 09:22:18,288 views 3725 123145462996992 Service entry form submission end
+DEBUG 2024-10-08 09:22:18,288 views 3725 123145462996992 Form submission took 5.45 seconds.
+WARNING 2024-10-08 09:22:18,289 custom_middleware 3725 123145462996992 Slow request: /addservice/ took 5.46 seconds.
+WARNING 2024-10-08 12:28:25,780 custom_middleware 3725 123145412091904 Slow request: /addsale/ took 5.62 seconds.
+DEBUG 2024-10-10 12:06:48,516 views 3916 123145662169088 Service entry form submission start SR2
+DEBUG 2024-10-10 12:06:56,977 views 3916 123145662169088 Service entry form submission end
+DEBUG 2024-10-10 12:06:56,978 views 3916 123145662169088 Form submission took 8.45 seconds.
+WARNING 2024-10-10 12:06:56,982 custom_middleware 3916 123145662169088 Slow request: /addservice/ took 8.47 seconds.
+DEBUG 2024-10-10 12:07:26,840 views 3916 123145662169088 Service entry form submission start SR3
+DEBUG 2024-10-10 12:07:33,810 views 3916 123145662169088 Service entry form submission end
+DEBUG 2024-10-10 12:07:33,811 views 3916 123145662169088 Form submission took 6.97 seconds.
+WARNING 2024-10-10 12:07:33,812 custom_middleware 3916 123145662169088 Slow request: /addservice/ took 6.98 seconds.
+DEBUG 2024-10-10 12:41:48,568 views 4710 123145552920576 Service entry form submission start SR4
+DEBUG 2024-10-10 12:41:54,119 views 4710 123145552920576 Service entry form submission end
+DEBUG 2024-10-10 12:41:54,121 views 4710 123145552920576 Form submission took 5.55 seconds.
+WARNING 2024-10-10 12:41:54,122 custom_middleware 4710 123145552920576 Slow request: /addservice/ took 5.57 seconds.
+WARNING 2024-10-10 14:04:36,804 custom_middleware 6750 123145531781120 Slow request: /servicebillingcheckout/SR1/ took 6.86 seconds.
+DEBUG 2024-10-10 15:14:48,230 views 8984 123145497317376 Service entry form submission start SR5
+DEBUG 2024-10-10 15:14:53,895 views 8984 123145497317376 Service entry form submission end
+DEBUG 2024-10-10 15:14:53,895 views 8984 123145497317376 Form submission took 5.66 seconds.
+WARNING 2024-10-10 15:14:53,897 custom_middleware 8984 123145497317376 Slow request: /addservice/ took 5.68 seconds.
+WARNING 2024-10-11 19:35:57,419 custom_middleware 2609 123145404964864 Slow request: /service_print/SR1/ took 5.77 seconds.
+WARNING 2024-10-11 19:36:35,684 custom_middleware 2651 123145410269184 Slow request: /service_print/SR1/ took 4.62 seconds.
+WARNING 2024-10-11 19:37:39,739 custom_middleware 2744 123145573507072 Slow request: /service_print/SR1/ took 4.94 seconds.
+WARNING 2024-10-11 19:40:36,544 custom_middleware 2833 123145527324672 Slow request: /service_print/SR1/ took 4.60 seconds.
+WARNING 2024-10-11 20:01:05,430 custom_middleware 3074 123145406099456 Slow request: /servicebillingcheckout/SR3/ took 4.93 seconds.
+WARNING 2024-10-11 20:01:14,830 custom_middleware 3074 123145389309952 Slow request: /service_print/SR3/ took 4.63 seconds.
+WARNING 2024-10-12 05:24:20,364 custom_middleware 795 123145471377408 Slow request: /service_print/SR3/ took 8.00 seconds.
+WARNING 2024-10-12 05:39:52,538 custom_middleware 795 123145504956416 Slow request: /servicebillingcheckout/SR2/ took 4.57 seconds.
+WARNING 2024-10-12 05:40:03,747 custom_middleware 795 123145471377408 Slow request: /service_print/SR2/ took 4.28 seconds.
+DEBUG 2024-10-12 06:15:08,859 views 1728 123145459544064 Service entry form submission start SR6
+DEBUG 2024-10-12 06:15:18,989 views 1728 123145459544064 Service entry form submission end
+DEBUG 2024-10-12 06:15:18,989 views 1728 123145459544064 Form submission took 10.13 seconds.
+WARNING 2024-10-12 06:15:18,990 custom_middleware 1728 123145459544064 Slow request: /addservice/ took 10.14 seconds.
+DEBUG 2024-10-12 06:16:11,735 views 1728 123145459544064 Service entry form submission start SR7
+DEBUG 2024-10-12 06:16:16,523 views 1728 123145459544064 Service entry form submission end
+DEBUG 2024-10-12 06:16:16,523 views 1728 123145459544064 Form submission took 4.79 seconds.
+WARNING 2024-10-12 06:16:16,524 custom_middleware 1728 123145459544064 Slow request: /addservice/ took 4.81 seconds.
+DEBUG 2024-10-12 06:19:30,505 views 1728 123145442754560 Service entry form submission start SR8
+DEBUG 2024-10-12 06:19:37,033 views 1728 123145442754560 Service entry form submission end
+DEBUG 2024-10-12 06:19:37,034 views 1728 123145442754560 Form submission took 6.53 seconds.
+WARNING 2024-10-12 06:19:37,034 custom_middleware 1728 123145442754560 Slow request: /addservice/ took 6.54 seconds.
+DEBUG 2024-10-12 06:23:29,318 views 2107 123145531883520 Service entry form submission start SR9
+DEBUG 2024-10-12 06:23:34,527 views 2107 123145531883520 Service entry form submission end
+DEBUG 2024-10-12 06:23:34,527 views 2107 123145531883520 Form submission took 5.21 seconds.
+WARNING 2024-10-12 06:23:34,529 custom_middleware 2107 123145531883520 Slow request: /addservice/ took 5.23 seconds.
+DEBUG 2024-10-12 06:24:27,569 views 2107 123145531883520 Service entry form submission start SR10
+DEBUG 2024-10-12 06:24:31,873 views 2107 123145531883520 Service entry form submission end
+DEBUG 2024-10-12 06:24:31,873 views 2107 123145531883520 Form submission took 4.30 seconds.
+WARNING 2024-10-12 06:24:31,874 custom_middleware 2107 123145531883520 Slow request: /addservice/ took 4.32 seconds.
+DEBUG 2024-10-12 06:26:07,029 views 2235 123145525870592 Service entry form submission start SR11
+DEBUG 2024-10-12 06:30:04,269 views 2319 123145521664000 Service entry form submission start SR11
+DEBUG 2024-10-12 06:30:39,674 views 2319 123145538453504 Service entry form submission start SR11
+DEBUG 2024-10-12 06:30:44,748 views 2319 123145538453504 Service entry form submission end
+DEBUG 2024-10-12 06:30:44,749 views 2319 123145538453504 Form submission took 5.07 seconds.
+WARNING 2024-10-12 06:30:44,753 custom_middleware 2319 123145538453504 Slow request: /addservice/ took 5.09 seconds.
+DEBUG 2024-10-12 09:57:37,111 views 3206 123145602220032 Service entry form submission start SR12
+DEBUG 2024-10-12 09:59:07,665 views 3206 123145535062016 Service entry form submission start SR12
+DEBUG 2024-10-12 09:59:16,854 views 3206 123145535062016 Service entry form submission end
+DEBUG 2024-10-12 09:59:16,855 views 3206 123145535062016 Form submission took 9.19 seconds.
+WARNING 2024-10-12 09:59:16,856 custom_middleware 3206 123145535062016 Slow request: /addservice/ took 9.20 seconds.
+DEBUG 2024-10-12 10:43:49,785 views 3506 123145589547008 Service entry form submission start SR13
+DEBUG 2024-10-12 10:43:57,607 views 3506 123145589547008 Service entry form submission end
+DEBUG 2024-10-12 10:43:57,607 views 3506 123145589547008 Form submission took 7.82 seconds.
+WARNING 2024-10-12 10:43:57,683 custom_middleware 3506 123145589547008 Slow request: /addservice/ took 7.91 seconds.
+DEBUG 2024-10-12 11:25:20,127 views 3646 123145346867200 Service entry form submission start SR14
+DEBUG 2024-10-12 11:25:28,087 views 3646 123145346867200 Service entry form submission end
+DEBUG 2024-10-12 11:25:28,087 views 3646 123145346867200 Form submission took 7.96 seconds.
+WARNING 2024-10-12 11:25:28,088 custom_middleware 3646 123145346867200 Slow request: /addservice/ took 7.98 seconds.
+DEBUG 2024-10-12 11:37:46,274 views 3730 123145353461760 Service entry form submission start SR15
+DEBUG 2024-10-12 11:37:51,094 views 3730 123145353461760 Service entry form submission end
+DEBUG 2024-10-12 11:37:51,094 views 3730 123145353461760 Form submission took 4.82 seconds.
+WARNING 2024-10-12 11:37:51,096 custom_middleware 3730 123145353461760 Slow request: /addservice/ took 4.83 seconds.
+WARNING 2024-10-12 11:43:44,453 custom_middleware 3745 123145410957312 Slow request: /servicebillingcheckout/SR15/ took 6.94 seconds.
+DEBUG 2024-10-12 11:45:54,414 views 3779 123145532825600 Service entry form submission start SR16
+DEBUG 2024-10-12 11:46:01,504 views 3779 123145532825600 Service entry form submission end
+DEBUG 2024-10-12 11:46:01,504 views 3779 123145532825600 Form submission took 7.09 seconds.
+WARNING 2024-10-12 11:46:01,505 custom_middleware 3779 123145532825600 Slow request: /addservice/ took 7.10 seconds.
+WARNING 2024-10-12 11:54:03,307 custom_middleware 3779 123145565868032 Slow request: /servicebillingcheckout/SR16/ took 5.93 seconds.
+DEBUG 2024-10-12 11:54:46,056 views 3779 123145582657536 Service entry form submission start SR17
+DEBUG 2024-10-12 11:54:51,275 views 3779 123145582657536 Service entry form submission end
+DEBUG 2024-10-12 11:54:51,276 views 3779 123145582657536 Form submission took 5.22 seconds.
+WARNING 2024-10-12 11:54:51,276 custom_middleware 3779 123145582657536 Slow request: /addservice/ took 5.23 seconds.
+WARNING 2024-10-12 11:56:03,019 custom_middleware 3779 123145515499520 Slow request: /servicebillingcheckout/SR17/ took 5.93 seconds.
+WARNING 2024-10-12 11:56:20,091 custom_middleware 3779 123145532289024 Slow request: /service_print/SR17/ took 4.70 seconds.
+DEBUG 2024-10-12 11:57:18,681 views 3779 123145549078528 Service entry form submission start SR18
+DEBUG 2024-10-12 11:57:26,078 views 3779 123145549078528 Service entry form submission end
+DEBUG 2024-10-12 11:57:26,078 views 3779 123145549078528 Form submission took 7.40 seconds.
+WARNING 2024-10-12 11:57:26,079 custom_middleware 3779 123145549078528 Slow request: /addservice/ took 7.41 seconds.
+WARNING 2024-10-12 11:59:28,228 custom_middleware 3779 123145582657536 Slow request: /servicebillingcheckout/SR18/ took 5.65 seconds.
+WARNING 2024-10-14 10:58:21,555 custom_middleware 2979 123145612804096 Slow request: /addsale/ took 4.83 seconds.
+WARNING 2024-10-14 11:52:46,029 custom_middleware 3922 123145541562368 Slow request: /addsale/ took 4.80 seconds.
+WARNING 2024-10-14 17:31:51,939 custom_middleware 7935 123145482129408 Slow request: /addsale/ took 5.57 seconds.
+WARNING 2024-11-06 09:30:37,093 custom_middleware 3369 123145467174912 Slow request: /generate_sale_pdf/SL5/view/ took 8.58 seconds.
+WARNING 2024-11-06 09:33:10,041 custom_middleware 3369 123145433059328 Slow request: /service_print/SR3/ took 5.61 seconds.
+WARNING 2024-11-06 09:46:11,667 custom_middleware 3891 123145512939520 Slow request: /servicebillingcheckout/SR6/ took 4.92 seconds.
+WARNING 2024-11-06 09:46:20,019 custom_middleware 3891 123145512939520 Slow request: /service_print/SR6/ took 4.49 seconds.
+WARNING 2024-11-06 09:54:15,821 custom_middleware 4170 123145410162688 Slow request: /service_print/SR6/ took 5.87 seconds.
+WARNING 2024-11-06 09:54:52,739 custom_middleware 4170 123145409626112 Slow request: /service_print/SR6/ took 5.01 seconds.
+WARNING 2024-11-06 09:55:51,212 custom_middleware 4224 123145534271488 Slow request: /service_print/SR6/ took 5.06 seconds.
+WARNING 2024-11-06 09:56:43,261 custom_middleware 4247 123145587023872 Slow request: /service_print/SR6/ took 5.00 seconds.
+WARNING 2024-11-06 09:57:54,958 custom_middleware 4297 123145452699648 Slow request: /service_print/SR6/ took 5.14 seconds.
+WARNING 2024-11-06 10:00:48,583 custom_middleware 4376 123145524920320 Slow request: /service_print/SR6/ took 5.10 seconds.
+WARNING 2024-11-06 10:05:13,199 custom_middleware 4470 123145444220928 Slow request: /service_print/SR6/ took 5.08 seconds.
+WARNING 2024-11-06 10:07:32,923 custom_middleware 4540 123145343598592 Slow request: /service_print/SR6/ took 4.86 seconds.
+DEBUG 2024-11-06 11:07:48,201 views 5451 123145549381632 Service entry form submission start SR12
+DEBUG 2024-11-06 11:07:55,756 views 5451 123145549381632 Service entry form submission end
+DEBUG 2024-11-06 11:07:55,756 views 5451 123145549381632 Form submission took 7.55 seconds.
+WARNING 2024-11-06 11:07:55,757 custom_middleware 5451 123145549381632 Slow request: /addservice/ took 7.57 seconds.
+WARNING 2024-11-06 11:09:36,552 custom_middleware 5451 123145616539648 Slow request: /servicebillingcheckout/SR12/ took 5.50 seconds.
+WARNING 2024-11-06 11:09:58,607 custom_middleware 5451 123145566171136 Slow request: /service_print/SR12/ took 4.81 seconds.
+DEBUG 2024-11-06 14:11:37,369 views 2318 123145489289216 Service entry form submission start SR1
+DEBUG 2024-11-06 14:11:45,288 views 2318 123145489289216 Service entry form submission end
+DEBUG 2024-11-06 14:11:45,289 views 2318 123145489289216 Form submission took 7.92 seconds.
+WARNING 2024-11-06 14:11:45,290 custom_middleware 2318 123145489289216 Slow request: /addservice/ took 7.93 seconds.
+WARNING 2024-11-06 14:13:03,259 custom_middleware 2318 123145455710208 Slow request: /service_print/SR1/ took 4.63 seconds.
+WARNING 2024-11-06 19:21:05,203 custom_middleware 773 123145636622336 Slow request: /servicebillingcheckout/SR1/ took 7.49 seconds.
+WARNING 2024-11-06 19:21:14,060 custom_middleware 773 123145686990848 Slow request: /service_print/SR1/ took 4.22 seconds.
+DEBUG 2024-11-06 19:21:42,859 views 773 123145670201344 Service entry form submission start SR2
+DEBUG 2024-11-06 19:21:47,382 views 773 123145670201344 Service entry form submission end
+DEBUG 2024-11-06 19:21:47,382 views 773 123145670201344 Form submission took 4.52 seconds.
+WARNING 2024-11-06 19:21:47,383 custom_middleware 773 123145670201344 Slow request: /addservice/ took 4.55 seconds.
+WARNING 2024-11-06 19:23:09,753 custom_middleware 773 123145653411840 Slow request: /servicebillingcheckout/SR2/ took 4.43 seconds.
+WARNING 2024-11-06 19:23:17,578 custom_middleware 773 123145686990848 Slow request: /service_print/SR2/ took 4.04 seconds.
+WARNING 2024-11-08 08:30:28,276 custom_middleware 2834 123145636573184 Slow request: /addsale/ took 5.23 seconds.
+WARNING 2024-11-08 08:31:10,107 custom_middleware 2834 123145636573184 Slow request: /addsale/ took 4.93 seconds.
+DEBUG 2024-11-08 08:33:16,431 views 2834 123145653362688 Service entry form submission start SR3
+DEBUG 2024-11-08 08:33:21,867 views 2834 123145653362688 Service entry form submission end
+DEBUG 2024-11-08 08:33:21,868 views 2834 123145653362688 Form submission took 5.44 seconds.
+WARNING 2024-11-08 08:33:21,869 custom_middleware 2834 123145653362688 Slow request: /addservice/ took 5.45 seconds.
+WARNING 2024-11-08 08:34:43,524 custom_middleware 2834 123145602994176 Slow request: /servicebillingcheckout/SR3/ took 4.61 seconds.
+WARNING 2024-11-08 09:15:26,364 custom_middleware 4183 123145480507392 Slow request: /addsale/ took 5.81 seconds.
+DEBUG 2024-11-08 09:33:17,838 views 4683 123145604411392 Service entry form submission start SR4
+DEBUG 2024-11-08 09:33:23,063 views 4683 123145604411392 Service entry form submission end
+DEBUG 2024-11-08 09:33:23,063 views 4683 123145604411392 Form submission took 5.22 seconds.
+WARNING 2024-11-08 09:33:23,064 custom_middleware 4683 123145604411392 Slow request: /addservice/ took 5.24 seconds.
+WARNING 2024-11-08 09:35:14,814 custom_middleware 4683 123145570832384 Slow request: /servicebillingcheckout/SR4/ took 4.80 seconds.
+DEBUG 2024-11-28 22:11:12,196 views 17648 16456 Service entry form submission start SR1
+DEBUG 2024-11-28 22:11:12,376 views 17648 16456 Service entry form submission end
+DEBUG 2024-11-28 22:11:12,377 views 17648 16456 Form submission took 0.18 seconds.
+DEBUG 2024-11-28 22:12:20,457 views 17648 12560 Service entry form submission start SR2
+DEBUG 2024-11-28 22:12:20,627 views 17648 12560 Service entry form submission end
+DEBUG 2024-11-28 22:12:20,628 views 17648 12560 Form submission took 0.17 seconds.
+DEBUG 2024-11-29 15:07:09,608 views 23968 25220 Service entry form submission start SR5
+DEBUG 2024-11-29 15:07:10,004 views 23968 25220 Service entry form submission end
+DEBUG 2024-11-29 15:07:10,006 views 23968 25220 Form submission took 0.39 seconds.
+DEBUG 2024-11-29 15:08:01,119 views 23968 19020 Service entry form submission start SR6
+DEBUG 2024-11-29 15:08:01,332 views 23968 19020 Service entry form submission end
+DEBUG 2024-11-29 15:08:01,333 views 23968 19020 Form submission took 0.21 seconds.
+WARNING 2024-12-10 11:33:51,313 custom_middleware 25356 7100 Slow request: /balancesheet_new/ took 2.92 seconds.
+WARNING 2024-12-10 11:41:14,495 custom_middleware 2828 22976 Slow request: /balancesheet_new/ took 3.49 seconds.
+WARNING 2024-12-10 11:44:04,849 custom_middleware 2680 5264 Slow request: /balancesheet_new/ took 4.20 seconds.
+WARNING 2024-12-10 11:44:45,390 custom_middleware 8708 21044 Slow request: /balancesheet_new/ took 5.77 seconds.
+WARNING 2024-12-10 11:46:55,322 custom_middleware 21132 5184 Slow request: /balancesheet_new/ took 5.59 seconds.
+DEBUG 2024-12-13 09:48:04,476 views 13980 7264 Service entry form submission start SR1
+DEBUG 2024-12-13 09:48:04,742 views 13980 7264 Service entry form submission end
+DEBUG 2024-12-13 09:48:04,743 views 13980 7264 Form submission took 0.26 seconds.
+DEBUG 2024-12-13 09:48:25,557 views 13980 16888 Service entry form submission start SR2
+DEBUG 2024-12-13 09:48:25,763 views 13980 16888 Service entry form submission end
+DEBUG 2024-12-13 09:48:25,764 views 13980 16888 Form submission took 0.21 seconds.
+DEBUG 2024-12-13 09:48:40,567 views 13980 15340 Service entry form submission start SR3
+DEBUG 2024-12-13 09:48:40,768 views 13980 15340 Service entry form submission end
+DEBUG 2024-12-13 09:48:40,768 views 13980 15340 Form submission took 0.20 seconds.
+DEBUG 2024-12-13 10:20:08,166 views 7424 18220 Service entry form submission start SR4
+DEBUG 2024-12-13 10:20:08,516 views 7424 18220 Service entry form submission end
+DEBUG 2024-12-13 10:20:08,517 views 7424 18220 Form submission took 0.35 seconds.

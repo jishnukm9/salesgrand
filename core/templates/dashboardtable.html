@@ -1,0 +1,375 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+              
+               
+          
+
+
+
+               
+
+              
+                
+                <div class="table-responsive indexdashtable ">
+                    <table class="table table-bordered bg-white dashboard-table-search " style="box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                        <thead>
+                            <tr class="fw-bold">
+                                <th style="padding: 10px;">Branch</th>
+                                <th style="padding: 10px;">I/P</th>
+                                <th style="padding: 10px;">O/P Ok</th>
+                                <th style="padding: 10px;">O/P NotOk</th>
+                                <th style="padding: 10px;">CWD</th>
+                                <th style="padding: 10px;">PUR</th>
+                                <th style="padding: 10px;">Service Income</th>
+                                <th style="padding: 10px;">Spare Cost</th>
+                                <th style="padding: 10px;">Net Service Income</th>
+                                <th style="padding: 10px;">Sale Income</th>
+                                <th style="padding: 10px;">Purchase Cost</th>
+                                <th style="padding: 10px;">Net Sale Income</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for branch in branch_data %}
+                            <tr {% if forloop.last and not forloop.counter == 1 %}style="font-weight:bold;"{% endif %}>
+                                <td style="padding: 10px;font-weight:bold;">{{ branch.branch }}</td>
+                                <td style="padding: 10px;">{{ branch.input }}</td>
+                                <td style="padding: 10px;">{{ branch.output_ok }}</td>
+                                <td style="padding: 10px;">{{ branch.output_notok }}</td>
+                                <td style="padding: 10px;">{{ branch.completed_waiting_dispatch }}</td>
+                                <td style="padding: 10px;">{{ branch.pending_under_repair }}</td>
+                                <td style="padding: 10px;">{{ branch.service_income | default:0 |floatformat:2 }}</td>
+                                <td style="padding: 10px;">{{ branch.spare_cost | default:0 |floatformat:2 }}</td>
+                                <td style="padding: 10px;">{{ branch.net_service_income |  default:0 |floatformat:2 }}</td>
+                                <td style="padding: 10px;">{{ branch.sale_income | default:0 |floatformat:2  }}</td>
+                                <td style="padding: 10px;">{{ branch.purchase_cost | default:0 |floatformat:2  }}</td>
+                                <td style="padding: 10px;">{{ branch.net_sales_income | default:0 |floatformat:2  }}</td>
+                               
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex mt-1" >
+                        <p class="me-3 text-secondary">Start Date: {{start_date}}</p><p class="text-secondary">End Date : {{end_date}}</p>
+                       
+                    </div>
+                </div>
+           
+
+{% if request.user.is_superuser %}
+                <div class="row mt-4">
+                <div class="col-lg-6 d-flex flex-column ">
+                    <div class="row flex-grow ">
+                      <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card ">
+                        <div class="card card-rounded " style="height: 300px;padding:24px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                            <div class="d-sm-flex justify-content-between align-items-start">
+                              <div>
+                               <h4 class="card-title card-title-dash">Net Service Income</h4>
+                              
+                               <p class="card-subtitle card-subtitle-dash text-secondary">Net Service Income of each branches</p>
+                              </div>
+                            </div>
+                            <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                              <canvas id="netserviceincomechart" ></canvas>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 d-flex flex-column ">
+                    <div class="row flex-grow ">
+                      <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card ">
+                        <div class="card card-rounded " style="height: 300px;padding:24px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                            <div class="d-sm-flex justify-content-between align-items-start">
+                              <div>
+                               <h4 class="card-title card-title-dash">Net Sale Income</h4>
+                              
+                               <p class="card-subtitle card-subtitle-dash text-secondary">Net Sale Income of each branches</p>
+                              </div>
+                            </div>
+                            <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                              <canvas id="netsaleincomechart" ></canvas>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+                  <div class="col-lg-12 d-flex flex-column mt-4">
+                    <div class="row flex-grow ">
+                      <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card ">
+                        <div class="card card-rounded " style="height: 400px;padding:24px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                            <div class="d-sm-flex justify-content-between align-items-start">
+                              <div>
+                               <h4 class="card-title card-title-dash">Net Service vs Net Sale income breakdown</h4>
+                              
+                               <p class="card-subtitle card-subtitle-dash text-secondary">Breakdown of income (service vs. sale) for each branch</p>
+                              </div>
+                            </div>
+                            <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                              <canvas id="netsaleserviceincomechart" ></canvas>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+{% endif %}
+
+
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="searchdashtable">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center m"
+          style="background-color:#4555B9;"
+          >
+          <h5 class="modal-title text-white"><strong>Search</strong></h5>
+     
+        </div>
+      
+        
+          <div class="modal-body">
+  
+          
+             
+             <form action="{% url 'dashboardtable' %}" method="post">
+  {% csrf_token %}
+            <div class="mb-4 ">
+                <label class=" mb-2" for="">  <strong>Start Date</strong>      </label>
+                <div id="datepicker" 
+                          
+             class="input-group date datepicker-field" 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control " 
+            name="startdate"
+            autocomplete="off" 
+            required
+                   type="text"  />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+              </div>
+              <div class="mb-4 ">
+                <label class=" mb-2" for="">  <strong>End Date</strong>      </label>
+                <div id="datepicker" 
+                          
+             class="input-group date datepicker-field" 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control " 
+            name="enddate"
+            autocomplete="off" 
+            required
+                   type="text"  />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary float-right">Search</button>
+              
+            </form>
+  
+  
+             
+           </div>
+  
+      </div>
+    </div>
+  </div>
+
+  <script>
+   document.addEventListener('DOMContentLoaded',function () {
+
+  var xValues = {{net_sale_graph.branches | safe }};
+  var yValues = {{net_sale_graph.income | safe }};
+ 
+ 
+        console.log("x val",xValues,yValues)
+  function updateChart() {
+    new Chart("netsaleincomechart", {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [
+          {
+            fill: false,
+            // backgroundColor: "rgba(216, 27, 96, 0.8)",
+
+            // borderColor: 'rgb(54, 162, 235)',
+            // backgroundColor:'rgba(255, 99, 132, 0.5)',
+            backgroundColor: 'rgba(54, 162, 235, 0.9)',
+            borderWidth: 3,
+
+            data: yValues,
+          },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false, // Make the chart responsive
+        responsive: true,
+        legend: {
+          display: false,
+        },
+        title: {
+          display: false,
+          text: "Net Promoter Score (NPS)",
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                min: 0,
+                max: 500,
+              },
+            },
+          ],
+          y: {
+            beginAtZero: true,
+            ticks: {
+              min: 0,
+            },
+          },
+        },
+      },
+    });
+  }
+  updateChart()
+});
+  </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded',function () {
+ 
+   var xValues = {{net_service_graph.branches | safe }};
+   var yValues = {{net_service_graph.income | safe }};
+  
+  
+         console.log("x val",xValues,yValues)
+   function updateChart() {
+     new Chart("netserviceincomechart", {
+       type: "bar",
+       data: {
+         labels: xValues,
+         datasets: [
+           {
+             fill: false,
+            //  backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            backgroundColor:'rgba(255, 99, 132, 0.9)',
+            //  borderColor: 'rgb(255, 99, 132)',
+             borderWidth: 3,
+ 
+             data: yValues,
+           },
+         ],
+       },
+       options: {
+         maintainAspectRatio: false, // Make the chart responsive
+         responsive: true,
+         legend: {
+           display: false,
+         },
+         title: {
+           display: false,
+           text: "Net Promoter Score (NPS)",
+         },
+         scales: {
+           xAxes: [
+             {
+               ticks: {
+                 min: 0,
+                 max: 500,
+               },
+             },
+           ],
+           y: {
+             beginAtZero: true,
+             ticks: {
+               min: 0,
+             },
+           },
+         },
+       },
+     });
+   }
+   updateChart()
+ });
+   </script>
+
+
+<script>
+    // Ensure this script runs after the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let branches = {{service_sale_graph.branches | safe }};
+        let service = {{service_sale_graph.service | safe }};
+        let sale = {{service_sale_graph.sale | safe }};
+        console.log("\n branches",branches)
+      let ctx = document.getElementById('netsaleserviceincomechart').getContext('2d');
+      let myChart = new Chart(ctx, {
+        type: 'bar', // Define chart type
+        data: {
+          labels:  branches, // X-axis labels
+          datasets: [{
+            label: 'Net Service Income',
+            data: service, // Data values for the first dataset
+            backgroundColor: 'rgba(255, 99, 132, 0.9)', // Background color for the bars
+            // borderColor:'rgb(255, 99, 132)',
+            borderWidth: 3,
+          }, {
+            label: 'Net Sale Income',
+            data: sale, // Data values for the second dataset
+            backgroundColor: 'rgba(54, 162, 235, 0.9)', // Background color for the bars
+            // borderColor:'rgb(54, 162, 235)',
+            borderWidth: 3,
+          }]
+        },
+        options: {
+            maintainAspectRatio: false, // Important for fitting
+          scales: {
+            x: { // X-axis configuration
+              stacked: true, // Enable stacking
+            },
+            y: { // Y-axis configuration
+              stacked: true // Enable stacking
+            }
+          }
+        }
+      });
+    });
+  </script>
+  
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

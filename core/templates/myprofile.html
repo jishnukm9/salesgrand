@@ -1,0 +1,864 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  
+
+                     <nav class="nav nav-borders">
+                        <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> User Details </a>
+                        <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'users' %}">User List</a>
+                        
+        
+                       
+                    </nav>
+
+                 
+               </div>
+               <br>
+
+
+
+<div class="">
+<div class="row">
+   <div class="col-lg-5">
+               <div class="card card-rounded  mb-4 ps-3 pe-3">
+
+
+                  <div class="outer p-4">
+
+
+                     <div class="d-flex align-items-center justify-content-center pb-2">
+                        <img
+                           src="/static/images/faces/face100.jpg"
+                           alt=""
+                           style="width: 60px; height: 60px"
+                           class="rounded-circle"
+                           />
+                        
+                     </div>
+
+                     <div class="name-email mb-4 text-center">
+
+                           <h4 class="fw-bold  pb-1">{{user.username}}</h4>
+
+                                   <p>{{user.email}}</p>
+
+                     </div>
+
+
+
+                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3">
+
+                           <p class="fw-bold fs-6 nunito-font">Branch</p>
+                           <p class="text-secondary nunito-font fs-6">{{user.userprofile.branch}}</p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3">
+                           
+                           <p class="fw-bold fs-6 nunito-font">Status</p>
+
+
+                           {%if request.user.is_superuser and request.user != user %}
+                                    <label class="switch">
+                                    <input id="toggleButton" type="checkbox" {% if user.is_active %}checked{% endif %}>
+                                    <span class="slider round">
+                                    <span class="ball"></span>
+                                    </span>
+                                    </label>
+                                    {% else %}
+                                    <label class="switch-desabled">
+                                    <input id="toggleButton-desabled" type="checkbox" {% if user.is_active %}checked{% endif %} disabled>
+                                    <span class="slider-desabled round-desabled">
+                                    <span class="ball-desabled"></span>
+                                    </span>
+                                    </label>
+                                    {% endif %}
+                                 
+                                    <input type="text" style="display:none" id="user_id" name="user_id" value="{{user.id}}">
+
+
+
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3">
+
+
+                           <p class="fw-bold nunito-font fs-6">Contact</p>
+                           <p class="text-muted nunito-font fs-6">{{user.userprofile.mobile}}</p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3">
+                           <p class="fw-bold nunito-font fs-6">Role</p>
+
+                           <p class="text-muted nunito-font fs-6">{{user.userprofile.role}}</p>
+                        </li>
+                     
+                      </ul>
+
+
+                      {% if request.user.is_superuser  %}
+                      <a href="{% url 'userupdateform' id=user.id %}" class="btn btn-primary fw-bold text-white me-0 mt-3">Edit User</a>
+                      {% endif %}
+
+
+                  </div>
+
+
+
+
+
+
+               </div>
+            </div>
+
+               <div class="col-lg-7">
+
+
+            
+                {%if request.user.is_superuser and request.user != user %}
+                  <div class="card card-rounded p-5 col-lg-12">
+                     <h4 class="fw-bold">Permissions</h4>
+
+
+<form action="{% url 'updateuserpermissions' %}" method="post" >
+
+   {% csrf_token %}
+
+   <input type="text" style="display:none" id="user_id" name="user_id" value="{{user.id}}">
+
+                     <div class="accordion  mt-4" id="accordionFlushExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                              Registration  
+                            </button>
+                          </h2>
+                          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+
+
+                              <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="products" id="products" {% if 'Products' in permissions %}checked{% endif %}   >
+                        <label class="form-check-label ms-2" for="products">
+                          Products
+                        </label>
+                      </div>
+
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="category" id="category" {% if 'Category' in permissions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="category">
+                          Category
+                        </label>
+                      </div>
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="subcategory" id="subcategory" {% if 'Subcategory' in permissions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="subcategory">
+                          Sub Category
+                        </label>
+                      </div>
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="supplier" id="supplier" {% if 'Supplier' in permissions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="supplier">
+                          Supplier
+                        </label>
+                      </div>
+
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="brand" id="brand" {% if 'Brand' in permissions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="brand">
+                          Brand
+                        </label>
+                      </div>
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="packing" id="packing"   {% if 'Packing' in permissions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="packing">
+                          Packing
+                        </label>
+                      </div>
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="tax" id="tax"  {% if 'Tax' in permissions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="tax">
+                          Tax
+                        </label>
+                      </div>
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="type" id="type"   {% if 'Type' in permissions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="type">
+                          Type
+                        </label>
+                      </div>
+
+                      <div class="form-check m-4 d-flex align-items-center">
+                        <input class="form-check-input mb-1" type="checkbox" value="" name="branch" id="branch"   {% if 'Branch' in permisiions %}checked{% endif %} >
+                        <label class="form-check-label ms-2" for="branch">
+                          Branch
+                        </label>
+                      </div>
+
+
+
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed  nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                              Purchase
+                            </button>
+                          </h2>
+                          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                               
+
+                              <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchaselist" id="purchaselist"  {% if 'Purchaselist' in permissions %}checked{% endif %} >
+                                 <label class="form-check-label ms-2" for="purchaselist">
+                                   Purchase List
+                                 </label>
+                               </div>
+                               
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchaseform" id="purchaseform"  {% if 'Purchaseform' in permissions %}checked{% endif %} >
+                                 <label class="form-check-label ms-2" for="purchaseform">
+                                   Purchase Entry
+                                 </label>
+                               </div>
+
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchaseview" id="purchaseview"  {% if 'Purchaseview' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="purchaseview">
+                                   Purchase View
+                                 </label>
+                               </div>
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchasedueform" id="purchasedueform"  {% if 'Purchasedueform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="purchasedueform">
+                                   Purchase Due Form
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchasepdf" id="purchasepdf"  {% if 'Purchasepdf' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="purchasepdf">
+                                   Purchase Printing
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchasereturnform" id="purchasereturnform" {% if 'Purchasereturnform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="purchasereturnform">
+                                   Purchase Return Entry
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchasereturnlist" id="purchasereturnlist" {% if 'Purchasereturnlist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="purchasereturnlist">
+                                   Purchase Return List
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchasereturndetails" id="purchasereturndetails" {% if 'Purchasereturdetails' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="purchasereturndetails">
+                                   Purchase Return Details
+                                 </label>
+                               </div>
+
+                              
+                           </div>
+                          </div>
+                        </div>
+
+
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                              Stock
+                            </button>
+                          </h2>
+                          <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                               
+                              
+                              <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="stocklist" id="stocklist" {% if 'Stocklist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="stocklist">
+                                   Stock List
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="branchstocklist" id="branchstocklist"  {% if 'Branchstocklist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="branchstocklist">
+                                   Branch Stock List
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="stocktransferlist" id="stocktransferlist" {% if 'Stocktransferlist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="stocktransferlist">
+                                   Stock Transfer List
+                                 </label>
+                               </div>
+
+                               <!-- <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="stocktransfer" id="stocktransfer">
+                                 <label class="form-check-label ms-2" for="stocktransfer">
+                                   Stock Transfer
+                                 </label>
+                               </div> -->
+
+
+
+                               
+                           
+                           
+                           
+                           </div>
+                          </div>
+                        </div>
+
+
+
+
+                        <div class="accordion-item">
+                           <h2 class="accordion-header" id="flush-headingSix">
+                             <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                               Sale
+                             </button>
+                           </h2>
+                           <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                             <div class="accordion-body">
+                                
+ 
+                              
+                                
+ 
+ 
+                                <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="salelist" id="salelist" {% if 'Salelist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="salelist">
+                                   Sale List
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="saleform" id="saleform" {% if 'Saleform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="saleform">
+                                   Sale Entry
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="saleview" id="saleview"   {% if 'Saleview' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="saleview">
+                                   Sale View
+                                 </label>
+                               </div>
+
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="saledueform" id="saledueform"  {% if 'Saledueform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="saledueform">
+                                   Sale Due Entry
+                                 </label>
+                               </div>
+
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="salereturnform" id="salereturnform"   {% if 'Salereturnform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="salereturnform">
+                                   Sale Return Entry
+                                 </label>
+                               </div>
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="salereturnlist" id="salereturnlist"   {% if 'Salereturnlist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="salereturnlist">
+                                   Sale Return List
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="salereturndetails" id="salereturndetails"  {% if 'Salereturndetails' in permissions %}checked{% endif %} >
+                                 <label class="form-check-label ms-2" for="salereturndetails">
+                                   Sale Return Details
+                                 </label>
+                               </div>
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="salepdf" id="salepdf"  {% if 'Salereturnlist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="salepdf">
+                                   Sale Printing
+                                 </label>
+                               </div>
+ 
+                               
+                            </div>
+                           </div>
+                         </div>
+
+
+
+
+
+
+
+                         <div class="accordion-item">
+                           <h2 class="accordion-header" id="flush-headingFour">
+                             <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                               Report
+                             </button>
+                           </h2>
+                           <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                             <div class="accordion-body">
+                                
+ 
+                              
+                                
+ 
+ 
+                                <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="purchasereport" id="purchasereport"  {% if 'Purchasereport' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="purchasereport">
+                                   Purchase Report
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="salesreport" id="salesreport"  {% if 'Salesreport' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="salesreport">
+                                   Sales Report
+                                 </label>
+                               </div>
+
+                               
+ 
+                               
+                            </div>
+                           </div>
+                         </div>
+
+
+
+
+
+
+
+                         <div class="accordion-item">
+                           <h2 class="accordion-header" id="flush-headingFive">
+                             <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                               Accounts
+                             </button>
+                           </h2>
+                           <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                             <div class="accordion-body">
+                                
+ 
+                              
+                                
+ 
+ 
+                                <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="moneyreciept" id="moneyreciept"   {% if 'Moneyreciept' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="moneyreciept">
+                                   Money Reciept
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="generalledger" id="generalledger"  {% if 'Generalledger' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="generalledger">
+                                   General Ledger
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="placcount" id="placcount"  {% if 'Placcount' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="placcount">
+                                   PL Account
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="cashbook" id="cashbook"   {% if 'Cashbook' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="cashbook">
+                                   Cash Book
+                                 </label>
+                               </div>
+
+                               
+ 
+                               
+                            </div>
+                           </div>
+                         </div>
+
+
+
+
+
+
+
+
+                         <div class="accordion-item">
+                           <h2 class="accordion-header" id="flush-headingEight">
+                             <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false" aria-controls="flush-collapseEight">
+                               Customer
+                             </button>
+                           </h2>
+                           <div id="flush-collapseEight" class="accordion-collapse collapse" aria-labelledby="flush-headingEight" data-bs-parent="#accordionFlushExample">
+                             <div class="accordion-body">
+                                
+ 
+                              
+                                
+ 
+ 
+                                <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="customerlist" id="customerlist"  {% if 'Customerlist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="customerlist">
+                                   Customer List
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="customerform" id="customerform"  {% if 'Customerform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="customerform">
+                                   Customer Entry
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="customerview" id="customerview"  {% if 'Customerview' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="customerview">
+                                   Customer View
+                                 </label>
+                               </div>
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="multiplecustomerform" id="multiplecustomerform"  {% if 'Multiplecustomerform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="multiplecustomerform">
+                                   Multiple Customer Entry
+                                 </label>
+                               </div>
+
+                               
+ 
+                               
+                            </div>
+                           </div>
+                         </div>
+
+
+
+
+
+
+
+
+                         <div class="accordion-item">
+                           <h2 class="accordion-header" id="flush-headingNine">
+                             <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false" aria-controls="flush-collapseNine">
+                               Expense
+                             </button>
+                           </h2>
+                           <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine" data-bs-parent="#accordionFlushExample">
+                             <div class="accordion-body">
+                                
+ 
+                              
+                                
+ 
+ 
+                                <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="expenseform" id="expenseform"  {% if 'Expenseform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="expenseform">
+                                   Expense Entry
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="expenselist" id="expenselist"  {% if 'Expenselist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="expenselist">
+                                   Expense List
+                                 </label>
+                               </div>
+
+                              
+
+                               
+ 
+                               
+                            </div>
+                           </div>
+                         </div>
+
+
+
+
+
+
+
+
+
+                         <div class="accordion-item">
+                           <h2 class="accordion-header" id="flush-headingTen">
+                             <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTen" aria-expanded="false" aria-controls="flush-collapseTen">
+                               Service
+                             </button>
+                           </h2>
+                           <div id="flush-collapseTen" class="accordion-collapse collapse" aria-labelledby="flush-headingTen" data-bs-parent="#accordionFlushExample">
+                             <div class="accordion-body">
+                                
+ 
+                              
+                                
+ 
+ 
+                                <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="serviceform" id="serviceform"  {% if 'Serviceform' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="serviceform">
+                                   Service Entry
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="servicelist" id="servicelist"  {% if 'Servicelist' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="servicelist">
+                                   Service List
+                                 </label>
+                               </div>
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="serviceprint" id="serviceprint"  {% if 'Serviceprint' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="serviceprint">
+                                   Service Print
+                                 </label>
+                               </div>
+
+
+
+                               <!-- <div class="form-check m-4 d-flex align-items-center">
+                                 <input class="form-check-input mb-1" type="checkbox" value="" name="serviceupdate" id="serviceupdate"  {% if 'Serviceupdate' in permissions %}checked{% endif %}>
+                                 <label class="form-check-label ms-2" for="serviceupdate">
+                                   Service Update
+                                 </label>
+                               </div> -->
+
+                              
+
+                               
+ 
+                               
+                            </div>
+                           </div>
+                         </div>
+
+                         <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingEleven">
+                            <button class="accordion-button collapsed nunito-font" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false" aria-controls="flush-collapseEleven">
+                              Settings
+                            </button>
+                          </h2>
+                          <div id="flush-collapseEleven" class="accordion-collapse collapse" aria-labelledby="flush-headingEleven" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                               
+
+                             
+                               
+
+
+                               <div class="form-check m-4 d-flex align-items-center">
+                                <input class="form-check-input mb-1" type="checkbox" value="" name="servicesettings" id="servicesettings"  {% if 'Servicesettings' in permissions %}checked{% endif %}>
+                                <label class="form-check-label ms-2" for="servicesettings">
+                                  Service Settings
+                                </label>
+                              </div>
+
+                            
+
+                             
+
+                              
+
+                              
+                           </div>
+                          </div>
+                        </div>
+
+
+{% if request.user.is_superuser %}
+
+<button class="btn-primary btn mt-4 text-white fw-bold" type="submit">Save</button>
+{% endif %}
+
+                      </div>
+
+
+
+
+                     </form>
+                     
+
+                      
+
+                     
+                  </div>
+                  {% endif %}
+
+               </div>
+            </div>
+
+
+         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+                        <!-- <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                           <div class="card-header py-3">
+                               <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>User Details </strong> </h5>
+                           </div>
+                        <div class="card-body">
+                          
+
+
+                           <div class="table-responsive mt-3">
+                              <table  class="table table-striped table-bordered  myprofile-table">
+                                 <tbody>
+                                    <tr>
+                                       <th >Name</th>
+                                       <td style="padding-top:12px;padding-bottom:12px;">
+                                          <div class="d-flex align-items-center">
+                                             <img
+                                                src="/static/images/faces/face100.jpg"
+                                                alt=""
+                                                style="width: 45px; height: 45px"
+                                                class="rounded-circle"
+                                                />
+                                             <div class="ms-3">
+                                                <p class="fw-bold mb-1">{{user.username}}</p>
+                                             </div>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <th >Email</th>
+                                       <td >
+                                          <p class="fw-normal mb-1">{{user.email}}</p>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <th >Status</th>
+                                       <td style="padding-top:10px;padding-bottom:10px;">
+                                          {%if request.user.is_superuser and request.user != user %}
+                                          <label class="switch">
+                                          <input id="toggleButton" type="checkbox" {% if user.is_active %}checked{% endif %}>
+                                          <span class="slider round">
+                                          <span class="ball"></span>
+                                          </span>
+                                          </label>
+                                          {% else %}
+                                          <label class="switch-desabled">
+                                          <input id="toggleButton-desabled" type="checkbox" {% if user.is_active %}checked{% endif %} disabled>
+                                          <span class="slider-desabled round-desabled">
+                                          <span class="ball-desabled"></span>
+                                          </span>
+                                          </label>
+                                          {% endif %}
+                                       
+                                          <input type="text" style="display:none" id="user_id" name="user_id" value="{{user.id}}">
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <th >Branch</th>
+                                       <td >{{user.userprofile.branch}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th >Contact</th>
+                                       <td >{{user.userprofile.mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th >Role</th>
+                                       <td >{{user.userprofile.role}}</td>
+                                    </tr>
+                                   
+                                 </tbody>
+                              </table>
+                           </div>
+                           {% if request.user.is_superuser  %}
+                           <a href="{% url 'userupdateform' id=user.id %}" class="btn btn-primary text-white me-0 mt-3">Edit User</a>
+                           {% endif %}
+                        </div>
+                     
+               <div class="row flex-grow">
+                  <div class="col-12 grid-margin stretch-card">
+                  </div>
+               </div>
+            </div> -->
+
+
+
+
+
+
+
+
+
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+
+
+{% endblock %}

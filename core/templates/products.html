@@ -1,0 +1,132 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  
+
+
+               
+
+
+
+
+
+
+                 <nav class="nav nav-borders">
+                  <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Product List </a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'productform' %}">Product Entry</a>
+
+    
+                 
+              </nav>
+
+               </div>
+               <br>
+               
+       
+     
+
+                           <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-header bg-white py-3 d-flex justify-content-between">
+                                  <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Product List </strong> </h5>
+                              
+                                  <div>
+                                    {% if messages %}
+                                      {% for message in messages %}
+                                        <span class="text-danger" style="font-size: 13px; ">{{ message }}</span>
+                                      {% endfor %}
+                                    {% endif %}
+                                  </div>
+                              
+                                 </div>
+                              <div class="card-body">
+                                  <div class="table-responsive">
+                       
+                      
+
+
+
+                                 <table class="add-pagination-products table-bordered table table-striped product-list" >
+                                    <thead>
+                                       <tr>
+                                          <th>Sl</th>
+                                          <th>Id</th>
+                                          <th> Name </th>
+                                          <th> Catagory</th>
+                                          <th> Subcatagory</th>
+                                          <th> Brand</th>
+                                          <th> Type</th>
+                                          <th> HSN </th>
+                                          <th> Branch</th>
+                                          <th> Action </th>
+                                       </tr>
+                                    </thead>
+                                    <tbody class="hi">
+                                       {% for item in data reversed %}
+                                       <tr>
+                                          <td>{{ forloop.counter }}</td>
+                                          <td>{{ item.id }}</td>
+                                          <td style="white-space: normal;">{{ item.name }}</td>
+                                          <td style="white-space: normal;">{{ item.catagory }}</td>
+                                          <td style="white-space: normal;">{{ item.subcatagory }}</td>
+                                          <td style="white-space: normal;">{{ item.brand }}</td>
+                                          <td style="white-space: normal;">{{ item.type }}</td>
+                                          <td>{{ item.HSN }}</td>
+                                          <td style="white-space: normal;">{{ item.branch }}</td>
+                                          <td>
+                                             <div class="d-flex gap-2">
+                                                <a href="{% url 'updateproductform' id=item.id%}"> <span class="edit-btn"><i class="fa-regular fa-eye"></i>  View</span> </a>
+                                                <!-- <a  href="{% url 'deleteproduct' id=item.id %}"> <span class="delete-btn "><i class="fa-regular fa-trash-can"></i>  Delete</span> </a> -->
+                                             </div>
+                                           
+                                          </td>
+                                       </tr>
+                                       {% endfor %}
+                                    </tbody>
+                                 </table>
+                        
+                        </div>
+                     </div>
+             
+               </div>
+
+
+
+
+
+
+
+
+               
+          
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

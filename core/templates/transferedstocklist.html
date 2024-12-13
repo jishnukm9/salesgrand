@@ -1,0 +1,162 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+              
+
+                
+
+
+
+                 <nav class="nav nav-borders">
+
+                  <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'purchaseform' %}">Purchase Entry</a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'purchasereturn' %}">Purchase Return</a>
+                 
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'addbulkpurchaseform' %}"> Mulitiple Entries  </a> -->
+
+                  <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'stock' %}"> Warehouse Stocks </a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'branchstock' %}">Branch Stocks</a>
+                  {% if request.user.is_superuser  %}
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"   href="{% url 'stocktransfer' %}">Stock Transfer</a>
+                 {% endif %}
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"     href="{% url 'stocktransferlist' %}">Stock Transfer List</a>
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="#"> Transfered Stock List </a>
+          
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'bulkstocklist' %}">Bulk Stock List</a>
+              </nav>
+
+
+
+               </div>
+               <br>
+           
+        
+
+
+
+
+
+
+
+
+              <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+               <div class="card-header bg-white py-3 bg-white">
+                   <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Transfered Stock List </strong> </h5>
+               </div>
+               <div class="card-body">
+                   <div class="table-responsive">
+
+
+
+                     <div class="mt-3">
+                        <div class="table-responsive">
+                           <table class="  add-pagination-purchase table-hover table-bordered  table table-striped purchase-list" >
+                              <thead >
+                                 <tr>
+                                    <th>Sl</th>
+                                    <th> Id</th>
+                                    <th  style="white-space:normal;"> Invoice Number</th>
+                                    <th>Product</th>
+                                    <th> Date</th>
+                                    <th> Supplier</th>
+
+                                 
+                                    <!-- <th>Bill Amount</th>
+                                    <th>Amount Paid</th>
+                                    <th>Due Balance</th>
+                                    <th>Pay</th> -->
+                                    <th>Branch</th>
+                                    <th>View</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for item in data %}
+                                 <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.purchaseid }}</td>
+                                    <td>{{ item.invoicenumber }}</td>
+                                    <td style="white-space:normal;">{{ item.name }}</td>
+                                    <td>{{ item.invoicedate }}</td>
+                                    <td>
+                                       {% if item.supplier == None %}
+                                       
+                                       {{ item.externalsupplier }}
+
+                                       {% else %}
+                                       {{ item.supplier }}
+                                       {% endif %}
+
+
+
+                                    </td>
+
+
+
+
+
+                                    <!-- <td>{{ item.totalbillingamount  | floatformat:2  }}</td>
+                                    <td>{{ item.amountrecieved  | floatformat:2  }}</td>
+                                    <td>{{ item.duebalance  | floatformat:2  }}</td>
+                                    {% if item.duebalance == 0 %}
+                                    <td><span class="purchase-collect"><strong>Paid</strong> </span></td>
+                                    {% else %}
+                                    {% if request.user.userprofile.branch == item.branch %}
+                                    <td> <a href="{% url 'purchasedueform' purchaseid=item.purchaseid%}"> <span class="label-purchase-collect">Pay</span> </a></td>
+                                    {% else %}
+                                    
+                                    <td><span class=" text-danger "><strong>Not Paid</strong> </span></td>
+                                    
+                                    {% endif %}
+
+
+                                    {% endif %} -->
+                                    <td>{{item.branch}}</td>
+                                    <td><a href="../transferedstockview/{{ item.purchaseid }}/"><i class="fa-solid fa-eye label-purchase-view"></i></a></td>
+                                    
+                                 </tr>
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+
+
+                   </div>
+                  </div>
+               </div>
+
+
+
+
+
+
+
+             
+              
+
+
+
+
+               <!-- -->
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,473 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+            
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'settings' %}">Company Settings </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"   href="{% url 'customersettings' %}">Customer Settings</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"   href="{% url 'servicesettings' %}">Service Settings</a>
+              
+  
+             
+          </nav>
+
+
+
+          </div>
+          <br />
+         
+          <div class="row">
+            <div class="col-md-12">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              ></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+           
+              <div class="card card-rounded p-1 mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-body">
+                  
+                
+                 
+                           <div class="border-bottom mb-3 pb-2 ">
+                            <h3 class="fs-5 nunito-font "  ><strong>Company Details</strong></h3>
+                        </div>
+
+                  <form
+                    action="{% url 'editcompanydetails' %}"
+                    method="post"
+                    enctype="multipart/form-data"
+                  >
+                    {% csrf_token %}
+
+                    <div class="form-row row">
+                      <div class="form-group col-lg-6">
+                        <label for="company_name"
+                          ><strong>Company name</strong></label
+                        >
+                        <input
+                          type="text"
+                          name="company_name"
+                          id="company_name"
+                          class="form-control cmp-input border-0 border-bottom"
+                          value="{{request.user.userprofile.company.company_name}}"
+                        />
+                      </div>
+                      <div class="form-group col-lg-6">
+                        <label for="address_line1"
+                          ><strong>Address Line 1</strong></label
+                        >
+                        <input
+                          type="text"
+                          name="address_line1"
+                          id="address_line1"
+                          class="form-control cmp-input  border-0 border-bottom"
+                          value="{{request.user.userprofile.company.address_line1}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-row row">
+                      <div class="form-group col-lg-6">
+                        <label for="address_line2"
+                          ><strong>Address Line 2</strong></label
+                        >
+                        <input
+                          type="text"
+                          name="address_line2"
+                          id="address_line2"
+                          class="form-control cmp-input  border-0 border-bottom"
+                          value="{{request.user.userprofile.company.address_line2}}"
+                        />
+                      </div>
+                      <div class="form-group col-lg-6">
+                        <label for="address_line3"
+                          ><strong>Address Line 3</strong></label
+                        >
+                        <input
+                          type="text"
+                          name="address_line3"
+                          id="address_line3"
+                          class="form-control cmp-input  border-0 border-bottom"
+                          value="{{request.user.userprofile.company.address_line3}}"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-row row">
+                    <div class="form-group col-lg-6">
+                      <label for="logo"><strong>Logo</strong></label>
+                      <input
+                        type="file"
+                        class="form-control center-file-input-text "
+                        name="logo"
+                        id="logo"
+                        
+                      />
+                    </div>
+                    <div class="form-group col-lg-6">
+                      <label for="country"><strong>Country</strong></label>
+                     <select class="form-control  border-0 border-bottom" name="country">
+                       <option selected value="{{request.user.userprofile.company.country.id}}">{{request.user.userprofile.company.country.name}}</option>
+                    {% for country in countries %}
+                        <option value="{{country.id}}" >{{country}}</option>
+                    {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                    <input
+                      type="text"
+                      name="company_id"
+                      value="{{request.user.userprofile.company.id}}"
+                      hidden
+                    />
+
+                    <div class="horizontal-line-dark mb-2 mt-5"></div>
+
+                    <button
+                      type="submit"
+                      class="btn btn-primary text-white mb-1 mt-3"
+                    >
+                      Save Change
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+
+
+
+
+
+
+<!--            
+                <div class="card card-rounded p-1 mb-4 " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                  <div class="card-body">
+                    <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                      <h4 class="fs-7 nunito-font "   ><strong>Payment Mode</strong></h4>
+                      <i data-toggle="modal" data-target="#servicerack-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                  </div>
+                   
+                            
+  
+                    <div>
+  
+                      <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                              <th width="5%">Sl</th>
+                                <th>Name</th>
+                                
+                                <th width="10%">Action</th>
+                            </tr>
+                          
+  
+                        </thead>
+                        <tbody>
+  
+                            
+                                {% for item in paymentmode %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                <td>{{item.name}}</td>
+                              
+                                <td>
+                                  <a href="{% url 'deletepaymentmode' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                </td>
+                            </tr>
+                                {% endfor %}
+  
+                     
+  
+                        </tbody>
+                    </table>
+                      
+                    </div>
+                  </div>
+                </div>
+               -->
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="card card-rounded p-1  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-body">
+                  
+                  <div class="border-bottom mb-3 pb-2 ">
+                    <h4 class="fs-7 nunito-font "   ><strong>Company Logo</strong></h4>
+                </div>
+                      
+
+                  <div>
+                    <!-- <img
+                      width="100%;"
+                      src="{{request.user.userprofile.company.logo_url}}"
+                      alt=""
+                    /> -->
+
+                    <img
+                      width="100%;"
+                      src="{{company_logo_url}}"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+
+
+
+        
+
+
+              <div class="card card-rounded p-1 mb-4 " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-body">
+                  <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                    <h4 class="fs-7 nunito-font "   ><strong>Invoice Language</strong></h4>
+
+                    <!-- <p>Selected : {{current_language}}</p> -->
+                    <!-- <i data-toggle="modal" data-target="#servicerack-modal" class="fa-regular fa-square-plus cursor-pointer"></i> -->
+                </div>
+                 
+                          
+
+                  <div>
+<form action="{% url 'updatelanguage' %}" method="post">
+  {% csrf_token %}
+<div class="form-group">
+                    <label for="language" class="fw-bold">Language</label>
+                    <select name="language" id="language" class="form-control  border-0 border-bottom">
+                      {% if current_language == 'en' %}
+                      <option selected value="en">English</option>
+                      <option  value="ar">Arabic</option>
+                      {% elif current_language == 'ar' %}
+                      <option selected value="ar">Arabic</option>
+                      <option  value="en">English</option>
+                      {% else %}
+                      <option selected value=""></option>
+                      <option  value="en">English</option>
+                      <option  value="ar">Arabic</option>
+                      {% endif %}
+                 
+                      
+                      
+                    </select>
+                  </div>
+                    <button type="submit" class="btn btn-primary text-white">Save</button>
+                    
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="card card-rounded p-1 mb-4 " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-body">
+                  <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                    <h4 class="fs-7 nunito-font "   ><strong>Invoice Page Size</strong></h4>
+
+                    <!-- <p>Selected : {{current_pagesize}}</p> -->
+                    <!-- <i data-toggle="modal" data-target="#servicerack-modal" class="fa-regular fa-square-plus cursor-pointer"></i> -->
+                </div>
+                 
+                          
+
+                  <div>
+            <form action="{% url 'updatepagesize' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                    <label for="pagesize" class="fw-bold">Page Size</label>
+                    <select name="pagesize" id="pagesize" class="form-control  border-0 border-bottom">
+                     {% for size in pagesizes %}
+                     {% if size.size == current_pagesize %}
+                     <option selected value="{{size.id}}">{{size}}</option>
+                     {% else %}
+                     <option value="{{size.id}}">{{size}}</option>
+                     {% endif %}
+                     {% endfor %}
+                    </select>
+                  </div>
+                    <button type="submit" class="btn btn-primary text-white">Save</button>
+                    
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card card-rounded p-1 mb-4 " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-body">
+                  <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                    <h4 class="fs-7 nunito-font "   ><strong>Set Default Country</strong></h4>
+                    <!-- <p>Selected : {{default_country}}</p> -->
+                </div>
+                 
+                          
+
+                <div>
+                  <form action="{% url 'setdefaultcountry' %}" method="post">
+                    {% csrf_token %}
+                  <div class="form-group">
+                                      <label for="language" class="fw-bold">County</label>
+                                      <select name="defcountry" id="defcountry" class="form-control  border-0 border-bottom">
+                                       <option value=""></option>
+                                        {% for country in countries %}
+                                        {% if country.name == default_country.name %}
+                                        <option selected value="{{country.id}}">{{country}}</option>
+                                        {% else %}
+                                          <option value="{{country.id}}">{{country}}</option>
+                                          {% endif %}
+                                        {% endfor %}
+                                      </select>
+                                    </div>
+                                      <button type="submit" class="btn btn-primary text-white">Save</button>
+                                      
+                                    </form>
+                                    </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+
+
+
+
+              <div class="card card-rounded p-1 mb-4 " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-body">
+                  <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                    <h4 class="fs-7 nunito-font "   ><strong>Integrations</strong></h4>
+                    <!-- <p>Selected : {{default_country}}</p> -->
+                </div>
+                 
+                          
+
+                <div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <p>WhatsApp Integration</p>
+                    </div>
+
+                    <div class="col-6">
+
+
+{%if request.user.is_superuser %}
+{% if whatsapp_status == True or whatsapp_status == False %}
+<label class="switch-whatsapp">
+<input id="toggleButton-whatsapp" class="switch-whatsapp-check" type="checkbox" {% if whatsapp_status == True %} checked {% elif whatsapp_status == False %} {% else %} disabled {% endif %}>
+<span class="slider-whatsapp round">
+<span class="ball"></span>
+</span>
+</label>
+{% endif %}
+{% endif %}
+
+                    </div>
+
+
+                  </div>
+                  
+
+
+
+
+
+                                    </div>
+
+
+
+
+
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+
+
+
+
+<div class="modal fade" style="z-index:1000;" id="servicerack-modal">
+  <div class="modal-dialog">
+    <div class="modal-content p-0 w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center text-white"
+        style="background-color:#4555B9;"
+      >
+        <h5 class="modal-title"><strong>Add Payment Mode</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'addpaymentmode' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="modal" class="fw-bold">Name</label>
+              
+
+              <input required type="text" class="form-control text-center"   name="paymentmode" id="paymentmode">
+            </div>
+           
+         </div>
+         <div class="modal-footer">
+           <button type="submit" class="btn btn-primary">Save</button>
+         </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- main-panel ends -->
+{% endblock %}

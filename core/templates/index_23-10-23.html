@@ -1,0 +1,521 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <!-- <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                    </li>
+                    
+                </div> -->
+
+
+
+
+
+
+                <div class="row mb-2 mt-4">
+                  <div class="col-xl-4  col-sm-6 mb-xl-0 mb-5">
+                    <div class="card border-style position-relative" style="border-radius:5px;border:0.5px solid #e2e2e2;" >
+                      <div class="card-header p-3 pt-2 bg-white" >
+                        <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-white text-center border-radius-xl mt-n4 position-absolute top-n20">
+                    <div>
+                      <i class="fa-solid fa-truck-fast mt-1"></i>
+                    </div>
+                          
+                        </div>
+                        <div class="text-end pt-1 ">
+                          <p class="text-sm mb-0 text-capitalize text-grey mb-2">Today's Sale</p>
+                          <h4 class="mb-0"> <strong>{{today_sales}} ₹</strong> </h4>
+                        </div>
+                      </div>
+                      <hr class="dark horizontal my-0">
+                      <div class="card-footer p-3 bg-white" >
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4   col-sm-6 mb-xl-0 mb-5">
+                    <div class="card border-style position-relative" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                      <div class="card-header p-3 pt-2 bg-white">
+                        <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-white text-center border-radius-xl mt-n4 position-absolute top-n20">
+                         
+                          <div>
+                            <i class="fa-solid fa-cart-shopping "></i>
+                          </div>
+                       
+                        </div>
+                        <div class="text-end pt-1 ">
+                          <p class="text-sm mb-0 text-capitalize text-grey mb-2">Today's Purchase</p>
+                          <h4 class="mb-0"><strong> {{today_purchase}} ₹</strong> </h4>
+                        </div>
+                      </div>
+                      <hr class="dark horizontal my-0">
+                      <div class="card-footer p-3 bg-white">
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than last month</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4   col-sm-6 mb-xl-0 mb-5">
+                    <div class="card border-style position-relative" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                      <div class="card-header p-3 pt-2 bg-white">
+                        <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-white text-center border-radius-xl mt-n4 position-absolute top-n20">
+                         
+                          <div>
+                            <i class="fa-solid fa-truck-fast pt-4"></i>
+                          </div>
+                        </div>
+                        <div class="text-end pt-1">
+                          <p class="text-sm mb-0 text-capitalize text-grey mb-2">Month's Sale</p>
+                          <h4 class="mb-0"><strong> {{month_sales}} ₹</strong> </h4>
+                        </div>
+                      </div>
+                      <hr class="dark horizontal my-0">
+                      <div class="card-footer p-3 bg-white">
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
+                      </div>
+                    </div>
+                  </div>
+                
+                </div>
+<br>
+                <div class="row mb-4 mt-4">
+
+                  <div class="col-xl-4   col-sm-6 mb-xl-0 mb-5">
+                    <div class="card border-style position-relative" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                      <div class="card-header p-3 pt-2 bg-white">
+                        <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center text-white border-radius-xl mt-n4 position-absolute top-n20">
+                          
+                          <div>
+                            <i class="fa-solid fa-cart-shopping pt-4"></i>
+                          </div>
+                        </div>
+                        <div class="text-end pt-1">
+                          <p class="text-sm mb-0 text-capitalize text-grey mb-2">Month's Purchase</p>
+                          <h4 class="mb-0 "><strong> {{month_purchase}} ₹</strong> </h4>
+                        </div>
+                      </div>
+                      <hr class="dark horizontal my-0">
+                      <div class="card-footer p-3 bg-white">
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4  col-sm-6 mb-xl-0 mb-5">
+                    <div class="card border-style position-relative" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                      <div class="card-header p-3 pt-2 bg-white">
+                        <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center text-white border-radius-xl mt-n4 position-absolute top-n20">
+                        
+                          <div>
+                            <i class="fa-solid fa-truck-fast pt-4"></i>
+                          </div>
+                        </div>
+                        <div class="text-end pt-1">
+                          <p class="text-sm mb-0 text-capitalize text-grey mb-2">Year's Sale</p>
+                          <h4 class="mb-0"><strong> {{year_purchase}} ₹</strong> </h4>
+                        </div>
+                      </div>
+                      <hr class="dark horizontal my-0">
+                      <div class="card-footer p-3 bg-white">
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4   col-sm-6 mb-xl-0 mb-5">
+                    <div class="card border-style position-relative" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                      <div class="card-header p-3 pt-2 bg-white">
+                        <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center text-white border-radius-xl mt-n4 position-absolute top-n20">
+                          
+                          <div>
+                            <i class="fa-solid fa-cart-shopping pt-4"></i>
+                          </div>
+                        </div>
+                        <div class="text-end pt-1">
+                          <p class="text-sm mb-0 text-capitalize text-grey mb-2">Year's Purchase</p>
+                          <h4 class="mb-0"><strong> {{year_purchase}} ₹</strong> </h4>
+                        </div>
+                      </div>
+                      <hr class="dark horizontal my-0">
+                      <div class="card-footer p-3 bg-white">
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <div class="row" style="display:none;">
+                  <div class="col-xl-3 col-md-6">
+                      <div class="card bg-gradient-info shadow-info border-style text-white mb-4">
+                          <div class="card-body">Primary Card</div>
+                          <div class="card-footer bg-gradient-info shadow-info  d-flex align-items-center justify-content-between">
+                              <a class="small text-white stretched-link" href="#">View Details</a>
+                              <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-md-6">
+                      <div class="card bg-gradient-warning shadow-warning border-style text-white mb-4">
+                          <div class="card-body">Warning Card</div>
+                          <div class="card-footer bg-gradient-warning shadow-warning  d-flex align-items-center justify-content-between">
+                              <a class="small text-white stretched-link" href="#">View Details</a>
+                              <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-md-6">
+                      <div class="card bg-gradient-success shadow-success border-style text-white mb-4">
+                          <div class="card-body">Success Card</div>
+                          <div class="card-footer d-flex bg-gradient-success shadow-success  align-items-center justify-content-between">
+                              <a class="small text-white stretched-link" href="#">View Details</a>
+                              <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-md-6">
+                      <div class="card bg-gradient-danger shadow-danger border-style  text-white mb-4">
+                          <div class="card-body">Danger Card</div>
+                          <div class="card-footer d-flex bg-gradient-danger shadow-danger  align-items-center justify-content-between">
+                              <a class="small text-white stretched-link" href="#">View Details</a>
+                              <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+
+
+
+
+
+
+                <div class="tab-content tab-content-basic" >
+                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+                    <!-- <div class="row" style="display:none;">
+                      <div class="col-sm-12">
+                        <div class="statistics-details d-flex align-items-center justify-content-between">
+                          <div class="card card-rounded p-3" >
+
+                            <div class="d-flex align-items-center justify-content-between">
+                              <p class="statistics-title me-3">Today's Sale</p>
+                              <i class="statistics-title menu-icon mdi mdi-cash-multiple"></i>
+                            </div>
+                            
+			    <h3 class="rate-percentage text-center">{{today_sales}} INR</h3>
+                          </div>
+                          <div class="card card-rounded p-3" >
+
+                           
+                            
+
+                            <div class="d-flex align-items-center justify-content-between">
+                              <p class="statistics-title me-3">Today's Purchase</p>
+                              <i class="statistics-title menu-icon mdi mdi-cart"></i>
+                            </div>
+			    <h3 class="rate-percentage text-center">{{today_purchase}} INR</h3>
+                          </div>
+                          <div class=" d-none d-md-block card card-rounded p-3" >
+                            
+
+                            <div class="d-flex align-items-center justify-content-between">
+                              <p class="statistics-title me-3">Month's Sale</p>
+                              <i class="statistics-title menu-icon mdi mdi-cash-multiple"></i>
+                            </div>
+
+			    <h3 class="rate-percentage text-center">{{month_sales}} INR</h3>
+                          </div>
+                          <div class="d-none d-md-block card card-rounded p-3" >
+                            
+                            <div class="d-flex align-items-center justify-content-between">
+                              <p class="statistics-title me-3">Month's Purchase</p>
+                              <i class="statistics-title menu-icon mdi mdi-cart"></i>
+                            </div>
+			    <h3 class="rate-percentage text-center">{{month_purchase}} INR</h3>
+                          </div>
+                          <div class="d-none d-md-block card card-rounded p-3" >
+                           
+
+                            <div class="d-flex align-items-center justify-content-between">
+                              <p class="statistics-title me-3">Year's Sale</p>
+                              <i class="statistics-title menu-icon mdi mdi-cash-multiple"></i>
+                            </div>
+
+			    <h3 class="rate-percentage text-center">{{year_sales}} INR</h3>
+                          </div>
+                          <div class="d-none d-md-block card card-rounded p-3" >
+                           
+
+                            <div class="d-flex align-items-center justify-content-between">
+                              <p class="statistics-title me-3">Year's Purchase</p>
+                              <i class="statistics-title menu-icon mdi mdi-cart"></i>
+                            </div>
+
+			    <h3 class="rate-percentage text-center">{{year_purchase}} INR</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  -->
+                    <div class="row ">
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                            <div class="card card-rounded" style="height: 300px;padding:24px;border-radius:5px;border:0.5px solid #e2e2e2;">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                   <h4 class="card-title card-title-dash">Customer Details</h4>
+                                   <!-- <h4 class="nunito-font">Customer Details</h4> -->
+                                   <p class="card-subtitle card-subtitle-dash">Number of customers added per month</p>
+                                  </div>
+                                </div>
+                                <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                                  <canvas id="firstchart" ></canvas>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                            <div class="card bg-secondary card-rounded" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-body pb-0">
+                                <h4 class="card-title card-title-dash text-white mb-4"> NPS - Net Promoter Score</h4>
+                                <div class="row">
+                                  <div class="col-sm-4">
+				    <h2 class="text-info"> NPS%</h2>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <div class="status-summary-chart-wrapper pb-4">
+                                      <canvas id="status-summary"></canvas>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                            <div class="card card-rounded" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-sm-6">
+                                    <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                                      <div class="circle-progress-width">
+                                        <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+                                      </div>
+                                      <div>
+                                        <p class="text-small mb-2">SMS sent today</p>
+                                        <h4 class="mb-0 fw-bold">2680</h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="circle-progress-width">
+                                        <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+                                      </div>
+                                      <div>
+                                        <p class="text-small mb-2">Emails sent today</p>
+                                        <h4 class="mb-0 fw-bold">9065</h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" >
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded" style="height: 490px;border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash">Total purchases by month</h4>
+                                   <p class="card-subtitle card-subtitle-dash">This graph shows the total purchases per month for a year</p>
+                                  </div>
+                                  <div>
+                                  </div>
+                                </div>
+                                <div class="d-sm-flex align-items-center mt-1 justify-content-between">
+                                  <div class="d-sm-flex align-items-center mt-4 justify-content-between"><h4 class="me-2 fw-bold netpurchase"></h4><h5 class="me-2">INR</h5><h5 class="text-success">(+1.37%)</h5></div>
+                                  <div class="me-3"><div id="marketing-overview-legend"></div></div>
+                                </div>
+                                <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                                  <canvas id="secondchart"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash"> How customer delighted about your service</h4>
+                                   <p class="card-subtitle card-subtitle-dash">You have 50+ reviews are pending</p>
+                                  </div>
+                                  <div>
+                                  </div>
+                                </div>
+                                <div class="table-responsive  mt-1">
+					<ul>
+						<li>
+							item
+
+						</li>
+					</ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <h4 class="card-title card-title-dash" style="color: #89B597">Comments require utmost attention</h4>
+                                      <div class="add-items d-flex mb-0">
+                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
+                                      </div>
+                                    </div>
+                                    <div class="list-wrapper">
+                                      <ul>
+                                        <li>
+					item
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+			
+			<div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                      <h4 class="card-title card-title-dash">Type By Amount</h4>
+                                    </div>
+                                    <canvas  id="thirdchart" height="200"></canvas>
+                                    <div class="doughnut-chart-legend"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                      <div>
+                                        <h4 class="card-title card-title-dash">Leave Report</h4>
+                                      </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="mt-3">
+                                      <canvas id="leaveReport"></canvas>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+
+
+        <script>
+
+
+
+ 
+
+
+	
+	  var xaxisvalues = [ "Positive", "Negative", "Neutral" ]
+		var yaxisvalues = [ {{ postivecomments }}, {{ negativecomments }}, {{ neutralcomments }} ] 
+          new Chart("thirdchart", {
+            type: "pie",
+            data: {
+            labels: xaxisvalues,
+            datasets: [{
+              fill: false,
+              backgroundColor: barColors,
+              borderColor: "rgba(100,150,255,255.1)",
+              data: yaxisvalues
+            }]
+          },
+            options: {
+              legend: {display: false},
+              title: {
+                display: false,
+                text: "Net Promoter score(NPS)"
+              },
+              responsive: false,
+              maintainAspectRatio: false,
+              scales: {
+                xAxes: [{ticks: {min: 0, max:500}}]
+              }
+            }
+          });
+
+
+
+          </script>
+
+
+
+
+        {% endblock %}
+

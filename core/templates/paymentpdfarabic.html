@@ -1,0 +1,184 @@
+
+<html  lang="ar">
+    <head>
+      <title>Payment</title>
+  
+      
+    </head>
+  
+    <body>
+      <div style="position: relative;">
+        <div>
+          <table>
+            <thead>
+              <th style="width:22%">
+                <img style="width:100%;" src="{{logo}}"  alt="logo">
+             
+              </th>
+  
+       
+              <th style="width:78%;">
+                <div class="text-right">
+                  <h4 class="company-name"  style="font-size:24px;">
+                
+                    <strong >مؤسسة اي لون الدولية للتجارة</strong>
+                  </h4>
+                  <h5 class="company-name" style="font-size:13px;">
+                    <strong>EYE LON AL-DAWLIYA EST
+                    </strong>
+                  </h5>
+                  <P class="address-2" style="font-size:13px;color:#111"> CR no: 4030167181 : ت س</P>
+                  <P class="address-2"  style="font-size:13px;color:#111"> VAT : 300115306700003: الرقم الضريبي</P>
+                 
+                 
+                </div>
+              </th>
+            </thead>
+          </table>
+        </div>
+  
+        <hr />
+  
+        <div class="text-center">
+     
+          <h3>Payment / الدفع</h3>
+  
+          
+   
+        </div>
+  
+  
+        <table class="table-cust" style="background-color: #f8f8f8;">
+  
+            <thead>
+  
+              <tr style="">
+  
+                  <th colspan="2" class="th cust-details" style="text-align:left;padding:10px;width: 33.33%;">
+  
+  
+                      <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">Voucher Number : {{voucher_number}} <span style="color:#111;">{{customer}}</span></p>
+                     
+                  </th>
+                  <th colspan="2" class="th " style="text-align:center;width: 33.33%;">
+  
+  
+
+                  </th>
+                  <th colspan="2" class="th cust-details" style="text-align:right;padding:10px;width: 33.33%;">
+  
+                      <!-- <p style="margin:0; padding:0;padding-bottom: 10px;">Customer Details</p> -->
+  
+                      <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">Date : {{date}}</p>
+                     
+                  </th>
+              </tr>
+  
+            </thead>
+  
+  
+        </table>
+  
+        
+      
+  
+        <table class="table-1" style="font-size:15px">
+         
+          <tbody>
+            <tr>
+              <th width="5%" class="sl">Sl <br></th>
+              <th  width="70%;" style="white-space: normal;" class="sl-2">Title <br></th>
+          
+              <th width="5%" class="sl-2" style="white-space: normal;">Mode<br></th>
+              <th width="10%;" class="sl-2" style="white-space: normal;">Amount <br></th>
+
+            </tr>
+  
+         
+            <tr>
+              <td class="sl">1</td>
+              <td style="white-space: normal;word-break: break-word; overflow-wrap: break-word" class="sl">{{ narration }}</td>
+              <td class="sl">{{ paymentmode }}</td>
+              
+              <td class="sl">{{ amount}}</td>
+  
+              
+            
+            </tr>
+            
+            <tr>
+              <td colspan="3">
+                  <p style="text-align:left;padding:4px;">Total</p>
+                 
+              </td>
+              <td colspan="3">
+                  <p style="text-align:right;padding:4px;">{{ amount}}</p>
+              </td>
+          </tr>
+          
+          </tbody>
+        
+        </table>
+  
+        <div  style="margin-top:20px;">
+  
+  
+          <table class="table-cust-2" >
+              <thead>
+                  <tr style="">
+                      <th colspan="5"  style="text-align:right;padding:5px;width: 85%;">
+                          <p style="margin:0; padding:0;font-size:14px">Grand Total (الإجمالي الكلي) :</p>
+                      </th>
+                      <th colspan="1"  style="text-align:right;padding:5px;width: 15%;">
+                          <p  style="margin:0; padding:0;font-size:14px">{{ amount}}</p>
+                      </th>
+                  </tr>
+                </thead>
+              </table>
+  
+              
+             
+  
+                 
+  
+  
+  
+  
+    
+      </div>
+  
+  
+      
+  
+       
+  
+  
+        <hr  />
+  
+        <div >
+            <p style="font-weight:bold;font-size:14px" >Amount In Word : {{totalworden}}</p>
+            <p style="font-weight:bold;font-size:14px"> {{totalwordar}} : المبلغ بالكلمات </p>
+        </div>
+  <hr>
+  
+  <div style="margin-top:120px;">
+    <p style="font-weight:bold;text-align:right;margin-top:50px;font-size:14px">For Magnus Care ( ماغنس للرعاية)</p>
+  </div>
+        
+        
+  
+        <!-- Footer text that should appear at the end of the PDF -->
+  
+    
+   
+  
+    
+  
+      <!-- This ensures that the footer text goes to the next page if the content is too long -->
+   
+      </div>
+     
+  
+    </body>
+  </html>
+  

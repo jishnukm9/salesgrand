@@ -1,0 +1,755 @@
+{% extends "navbar.html" %} {% block content %}
+
+<style>
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      
+  
+      .container-print, .container-print * {
+        visibility: visible;
+        
+      }
+
+      
+  
+      .container-print {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+  
+      }
+
+      .print-button-allinonereport {
+        display:none;
+      }
+      
+      
+    }
+  </style>
+  
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+           
+            <nav class="nav nav-borders">
+               <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="">All In One Report</a>
+
+           </nav>
+         </div>
+         <br>
+            <div class="card card-rounded " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #fff">
+                <div>
+                    <h5 class="m-0 font-weight-bold" style="color:#2c2e2f"> <strong>All In One Report</strong>  </h5>
+                  
+                </div> 
+
+                                <div class="d-flex align-items-center gap-3">
+                                  <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#dashboardyearlypurchasemodal" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                  <a class="sales-clear" href="{% url 'allinonereport' %}">Clear</a>
+                               </div>
+           
+            </div>
+
+
+            <div class="container-print" >
+
+            
+            <div class="card-body">
+
+              <div class="d-flex justify-content-between">
+                <div class="">
+
+                  <p>Date Range: <strong>{{startdate}} - {{enddate}}</strong> </p>
+                  <p>Branch : <strong>{{branch}}</strong> </p>
+              </div>
+
+              <div>
+                <img src="{{logo}}" alt="logo" width="200" >
+
+              </div>
+
+
+              </div>
+                
+
+
+              <div class="table-responsive">
+                <h5 class="text-center text-uppercase fw-bold">Service Report</h5> 
+                <table class=" table-bordered  table purchase-list" >
+                   <thead >
+                      <tr>
+                         <th>Sl</th>
+                         <th style="white-space: normal;"> Service ref Number</th>
+                         <th>Complaint</th>
+                         <th> Product</th>
+                         <th> Spare </th>
+                         <th style="white-space: normal;"> Service Income</th>
+                         <th style="white-space: normal;"> Spare Cost</th>
+                         <th> Tax</th>
+                         <th> Profit</th>
+                        
+                        
+                      </tr>
+                     
+                   </thead>
+                   <tbody >
+                      {% for item in all_service %}
+                      <tr>
+                         <td>{{ forloop.counter }}</td>
+                         <td>{{ item.servicerefnumber }}</td>
+                         <td style="white-space: normal;">{{item.complaint}}</td>
+                         <td>{{ item.product }}</td>
+                         <td style="white-space: normal;">{{ item.spares | safe }}</td>
+                         <td>{{ item.totalserviceincome|floatformat:2 }}</td>
+                         <td>{{ item.totalpurchasecost|floatformat:2 }}</td>
+                         <td>{{ item.totaltax|floatformat:2}}</td>
+                         <td>{{ item.profit|floatformat:2}}</td>
+                         
+                      </tr>
+                      {% endfor %}
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="white-space: normal;"></td>
+                        <td></td>
+                        <td style="white-space: normal;"><p class="fw-bold">Total</p></td>
+                        <td class="fw-bold">{{total_service_income | default:0 |floatformat:2}}</td>
+                        <td class="fw-bold">{{total_purchase_cost_service | default:0 |floatformat:2}}</td>
+                        <td class="fw-bold">{{total_tax_service | default:0 |floatformat:2}}</td>
+                        <td class="fw-bold">{{total_profit_service | default:0 |floatformat:2}}</td>
+
+                    </tr>
+                   
+                   </tbody>
+                </table>
+             </div>
+
+                </div>
+
+                <div class="card-body"> 
+                  <div class="table-responsive">
+                    <h5 class="text-center text-uppercase fw-bold">Sales Report</h5> 
+                    <table class="  table-bordered  table purchase-list" >
+                       <thead >
+                          <tr>
+                             <th>Sl</th>
+                             <th> Sale Id</th>
+                             <th  style="white-space: normal;"> Invoice Number</th>
+                             <!-- <th>Customer</th> -->
+                             <th> Products</th>
+                             <th  style="white-space: normal;"> Sale Income</th>
+                             <th  style="white-space: normal;"> Purchase Cost</th>
+                             <th> Tax</th>
+                             <th> Profit</th>
+                            
+                            
+                          </tr>
+                       </thead>
+                       <tbody>
+                          {% for item in all_sales %}
+                          <tr>
+                             <td>{{ forloop.counter }}</td>
+                             <td>{{ item.saleid }}</td>
+                             <td>{{ item.invoicenumber }}</td>
+                             <!-- <td style="white-space: normal;">{{item.customer}}</td> -->
+                             <td style="white-space: normal;">{{ item.products | safe }}</td>
+                             <td>{{ item.totalsaleprice|floatformat:2 }}</td>
+                             <td>{{ item.totalpurchasecost|floatformat:2 }}</td>
+                             <td>{{ item.totaltax|floatformat:2}}</td>
+                             <td>{{ item.profit|floatformat:2}}</td>
+                             
+                          </tr>
+                          {% endfor %}
+
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td style="white-space: normal;"></td>
+                            <!-- <td></td> -->
+                            <td style="white-space: normal;"><p class="fw-bold">Total</p></td>
+                            <td class="fw-bold">{{total_sale_price | default:0 |floatformat:2}}</td>
+                            <td class="fw-bold">{{total_purchase_cost_sale | default:0 |floatformat:2}}</td>
+                            <td class="fw-bold">{{total_tax_sale | default:0 |floatformat:2}}</td>
+                            <td class="fw-bold">{{total_profit_sale | default:0 |floatformat:2}}</td>
+    
+                        </tr>
+                       
+                       </tbody>
+                    </table>
+                 </div>
+    
+                    </div>
+
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <h5 class="text-center text-uppercase fw-bold">Purchase Report</h5> 
+                      <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>sl</th>
+                                  <th style="white-space: normal;">Purchase Id</th>
+                                  <th>For which job card</th>
+                                  <th style="white-space: normal;">Product - Qty - Cost</th>
+                                  <th  style="white-space: normal;">Purchase Cost</th>
+                                  <th>Supplier</th>
+                                  <th>Status</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <!-- First Row: Purchase 1 -->
+                               {% for purchase in purchase_list %}
+                              <tr>
+                                  <td >{{forloop.counter}}</td>
+                                  <td >{{purchase.purchaseid}}</td>
+                                  <td ></td>
+                                  <td class="m-0 p-0">
+                                   
+                                    <ul class="list-group-flush m-0 p-0">
+                                      {% for prod in purchase.products %}
+                                      <li class="list-group-item" style="white-space: normal;">{{prod.prod}} - {{prod.quantity}} Qty - {{prod.cost}}</li>
+                                      
+                                   {% endfor %}
+                                    </ul>
+
+                                    
+                                  </td>
+                                  <td>{{purchase.totalamount}}</td>
+                                  <td style="white-space: normal;">{{purchase.supplier}}</td>
+                                  <td >{{purchase.status}}</td>
+                              </tr>
+                              {% endfor %}
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td ></td>
+                                
+                                <td style="white-space: normal;"><p class="fw-bold">Total</p></td>
+                                <td class="fw-bold">{{total_amount_paid | default:0 |floatformat:2}}</td>
+                                <td></td>
+                                <td ></td>
+                         
+        
+                            </tr>
+                              
+                              <!-- Second Row: Purchase 2 -->
+                             
+                          </tbody>
+                      </table>
+                  </div>
+                </div>
+
+
+
+                    <div class="card-body"> 
+                      <div class="table-responsive">
+                        <h5 class="text-center text-uppercase fw-bold">Payment Report</h5> 
+                        <table class="  table-bordered  table purchase-list" >
+                           <thead >
+                              <tr>
+                                 <th>Sl</th>
+                              
+                                 <th  style="white-space: normal;"> Payment Id</th>
+                                 <th>Narration</th>
+                                 <th> Amount</th>
+                                 
+                          
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for item in payment_obj %}
+                              <tr>
+                                 <td>{{ forloop.counter }}</td>
+                                 <td>{{ item.paymentid }}</td>
+                                 <td style="white-space: normal;">{{ item.narration }}</td>
+                                 <td >{{item.amount}}</td>
+                                 
+                                
+                                 
+                              </tr>
+                              {% endfor %}
+    
+                              <tr>
+                                <td></td>
+                                
+                                <td></td>
+                                <td style="white-space: normal;"><p class="fw-bold">Total</p></td>
+                                <td class="fw-bold">{{total_payment | default:0 |floatformat:2}}</td>
+                                
+        
+                            </tr>
+                           
+                           </tbody>
+                        </table>
+                     </div>
+        
+                        </div>
+
+
+
+
+
+                        <div class="card-body row">
+
+                          <div class=" col-6" >
+                            <div class="table-responsive">
+                              <h5 class="text-center text-uppercase fw-bold">Financial</h5> 
+                              <table class="  table-bordered  table purchase-list" >
+                               
+                                 <tbody>
+                                 
+                                    <tr class="fw-bold">
+                                        <td>1</td>
+                                        <td  style="white-space: normal;">Gross Service Profit</td>
+                                        <td>{{total_profit_service | default:0 |floatformat:2}}</td>
+                                     
+                                       
+                                    </tr>
+                                
+          
+                                    <tr class="fw-bold">
+                                      
+                                        <td>2</td>
+                                        <td  style="white-space: normal;">Gross Sales Profit</td>
+                                        <td>{{total_profit_sale | default:0 |floatformat:2}}</td>
+                                  </tr>
+                                  <tr class="fw-bold">
+                                    <td></td>
+                                    <td  style="white-space: normal;">Total Gross Profit</td>
+                                    <td>{{total_gross_profit | default:0 |floatformat:2}}</td>
+              
+                                </tr>
+                                 
+                                 </tbody>
+                              </table>
+                           </div>
+              
+                              </div>
+
+
+
+
+
+
+
+                              <div class="col-6">
+                                <div class="table-responsive">
+                                  <h5 class="text-center text-uppercase fw-bold">Stock</h5> 
+                                  <table class="  table-bordered  table purchase-list" >
+                                   
+                                     <tbody>
+                                     
+                                        <tr class="fw-bold">
+                                           
+                                            <td  style="white-space: normal;">Opening Stock Value</td>
+                                            <td>{{opening_stock_value | default:0 |floatformat:2}}</td>
+                                         
+                                           
+                                        </tr>
+                                    
+              
+                                        <tr class="fw-bold">
+                                          
+                                         
+                                            <td  style="white-space: normal;">Closing Stock Value</td>
+                                            <td>{{closing_stock_value | default:0 |floatformat:2 }}</td>
+                                      </tr>
+                                      
+                                     
+                                     </tbody>
+                                  </table>
+                               </div>
+                  
+                                  </div>
+
+                        </div>
+                       
+                     
+
+
+
+
+                    
+
+
+
+
+
+
+
+
+                          
+
+
+
+
+
+
+
+                         <div class="card-body">
+
+                            <div class="table-responsive">
+                             
+                              <table class="table table-bordered text-center">
+                                <thead class="bg-white">
+                                  <tr>
+                                    <th rowspan="" class="align-middle">PARTICULAR</th>
+                                    <th colspan="">CASH</th>
+                                    <th colspan="">CARD</th>
+                                    <th colspan="">BANK</th>
+                                    <th colspan="">UPI</th>
+                                    <th colspan="">TOTAL</th>
+                                  </tr>
+                                 
+                                </thead>
+                                <tbody>
+                                  <tr  >
+                                    <td  style="white-space: normal;" class="fw-bold">Opening Balance</td>
+                                    {% if cashbook.opening_cash_balance_type == "receipt" %}
+                            <td >{{cashbook.opening_cash_balance  | default:0 |floatformat:2 }}</td>
+                            {% else %}
+                           <td>0</td>
+                            {%endif %}
+                                    
+
+                            {% if cashbook.opening_card_balance_type == "receipt" %}
+                            <td >{{cashbook.opening_card_balance  | default:0 |floatformat:2}}</td>
+                            {% else %}
+                           <td>0</td>
+                            {%endif %}
+
+
+
+
+                                    {% if cashbook.opening_bank_balance_type == "receipt" %}
+                                    <td >{{cashbook.opening_bank_balance  | default:0 |floatformat:2 }}</td>
+                                    {% else %}
+                                    <td>0</td>
+                                    {%endif %}
+
+
+                                    {% if cashbook.opening_upi_balance_type == "receipt" %}
+                                    <td >{{cashbook.opening_upi_balance  | default:0 |floatformat:2 }}</td>
+                                    {% else %}
+                                    <td>0</td>
+                                    {%endif %}
+
+
+                                    <td class="fw-bold">{{cashbook.opening_balance_total | default:0 |floatformat:2}}</td>
+                                    
+                                  </tr>
+
+
+
+
+                                  <tr  >
+                                    <td style="white-space: normal;"  class="fw-bold">Closing Balance</td>
+                                    {% if cashbook.balancetype_cash == "receipt" %}
+                                    <td >{{ cashbook.closingbalance_cash  | default:0 |floatformat:2 }}</td>
+                                    {% else %}
+                                    <td>0</td>
+                                    {% endif %}
+
+
+
+                                     {% if cashbook.balancetype_card == "receipt" %}
+                                                <td >{{ cashbook.closingbalance_card  | default:0 |floatformat:2  }}</td>
+                                                {% else %}
+                                                <td>0</td>
+                                                {% endif %}
+
+                                   {% if cashbook.balancetype_bank == "receipt" %}
+                                                <td >{{ cashbook.closingbalance_bank  | default:0 |floatformat:2  }}</td>
+                                                {% else %}
+                                                <td>0</td>
+                                                {% endif %}
+
+
+
+
+
+                                                {% if cashbook.balancetype_upi == "receipt" %}
+                                                <td >{{ cashbook.closingbalance_upi  | default:0 |floatformat:2  }}</td>
+                                                {% else %}
+                                                <td>0</td>
+                                                {% endif %}
+
+
+
+                                                <td class="fw-bold">{{cashbook.cash_balance_total | default:0 |floatformat:2}}</td>
+                                  
+                                  </tr>
+
+
+
+
+
+                                  
+
+
+
+
+                                </tbody>
+                              </table>
+                              
+                           </div>
+
+
+
+                           
+              
+                              </div> 
+
+
+
+
+
+
+                              <div class="card-body">
+
+                                <div class="table-responsive">
+                                 
+                                  <table class="table table-bordered text-center">
+                                    <thead class="bg-white">
+                                      <tr>
+                                        <th rowspan="2" class="align-middle" style="white-space: normal;">PAYMENT RECEIVED MODE</th>
+                                        <th colspan="">CASH</th>
+                                        <th colspan="">CARD</th>
+                                        <th colspan="">BANK</th>
+                                        <th colspan="">UPI</th>
+                                        <th colspan="">TOTAL</th>
+                                     
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <!-- {% if cashbook.balancetype_cash == "receipt" %}
+                                         {{ cashbook.closingbalance_cash }}
+                                         {% else %}
+                                         0
+                                         {% endif %} -->
+                                         
+                                        {{cashbook.total_today_receipt_cash | default:0 |floatformat:2}}
+                                        </td>
+                                        <td>
+                                          <!-- {% if cashbook.balancetype_card == "receipt" %}
+                                          {{ cashbook.closingbalance_card }}
+                                          {% else %}
+                                          0
+                                          {% endif %} -->
+                                        {{cashbook.total_today_receipt_card | default:0 |floatformat:2}}  
+                                        
+                                        </td>
+                                        <td >
+                                          <!-- {% if cashbook.balancetype_bank == "receipt" %}
+                                          {{ cashbook.closingbalance_bank }}
+                                          {% else %}
+                                          0
+                                          {% endif %} -->
+                                         {{cashbook.total_today_receipt_bank| default:0 |floatformat:2 }} 
+                                        </td>
+                                          <td >
+                                            <!-- {% if cashbook.balancetype_upi == "receipt" %}
+                                            {{ cashbook.closingbalance_upi }}
+                                            {% else %}
+                                            0
+                                            {% endif %} -->
+                                            {{cashbook.total_today_receipt_upi | default:0 |floatformat:2}}
+                                          
+                                          </td>
+                                        <td class="fw-bold">{{cashbook.total_today_receipt_total | default:0 |floatformat:2}}</td>
+                                        
+                                    
+                                      </tr>
+                                      <tr>
+                                        <th colspan="5" style="white-space: normal;">CASH BALANCE IN DROW</th>
+
+                                        <td class="fw-bold"> {{cashbook.cash_in_drow | default:0 |floatformat:2}} </td>
+                                      </tr>
+                                    </thead>
+                                 
+                                  </table>
+                                  
+                               </div>
+    
+    
+    
+                               
+                  
+                                  </div>
+
+
+
+
+
+
+
+                              <div class="card-body mb-5">
+
+                               <div class="container-remarks ">
+
+                                <h5 CLASS="fw-bold">
+                                    REMARKS : 
+                                </h5>
+
+
+                               </div>
+
+                                  </div>
+
+
+                                  <div class="card-body mt-5">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+
+                                            <p class="fw-bold">Signature of Manager</p>
+                                            <!-- <p class="fw-bold">Muhammed Rashid NV</p> -->
+                                        </div>
+                                        <div>
+                                            <p class="fw-bold">Signature of MD</p>
+                                            <!-- <p class="fw-bold">Abdullah Zakariyya</p> -->
+                                        </div>
+                                    </div>
+                                       </div>
+
+
+
+                              
+
+
+                            </div>
+
+                            <div class="d-flex justify-content-end   m-5 me-4 mt-3">
+                                <button class="btn btn-primary  text-white fw-bold print-button-allinonereport" onclick="printDiv()"><i class="fa-solid fa-print"></i> Print</button>
+                            </div>
+
+            </div>
+              
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="dashboardyearlypurchasemodal">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'allinonereport' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+        
+           
+             <div class="form-group">
+               <label for="date"  class="fw-bold">Start Date</label>
+               <div id="datepicker" 
+               name=""
+  class="input-group date datepicker-current " 
+  data-date-format="dd-mm-yyyy">
+ <input class="form-control  " 
+ name="startdate"
+
+ autocomplete="off" 
+ id="date"
+
+style="text-align:center;"
+        type="text"   />
+ <span class="input-group-addon">
+     <i class="glyphicon glyphicon-calendar"></i>
+ </span>
+</div>
+</div>
+
+<div class="form-group">
+    <label for="date"  class="fw-bold">End Date</label>
+    <div id="datepicker" 
+    name=""
+class="input-group date datepicker-current " 
+data-date-format="dd-mm-yyyy">
+<input class="form-control  " 
+name="enddate"
+
+autocomplete="off" 
+id="date"
+
+style="text-align:center;"
+type="text"   />
+<span class="input-group-addon">
+<i class="glyphicon glyphicon-calendar"></i>
+</span>
+</div>
+             </div>
+   
+           
+             <div class="form-group">
+               <label for="sale_subcategory" class="fw-bold">Select Branch</label>
+               <select class="selectizefield "  name="branch" id="branch">
+
+
+                <option value="{{selected_branch.id}}">{{selected_branch}}</option>
+
+                {% for branch in all_branches %}
+                 <option value="{{branch.id}}">{{branch.name}}</option>
+               {% endfor %}
+                 
+               </select>
+             </div>
+         
+
+          
+            
+             
+
+
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+
+<script>
+    function printDiv() {
+      var originalTitle = document.title;
+      var printContents = document.querySelector('.container-print').innerHTML;
+      var originalContents = document.body.innerHTML;
+      document.title = "Magnus";
+  
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      document.title = originalTitle;
+    }
+  </script>
+
+
+<!-- main-panel ends -->
+{% endblock %}

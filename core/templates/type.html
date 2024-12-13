@@ -1,0 +1,113 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <!-- <ul class="nav nav-tabs" role="tablist">
+                     
+                     <li  class="nav-item" >
+                        <a class="nav-link" id="more-tab"  href="{% url 'products' %}" role="tab">Products</a>
+                     </li>
+                     <li  class="nav-item" >
+                        <a class="nav-link" id="profile-tab"  href="{% url 'catagories' %}">Catagories</a>
+                     </li>
+                     <li  class="nav-item" >
+                        <a class="nav-link" id="contact-tab"  href="{% url 'subcatagories' %}">SubCatagories</a>
+                     </li>
+                     <li  class="nav-item">
+                        <a class="nav-link" id="contact-tab"  href="{% url 'supplier' %}" role="tab">Supplier</a>
+                     </li>
+                     <li  class="nav-item" >
+                        <a class="nav-link" id="more-tab"  href="{% url 'brand' %}" role="tab">Brand</a>
+                        </l>
+                     <li  class="nav-item">
+                        <a class="nav-link" id="more-tab" href="{% url 'packing' %}" role="tab">Packing</a>
+                     </li>
+                     <li  class="nav-item" >
+                        <a class="nav-link " id="more-tab"  href="{% url 'tax' %}" role="tab">Tax</a>
+                     </li>
+                     <li  class="nav-item" >
+                        <a class="nav-link active text-white" id="home-tab" style="background-color: #1f3bb3;border-radius: 5px;"  href="{% url 'type' %}" role="tab" aria-controls="Overview" aria-selected="true">Product Type List</a>
+                     </li>
+                     <li  class="nav-item" >
+                        <a class="nav-link" id="profile-tab"  href="{% url 'typeform' %}">Add Product Type</a>
+                     </li>
+                     <li  class="nav-item" >
+                        <a class="nav-link border-0" id="more-tab"  href="{% url 'branch' %}" role="tab">Branch</a>
+                     </li>
+                  </ul> -->
+
+
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Product Type List </a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'typeform' %}">Product Type Entry</a>  
+                 </nav>
+   
+               </div>
+               <br>
+            
+               <!-- <div class="btn-wrapper d-flex justify-content-between">
+                  <a href="{% url 'typeform' %}" class="btn btn-primary text-white me-0">Add Type</a>
+                  <a href="{% url 'index' %}" class="btn text-white me-0" style="background-color:#2c676b;"><i class="fa-solid fa-rotate-left"></i>Back</a>
+               </div> -->
+              
+               <!-- <div class="row"> -->
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                     <div class="card-header py-3">
+                         <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Product Type List </strong> </h5>
+                     </div>
+                     <div class="card-body">
+                         <div class="table-responsive">
+
+
+                                 <table class="add-pagination  table-bordered table table-striped type_list">
+                                    <thead>
+                                       <tr>
+                                          <th width="5%">Sl</th>
+                                          <th width="45%"> Type</th>
+                                          <th width="40%"> Branch</th>
+                                          <th width="10%">Action</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for item in data %}
+                                       <tr>
+                                          <td>{{ forloop.counter }}</td>
+                                          <td>{{ item }}</td>
+                                          <td>{{ item.branch }}</td>
+                                          <td>
+                                             <a href="{% url 'updatetypeform' id=item.id %}"> <span class="edit-btn"><i class="fa-regular fa-eye"></i>  View</span> </a>
+                                           
+                                          </td>
+                                       </tr>
+                                       {% endfor %}
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        <!-- </div>
+                     </div>
+                  </div> -->
+               </div>
+               <!-- </div> -->
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

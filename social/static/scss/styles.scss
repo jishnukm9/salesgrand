@@ -1,0 +1,266 @@
+// body section
+
+$body-color: #f0f2f5;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: $body-color;
+  height: 100%;
+}
+
+/* navbar section */
+
+$button-bg: #e4e6eb;
+$button-bg-hover: #e1e2e5;
+
+.navbar-menu {
+  list-style-type: none;
+}
+
+.nav-link {
+  background-color: $button-bg;
+  width: 3rem;
+  height: 3rem;
+}
+
+.nav-link:hover,
+.person-online:hover,
+.chat-groups:hover,
+.sponsered-ad:hover {
+  background-color: $button-bg-hover;
+}
+
+.tabs a {
+  color: #444;
+  padding: 2px 12px;
+}
+.tabs .tab-active {
+  color: blue;
+  border-bottom: 3px solid blue;
+  // border-bottom-color: blue;
+}
+
+.profile-pic-round:hover {
+  filter: brightness(90%);
+}
+
+.logo-first-letter {
+  color: blue;
+  font-weight: bolder;
+  font-size: 2rem;
+}
+
+$box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+  rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+.nav-shadow {
+  box-shadow: $box-shadow;
+}
+
+// content section
+
+.content-container {
+  margin-top: 6rem;
+}
+
+.middle-content,
+.middle-content-two {
+  box-shadow: $box-shadow;
+}
+
+.prof-pic {
+  height: 100%;
+}
+
+.prof-pic-left {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.whats-on {
+  height: 3rem;
+  background-color: $body-color;
+}
+.whats-on:hover {
+  background-color: $button-bg-hover;
+}
+
+.last-content {
+  position: sticky;
+  top: 6rem;
+  height: 110vh;
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.first-content {
+  position: sticky;
+  top: 6rem;
+}
+
+.video-up:hover,
+.img-up:hover,
+.feeling-up:hover {
+  background-color: $button-bg-hover;
+  cursor: pointer;
+}
+
+.time {
+  font-size: 0.7rem;
+}
+
+.post-description-font {
+  font-size: 0.9rem;
+}
+
+.post-image,
+.post-video {
+  width: 100%;
+}
+
+.left-links,
+.contacts-online-list {
+  list-style-type: none;
+}
+
+.left-links a {
+  text-decoration: none;
+  color: black;
+}
+
+.left-links li:hover {
+  background-color: #e1e2e5;
+}
+
+.sponsored-img {
+  width: 8rem;
+  height: 8rem;
+}
+.sponsoredad-text {
+  font-size: 0.9rem;
+}
+
+.sponsered-website {
+  font-size: 0.6rem;
+}
+// login page
+
+.login-container,
+.login-container-left,
+.login-containr-right {
+  height: 100vh;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-form-container {
+  width: 60%;
+}
+
+.logo-first-letter-login {
+  color: blue;
+  font-weight: bolder;
+  font-size: 3rem;
+}
+
+.login-description {
+  line-height: 1.5;
+}
+
+.login-container-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.login-container-child-1 {
+  padding: 0 1rem;
+}
+.login-container-child-2 {
+  padding: 0 1rem;
+  // width: 30%;
+}
+
+.login-container-child-1 {
+  flex-basis: 110%;
+}
+.login-container-child-2 {
+  flex-basis: 90%;
+}
+// media queries
+
+/* Extra small devices (phones) */
+@media only screen and (max-width: 576px) {
+  /* Your styles for xs devices go here */
+  .last-content,
+  .first-content,
+  .tabs-container {
+    display: none;
+  }
+  .login-container-child {
+    display: block;
+    // margin-top: 10rem;
+  }
+  .login-container-child-2 {
+    margin-top: 2rem;
+  }
+  .login-container-child-1 {
+    text-align: center;
+  }
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* Your styles for sm devices go here */
+  .last-content,
+  .first-content {
+    display: none;
+  }
+  .tabs-container {
+    display: none;
+  }
+  .login-container-child {
+    display: block;
+  }
+  .login-container-child-2 {
+    margin-top: 2rem;
+  }
+  .login-container-child-1 {
+    text-align: center;
+  }
+}
+
+/* Medium devices (desktops) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* Your styles for md devices go here */
+  .last-content,
+  .first-content {
+    display: none;
+  }
+  .tabs-container {
+    display: none;
+  }
+  .login-container-child {
+    display: block;
+  }
+  .login-container-child-2 {
+    margin-top: 2rem;
+  }
+  .login-container-child-1 {
+    text-align: center;
+  }
+}
+
+/* Large devices (large desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* Your styles for lg devices go here */
+}
+
+/* Extra large devices (extra large desktops) */
+@media only screen and (min-width: 1200px) {
+  /* Your styles for xl devices go here */
+}

@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>salesgrand</title>
+      <!-- plugins:css -->
+      {% load static %}
+  
+      <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/typicons/typicons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/simple-line-icons/css/simple-line-icons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+      
+      <!-- endinject -->
+      <!-- Plugin css for this page -->
+      <!-- senseweave favicon -->
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+      <link rel="manifest"  href="{% static 'images/site.webmanifest' %}">
+      <!-- added new datatable bootstrap cdn 15-06-2023 -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+
+      <!-- End plugin css for this page -->
+      <!-- inject:css -->
+     <!-- ----------------------- for buttons in datatable --------------------------- -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+     
+     <!-- https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css -->
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+           <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+     
+     <!-- ---------------------------------------------- -->
+
+
+      <link rel="stylesheet" href=
+      "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+
+      <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+      <!-- endinject -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+      <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <script src="https://kit.fontawesome.com/8b32c96dee.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="{% static 'css/mystyles.css' %}">
+      <link rel="stylesheet" href="{% static 'css/updatestyle.css' %}">
+      <link rel="stylesheet" href="{% static 'css/jquery.toast.min.css' %}">
+
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400;1,500&family=Nunito&family=Roboto:ital@1&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+      <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css" media="all">
+        
+  
+   </head>
+   <!-- <body class="sidebar-icon-only" > -->
+      <body class="{{request.user.userprofile.sidebar_status}}"  >
+
+         <style>
+        
+/* General styling for all buttons */
+.dt-button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 24px; /* Padding inside the button */
+    margin: 5px; /* Space between buttons */
+    border: none; /* Remove borders */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Mouse pointer on hover */
+    font-size: 16px; /* Text size */
+}
+
+/* Specific styling for CSV button */
+.buttons-csv {
+    background-color: #f44336; /* Red background for CSV button */
+}
+
+/* Specific styling for Excel button */
+.buttons-excel {
+    background-color: #2196F3; /* Blue background for Excel button */
+}
+
+/* Specific styling for PDF button */
+.buttons-pdf {
+    background-color: #ffeb3b; /* Yellow background for PDF button */
+    color: black; /* Black text for PDF button */
+}
+
+/* Specific styling for Column Visibility button */
+.buttons-colvis {
+    background-color: #9c27b0; /* Purple background for Column Visibility button */
+}
+
+            
+        </style>
+         
+      <!-- <div class="container-scroller" > -->
+
+
+         <!-- ---- #search bar---- -->
+         <div class="modal fade" id="servicesearchModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content p-0 w-100 text-white">
+                <div class="modal-header"
+                style="background-color:#4555B9;">
+                  <h5 class="modal-title fw-bold" id="exampleModalLabel">Print Barcode</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                  </button>
+                </div>
+
+                <div class="modal-body ">
+
+
+                
+                     
+                     <div >
+<form action="{% url 'printbarcode' %}" method="POST" target="_blank" class="my-2">
+
+   {% csrf_token %}
+
+   <div class="form-group">
+      <label class="text-dark fw-bold"  for="barcode">Barcode Number</label>
+      <input required type="text" name="barcode" id="barcodequickprint" class="form-control quick-print-barcode  mb-2" >
+     
+    </div>
+
+    <!-- <div class="form-group">
+      <label class="text-dark fw-bold" for="quantity">Quantity</label> -->
+      <input required hidden type="number" min="1" name="quantity"  id="quantityquickprint" value="1" class="form-control quick-print-qty  mb-2"  >
+     
+    <!-- </div> -->
+
+    <div class="form-group">
+      <label class="text-dark fw-bold"  for="typequickprint">Type</label>
+      <select required name="type" id="typequickprint" class="form-control border mb-2 ">
+         <option value="" ></option>
+         <option value="Purchase">Purchase</option>
+         <option value="Service">Service</option>
+      </select>
+     
+    </div>
+                    
+                    
+                     
+                     <button type="submit"   class="btn btn-primary float-right quick-print"  >Print</button>
+                  
+                  </form>
+
+
+                
+                
+</div>
+                              
+              </div>
+            </div>
+
+           
+            </div>
+          </div>
+
+
+
+
+
+          <div class="modal fade" id="barcodeprintModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content p-0 w-100 text-white">
+                <div class="modal-header"
+                style="background-color:#4555B9;">
+                  <h5 class="modal-title fw-bold" id="exampleModalLabel">Search Service Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                  </button>
+                </div>
+
+                <div class="modal-body ">
+
+
+                
+                     
+                     <div >
+<form class="d-flex gap-3 my-5">
+                     <input type="text" name="serviceref" class="form-control quick-search-serviceref border-primary" placeholder="Enter Service Barcode Number" >
+                     <button  class="btn btn-primary btn-sm quick-search-service">Search</button>
+                  
+                  </form>
+
+
+                
+                
+</div>
+                              
+              </div>
+            </div>
+
+           
+            </div>
+          </div>
+
+
+
+
+          <!-- email modal  -->
+
+          <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content p-0 w-100 text-white">
+                <div class="modal-header"
+                style="background-color:#4555B9;">
+                  <h5 class="modal-title fw-bold" id="exampleModalLabel">Contact Us</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                  </button>
+                </div>
+
+                <div class="modal-body ">
+
+
+
+                
+                     
+                     <div >
+<form action="{% url 'send_support_email' %}" method="post">
+   {% csrf_token %}
+   <div class="form-group">
+      <label for="subject" class="fw-bold text-dark">Subject</label>
+      <input type="text" name="subject" class="form-control" id="subject" required>
+    </div>
+
+    <div class="form-group">
+      <label for="message" class="fw-bold text-dark">Message</label>
+      <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
+      <textarea required class="form-control" id="message" name="message" style="height:200px;" rows="10"></textarea>
+    </div>
+   
+  
+                    
+                     <button type="submit"  class="btn btn-primary ">Send</button>
+                  
+                  </form>
+
+
+                
+                
+</div>
+                              
+              </div>
+            </div>
+
+           
+            </div>
+          </div>
+
+
+
+
+         <!-- #lOADER HTML -->
+         <div class="preloader-wrapper">
+            <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status">
+               <span class="visually-hidden">Loading...</span>
+             </div>
+             <!-- <p class="text-muted me-2 fs-6" style="font-family:San-serif;">Loading....</p> -->
+
+             
+            </div>
+            </div>
+
+
+            <!-- toast code -->
+
+            <div class="toasts">
+        
+
+            </div>
+
+
+
+         <!-- partial:partials/_navbar.html -->
+         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row" >
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start" >
+               <div class="me-3">
+                  <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+                  <span class="icon-menu text-white"></span>
+                  </button>
+               </div>
+               <div>
+                  <a class="navbar-brand brand-logo" href="{% url 'index' %}" class="img-responsive">
+                  <img width="500" height="700" src="{% static 'images/magnus-arabic-logo.png' %}" alt="logo" />
+                 <!-- <h2 class="text-white fw-bold">Magnus</h2> -->
+                  </a>
+                  <a class="navbar-brand brand-logo-mini" href="{% url 'index' %}">
+                  <img src="{% static 'images/logo-mini.png' %}" style="width:revert;" alt="logo" />
+                  </a>
+               </div>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-top" >
+               <ul class="navbar-nav">
+                  <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+                     <!-- <h1 class="welcome-text ">{{ request.user.userprofile.branch }} <span class="text-black fw-bold"></span></h1> -->
+                  </li>
+               </ul>
+
+               <!-- <ul>
+                  
+                  
+               </ul> -->
+               <ul class="navbar-nav ms-auto">
+                  
+                  <li class="">
+                     <h6 class="pt-2 nunito-font navbar-name fw-bold">{{ request.user.username | title }} ({{ request.user.userprofile.role }})</h6>
+                     
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#" data-toggle="modal" data-target="#emailModal">
+                        <i class="fa-solid fa-headset icon-headset-navbar"></i>
+                        
+                       
+                      
+                      </a>
+                  </li>
+                  <li class="nav-item dropdown"> 
+                     <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                     
+                       <!-- <i class="fa-regular fa-clock text-white"></i> -->
+                       <i class="icon-clock"></i>
+                     
+                       <span class="count-call">0</span>
+                      
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
+                       <a href="{% url 'notifications' %}" class="dropdown-item py-3 ">
+
+                        
+                         <p class="mb-0 font-weight-medium float-left">You have <span class="text-danger fw-bold count-call-second">0</span> new call notifications </p>
+
+                        
+                         <span class="badge badge-pill badge-primary float-right fw-bold" style="background-color:#d0d4f3;">View all</span>
+                       </a>
+                       
+                     </div>
+                   </li>
+               
+                    
+                
+                  <li class="nav-item dropdown"> 
+                     <a class="nav-link count-indicator count-indicator-notification" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                       <i class="icon-bell"></i>
+                       
+                       <span class="count-number">0</span>
+                     
+                     </a>
+                     <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here lor</a>
+                      </div> -->
+                      
+                      <ul class="dropdown-menu notifications dropdown-menu-right navbar-dropdown preview-list pb-0" role="menu" aria-labelledby="countDropdown">
+    
+                        <div class="notification-heading pt-3 " style="background-color:#4555B9;"><h5 class="menu-title">Notifications</h5>
+                        </div>
+                        <li class="divider"></li>
+                       <div class="notifications-wrapper border" >
+                        
+                    
+                       </div>
+                        <li class="divider"></li>
+                        <div class="notification-footer" style="background-color:#4555B9;"><h4 class="menu-title"><i class="glyphicon glyphicon-circle-arrow-right"></i></h4></div>
+                      </ul>
+                   </li>
+
+                  
+
+
+
+
+
+
+
+
+                  <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+                     <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+
+                       
+                              <div>
+                                 <img class="img-xs rounded-circle add-dot" style="position:relative;" src="{% static 'images/faces/face100.jpg' %}" alt="Profile image"> 
+                                    </div>
+               </a>
+                     
+                      
+                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+
+                        
+                        <div class="dropdown-header text-center">
+                           <img class="img-md rounded-circle" src="{% static 'images/faces/face100.jpg' %}" alt="Profile image">
+                           <p class="mb-1 mt-3 font-weight-semibold">{{ request.user.username }}</p>
+                           <p class="fw-light text-mutedd mb-0">{{ request.user.email }}</p>
+                           <p class="fw-light text-mutedd mb-0">Branch : {{ request.user.userprofile.branch }}</p>
+                           
+                        </div>
+                        <a class="dropdown-item" href="{% url 'myprofile' %}"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile</a>
+                        <a class="dropdown-item" href="{% url 'home' %}"><i class="dropdown-item-icon mdi mdi-account-plus text-primary me-2"></i> Social</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}"><i class="dropdown-item-icon mdi mdi-power text-primary me-2" ></i>Sign Out</a>
+                     </div>
+                  </li>
+               </ul>
+               <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+               <span class="mdi mdi-menu"></span>
+               </button>
+            </div>
+         </nav>
+         <!-- partial -->
+         <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div id="right-sidebar" class="settings-panel">
+               <i class="settings-close ti-close"></i>
+               <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+                  <li class="nav-item">
+                     <a class="nav-link active" id="todo-tab" data-bs-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" id="chats-tab" data-bs-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+                  </li>
+               </ul>
+               <div class="tab-content" id="setting-content">
+                  <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+                     <div class="add-items d-flex px-3 mb-0">
+                     </div>
+                  </div>
+                  <!-- chat tab ends -->
+               </div>
+            </div>
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas"  id="sidebar" >
+               <ul class="nav">
+                  <li class="nav-item">
+                     <a class="nav-link" href="{% url 'index' %}">
+                     <i class="mdi mdi-view-dashboard menu-icon"></i>
+                     <span class="menu-title" >Dashboard</span>
+                     
+                     </a>  
+                  </li>
+
+
+
+
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#registration" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="mdi mdi-keyboard menu-icon"></i>
+                        <span class="menu-title">Registration</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="registration">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'products' %}">Products</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'catagories' %}">Category</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'subcatagories' %}">Sub Category</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'supplier' %}">Supplier</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'brand' %}">Brand</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'packing' %}">Packing</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'tax' %}">Tax</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'type' %}">Product Type</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'branch' %}">Branch</a></li>
+                          {% if request.user.is_superuser %}
+                          <li class="nav-item"><a class="nav-link" href="{% url 'externalcustomers' %}">External Customers</a></li>
+                          {% endif %}
+                          <li class="nav-item"><a class="nav-link" href="{% url 'chartofaccounts' %}">Account heads</a></li>
+
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+
+
+
+
+
+                
+                  
+
+
+
+              
+
+
+
+
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="menu-icon mdi mdi-crown"></i>
+                        <span class="menu-title">Customers</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="form-elements">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'customerform' %}">Customer Entry</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'customers' %}">Customer List</a></li>
+                        
+                          <li class="nav-item"><a class="nav-link" href="{% url 'addmultiplecustomersform' %}">Multiple Entries</a></li>
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+
+
+
+                 
+
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#purchase" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="menu-icon mdi mdi-cart"></i>
+                        <span class="menu-title">Purchase</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="purchase">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'purchaseform' %}">Purchase Entry</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'purchase' %}">Purchase List</a></li>
+             
+                          <li class="nav-item"><a class="nav-link" href="{% url 'purchasereturn' %}">Purchase Retrun</a></li>
+                          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'addbulkpurchaseform' %}">Bulk Purchase Entry</a></li> -->
+                         
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+
+
+
+
+
+
+
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#stocks" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="mdi mdi-view-list menu-icon"></i>
+                        <span class="menu-title">Stock</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="stocks">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'stock' %}">Warehouse Stocks</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'branchstock' %}">Branch Stocks</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'branchoutofstock' %}">Items Out of Stock</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'stocktransfer' %}">Stock Transfer</a></li>
+                          
+                           <li class="nav-item"><a class="nav-link" href="{% url 'stocktransferlist' %}">Stock Transfer List</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'transferedstocklist' %}">Transfered Stock List</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'bulkstocklist' %}">Bulk Stock List</a></li>
+
+                           {% if request.user.is_superuser or request.user.userprofile.role == 'Branch Admin' or request.user.userprofile.role == 'Franchise Admin'  %}
+                           <li class="nav-item"><a class="nav-link" href="{% url 'stockadjustment' %}">Stock Adjustment</a></li>
+                           {% endif %}
+                       
+                       
+                       
+                       
+                        </ul>
+                      </div>
+                     
+                  
+
+
+             
+
+
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="menu-icon mdi mdi-currency-eur"></i>
+                        <span class="menu-title">Sales</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="sales">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'saleform' %}">Sales Entry</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'sale' %}">Sales List</a></li>
+                      
+                          <li class="nav-item"><a class="nav-link" href="{% url 'salesreturn' %}">Sales Retrun</a></li>
+                          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'comingsoon' %}">Sales Settlement</a></li> -->
+                          
+                       
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+
+
+
+                  <li class="nav-item">
+
+                     <a class="nav-link" data-bs-toggle="collapse" href="#service" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="mdi mdi-headset  menu-icon"></i>
+                        <span class="menu-title">Service</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="service">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'serviceform' %}">Service Entry</a></li>
+                           {% if request.user.userprofile.role == "Field Engineer" %}
+               <li class="nav-item"><a class="nav-link" href="{% url 'service' %}">My Service</a></li>
+            {% endif %}
+                           {% if request.user.userprofile.role != "Field Engineer" %}
+                           <li class="nav-item"><a class="nav-link" href="{% url 'service' %}">All Service List</a></li>
+                           {% endif %}
+                           
+                           {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'sparerequests' %}">Spare Requested</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'servicechargeestimationlist' %}">Service Charge</a></li> -->
+                           
+                           {% endif %}
+                           {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" or request.user.userprofile.role == "TRC Front Desk" or request.user.userprofile.role == "Field Engineer"    %}
+                           <li class="nav-item"><a class="nav-link" href="{% url 'servicebooking' %}">Service Booking</a></li>
+                           {% endif %}
+                           {% if user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' or user.userprofile.role == "TRC Front Desk" %}
+           
+               <li class="nav-item"><a class="nav-link" href="{% url 'servicecnp' %}">My Task</a></li>
+               {% endif %}
+               
+               {% if user.userprofile.role == "TRC Front Desk" %}
+              
+               <li class="nav-item"><a class="nav-link" href="{% url 'servicecompletedfd' %}">Service Completed</a></li>
+               {% endif %}
+
+                           
+                     
+                        </ul>
+                      </div>
+
+
+                  </li>
+
+
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#accounts" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="menu-icon mdi mdi-library-books"></i>
+                        <span class="menu-title">Accounts</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="accounts">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'accounts' %}">Transactions</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'daybook' %}">Daybook</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'paymentform' %}">Payment</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'receiptform' %}">Receipt</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'journalform' %}">Journal</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'cashbook' %}">Cash Book</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'generalledger' %}">General Ledger</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'placcount_new' %}">P & L Account</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'balancesheet_new' %}">Balance Sheet</a></li>
+                          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'lcashbook' %}">L-Cash Book</a></li> -->
+                          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'lledger' %}">L-General Ledger</a></li> -->
+
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+
+
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="menu-icon mdi mdi-human-male-female"></i>
+                        <span class="menu-title">Users</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="users">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'adduserpage' %}">User Entry</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'users' %}">User List</a></li>
+                          
+                    
+                  
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="mdi mdi-chart-histogram  menu-icon"></i>
+                        <span class="menu-title">Reports</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="reports">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'reportsdailypurchase' %}">Basic Purchase Report</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'purchasetaxreport' %}">Purchase Tax Report</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'reportsdailysales' %}">Basic Sale Report</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'detailedsalesreport' %}">Detailed Sale Report</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'saletaxreport' %}">Sale Tax Report</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'servicetaxreport' %}">Service Tax Report</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'sparetaxreport' %}">Spare Tax Report</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'detailedservicereport' %}">Detailed Service Report</a></li>
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'allinonereport' %}">All In One Report</a></li> -->
+
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+
+
+
+
+
+
+                 
+                  <li class="nav-item">
+                     <a class="nav-link" data-bs-toggle="collapse" href="#settings" aria-expanded="false" aria-controls="form-elements">
+                       
+                       
+                        <i class="mdi mdi-settings menu-icon"></i>
+                        <span class="menu-title">Settings</span>
+                       
+                        <i class="menu-arrow"></i>
+                      </a>
+                      <div class="collapse" id="settings">
+                        <ul class="nav flex-column sub-menu">
+                           <li class="nav-item"><a class="nav-link" href="{% url 'settings' %}">Company Settings</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'customersettings' %}">Customer Settings</a></li>
+                    
+                           <li class="nav-item"><a class="nav-link" href="{% url 'servicesettings' %}">Service Settings</a></li>
+                        </ul>
+                      </div>
+                     
+                  
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{% url 'documentation' %}">
+                     <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+                     <span class="menu-title">View Docs</span>
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{% url 'logout' %}">
+                     <i class="mdi mdi-logout menu-icon"></i>
+                     <span class="menu-title">Sign Out</span>
+                     </a>
+                  </li>
+               </ul>
+            </nav>
+            <!-- <div id="loader" class="center"></div> -->
+
+           
+            
+            {% block content %}
+            {% endblock %}
+
+            
+         </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:partials/_footer.html -->
+      <footer class="footer">
+         <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.salesgrand.com/" target="_blank" style="text-decoration: none;">www.salesgrand.com</a></span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © {{current_year_now}}. All rights reserved. | {{app_version}} </span>
+         </div>
+      </footer>
+      <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+      </div>
+      <!-- container-scroller -->
+
+      <!-- jquery JS -->
+
+      <input type="text" value="{{ request.user.username }}" id="username" hidden >
+
+      
+
+
+
+     
+      <!-- plugins:js -->
+      <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+      <!-- endinject -->
+      <!-- Plugin js for this page -->
+      <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+      <script src="{% static 'vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+      <script src="{% static 'vendors/progressbar.js/progressbar.min.js' %}"></script>
+      <!-- End plugin js for this page -->
+      <!-- inject:js -->
+      <script src="{% static 'js/off-canvas.js' %}"></script>
+      <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+      <script src="{% static 'js/template.js' %}"></script>
+      <script src="{% static 'js/settings.js' %}"></script>
+      <script src="{% static 'js/todolist.js' %}"></script>
+      <!-- endinject -->
+      <!-- Custom js for this page-->
+      <script src="{% static 'js/chart.js' %}"></script>
+      <script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript"></script>
+      <script src="{% static 'js/dashboard.js' %}"></script>
+      <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
+
+      
+     
+      <!-- End custom js for this page-->
+     
+      <!-- endinject -->
+      <script src=
+"https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" 
+        integrity=
+"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+        crossorigin="anonymous">
+    </script>
+    <script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" 
+        integrity=
+"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+        crossorigin="anonymous"></script>
+      <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
+    </script>
+      <!-- Custom js for this page-->
+      <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> 
+
+<!-- ------------- for  buttons in datatable -------------- -->
+      <!-- https://code.jquery.com/jquery-3.7.0.js
+https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js -->
+      <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+      <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+      <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+<!-- ---------------------------------------------- -->
+
+
+
+<!-- ------------- for  filter in datatable -------------- -->
+<script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+
+<!-- ---------------------------------------------- -->
+
+
+
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+     
+     
+      <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.datetimepicker.min.css' %}">
+      <!-- <script src="{% static 'js/jquery.js' %}"></script> -->
+      <script src="{% static 'js/jquery.datetimepicker.full.js' %}"></script>
+      <script src="{% static 'js/table2excel.js' %}"></script>
+      <script src="{% static 'js/jquery.toast.min.js' %}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+      <script src="
+      https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js
+      "></script>
+     <script>
+         var csrf_token = '{{csrf_token}}'
+      </script>
+      <script src="{% static 'js/myscripts.js' %}"></script>
+      
+
+      <!-- <script type="module" src="{% static 'js/index.js' %}"></script> -->
+
+
+      <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+
+<!-- 
+      <script>
+        
+         document.addEventListener('DOMContentLoaded', function () {
+            
+             const toastDiv = document.querySelector('.toasts');
+            let roomName =document.querySelector("#username").value
+
+            console.log("username")
+            console.log("username",roomName)
+  
+     
+             const chatSocket = new WebSocket(
+                 'ws://'
+                 + window.location.host
+                 + '/ws/notification/'
+                 + roomName
+                 + '/'
+             );
+     
+             chatSocket.onmessage = function (e) {
+                 const data = JSON.parse(e.data);
+
+                 const showNotification = function(data){
+
+document.querySelector('.count-number').innerHTML = parseInt(document.querySelector('.count-number').innerHTML) + 1
+
+$.toast({
+      heading: header,
+      text: data.message,
+      hideAfter: false,
+      showHideTransition: 'slide',
+      position: 'top-right',
+      icon: 'info',
+      stack:20,
+      bgColor: '#40c057',
+      textColor: 'white',
+      afterShown: function () {
+         var csrftoken = csrf_token
+
+               $.ajax({
+               url: '/update_notifications_seen/',
+               type: 'POST',
+               data: {id:data.id},
+               contentType: 'application/json',
+
+               headers: {
+               'X-CSRFToken': csrftoken
+               },
+               success: function(response) {
+                  console.log(response)
+               },
+               error: function(xhr, textStatus, errorThrown) {
+                  
+                  console.log(errorThrown)
+               }
+               });
+               },
+                        })
+
+
+               }
+
+
+
+
+
+
+
+const showScheduleCallNotification = function(data){
+         $.toast({
+         heading: header,
+         text: data.message,
+         hideAfter: false,
+         showHideTransition: 'slide',
+         position: 'top-right',
+         icon: 'info',
+         stack:20,
+
+         bgColor:"#e67700",
+ 
+         afterShown: function () {
+
+         },
+         })
+
+
+         }
+
+
+
+         
+const showErrorNotification = function(data){
+         $.toast({
+         heading: header,
+         text: data.message,
+         hideAfter: true,
+         showHideTransition: 'fade',
+         position: 'top-center',
+         icon: 'error',
+         stack:20,
+
+
+         })
+
+
+         }
+
+
+         
+             
+                 let header;
+                  if (data.notification_type == 'spare_request'){
+                     header = 'Spare Request'
+                     showNotification(data)
+                  }else if(data.notification_type == 'service_charge_request'){
+                        header = 'Service Charge Request'
+                        showNotification(data)
+                     
+                     }else if(data.notification_type == 'service_entry'){
+                        header = 'Service Entry'
+                        showNotification(data)
+                     
+                     }else if(data.notification_type == 'not_serviced'){
+                        header = 'Not Serviced'
+                        showNotification(data)
+                     
+                     }else if(data.notification_type == 'spare_allocated'){
+                        header = 'Spare Allocated'
+                        showNotification(data)
+                     
+                     }else if(data.notification_type == 'service_assigned'){
+                        header = 'Service Assigned'
+                        showNotification(data)
+                     
+                     }else if(data.notification_type == 'qc_failed'){
+                        header = 'QC Failed'
+                        showNotification(data)
+                     
+                        }else if(data.notification_type == 'cnp_pending'){
+                        header = 'CNP Pending'
+                        showNotification(data)
+                     
+                        }else if(data.notification_type == 'servicecall'){
+                           header = "Schedule Call"
+                           showScheduleCallNotification(data)
+                        }else if(data.notification_type == 'error'){
+                                                 
+                           header = "Error!"
+                           showErrorNotification(data)
+                              }
+
+
+
+
+                             
+
+                 
+                 
+
+
+     
+               
+     
+     
+     
+                
+             };
+     
+             chatSocket.onclose = function (e) {
+                 console.error('Chat socket closed unexpectedly',e);
+             };
+         });
+     </script> -->
+     
+
+
+     
+   </body>
+</html>

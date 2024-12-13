@@ -1,0 +1,184 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <!-- <ul class="nav nav-tabs" role="tablist">
+                     <li class="nav-item">
+                        <a class="nav-link active ps-0" id="home-tab"  href="{% url 'stock' %}" role="tab" aria-controls="Overview" aria-selected="true">All Stock</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link border-0" id="profile-tab"  href="{% url 'branchstock' %}">My Stock</a>
+                     </li>
+                  </ul> -->
+
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"   href="{% url 'singleledger' %}"> Single ledger List </a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color: #4555B9 ; border-bottom:2px solid #4555B9;"     href="#">Single Ledger Form</a>
+
+             
+                 </nav>
+               </div>
+               <br>
+               <!-- <div class="row"> -->
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                     <div class="card-header py-3" style="background-color: #fff;">
+                         <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Single Ledger Form </strong> </h5>
+                     </div>
+                     <div class="card-body" >
+                    
+                           <!-- <div class="mt-3"> -->
+                              <div class="row" style="z-index:10;">
+
+                                 <form
+                                 action="{% url 'addsingleledger' %}"
+                                 method="post"
+                                 enctype="multipart/form-data"
+                                 >
+                                 {% csrf_token %}
+
+                                <div class="mb-3 col-lg-3">
+                                    <label for="branch" class="fw-bold mb-2">Branch</label>
+                                    <Select name="branch" class="selectizefield form-control">
+                                        {% for branch in branch_list %}
+                                        <option value="{{branch}}">{{branch}}</option>
+                                        {% endfor %}
+                                       </Select>
+                                </div>
+
+<div class="mb-3 col-lg-12">
+
+<!-- <div class="table-responsive" > -->
+
+
+                                <table
+                        class="table table-bordered sale-entry-table"
+                        
+                      >
+                        <thead  >
+                          <tr >
+
+                           
+
+                           
+                            <th width="30%" >Account Head<span style="color:#e2e6fb3d;">----------------</span>  </th>
+                            <th width="20%"  class="puchase-qty-right">Narration</th>
+                            <th width="14%">As On<span style="color:#e2e6fb3d;">------------------------------</span></th>
+                           <th width="15%">Amount</th>
+                            
+                            
+                            <th width="15%" >Dr/Cr<span style="color:#e2e6fb3d;">----</span></th>
+                 
+                           
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr style="background-color:#fff;">
+                            
+                            <td>
+                           <select name="account_head" id="head" class="selectizefield form-control">
+                          <option value="">-------</option>
+                         {% for head in account_head %}
+                        <option value="{{head}}">{{head}}</option>
+                        {% endfor %}
+                     </select>
+                            </td>
+
+                            
+                            <td class="puchase-qty-right">
+                              <input
+
+                                name="narration"
+                                min="0"
+                                autocomplete="off" 
+                                class="form-control no-spinner"
+                              />
+                              
+                            </td>
+                            <td>
+                              
+                            <div id="datepicker" 
+                          
+                            class="input-group date datepicker-field" 
+                            data-date-format="dd-mm-yyyy">
+                           <input class="form-control " 
+                           name="date"
+                           autocomplete="off" 
+                           
+                                  type="text"  />
+                           <span class="input-group-addon">
+                               <i class="glyphicon glyphicon-calendar"></i>
+                           </span>
+                       </div>
+                              
+                            </td>
+                            <td>
+                                <input 
+                                type="number"
+                                 class="form-control no-spinner"
+                                  min="0"
+                                  step="0.01"
+                                  value="" 
+                                   name="amount">
+                            </td>
+                            
+                           
+                           
+                            <td>
+                              <select class="form-control border" name="account_type" id="drcr">
+                               
+                             
+                                <option value="Cr">Cr</option>
+                                <option value="Dr">Dr</option>
+                              </select>
+                            </td>
+                         
+                           
+                            
+                            
+                          </tr>
+                        </tbody>
+
+
+
+                      </table>
+        
+                  
+                      <button
+                      type="submit"
+                      class="btn btn-primary text-white mb-1 mt-3 fs-6">
+                      Save
+                    </button>
+                  </form>
+                    </div>
+                    <!-- </div> -->
+
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- </div> -->
+            </div>
+         </div>
+         <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

@@ -1,0 +1,285 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+            <!-- <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active ps-0" id="home-tab" href="{% url 'stock' %}" role="tab" aria-controls="Overview" aria-selected="true">All Stock</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link border-0" id="profile-tab" href="#">My Stock</a>
+              </li>
+            </ul> -->
+
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'stock' %}"> Warehouse Stocks </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'branchstock' %}">Branch Stocks</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color: #4555B9 ; border-bottom:2px solid #4555B9;"    href="">Out Of Stock Stock</a>
+              {% if request.user.is_superuser  %}
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'stocktransfer' %}">Stock Transfer</a>
+             {% endif %}
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'stocktransferlist' %}">Stock Transfer List</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'transferedstocklist' %}">Transfered Stock List</a>
+               
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'bulkstocklist' %}">Bulk Stock List</a>
+          </nav>
+          </div>
+          <br>
+          <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+            <div class="card-header py-3 d-flex justify-content-between bg-white">
+                <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Branch Items Out Of Stock</strong> </h5>
+            
+            
+                <div class="d-flex align-items-center gap-3">
+
+                      
+                  <i id="fa-magnifying-glass-moneyreciept"   data-toggle="modal" data-target="#stocksearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+    
+                  <a class="moneyreciept-clear" href="{% url 'branchoutofstock' %}">Clear</a>
+               </div>
+              </div>
+            <div class="card-body">
+
+              <div>
+
+
+
+                <!-- <div class="row">
+
+                  <div class="col-lg-4">
+                    
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                      <p class="m-0 p-0 fw-bold">{% if issearch == True %}Filtered Total Qty{% else %}Total Qty{% endif %}</p>
+                      <p class="m-0 px-1 bg-white"><b>{{ total_quantity }}</b></p>
+                    </div>
+                  </div>
+                
+                  <div class="col-lg-4">
+                    <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                      <p class="m-0 p-0 fw-bold">{% if issearch == True %}Filtered Total Stock Value{% else %}Total Stock Value{% endif %}</p>
+                      <p class="m-0 px-1 bg-white"><b>{{ total_value |floatformat:2 }}</b></p>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+
+
+
+                  <div class="mt-3">
+                    <div class="table-responsive">
+                      <table class="add-pagination table-bordered table table-striped">
+                       <thead>
+                        <tr>
+                          <th width="5%">Sl</th>
+                          <th width="30%">Product</th>
+                          <th width="15%">Quantity</th>
+                          <th width="10%" style="white-space: normal;">Purchase Rate</th>
+                          <th width="" style="white-space: normal;">Purchase Tax</th>
+                          <th width="10%">Sale Rate</th>
+                          <th width="" style="white-space: normal;">Sale Tax</th>
+                          <!-- <th width="15%" style="white-space: normal;">Stock Value</th> -->
+                          <th>Barcode</th>
+                          <th width="15%">Branch</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in data_new %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td style="white-space: normal;">{{ item.name }}</td>
+                          <td>{{ item.quantity }}</td>
+                          <td>{{ item.purchaserate}}</td>
+                          <td>{{ item.name.purchasegst}}</td>
+                          <td>{{ item.salerate }}</td>
+                          <td>{{ item.name.salegst}}</td>
+                          <!-- <td>{{ item.stockvalue |floatformat:2 }}</td> -->
+                          {% if item.barcode %}
+                          <td >{{item.barcode}} <br> <span><a data-barcode="{{ item.barcode }}"  class="print-purchase-barcode mt-5 text-decoration-none" href="{% url 'print_purchase_barcode_new' barcode_number=item.barcode purchaseid=item.purchaseid %}" target="_blank" >Print</a></span></td>
+                         {% else %}
+                          <td></td>
+                         {% endif %}
+                          <td>{{ item.branch}}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="stocksearch">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search Branch Stocks</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'branchoutofstock' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="branch" class="fw-bold">Branch</label>
+            <select class="selectizefield" name="branch" id="branch">
+              {% if request.user.is_superuser %}
+              <option value="">Select Branch</option>
+              {% for branch in branch_list %}
+              <option value="{{branch.id}}">{{branch}}</option>
+
+            {% if search_branch != '' %}
+            <option selected value="{{search_branch.id}}">{{search_branch}}</option>
+            {% endif %}
+
+
+              {% endfor %}
+              {% else %}
+             
+              <option selected value="{{request.user.userprofile.branch.id}}">{{request.user.userprofile.branch}}</option>
+              
+              {% endif %}
+            </select>
+          </div>
+         
+
+          <div class="form-group">
+            <label for="brand" class="fw-bold">Brand</label>
+            <select class="selectizefield stockcategoryfilter" name="brand" id="brand">
+             
+              
+              {% if search_brand != '' %}
+              <option selected value="{{search_brand.id}}">{{search_brand.name}}</option>
+              {% else %}
+              <option value="">Select Brand</option>
+              {% endif %}
+
+
+              {% for cat in all_brands %}
+              <option value="{{cat.id}}">{{cat}}</option>
+              {% endfor %}
+
+              
+             
+            </select>
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="category" class="fw-bold">Category</label>
+            <select class="selectizefield stockcategoryfilter" name="category" id="category">
+             
+
+              {% if search_catagory != '' %}
+              <option selected value="{{search_catagory.id}}">{{search_catagory}}</option>
+              {% else %}
+              <option value="">Select Category</option>
+              {% endif %}
+              
+              {% for cat in all_category %}
+              <option value="{{cat.id}}">{{cat}}</option>
+              {% endfor %}
+
+
+              
+             
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="subcategoy" class="fw-bold">Sub Category</label>
+            <select  class="form-control selectizefield stocksubcategoryfilter" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="subcategory" id="subcategory">
+              
+
+
+              {% if search_subcatagory != '' %}
+              <option selected value="{{search_subcatagory.id}}">{{search_subcatagory}}</option>
+             {% else %}
+             <option value="" selected>Select Sub Category</option>
+              {% endif %}
+
+              {% for cat in all_subcat %}
+              <option value="{{cat.id}}">{{cat}}</option>
+              {% endfor %}
+
+
+             
+
+
+            </select>
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="category" class="fw-bold">Product Type</label>
+            <select class="selectizefield" name="type" id="type">
+
+
+              {% if search_product_type != '' %}
+              <option selected value="{{search_product_type.id}}">{{search_product_type}}</option>
+             {% else %}
+             <option value="">Select Type</option>
+              {% endif %}
+
+
+             
+              
+              {% for cat in all_type %}
+              <option value="{{cat.id}}">{{cat}}</option>
+              {% endfor %}
+
+
+              
+             
+            </select>
+          </div>
+            
+             
+             
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

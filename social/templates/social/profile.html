@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>salesgrand Social</title>
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/favicon.ico' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static 'css/plyr.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <style>
+      * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  background-color: #f0f2f5;
+  height: 100%;
+}
+
+/* Customize the width of the scrollbar */
+::-webkit-scrollbar,
+.last-content::-webkit-scrollbar,
+.post-details-scroll-div::-webkit-scrollbar,
+.message-body::-webkit-scrollbar,
+.chat-box-body-inside::-webkit-scrollbar,
+.notification-insert::-webkit-scrollbar {
+  width: 12px; /* Adjust the width as needed */
+}
+
+/* Optionally, style the handle */
+::-webkit-scrollbar-thumb,
+.last-content::-webkit-scrollbar-thumb,
+.post-details-scroll-div::-webkit-scrollbar-thumb,
+.message-body::-webkit-scrollbar-thumb,
+.chat-box-body-inside::-webkit-scrollbar-thumb,
+.notification-insert::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 10px;
+}
+
+/* Optionally, style the track */
+::-webkit-scrollbar-track,
+.last-content::-webkit-scrollbar-track,
+.post-details-scroll-div::-webkit-scrollbar-track,
+.message-body::-webkit-scrollbar-track,
+.chat-box-body-inside::-webkit-scrollbar-track,
+.notification-insert::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* Customize the width of the scrollbar */
+html,
+.last-content,
+.post-details-scroll-div,
+.message-body,
+.chat-box-body-inside,
+.notification-insert {
+  scrollbar-width: thin; /* 'auto', 'thin', or 'none' */
+  scrollbar-color: darkgrey white; /* thumb and track color */
+}
+
+html {
+  overflow-y: scroll;
+}
+
+/* navbar section */
+.navbar-menu {
+  list-style-type: none;
+}
+
+.nav-link-custom {
+  background-color: #e4e6eb;
+  width: 3rem;
+  height: 3rem;
+  color: black;
+  text-decoration: none;
+}
+
+.chat-user-img {
+  background-color: #e4e6eb;
+  width: 2rem;
+  height: 2rem;
+  /* color: black; */
+  text-decoration: none;
+}
+.message-container {
+  max-width: 28rem;
+  position: absolute;
+  z-index: 1000;
+  top: -8rem;
+  right: 0;
+  display: none;
+}
+
+.messages-chats {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 5px;
+}
+
+.messages-chats li p {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #dee2e6;
+  border-radius: 5px;
+
+  width: auto;
+}
+
+.messages-chats li {
+  margin-bottom: 15px;
+}
+
+.message-body {
+  height: 280px;
+  background-color: #dee2e6;
+  overflow-y: auto;
+}
+.chat-box-body-inside {
+  height: 65vh;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.profile-pic-round-small {
+  width: 2rem;
+  height: 2rem;
+}
+
+.nav-link-custom:hover,
+.person-online:hover,
+.chat-groups:hover,
+.sponsered-ad:hover {
+  background-color: #e1e2e5;
+}
+
+.tabs a {
+  color: #444;
+  padding: 2px 12px;
+}
+
+.tabs .tab-active {
+  color: blue;
+  /* border-bottom: 3px solid blue; */
+}
+
+.profile-pic-round:hover {
+  filter: brightness(90%);
+}
+
+.logo-first-letter {
+  color: blue;
+  font-weight: bolder;
+  font-size: 2rem;
+}
+
+.nav-shadow {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.chat-container {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+/* home page  */
+
+.content-container {
+  margin-top: 6rem;
+}
+
+.middle-content,
+.middle-content-two {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+/* .prof-pic {
+  height: 100%;
+} */
+.close-post-comment:hover {
+  cursor: pointer;
+}
+
+.prof-pic-left {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.whats-on {
+  height: 3rem;
+  background-color: #f0f2f5;
+}
+
+.whats-on:hover {
+  background-color: #e1e2e5;
+}
+
+.last-content {
+  position: sticky;
+  top: 6rem;
+  /* height: 100vh; */
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.first-content {
+  position: sticky;
+  top: 6rem;
+}
+
+.video-up:hover,
+.img-up:hover,
+.feeling-up:hover {
+  background-color: #e1e2e5;
+  cursor: pointer;
+}
+
+.time {
+  font-size: 0.7rem;
+}
+
+.post-description-font {
+  font-size: 0.9rem;
+}
+
+.post-image,
+.post-video {
+  width: 100%;
+}
+
+.post-close-btn:hover,
+.post-three-dot:hover {
+  cursor: pointer;
+}
+.post-view-btn {
+  position: absolute;
+  right: 2rem;
+}
+.post-view-btn ul {
+  list-style-type: none;
+}
+
+.post-view-btn ul:hover {
+  background-color: blue;
+  color: #fff;
+}
+
+.left-links,
+.contacts-online-list,
+.groups-list,
+.ads-list {
+  list-style-type: none;
+}
+
+.last-content-one {
+  position: relative;
+}
+
+.left-links a {
+  text-decoration: none;
+  color: black;
+}
+
+.left-links li:hover {
+  background-color: #e1e2e5;
+}
+
+.sponsored-img {
+  width: 8rem;
+  height: 8rem;
+}
+
+.sponsoredad-text {
+  font-size: 0.9rem;
+}
+
+.sponsered-website {
+  font-size: 0.6rem;
+}
+
+.dropdown-profile {
+  position: relative;
+}
+
+.dropdown-container {
+  transition: all 0.5s ease-in;
+  position: absolute;
+  list-style: none;
+  padding: 1rem 0rem;
+  top: 5rem;
+  right: 2rem;
+  background-color: #fff;
+}
+
+.dropdown-container-notification {
+  transition: all 0.5s ease-in;
+  position: absolute;
+  list-style: none;
+  padding: 1rem 0rem;
+  top: 5rem;
+  right: 2rem;
+  background-color: #fff;
+  width: 22rem;
+}
+.dropdown-container-notification .dropdown-item {
+  padding: 0.5rem 1rem;
+}
+
+.notif-continer-header {
+  padding: 0.5rem 3rem;
+}
+
+.dropdown-container .dropdown-item {
+  padding: 0.5rem 1rem;
+}
+
+.dropdown-container .dropdown-item:hover {
+  background-color: #eaebed;
+}
+.dropdown-container-notification .dropdown-item:hover {
+  background-color: #eaebed;
+}
+
+.hide-logout {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+.notification-prof-pic {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.post-details-container-post-details {
+  max-width: 800px;
+  margin: 5rem auto;
+  /* margin-top: 20rem; */
+}
+
+.body-wrapper-two,
+.body-wrapper-two-edit-profile {
+  display: none;
+  position: absolute;
+  width: 100%;
+  /* height: 100vh; */
+  /* padding: 5px; */
+  top: 0;
+  left: 0;
+  /* background-color: red; */
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.post-upload-container,
+.post-upload-container-edit-profile {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  width: 700px;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+}
+
+.body-wrapper-comment {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.post-comment-container {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  /* width: 500px; */
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+  /* height: 450px; */
+}
+
+.post-details-scroll-div {
+  height: 400px;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.post-details-container,
+.comment-section {
+  margin: 0 auto;
+  width: 95%;
+}
+
+.comment-section img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.comment-section-text {
+  background-color: #e1e2e5;
+}
+
+.comment-date-text {
+  font-size: 10px;
+}
+
+.upload-icon:hover {
+  cursor: pointer;
+}
+
+.text-blue {
+  color: blue !important;
+}
+
+.post-liked {
+  color: blue !important;
+}
+
+.post-saved {
+  color: blue !important;
+}
+
+.file-upload-inp-image {
+  display: none;
+  transition: all 2s ease-in;
+}
+.file-upload-inp-video {
+  display: none;
+  transition: all 2s ease-in;
+}
+
+.file-upload-inp-show {
+  display: block;
+}
+.file-upload-inp-hide {
+  display: none;
+}
+
+.close-post-upload:hover {
+  cursor: pointer;
+}
+
+.contacts-online-container {
+  position: relative;
+}
+
+.online-status {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  padding: 4px;
+
+  border-radius: 50%;
+}
+
+.online-status-chat {
+  position: absolute;
+  bottom: 5px;
+  left: 32px;
+  padding: 4px;
+  outline: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.online {
+  background-color: green;
+}
+
+.offline {
+  background-color: grey;
+}
+/* #Login  */
+
+.logout-icon {
+  background-color: #e1e2e5;
+  padding: 1rem 1rem;
+  border-radius: 50%;
+}
+
+.login-container,
+.login-container-left,
+.login-containr-right {
+  height: 100vh;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-form-container {
+  width: 60%;
+}
+
+.logo-first-letter-login {
+  color: blue;
+  font-weight: bolder;
+  font-size: 3rem;
+}
+
+.login-description {
+  line-height: 1.5;
+}
+
+.login-container-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-container-child-1 {
+  padding: 0 1rem;
+}
+
+.login-container-child-2 {
+  padding: 0 1rem;
+}
+
+.login-container-child-1 {
+  flex-basis: 110%;
+}
+
+.login-container-child-2 {
+  flex-basis: 90%;
+}
+
+.messages-container {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.message-item {
+  background-color: #f8d7da; /* Light red background for error messages */
+  color: #721c24; /* Dark red text color for error messages */
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb; /* Border color for error messages */
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.message-item.success {
+  background-color: #d4edda; /* Light green background for success messages */
+  color: #155724; /* Dark green text color for success messages */
+  border-color: #c3e6cb; /* Border color for success messages */
+}
+
+.body-wrapper {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  padding: 50px;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.register-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+}
+
+.transparent-effect {
+  display: block;
+}
+
+.close-registration-form:hover {
+  cursor: pointer;
+}
+
+.db-text {
+  font-size: 0.8rem;
+}
+
+.gender-radio {
+  padding: 0.45rem 2rem;
+}
+
+/* profile  */
+
+.profile-container {
+  width: 100%;
+  /* height: 71vh; */
+  height: 498px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.nav-shadow-profile {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.cover-pic-container-box {
+  width: 100%;
+}
+
+.active-tab {
+  border-bottom: 3px solid blue;
+  border-radius: none;
+}
+.not-active-item:hover {
+  background-color: #e1e2e5;
+  border-radius: 5px;
+}
+
+.cover-pic-container {
+  max-width: 900px;
+  /* height: 50vh; */
+  height: 352.5px;
+  margin: 0 auto;
+}
+
+.profile-description-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.profile-devider {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.posts-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.chat-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.chat-container {
+  margin-top: 5rem;
+}
+
+.profile-tabs {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.friend-requests-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.friend-requests-container {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.req-image {
+  width: 5rem;
+  height: 5rem;
+}
+
+.profile-pic-contain {
+  position: relative;
+}
+
+.profile-page-pic {
+  position: absolute;
+  width: 9rem;
+  height: 9rem;
+  bottom: -4rem;
+  border-radius: 50%;
+  outline: 5px solid #fff;
+}
+
+.edit-profile-container {
+  height: 100%;
+  text-align: end;
+  margin-top: 13px;
+}
+
+.notification-insert {
+  height: 70vh;
+  overflow-y: auto;
+  /* padding: 0; */
+  list-style: none;
+  margin-top: 1rem;
+}
+.notification-insert li:hover {
+  background-color: #e1e2e5;
+}
+.notification-insert li a {
+  text-decoration: none;
+  color: #444;
+}
+
+.notif-nav-item:hover {
+  cursor: pointer;
+}
+/* .body-wrapper-two-profile-page {
+  margin-top: 32rem;
+} */
+
+/* .body-wrapper-two-profile-page-edit-profile {
+  margin-top: 10rem;
+} */
+
+.close-post-upload-edit:hover {
+  cursor: pointer;
+}
+
+.about-ul {
+  list-style: none;
+  padding-left: 0;
+}
+.about-ul li a {
+  text-decoration: none;
+  color: #444;
+}
+.about-ul li {
+  margin-bottom: 15px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.about-ul li:hover {
+  cursor: pointer;
+}
+
+.about-ul-parent li:hover {
+  background-color: #e1e2e5;
+}
+
+.about-display-none {
+  display: none;
+}
+.about-display-block {
+  display: block;
+}
+.about-divider {
+  display: none;
+}
+
+.save-post-container {
+  position: relative;
+}
+
+.save-container {
+  position: absolute;
+  right: 5px;
+  background-color: #fff;
+}
+
+.save-container ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.save-container ul li {
+  padding: 2px 4px;
+}
+
+.save-container ul li:hover {
+  background-color: blue;
+  color: #fff;
+  cursor: pointer;
+  border: 5px;
+}
+.save-container:hover {
+  background-color: blue;
+  color: #fff;
+}
+
+.save-container-display-block {
+  display: block;
+}
+.save-container-display-none {
+  display: none;
+}
+.notif-nav-item {
+  position: relative;
+}
+.notif-count {
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  top: -7px;
+  right: -7px;
+}
+
+/* Extra small devices (phones) */
+@media only screen and (max-width: 576px) {
+  /* Your styles for xs devices go here */
+  .last-content,
+  .first-content,
+  .tabs-container {
+    display: none;
+  }
+  .login-container-child {
+    display: block;
+  }
+  .login-container-child-2 {
+    margin-top: 2rem;
+  }
+  .login-container-child-1 {
+    text-align: center;
+  }
+  .register-container {
+    width: 90%;
+  }
+  .profile-pic-contain {
+    text-align: center;
+    margin-left: -7.5rem;
+  }
+  .name-friends {
+    text-align: center;
+    margin-top: 5rem;
+  }
+  .edit-profile-container {
+    text-align: center;
+    padding-left: 30px;
+  }
+  .profile-container {
+    height: 660px;
+  }
+  .about-divider {
+    display: block;
+  }
+  .post-comment-container {
+    width: 90%;
+
+    /* height: 450px; */
+  }
+  .post-upload-container,
+  .post-upload-container-edit-profile {
+    width: 90%;
+  }
+}
+/* Small devices (tablets) */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* Your styles for sm devices go here */
+  .last-content,
+  .first-content {
+    display: none;
+  }
+  .tabs-container {
+    display: none;
+  }
+  .login-container-child {
+    display: block;
+  }
+  .login-container-child-2 {
+    margin-top: 2rem;
+  }
+  .login-container-child-1 {
+    text-align: center;
+  }
+  .register-container {
+    width: 90%;
+  }
+  .profile-pic-contain {
+    text-align: center;
+    margin-left: -7.5rem;
+  }
+  .name-friends {
+    text-align: center;
+    margin-top: 5rem;
+  }
+  .edit-profile-container {
+    text-align: center;
+    padding-left: 30px;
+  }
+  .profile-container {
+    height: 622px;
+  }
+  .about-divider {
+    display: block;
+  }
+}
+/* Medium devices (desktops) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* Your styles for md devices go here */
+  .last-content,
+  .first-content {
+    display: none;
+  }
+  .tabs-container {
+    display: none;
+  }
+  .login-container-child {
+    display: block;
+  }
+  .login-container-child-2 {
+    margin-top: 2rem;
+  }
+  .login-container-child-1 {
+    text-align: center;
+  }
+  .profile-pic-contain {
+    text-align: center;
+    margin-left: -7.5rem;
+  }
+  .name-friends {
+    text-align: center;
+    margin-top: 5rem;
+  }
+  .edit-profile-container {
+    text-align: center;
+    padding-left: 30px;
+  }
+  .profile-container {
+    height: 624px;
+  }
+}
+/* Large devices (large desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* Your styles for lg devices go here */
+}
+/* Extra large devices (extra large desktops) */
+@media only screen and (min-width: 1200px) {
+  /* Your styles for xl devices go here */
+}
+
+    </style>
+    <!-- <nav class="navbar navbar-expand-md bg-white fixed-top nav-shadow"> -->
+    <div
+      class="d-flex bg-white fixed-top nav-shadow justify-content-between align-items-center px-3 py-0"
+    >
+    <a href="{% url 'home' %}" class="navbar-brand fs-3 fw-bold"
+    ><span class="logo-first-letter">s</span>alesgrand<span
+      class="logo-first-letter"
+      >.</span
+    ></a
+  >
+
+      <div class="tabs-container">
+        <div
+          class="tabs d-flex justify-content-between align-items-center gap-5 fs-4"
+        >
+          <a href="{% url 'home' %}"><i class="fa-solid fa-house-user"></i> </a>
+          <a href="{% url 'friends' id=current_user.id %}"
+            ><i class="fa-solid fa-users"></i
+          ></a>
+          <a href="{% url 'profile' id=user.id %}" class="tab-active"
+            ><i class="fa-solid fa-user"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end align-items-center">
+        <ul
+          class="navbar-menu d-flex justify-content-between align-items-center gap-3 mt-3"
+        >
+          <!-- <li class="nav-item">
+            <a
+              href="#"
+              class="nav-link-custom active p-3 rounded-circle d-flex align-items-center justify-content-center"
+            >
+              <i class="fa-solid fa-message"></i>
+            </a>
+          </li> -->
+          <li class="nav-item notif-nav-item">
+            <a
+              class="nav-link-custom notif-btn active p-3 rounded-circle d-flex align-items-center justify-content-center"
+            >
+              <i class="fa-solid fa-bell"></i>
+            </a>
+            <div class="notif-count">{{notification_count}}</div>
+
+            <ul class="dropdown-container-notification rounded shadow hide">
+              <div
+                class="notif-container-header px-3 d-flex justify-content-between align-items-center"
+              >
+                <h4 class="m-0">Notifications</h4>
+                <i class="fa-solid fa-ellipsis"></i>
+              </div>
+              <ul class="notification-insert px-3"></ul>
+            </ul>
+          </li>
+          <li class="nav-item dropdown-profile">
+            <a href="" class="profile-btn">
+              <img
+                class="nav-link-custom border profile-pic-round rounded-circle d-flex align-items-center justify-content-center"
+                src="{{current_user.userprofilesocial.profile_picture}}"
+                alt="profie image"
+            /></a>
+            <ul class="dropdown-container rounded shadow hide-logout">
+              <li>
+                <a
+                  href="{% url 'profile' id=current_user.id %}"
+                  class="dropdown-item d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <i class="fa-solid fa-user logout-icon"></i
+                    ><span class="ps-2">Profile</span>
+                  </div>
+                  <!-- <div>></div> -->
+                </a>
+              </li>
+              <li>
+                <a
+                  href="{% url 'index' %}"
+                  class="dropdown-item d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <i class="fa-solid fa-computer  logout-icon"></i><span class="ps-2">salesgrand</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/social/logout/"
+                  class="dropdown-item d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <i class="fa-solid fa-right-from-bracket logout-icon"></i
+                    ><span class="ps-2">Logout</span>
+                  </div>
+                  <!-- <div>></div> -->
+                </a>
+              </li>
+              <!-- <li><a href="#" class="dropdown-item">Item 2</a></li>
+                <li><a href="#" class="dropdown-item">Item 3</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="profile-container bg-white">
+      <div class="cover-pic-container-box">
+        <div
+          class="cover-pic-container"
+          style="
+            background-image: url({{user.userprofilesocial.cover_picture}});
+            background-size: cover;
+          "
+        ></div>
+      </div>
+
+      <div
+        class="profile-description-container d-flex justify-content-between align-items-center mt-2"
+      >
+        <div class="profile-pic-box w-100">
+          <div class="row">
+            <div class="col-lg-2">
+              <div class="profile-pic-contain">
+                <img
+                  class="profile-page-pic"
+                  src="{{user.userprofilesocial.profile_picture}}"
+                  alt="profile-pic"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="name-friends ps-3">
+                <div class="prof-name">
+                  <h2 class="p-0 m-0">
+                    {{user.first_name}} {{user.last_name}}
+                  </h2>
+                </div>
+                <!-- <div class="friends-count">{{friends_count}} friends</div> -->
+                <div class="friends-count">{{user.userprofilesocial.verified_contributions}} Contributions</div>
+              </div>
+            </div>
+            <div class="col-lg-4 edit-profile-container">
+              <div class="edit-profile">
+                {% if is_current_user %}
+                <!-- <button class="btn btn-secondary edit-profile-btn">
+                  Edit Profile
+                </button> -->
+                {% else %} {% if request_status == 'Pending' %}
+                <button class="btn btn-warning">Pending</button>
+                {% elif request_status == 'Friends' %} {% else %}
+                <a
+                  href="{% url 'addfriend' receiver=user.id  %}"
+                  class="btn btn-success"
+                  >Add Friend</a
+                >
+                {% endif %} {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-devider">
+        <hr />
+      </div>
+      <div class="profile-tabs">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a
+              class="nav-link active-tab text-blue"
+              aria-current="page"
+              href="#"
+              >Posts</a
+            >
+          </li>
+          <li class="nav-item not-active-item">
+            <a class="nav-link text-dark" href="{% url 'about' id=user.id %}"
+              >About</a
+            >
+          </li>
+          <li class="nav-item not-active-item">
+            <a class="nav-link text-dark" href="{% url 'friends' id=user.id %}"
+              >Friends</a
+            >
+          </li>
+          {% if is_current_user %}
+          <li class="nav-item not-active-item">
+            <a
+              href="{% url 'friendrequest' %}"
+              class="nav-link text-dark"
+              href="#"
+              >Friend Requests</a
+            >
+          </li>
+          {% endif %}
+          <!-- <li class="nav-item not-active-item">
+            <a class="nav-link text-dark" href="{% url 'photos' id=user.id %}"
+              >Photos</a
+            >
+          </li>
+          <li class="nav-item not-active-item">
+            <a class="nav-link text-dark" href="{% url 'videos' id=user.id %}"
+              >Videos</a
+            >
+          </li> -->
+          <li class="nav-item not-active-item">
+            <a
+              class="nav-link text-dark"
+              href="{% url 'savedposts' id=user.id %}"
+              >Saved</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="posts-container mt-3">
+      {% if is_current_user %}
+      <div class="middle-content mb-3">
+        <div class="mid-content-child rounded bg-white p-3">
+          <div class="hstack gap-2 pb-3 border-bottom">
+            <img
+              class="nav-link-custom border profile-pic-round prof-pic rounded-circle d-flex align-items-center justify-content-center"
+              src="{{user.userprofilesocial.profile_picture}}"
+              alt="profie image"
+            />
+
+            <input
+              type="text"
+              class="form-control whats-on"
+              placeholder="What's on your mind {{user.first_name}}?"
+              autocomplete="off"
+              id="whats-on-mind"
+              data-page="profile"
+            />
+          </div>
+
+          <div class="px-5 pt-3">
+            <!-- <div
+              class="upload-btn d-flex justify-content-between align-items-center"
+            >
+              <div
+                data-page="profile"
+                id="video-upload-pop"
+                class="video-up video-upload-pop- video-upload-pop-profile d-flex align-items-center gap-2 px-4 py-2 rounded"
+              >
+                <i class="fa-solid fa-video text-danger"></i>
+                <p class="align-items-center m-0">Video</p>
+              </div>
+              <div
+                id="image-upload-pop"
+                data-page="profile"
+                class="img-up image-upload-pop- image-upload-pop-profile d-flex align-items-center gap-2 px-4 py-2 rounded"
+              >
+                <i class="fa-solid fa-image text-success"></i>
+                <p class="align-items-center m-0">Image</p>
+              </div>
+              <div
+                id="feeling-upload-pop"
+                data-page="profile"
+                class="feeling-up feeling-upload-pop feeling-upload-pop-profile d-flex align-items-center gap-2 px-4 py-2 rounded"
+              >
+                <i class="fa-regular fa-face-smile text-warning"></i>
+                <p class="align-items-center m-0">Feelings</p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      {% endif %} {% for post in posts %}
+
+      <div class="middle-content-two mb-2">
+        <div class="middle-content-two-child rounded bg-white p-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex gap-2">
+              <div>
+                <img
+                  class="nav-link-custom border profile-pic-round prof-pic rounded-circle d-flex align-items-center justify-content-center"
+                  src="{{post.user.userprofilesocial.profile_picture}}"
+                  alt="profie image"
+                />
+              </div>
+              <div class="d-flex align-items-center justify-content-center">
+                <div>
+                  <p class="m-0">
+                    {{post.user.first_name}} {{post.user.last_name}} {% if post.solved %} <span class="ms-2  text-success"><i class="fa-solid fa-circle-check"></i> Solved</span> {% endif %}
+                  </p>
+                  <p class="m-0 time">{{post.post.created_at}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex gap-3">
+              <div>
+                <i class="fa-solid fa-ellipsis fs-4 post-three-dot"></i>
+              </div>
+
+              <div>
+                <i class="fa-solid fa-xmark fs-4 post-close-btn"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-description">
+            <p class="post-description-font">{{post.post.text}}</p>
+          </div>
+
+          {% if post.post.post_type == 'Image' %}
+
+          <div class="post-image-container">
+            <img class="post-image" src="{{post.post.image}}" alt="" />
+          </div>
+
+          {% elif post.post.post_type == 'Video' %}
+
+          <div class="post-video-container">
+            <video
+              id="player{{forloop.counter}}"
+              playsinline
+              controls
+              data-poster="/path/to/poster.jpg"
+            >
+              <source src="{{post.post.video}}" type="video/mp4" />
+
+              <!-- Captions are optional -->
+              <track
+                kind="captions"
+                label="English captions"
+                src="/path/to/captions.vtt"
+                srclang="en"
+                default
+              />
+            </video>
+          </div>
+          {% endif %}
+
+          <div class="px-2 pt-3">
+            <div
+              class="like-comment-container d-flex justify-content-between align-items-center"
+            >
+              <div
+                class="like-count d-flex align-items-center gap-2 px-0 py-2 rounded"
+              >
+                <i class="fa-solid fa-thumbs-up text-blue"></i>
+                <p class="align-items-center likes-count m-0">
+                  <span class="like-count-integer">{{post.like_count}}</span>
+                  Likes
+                </p>
+              </div>
+
+              <div
+                class="comment-count d-flex align-items-center gap-2 px-0 py-2 rounded"
+              >
+                <i class="fa-solid fa-comment"></i>
+                <p class="align-items-center m-0">
+                  {{post.comment_count}} Comments
+                </p>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="px-5 pt-0">
+            <div
+              class="upload-btn d-flex justify-content-between align-items-center"
+            >
+              {% if post.current_user_liked == True %}
+              <a
+                data-post-id="{{post.post.id}}"
+                data-user-id="{{user.id}}"
+                class="video-up post-like-btn post-liked fw-bold text-decoration-none text-secondary d-flex align-items-center gap-2 px-2 py-2 rounded"
+              >
+                <i class="fa-regular fa-thumbs-up"></i>
+                <p class="align-items-center m-0">Like</p>
+              </a>
+              {% else %}
+              <a
+                data-post-id="{{post.post.id}}"
+                data-user-id="{{user.id}}"
+                class="video-up post-like-btn not-liked fw-bold text-decoration-none text-secondary d-flex align-items-center gap-2 px-2 py-2 rounded"
+              >
+                <i class="fa-regular fa-thumbs-up"></i>
+                <p class="align-items-center m-0">Like</p>
+              </a>
+              {% endif %}
+
+              <a
+                data-post-id="{{post.post.id}}"
+                data-user-id="{{user.id}}"
+                data-page="profile"
+                class="img-up post-comment-btn post-comment-btn-profile text-decoration-none fw-bold text-secondary d-flex align-items-center gap-2 px-2 py-2 rounded"
+              >
+                <i class="fa-regular fa-comment"></i>
+                <p class="align-items-center m-0">Comment</p>
+              </a>
+
+              {% if post.current_user_saved == True %}
+              <a
+                data-post-id="{{post.post.id}}"
+                data-user-id="{{user.id}}"
+                class="video-up save-post-btn post-saved fw-bold text-decoration-none text-secondary d-flex align-items-center gap-2 px-2 py-2 rounded"
+              >
+                <i class="fa-solid fa-bookmark"></i>
+                <p class="align-items-center m-0">Save</p>
+              </a>
+              {% else %}
+              <a
+                data-post-id="{{post.post.id}}"
+                data-user-id="{{user.id}}"
+                class="feeling-up save-post-btn not-saved text-decoration-none fw-bold text-secondary d-flex align-items-center gap-2 px-2 py-2 rounded"
+              >
+                <i class="fa-solid fa-bookmark"></i>
+                <p class="align-items-center m-0">Save</p>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="footer mt-5"></div> -->
+
+      {% endfor %}
+    </div>
+
+    <!-- </div> -->
+    <div class="body-wrapper-two">
+      <div
+        class="post-upload-container body-wrapper-two-profile-page bg-white p-3 rounded shadow"
+      >
+        <div
+          class="post-upload-header d-flex justify-content-between align-items-center"
+        >
+          <div></div>
+          <div><h4>Create Post</h4></div>
+          <div>
+            <i class="fa-solid fa-xmark fs-4 close-post-upload"></i>
+          </div>
+        </div>
+        <div><hr /></div>
+        <div>
+          <div
+            class="d-flex align-items-center gap-2 py-2 px-2 text-decoration-none text-dark"
+          >
+            <img
+              class="nav-link-custom border profile-pic-round prof-pic-left rounded-circle d-flex align-items-center justify-content-center"
+              src="{{user.userprofilesocial.profile_picture}}"
+              alt="profie image"
+            /><span>{{user.first_name}} {{user.last_name}}</span>
+          </div>
+        </div>
+        <form
+          action="{% url 'uploadpost' page='profile' %}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %}
+          <div class="upload-form-continer">
+            <textarea
+              name="text"
+              id=""
+              cols="30"
+              rows="10"
+              placeholder="What's on your mind {{user.first_name}}?"
+              class="form-control border ps-4"
+            ></textarea>
+          </div>
+
+          <div class="mt-2 file-upload-inp-image">
+            <input
+              type="file"
+              class="form-control"
+              name="image"
+              id="imageInput"
+              accept="image/*"
+            />
+            <input type="text" name="posttype" value="Image" hidden />
+          </div>
+          <div class="mt-2 file-upload-inp-video">
+            <input
+              type="file"
+              class="form-control"
+              name="video"
+              id="videoInput"
+              accept="video/*"
+            />
+            <input type="text" name="posttype" value="video" hidden />
+          </div>
+
+          <div
+            class="d-flex justify-content-between align-items-center border rounded px-3 py-3 mt-2"
+          >
+            <!-- <div><p class="m-0 p-0">Add to your post</p></div>
+            <div
+              class="d-flex align-items-center justify-content-between gap-4"
+            >
+              <div class="upload-icon- upload-icon-image-">
+                <i class="fa-solid fa-image text-success"></i>
+              </div>
+              <div class="upload-icon- upload-icon-video-">
+                <i class="fa-solid fa-video text-success"></i>
+              </div>
+              <div class="upload-icon- upload-icon-feeling-">
+                <i class="fa-regular fa-face-smile text-warning"></i>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="mt-2 w-100">
+            <button class="btn btn-success w-100">Post</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="body-wrapper-two-edit-profile">
+      <div
+        class="post-upload-container-edit-profile body-wrapper-two-profile-page-edit-profile bg-white p-3 rounded shadow"
+      >
+        <div
+          class="post-upload-header d-flex justify-content-between align-items-center"
+        >
+          <div></div>
+          <div><h4>Edit</h4></div>
+          <div>
+            <i class="fa-solid fa-xmark fs-4 close-post-upload-edit"></i>
+          </div>
+        </div>
+        <div><hr /></div>
+
+        <form
+          action="{% url 'editprofile' page='about' %}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %}
+
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">Profile Picture</p>
+            <input
+              type="file"
+              class="form-control"
+              name="profilepicture"
+              id="imageInput"
+              accept="image/*"
+            />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">Cover Picture</p>
+            <input
+              type="file"
+              class="form-control"
+              name="coverpicture"
+              id="imageInput"
+              accept="image/*"
+            />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">High School</p>
+            <input type="text" name="highschool" class="form-control" />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">High School Passed Year</p>
+            <input
+              type="number"
+              name="highschoolpassed"
+              min="1900"
+              class="form-control"
+            />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">College</p>
+            <input type="text" name="college" class="form-control" />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">College Passed Year</p>
+            <input
+              type="number"
+              name="collagepassed"
+              min="1900"
+              class="form-control"
+            />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">City</p>
+            <input type="text" name="city" class="form-control" />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">District</p>
+            <input type="text" name="district" class="form-control" />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">State</p>
+            <input type="text" name="state" class="form-control" />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">Country</p>
+            <input type="text" name="country" class="form-control" />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">Phone</p>
+            <input type="number" min="1900" name="phone" class="form-control" />
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">Relationship Status</p>
+            <select name="relationship" id="" class="form-control">
+              <option value=""></option>
+              <option value="Single">Single</option>
+              <option value="In a relationship">In a relationship</option>
+              <option value="Married">Married</option>
+              <option value="Divorced">Divorced</option>
+              <option value="Engaged">Engaged</option>
+            </select>
+          </div>
+          <div class="mt-3">
+            <p class="fw-bold text-secondary">Gender</p>
+            <select name="gender" id="" class="form-control">
+              <option value=""></option>
+              <option value="Male">Male</option>
+
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div class="mt-4 w-100">
+            <button class="btn btn-success w-100">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="body-wrapper-comment">
+      <div class="post-comment-container bg-white p-3 rounded shadow mt-1">
+        <div
+          class="post-upload-header d-flex justify-content-between align-items-center"
+        >
+          <div></div>
+          <div><h4>Comment</h4></div>
+          <div>
+            <i class="fa-solid fa-xmark fs-4 close-post-comment"></i>
+          </div>
+        </div>
+        <div><hr /></div>
+        <div class="post-details-scroll-div" id="post-details-scroll-div">
+          <div
+            class=" post-details-container  py-2 px-2 text-decoration-none text-dark"
+          ></div>
+
+          <div class="comment-section px-2"></div>
+        </div>
+        <div
+          class="post-details-footer d-flex justify-content-between align-items-center px-4 pt-4 pb-2"
+        >
+          <div class="d-flex justify-content-between w-100 gap-2">
+            <div>
+              <img
+                class="nav-link-custom border profile-pic-round-small rounded-circle d-flex align-items-center justify-content-center"
+                src=""
+                alt="profie image"
+              />
+            </div>
+            <input type="text" id="getpostid" value="" hidden />
+            <textarea
+              class="form-control"
+              name=""
+              cols="30"
+              rows="2"
+              placeholder="Reply"
+              id="replytext"
+            ></textarea>
+            <div>
+              <button class="btn btn-success givereply">Reply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let csrf_token = "{{csrf_token}}";
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let roomName = "{{userid}}";
+        const chatSocket = new WebSocket(
+          "ws://" + window.location.host + "/ws/notification/" + roomName + "/"
+        );
+
+        chatSocket.onmessage = function (e) {
+          const data = JSON.parse(e.data);
+          console.log("data-", data);
+          if (data.type === "notification") {
+            const notificationCount = document.querySelector(".notif-count");
+            const count = parseInt(notificationCount.textContent) + 1;
+            console.log(count, "count");
+            document.querySelector(".notif-count").textContent = count;
+          }
+        };
+      });
+    </script>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/plyr.js' %}"></script>
+
+    <script>
+        let count={{post_count}}
+      for (let index = 1; index < parseInt(count)+1; index++) {
+        const player = new Plyr(`#player${index}`);
+      }
+    </script>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+  </body>
+</html>

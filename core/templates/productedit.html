@@ -1,0 +1,959 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <nav class="nav nav-borders">
+                     <a class="nav-link ps-0 pe-0  me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="">Product Details</a>
+                     <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'products' %}"> Product List </a>
+                     
+       
+       
+                    
+                 </nav>
+               </div>
+               <br>
+
+
+
+
+
+
+
+               <div class="card-body d-flex justify-content-center">
+                                                                                           
+                  <div class="col-lg-9 col-md-6 col-sm-12">
+              
+                      <div class="card card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                        <div class="card-body" >
+                          <div class="d-flex justify-content-between ">
+                            <h3 class="nunito-font " style="color:#444;" ><strong>Edit Product</strong></h3>
+                            <div>
+                              {% if messages %}
+                                {% for message in messages %}
+                                  <span class="text-danger" style="font-size: 13px; ">{{ message }}</span>
+                                {% endfor %}
+                              {% endif %}
+                            </div>
+                          </div>
+                        
+                         
+                          <div class="horizontal-line-dark mb-2 mt-4"></div>
+                          <br />
+        
+                          <form action="{% url 'updateproduct' id=product.id %}" method="POST">
+                            {% csrf_token %}
+      
+                            
+        
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="name" class="fs-6 fw-bold"
+                                  >Name</label
+                                >
+                               
+                              </div>
+                              <div class="form-group col-lg-8">
+                              
+                                <input class="form-control no-spinner-pad" type="text" name="name" id="name" value="{{product.name}}">
+                              </div>
+                            </div>
+      
+      
+      
+      
+      
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="category" class="fs-6 fw-bold"
+                                  >Category</label
+                                >
+                               
+                              </div>
+                              <div class="form-group col-lg-8  d-flex justify-content-center align-items-center gap-2">
+                              
+                                 <select  class="form-control selectizefield registrationcategoryedit registrationcategory" name="catagory">
+                                    <option value="{{product.catagory}}" selected>{{product.catagory}}</option>
+                                    {% for item in catagories %}
+                                    <option value="{{ item.name }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                 </select>
+      
+                                 <a href="#" data-toggle="modal" data-target="#addcat"><i class="fa-solid fa-plus addcatbtn"></i></a>
+                              </div>
+                            </div>
+      
+      
+      
+      
+      
+      
+                            
+                           <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="subcategory" class="fs-6 fw-bold"
+                                  >Sub Category</label
+                                >
+                               
+                              </div>
+                              <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+      
+                                 <select   class="form-control selectizefield registrationsubcategoryedit  registrationsubcategory" name="subcatagory">
+                                    <option value="{{product.subcatagory}}" selected>{{product.subcatagory}}</option>
+                                    
+                                 </select>
+                              
+                                 <a href="#" data-toggle="modal" data-target="#addsubcat"><i class="fa-solid fa-plus addsubcatbtn"></i></a>
+                              </div>
+                            </div>
+      
+      
+      
+      
+      
+      
+      
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="brand" class="fs-6 fw-bold"
+                                  >Brand</label
+                                >
+                               
+                              </div>
+                              <div class="form-group col-lg-8  d-flex justify-content-center align-items-center gap-2">
+      
+                                 <select  class="form-control selectizefield  registrationbrand" name="brand">
+                                    <option value="{{product.brand.id}}" selected>{{product.brand}}</option>
+                                    {% for item in brands %}
+                                    <option value="{{ item.id }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                 </select>
+                              
+                                 <a href="#" data-toggle="modal" data-target="#addbr"><i class="fa-solid fa-plus addbrandbtn"></i></a>
+                              </div>
+                            </div>
+      
+      
+      
+      
+      
+      
+                           <div class="form-row row">
+                             <div class="form-group col-lg-4">
+                               <label for="type" class="fs-6 fw-bold"
+                                 >Product Type</label
+                               >
+                              
+                             </div>
+                             <div class="form-group col-lg-8  d-flex justify-content-center align-items-center gap-2">
+                             
+                              <select  class="form-control selectizefield registrationtype" name="type">
+                                 <option value="{{product.type.id}}" selected>{{product.type}}</option>
+                                 {% for item in producttypes %}
+                                 <option value="{{ item.id }}">{{ item.name }}</option>
+                                 {% endfor %}
+                              </select>
+                              <a href="#" data-toggle="modal" data-target="#addtype"><i class="fa-solid fa-plus addtypebtn"></i></a>
+                             </div>
+                           </div>
+      
+      
+      
+      
+      
+                           <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="packing" class="fs-6 fw-bold"
+                                  >Packing</label
+                                >
+                               
+                              </div>
+                              <div class="form-group col-lg-8  d-flex justify-content-center align-items-center gap-2">
+      
+                                 <select   class="form-control selectizefield registrationpacking" name="packing">
+                                    <option value="{{product.packing.id}}" selected>{{product.packing}}</option>
+                                    {% for item in packing %}
+                                    <option value="{{ item.id }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                 </select>
+                              
+                                 <a href="#" data-toggle="modal" data-target="#addpacking"><i class="fa-solid fa-plus addpackingrbtn"></i></a>
+                              </div>
+                            </div>
+      
+      
+      
+      
+      
+      
+                            <div class="form-row row">
+                             <div class="form-group col-lg-4">
+                               <label for="hsn" class="fs-6 fw-bold"
+                                 >HSN</label
+                               >
+                            
+                             </div>
+                             <div class="form-group col-lg-8">
+      
+                              <input class="form-control no-spinner-pad" type="text" name="hsn" value="{{product.HSN}}">
+                             
+                             </div>
+                           </div>
+
+
+
+
+
+
+                           <!-- <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="barcodenumber" class="fs-6"
+                                  >Barcode number</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8">
+        
+                               <input required value="{{product.barcodenumber}}" class="form-control " type="number" name="barcodenumber" id="barcodenumber">
+                              
+                              </div>
+                            </div> -->
+        
+        
+        
+        
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="price" class="fs-6 fw-bold"
+                                  >Purchase Price Including Tax</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8">
+        
+                               <input   value="{{purchase_price_with_tax}}" required  class="form-control no-spinner-pad" type="number"
+                               step="0.01"
+                               min="0" name="price" id="price">
+                              
+                              </div>
+                            </div>
+        
+        
+        
+        
+        
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="purchasegst" class="fs-6 fw-bold"
+                                  >Purchase VAT</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+        
+                             <!-- <select required class="form-control selectizefield registrationpurchasetax" name="purchasegst" id="purchasegst">
+        
+                              <option value="{{product.purchasegst.id}}" selected>{{product.purchasegst.name}}</option>
+                                        {% for gst in tax %}
+                                        <option
+                                          data-purchasegst="{{ gst.percentage }}"
+                                          value="{{ gst.id }}"
+                                        >
+                                          {{ gst.name }}
+                                        </option>
+                                        {% endfor %}
+                             </select> -->
+
+                             <select class="form-control selectizefield registrationpurchasetax" name="purchasegst" id="purchasegst">
+                              <option value="{{product.purchasegst.id}}" selected>{{product.purchasegst.name}}</option>
+                              {% for gst in tax %}
+                              <option data-purchasegst="{{ gst.percentage }}" value="{{ gst.id }}">
+                                  {{ gst.name }}
+                              </option>
+                              {% endfor %}
+                          </select>
+                          
+                          <!-- Hidden field to store the value -->
+                          <!-- <input type="hidden" name="purchasegst" value="{{product.purchasegst.id}}"> -->
+                          
+
+                             <a href="#" data-toggle="modal" data-target="#addpurchasetax"><i class="fa-solid fa-plus addgstrbtn"></i></a>
+                            
+                              </div>
+                            </div>
+
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="sellingprice" class="fs-6 fw-bold"
+                                  >Selling Price Including Tax</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8">
+        
+                               <input  value="{{selling_price_with_tax}}" required  class="form-control no-spinner-pad" type="number"
+                               step="0.01"
+                               min="0" name="sellingprice" id="sellingprice">
+                              
+                              </div>
+                            </div>
+        
+        
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="salesgst" class="fs-6 fw-bold"
+                                  >Sales VAT</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8 d-flex justify-content-center align-items-center gap-2">
+        
+                                <select  required class="form-control selectizefield registrationsaletax" name="salesgst" id="salesgst">
+        
+                                  <option value="{{product.salegst.id}}" selected>{{product.salegst.name}}</option>
+                                            {% for gst in tax %}
+                                            <option
+                                              data-purchasegst="{{ gst.percentage }}"
+                                              value="{{ gst.id }}"
+                                            >
+                                              {{ gst.name }}
+                                            </option>
+                                            {% endfor %}
+                                 </select>
+                                 <a href="#" data-toggle="modal" data-target="#addsaletax"><i class="fa-solid fa-plus addgstrbtn"></i></a>
+                              </div>
+                            </div>
+        
+                            
+        
+        
+        
+        
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="mrp" class="fs-6 fw-bold"
+                                  >MRP</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8">
+        
+                               <input value="{{product.mrp}}" required class="form-control no-spinner-pad" type="number"
+                               step="0.01"
+                               min="0" name="mrp" id="mrp">
+                              
+                              </div>
+                            </div>
+        
+        
+        
+        
+        
+                            <div class="form-row row">
+                              <div class="form-group col-lg-4">
+                                <label for="mop" class="fs-6 fw-bold"
+                                  >MOP</label
+                                >
+                             
+                              </div>
+                              <div class="form-group col-lg-8">
+        
+                               <input value="{{product.mop}}"  required class="form-control no-spinner-pad" type="number"
+                               step="0.01"
+                               min="0" name="mop" id="mop">
+                              
+                              </div>
+                            </div>
+
+
+
+                           <div class="horizontal-line-dark mt-2"></div>
+                           
+        
+
+
+
+                            <button
+                              type="submit"
+                              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+                            >
+                              Save
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+      
+      
+      
+      
+              </div>
+       
+
+
+
+
+
+
+
+
+
+
+               <!-- <div class="row flex-grow">
+                  <div class="col-12 grid-margin stretch-card">
+                     <div class="card card-rounded">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-lg-12">
+                                 <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="table-main-heading">
+                                       <h4 class="card-title card-title-dash">Update Product</h4>
+                               
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="mt-3">
+                              <form action="{% url 'updateproduct' id=product.id %}" method="POST">
+                                 {% csrf_token %}
+                                 <div class="mt-3">
+                                    <div class="table-responsive">
+                                       <table class="table table-bordered" >
+                                          <thead>
+                                             <tr class="table-primary">
+                                                <th> Name</th>
+                                                <th> Category</th>
+                                                <th> Subcategory</th>
+                                                <th> Brand</th>
+                                                <th> Type</th>
+                                                <th> Packing</th>
+                                                <th> HSN</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td> 
+                                                   <input class="form-control" type="text" name="name" value="{{product.name}}">
+                                                </td>
+                                                <td>
+                                                   <select  class="form-control" name="catagory">
+                                                      <option value="{{product.catagory.id}}" selected>{{product.catagory}}</option>
+                                                      {% for item in catagories %}
+                                                      <option value="{{ item.id }}">{{ item.name }}</option>
+                                                      {% endfor %}
+                                                   </select>
+                                                </td>
+                                                <td>
+                                                   <select  class="form-control" name="subcatagory">
+                                                      <option value="{{product.subcatagory.id}}" selected>{{product.subcatagory}}</option>
+                                                      {% for item in subcatagories %}
+                                                      <option value="{{ item.id }}">{{ item.name }}</option>
+                                                      {% endfor %}
+                                                   </select>
+                                                </td>
+                                                <td>
+                                                   <select  class="form-control" name="brand">
+                                                      <option value="{{product.brand.id}}" selected>{{product.brand}}</option>
+                                                      {% for item in brands %}
+                                                      <option value="{{ item.id }}">{{ item.name }}</option>
+                                                      {% endfor %}
+                                                   </select>
+                                                </td>
+                                                <td>
+                                                   <select  class="form-control" name="type">
+                                                      <option value="{{product.type.id}}" selected>{{product.type}}</option>
+                                                      {% for item in producttypes %}
+                                                      <option value="{{ item.id }}">{{ item.name }}</option>
+                                                      {% endfor %}
+                                                   </select>
+                                                </td>
+                                                <td>
+                                                   <select  class="form-control" name="packing">
+                                                      <option value="{{product.packing.id}}" selected>{{product.packing}}</option>
+                                                      {% for item in packing %}
+                                                      <option value="{{ item.id }}">{{ item.name }}</option>
+                                                      {% endfor %}
+                                                   </select>
+                                                </td>
+                                                <td>
+                                                   <input class="form-control" type="text" name="hsn" value="{{product.HSN}}">
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <button type="submit" class="btn btn-primary text-white mb-2">Update</button>
+                              </form>
+                              </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     <!-- </div> -->
+                  </div>
+                  <div class="row flex-grow">
+                     <div class="col-12 grid-margin stretch-card">
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addcat">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Category</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addcatform" action="{% url 'addcatagorymodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control catname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6 float-right"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addsubcat">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Sub Category</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addsubcatform" action="{% url 'addsubcatagorymodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control subcatname" type="text" name="name">
+             
+             </div>
+           </div>
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="name" class="fs-6"
+                  >Category</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <select  class="form-control selectizefield catid registrationcatinsubcat" name="catagory">
+                    <option value="" selected>Select Category</option>
+                    {% for item in catagory %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                    {% endfor %}
+                 </select>
+              
+              </div>
+            </div>
+
+
+
+
+
+         
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addtype">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Product Type</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          
+          <form id="addtypeform" action="{% url 'addtypemodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control typename" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addpacking">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Packing</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addpackingform" action="{% url 'addpackingmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control packingname" type="text" name="name">
+             
+             </div>
+           </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addpurchasetax">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Tax</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+    
+          <form id="addpurchasetaxform" action="{% url 'addtaxmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control purchasetaxname" type="text" name="name">
+             
+             </div>
+           </div>
+
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="percentage" class="fs-6"
+                  >Percentage</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <input class="form-control purchasetaxnumber" type="number" name="percentage">
+              
+              </div>
+            </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="addsaletax">
+  <div class="modal-dialog">
+    <div class="modal-content w-100 p-0">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Tax</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+           
+
+          <form id="addsaletaxform" action="{% url 'addtaxmodal' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row row">
+             <div class="form-group col-lg-4">
+               <label for="name" class="fs-6"
+                 >Name</label
+               >
+            
+             </div>
+             <div class="form-group col-lg-8">
+
+              <input class="form-control saletaxname" type="text" name="name">
+             
+             </div>
+           </div>
+
+
+           <div class="form-row row">
+              <div class="form-group col-lg-4">
+                <label for="percentage" class="fs-6"
+                  >Percentage</label
+                >
+             
+              </div>
+              <div class="form-group col-lg-8">
+
+                 <input class="form-control saletaxnumber" type="number" name="percentage">
+              
+              </div>
+            </div>
+           <div class="horizontal-line-dark mt-2"></div>
+           
+
+            <button
+              type="submit"
+              class="btn btn-primary text-white mb-1 mt-3 fs-6"
+            >
+              Save
+            </button>
+          </form>
+            
+             
+
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 
+<script>
+  $(document).ready(function() {
+      $('.registrationsaletax').selectize({
+          onInitialize: function() {
+              this.disable();
+          }
+      });
+  });
+  </script> -->
+
+{% endblock %}

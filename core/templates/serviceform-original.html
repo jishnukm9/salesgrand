@@ -1,0 +1,969 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+ 
+
+
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'service' %}"> Service List </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'serviceform' %}">Service Entry</a>
+             
+
+             
+          </nav>
+
+<!-- <hr class="mt-0 mb-4"> -->
+
+
+          </div>
+
+
+
+          <br>
+
+
+
+         
+  
+
+
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3">
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Service Entry </strong> </h5>
+          </div>
+          <div class="card-body">
+
+
+            
+    
+
+                <form id="serviceForm" action="{% url 'addservice' %}"  method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                      <div class="form-group col-lg-12 mb-2"  >
+
+                        <label class="mb-1" for="mobileservice"
+                        ><strong>Customer</strong></label
+                      >
+      
+      
+                      <select  class="form-control selectizefield" name="mobileservice" id="mobileservice" >
+                        <option value=""></option>
+      
+                        {% for num in phone %}
+                        <option value="{{num.phone}}">{{num.firstname}} - {{num.phone}}</option>
+                        {% endfor %}
+                        
+      
+      
+      
+                      </select>
+                     
+                    
+                     
+                    </div>
+
+
+                 
+
+                        <div class="form-group col-lg-12 mb-2"  >
+
+                            <label class="mb-1" for="firstnameservice"
+                            ><strong>First Name</strong></label
+                          >
+                         
+                          <input autocomplete="off"  class="form-control " type="text" name="firstnameservice" id="firstnameservice" >
+                         
+                        </div>
+
+                        <div class="form-group col-lg-12"  >
+
+                            <label class="mb-1" for="lastnameservice"
+                            ><strong>Last Name</strong></label
+                          >
+                         
+                          <input autocomplete="off" class="form-control " type="text" id="lastnameservice" name="lastnameservice" >
+                         
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                
+
+
+                        <div class="form-group col-lg-12 mb-2"  >
+
+                            <label class="mb-1" for="addressservice"
+                            ><strong>Address</strong></label
+                          >
+                         
+                          <textarea autocomplete="off"  class="form-control " style="height:67px;" name="addressservice" id="addressservice"  rows="10"></textarea>
+                         
+                        </div>
+
+                        <div class="form-group col-lg-12 mb-2"  >
+
+                          <label class="mb-1" for="mobilenumber"
+                          ><strong>Mobile Number</strong></label
+                        >
+                       
+                        <input autocomplete="off"   class="form-control " type="number" id="mobilenumber" name="mobilenumber"  >
+                       
+                      </div>
+
+                        
+
+                        <div class="form-group col-lg-12"  >
+
+                            <label class="" for="refnumber"
+                            ><strong>Service Ref No <span class="ms-3 text-primary">{{servicenumber}}</span></strong></label
+                          >
+                         
+                          <input  hidden   class="form-control" type="text" name="refnumber" value="{{servicenumber}}" >
+                         
+                        </div>
+
+
+
+                     
+        
+
+
+                        
+
+                    </div>
+
+
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        
+
+                        <div class="form-group col-lg-12 mb-2"  >
+
+                          <label class="mb-1" for="customeridservice"
+                          ><strong>Customer Id</strong></label
+                        >
+                       
+                        <input autocomplete="off" readonly  style="border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;" class="form-control" type="text" id="customeridservice" name="customeridservice" >
+                       
+                      </div>
+
+                        <div class="form-group col-lg-12 mb-2"  >
+                          
+
+                            <label class="mb-1" for="serviceentrydate"
+                            ><strong>Memo Date</strong></label
+                          >
+
+                          <div id="datepicker" 
+                          name="serviceentrydate"
+             class="input-group date datepicker-current " 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control  " 
+            name="serviceentrydate"
+            autocomplete="off" 
+  
+                   type="text"    />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+                         
+                          <!-- <input   style="border:1px solid #cccccc;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;" class="form-control" type="date" value="{{today}}" id="serviceentrydate" name="serviceentrydate" placeholder="Expected Date" required> -->
+                         
+                        </div>
+                        <div class="form-group col-lg-12"  >
+
+                            <label class="mb-1" for="expecteddate"
+                            ><strong>Estimated Date</strong></label
+                          >
+
+                            <div id="datepicker" 
+                          
+             class="input-group date datepicker-field" 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control " 
+            name="expecteddate"
+            autocomplete="off" 
+            
+                   type="text"  />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+                         
+                          <!-- <input   style="border:1px solid #cccccc;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;" class="form-control" type="text" id="expecteddate" name="expecteddate" placeholder="Expected Date" required> -->
+                         
+                        </div>
+
+
+                    </div>
+
+           
+
+              </div>
+
+
+
+              <hr class=" dark-line">
+
+
+
+
+              <div class="row mb-4">
+
+
+
+               
+         
+
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+
+
+
+                  <div class="contentarea">
+                    <div class="Input">
+                    
+                            <div id="camera" class="camera">
+                                <video id="video">Video stream not available.</video>
+                                <button id="startbutton" type="button">Take photo</button>
+                                <input name="image1" id="webimg" value="" type="text" style="display: none;">
+                                <canvas id="canvas">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo" alt="your image">
+                            </div>
+                            <br>
+                           
+                       
+                    </div>
+                   
+                </div>
+
+                  <!-- <div class="form-group col-lg-12 mb-2"  >
+
+
+
+                    
+                    <label class="mb-1" for="image1"
+                    ><strong>Image 1</strong></label
+                  >
+                 
+                  <input type="file" class="form-control  center-file-input-text" name="image1" id="image1" >
+
+                  </div> -->
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+
+                  <div class="contentarea">
+                    <div class="Input">
+                       
+                            <div id="camera1" class="camera">
+                                <video id="video1">Video stream not available.</video>
+                                <button id="startbutton1" type="button">Take photo</button>
+                                <input name="image2" id="webimg1" value=""  type="text" style="display: none;">
+                                <canvas id="canvas1">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo1" alt="your image">
+                            </div>
+                            <br>
+                           
+                       
+                    </div>
+                
+                </div>
+
+                  <!-- <div class="form-group col-lg-12 mb-2"  >
+
+
+
+                    
+                    <label class="mb-1" for="image2"
+                    ><strong>Image 2</strong></label
+                  >
+                 
+                  <input type="file" class="form-control  center-file-input-text" name="image2" id="image2" >
+
+                  </div> -->
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+
+                  <div class="contentarea">
+                    <div class="Input">
+                       
+                            <div id="camera2" class="camera">
+                                <video id="video2">Video stream not available.</video>
+                                <button id="startbutton2" type="button">Take photo</button>
+                                <input name="image3" id="webimg2" value="" type="text" style="display: none;">
+                                <canvas id="canvas2">
+                                </canvas>
+                            </div>
+                            <br>
+                            <div>
+                                <img  id="photo2" alt="your image">
+                            </div>
+                            <br>
+                           
+                      
+                    </div>
+                
+                </div>
+
+                  <!-- <div class="form-group col-lg-12 mb-2"  >
+
+
+
+                    
+                    <label class="mb-1" for="image1"
+                    ><strong>Image 3</strong></label
+                  >
+                 
+                  <input type="file" class="form-control  center-file-input-text" name="image3" id="image3" >
+
+                  </div> -->
+                </div>
+              </div>
+
+
+
+
+
+
+
+              <hr class=" dark-line">
+
+
+
+
+
+
+              <div class="mt-4 mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="border py-1 d-flex justify-content-between" style="background:linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(246,246,246,1) 19%,rgba(237,237,237,1) 100%);">
+                    <h5 class="m-0 font-weight-bold p-1" style="color:#2c2e2f">Service Entries </h5>
+
+                    <span class="addsalebtnservice me-2 ps-2 pe-2 mt-1 mb-1"   >Add Spare Parts</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" >
+
+
+
+
+
+                      <table
+                      class="table  service-entry-table"
+                      
+                
+                    >
+                      <thead style="background-color:white;"  >
+                        <tr>
+                          <th width="5%"></th>
+                          <th width="5%;">Product</th>
+                          <th width="20%;" >Brand</th>
+                          <th width="20%;">Model</th>
+                         
+                          <th width="20%;">IMEI/Serial No</th>
+                       
+                          <th width="20%;" class="puchase-qty-right">Expected Charge</th>
+                          <th class="puchase-qty-left"></th>
+                        </tr>
+                      </thead>
+                      <tbody >
+                        <tr style="background-color:#fff;">
+                          <td>1</td>
+
+
+
+                          <td width="20%;"> 
+                            
+
+
+
+
+                            <input
+                                        type="text"
+                                        id="sale-search-input-product1"
+                                        autocomplete="off"
+                                        name="product1"
+                                    
+                                        list="product1"
+                                        class="form-control "
+                                        
+                                        />
+                                     <datalist id="product1">
+                                      <option value="Mobile Phones">Mobile Phones</option>
+                                      <option value="Laptops">Laptops</option>
+                                     </datalist>
+
+
+
+
+                          </td>
+
+
+
+                          <td>
+                            <input
+                              type="text"
+                              name="brand1"
+                              class="form-control "
+                              autocomplete="off"
+                
+                             
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                            
+                              name="model1"
+                              class="form-control "
+                              autocomplete="off"
+                           
+                            />
+                          </td>
+                      
+                          <td >
+                            <input
+                              type="text"
+                           
+                              name="imei1"
+                              class="form-control "
+                              autocomplete="off"
+                             
+                            />
+                          </td>
+                         
+                          <td class="puchase-qty-right">
+                            <input
+                              type="number"
+                              step="0.01"
+                             
+                              name="serviceprice1"
+                              min="0"
+                              class="form-control "
+                              autocomplete="off"
+                        
+                            />
+                          </td>
+                          <td class="puchase-qty-left">
+
+                            <!-- <span class="addrowbtnservice"   ><i class="fa-solid fa-plus"></i> Add Row</span> -->
+
+
+                            
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+
+
+                    </div>
+                    </div>
+              </div>
+
+
+
+
+             
+              
+
+
+
+
+
+
+              <div class="sales-in-service mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="border py-1 " style="background:linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(246,246,246,1) 19%,rgba(237,237,237,1) 100%);">
+                    <h5 class="m-0 font-weight-bold p-1" style="color:#2c2e2f">Spare Parts</h5>
+
+                  
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+
+
+
+
+
+                      <table
+                      class="table sale-entry-table-in-service"
+                    >
+                      <thead style="background-color:white;" >
+                        <tr>
+                          <th></th>
+                          <th width="30%">Name</th>
+                          <th>Barcode</th>
+                          <th>Unit Price</th>
+               
+                          <th>Sale GST</th>
+                          <th>MRP</th>
+                          <TH>MOP</TH>
+                          <th class="puchase-qty-right">Quantity</th>
+                          <th class="puchase-qty-left"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style="background-color:#fff;">
+                          <td>1</td>
+                          <td>
+                            <input
+                              type="text"
+                              id="sale-search-input-name1"
+                              autocomplete="off"
+                              name="salename1"
+                              list="salename1"
+                              class="form-control "
+                              
+                            />
+                            <datalist id="salename1">
+                              {% for product in products %}
+                              <option value="{{ product }}">
+                                {{ product }}
+                              </option>
+                              {% endfor %}
+                            </datalist>
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                              name="salebarcode1"
+                              class="form-control "
+                              autocomplete="off"
+                              
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              name="saleprice1"
+                              step="0.01"
+                              min="0"
+                              class="form-control "
+                              autocomplete="off"
+                              
+                            />
+                          </td>
+                       
+                          <td>
+
+
+ 
+
+                            <input
+                            type="text"
+                            id="sale-search-input-product1"
+                            autocomplete="off"
+                            name="salegstsale1"
+                        
+                            list="salegstsale1"
+                            class="form-control "
+                            
+                            />
+                         <datalist id="salegstsale1">
+                         {% for gst in tax %}
+                              <option value="{{ gst.name }}">
+                                {{ gst.name }}
+                              </option>
+                              {% endfor %}
+                         </datalist>
+                          </td>
+                          <td >
+                            <input
+                              type="number"
+                              step="0.01"
+                              name="salemrp1"
+                              min="0"
+                              class="form-control "
+                              autocomplete="off"
+                              
+                            />
+                          </td>
+                          <td >
+                            <input
+                              type="number"
+                              step="0.01"
+                              name="salemop1"
+                              min="0"
+                              class="form-control "
+                              autocomplete="off"
+                             
+                            />
+                          </td>
+                          <td class="puchase-qty-right">
+                            <input
+                              type="number"
+                              name="salequantity1"
+                              class="form-control "
+                              min="0"
+                              autocomplete="off"
+                              
+                            />
+                          </td>
+                          <td class="puchase-qty-left">
+
+                            <span class="addrowbtnsaleservice"   ><i class="fa-solid fa-plus"></i> Add Row</span>
+                    
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                    </div>
+              </div>
+
+
+              
+
+
+              <hr class=" dark-line">
+            
+
+
+
+
+
+              <div class="row">
+
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                    <div class="form-group col-lg-12 mb-2"  >
+
+                        <label class="mb-1" for="problem"
+                        ><strong>Problem Reported</strong></label
+                      >
+                     
+                      <textarea class="form-control" style="height:106px; " name="problem" id="problem"  rows="10"></textarea>
+                     
+                    </div>
+
+
+
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+            
+
+
+                    <div class="form-group col-lg-12 mb-3"  >
+
+                        <!-- <label class="mb-1" for="refnumber"
+                        ><strong>Warrenty Status</strong></label
+                      >
+                     
+                      <input   style="border:1px solid #cccccc;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;" class="form-control" type="text" name="refnumber"  >
+                      -->
+
+                      <label for="warrentystatus"> <strong>Warrenty Status</strong> </label>
+
+              <select class="form-control selectizefield" name="warrentystatus" id="warrentystatus" style=" border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;">
+                <option value="" ></option>
+<option value="Out Of Warrenty" >Out Of Warrenty</option>
+<option value="Under Warrenty">Under Warrenty</option>
+
+              </select>
+
+              
+
+
+                    </div>
+
+                    <div class="form-group col-lg-12"  >
+
+                        <label class="mb-1" for="accessories"
+                        ><strong>Accessories Attached</strong></label
+                      >
+
+                      <div class=" row-fluid" >
+
+                        <div class="p-1 " style="border-radius:3px;border:1px solid #dee2e6;" >
+                    	
+                            <input type="checkbox" name="accessory[battery]" style=" margin:0 5px 0 10px;" id="accessory" value="Battery"> <span style="font-size:14px;">Battery </span>                                                             
+                                  <input type="checkbox" name="accessory[charger]" style=" margin:0 5px 0 10px;" id="accessory" value="Charger"> <span style="font-size:14px;">Charger </span>                                  
+                                 <input type="checkbox" name="accessory[SIM]" style=" margin:0 5px 0 10px;" id="accessory" value="SIM"><span style="font-size:14px;">SIM   </span>  
+                                     <input type="checkbox" name="accessory[memory]" style=" margin:0 5px 0 10px;" id="accessory" value="Memory Card">  <span style="font-size:14px;">Memory Card  </span>   
+                                                                          </div>
+
+
+
+                      </div>
+                     
+                      <!-- <input   style="border:1px solid #cccccc;" class="form-control" type="text" name="refnumber" placeholder="Service Ref No" required> -->
+                     
+                    </div>
+
+
+                    
+
+                </div>
+
+
+
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+
+
+                   <div class="form-group col-lg-12 mb-2"  >
+
+                        <label class="mb-1" for="remarks"
+                        ><strong>Remarks</strong></label
+                      >
+                     
+                      <textarea class="form-control " style="height:106px;" name="remarks" id="remarks"  rows="10"></textarea>
+                     
+                    </div>
+
+
+                </div>
+
+       
+
+          </div>
+
+          <hr class=" dark-line">
+
+
+
+
+
+
+
+
+
+          <div class="row">
+
+
+
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+
+
+              <label for="status"> <strong>Status</strong> </label>
+
+              <select class="form-control selectizefield mb-3" name="status" id="status" style="border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;">
+
+<option value="Pending">Pending</option>
+<option value="In Progress">In Progress</option>
+<option value="Completed">Completed</option>
+<option value="Rejected">Rejected</option>
+
+
+              </select>
+             
+
+
+                
+          
+
+
+              <label for="status"> <strong>Payment Mode</strong> </label>
+
+              <select class="form-control selectizefield mb-3" name="paymentmode" id="paymentmode" style="border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;">
+
+<option value="Cash">Cash</option>
+
+
+              </select>
+
+
+
+              <label for="technician"> <strong>Technician</strong> </label>
+              <select class="form-control selectizefield " name="technician" id="technician" style="border:1px solid #cccccc;box-shadow: inset 0 1px 1px #00000013;">
+                <option value=""></option>
+                {% for technician in technicians %}
+                <option value="{{technician.user.username}}">{{technician.user}}</option>
+                {% endfor %}
+                
+                              </select>
+
+
+            </div>
+            
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+
+
+            </div>
+
+            <div class="form-group  col-lg-4 col-md-4 col-sm-4 ">
+
+
+                <div class=" mb-1 p-2" style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+
+                    <div class="row">
+                    <div class="col-6"> <strong>  Total Amount</strong> </div>
+                    <div class="col-6">
+                      <input readonly class="border-0 w-100" type="number" min="0" step="0.01" id="totalamount" name="totalamount" value="0">
+                    </div>
+                  </div>
+
+                    
+                </div>
+                <div class=" mb-1 p-2" style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                  <div class="row">
+                  <div class="col-6"> <strong>Discount</strong> </div>
+                  <div class="col-6">
+                    <input class="border p-1 w-100 " type="number" step="0.01" min="0" id="discount" name="discountservice" value="0">
+                  </div>
+                </div>
+                </div>
+                <div class=" mb-1 p-2" style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                  <div class="row">
+                  <div class="col-6"> <strong>Final Amount</strong> </div>
+                  <div class="col-6">
+                    <input readonly class="border-0 w-100" type="number" step="0.01" min="0" id="finalamount" name="finalamount" value="0">
+                  </div>
+                </div>
+              </div>
+                <div class=" mb-1 p-2 " style=" border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                   
+                  <div class="row">
+                    <div class="col-6"> <strong>Amount Recieved</strong> </div>
+                  <div class="col-6">
+                    <input class="border p-1 w-100 " type="number" step="0.01" min="0" id="amountrecieved" name="amountrecieved" value="0">
+                  </div>
+                </div>
+                </div>
+                <div class=" mb-1 p-2" style="border:1px solid #cccccc;    box-shadow: inset 0 0 7px #EAEAEA;">
+                  <div class="row">
+                    <div class="col-6"> <strong>Due Balance Amount</strong>  </div>
+                  <div class="col-6">
+                    <input readonly class="border-0 w-100" type="number" step="0.01" min="0" id="duebalance" name="duebalance" value="0">
+                  </div>
+                </div>
+              </div>
+
+                <div class="mt-3 text-end">
+
+                  <button class="btn btn-primary text-white ps-4 pe-4 mt-3 float-right" type="submit">Save</button>
+                </div>
+            </div>
+
+
+            <!-- </div> -->
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <div>
+
+              </div>
+
+              
+
+
+
+
+
+
+            </form>
+
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card"></div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- </div>
+</div>
+</div> -->
+
+
+
+
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

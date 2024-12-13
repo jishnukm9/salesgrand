@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doorstep Mobile Repair Service at Best Price | Magnus Store & Care</title>
+    {% load static %}
+  
+      <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/typicons/typicons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/simple-line-icons/css/simple-line-icons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+      
+      <!-- endinject -->
+      <!-- Plugin css for this page -->
+      <!-- senseweave favicon -->
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+      <link rel="manifest"  href="{% static 'images/site.webmanifest' %}">
+      <!-- added new datatable bootstrap cdn 15-06-2023 -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+      <!-- End plugin css for this page -->
+      <!-- inject:css -->
+     <!-- ----------------------- for buttons in datatable --------------------------- -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+     
+     <!-- https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css -->
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+           <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+     
+     <!-- ---------------------------------------------- -->
+
+
+      <link rel="stylesheet" href=
+      "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+
+      <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+      <!-- endinject -->
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" /> -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+      <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <script src="https://kit.fontawesome.com/8b32c96dee.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="{% static 'css/mystyles.css' %}">
+      <!-- <link rel="stylesheet" href="{% static 'css/updatestyle.css' %}"> -->
+      <link rel="stylesheet" href="{% static 'css/jquery.toast.min.css' %}">
+      <link rel="stylesheet" href="{% static 'js/OwlCarousel/dist/assets/owl.carousel.min.css' %}">
+      <link rel="stylesheet" href="{% static 'js/OwlCarousel/dist/assets/owl.theme.default.min.css' %}">
+
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400;1,500&family=Nunito&family=Roboto:ital@1&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400;1,500&family=Nunito&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Enriqueta&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+      <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css" media="all"> -->
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+<body > 
+
+
+    <style>
+
+        /* ### Customer service entry page styles #### */
+
+
+        .hero-container-row{
+    padding-top:50px;
+    padding-bottom:50px;
+}
+
+.hero-container {
+    position:relative;
+    /* z-index: -50; */
+    overflow: hidden;
+}
+
+.hero-img{
+    /* z-index: -50; */
+    width:66%;
+  /* clip-path: polygon(0% 10%, 10% 0%, 100% 0%, 100% 100%, 0% 100%); */
+  /* clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); */
+border-radius:15px;
+/* transform: scale(1.2); */
+
+}
+
+
+
+.star-1{
+    position:absolute;
+    height:500px;
+    width:500px;
+    /* top:-100px; */
+    left:-200px;
+    /* overflow: hidden; */
+    /* z-index: -100; */
+
+}
+
+.star-2{
+    position:absolute;
+    height:500px;
+    width:500px;
+    top:0;
+    right:-200px;
+    /* z-index: -100; */
+}
+.secondary-text{
+   color:#0A7D7D
+}
+
+
+.text-enquiry{
+  color:#7D0A0A;
+}
+
+.customer-service-entry-nav{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #BF3131; */
+  background-color: #ffff;
+  padding:15px 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+  /* border-bottom: 5px red solid; */
+}
+.footer-top{
+  background-color: #BF3131;
+}
+
+.landing-form .col-md-6 {
+  margin: 8px 0px;
+  padding-right: 3px;
+  padding-left: 5px;
+}
+.banner-form .col-md-6 {
+  margin: 8px 0px;
+  padding-right: 3px;
+  padding-left: 5px;
+}
+
+.head-desc{
+  line-height: 1.7;
+}
+
+.font-family-mont{
+  /* font-family:Rubik;  */
+  /* font-family:Inter; */
+  /* font-family:Merriweather;  */
+  font-family:Montserrat;
+  /* font-family: Nunito; */
+}
+
+.hero-text{
+  /* font-family: Enriqueta; */
+  /* font-size:45px; */
+  font-size:42px;
+  line-height:1.3;
+  color:#444;
+  letter-spacing: 2px;
+  
+}
+
+.hero-text span {
+    font-size: 45px;
+    background: linear-gradient(to right, #e3636a, #dc3c45);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;  
+    display: inline-block; 
+}
+
+.head-magnus{
+  line-height:1.5;
+  font-size:30px;
+  font-weight: bold;
+}
+.head{
+    line-height: 1.5;
+}
+
+/* .hero-text-wrapper{
+  padding-top:145px;
+} */
+
+.hero-text-wrapper-booking,.hero-img{
+    z-index:10000;
+}
+
+.read-more{
+  display:inline-block;
+  text-decoration: none;
+  /* background-color: #bf3131; */
+  color:#bf3131;
+  font-size:20px;
+  /* padding:4px 8px; */
+  border-radius: 5px;
+}
+
+.read-more:hover{
+  
+  color: #bf3131;
+}
+
+.red-color-text{
+  color: #BF3131;
+}
+
+.hero-container{
+ 
+  /* background-color: #f2f3f5; */
+  /* background:linear-gradient(to right top, rgb(78, 216, 247), rgb(38, 175, 235) 70%); */
+  background:linear-gradient(to right top, #fff, #e6e6e6 70%);
+color:#fff;
+}
+
+.hero-image-container{
+    position:relative;
+}
+
+.hero-image-shape-1{
+    position:absolute;
+    width:300px;
+    height:300px;
+    /* z-index:-99; */
+    bottom:-200px;
+    left:-150px;
+}
+.hero-image-shape-2{
+    position:absolute;
+    width:300px;
+    height:300px;
+    /* z-index:-99; */
+    top:-20px;
+    left:-20px;
+}
+
+
+.iphone{
+    padding:20px;
+   border-radius: 5px;
+}
+.iphone:hover{
+
+    background-color: #fff;
+   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    /* width:300px;
+    height:300px; */
+    /* height:300px;
+    background-image: url(' https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+background-size: cover; */
+   
+}
+
+
+.hero-container-outer{
+  /* background-color: #f7f7f7;
+   */
+   /* background-color: #fcfcfe; */
+  
+  
+}
+/* .hero-container{
+    padding-top:140px;
+} */
+
+.logo-cust{
+  width:150px;
+}
+
+
+
+.contact-btn{
+  padding:8px 16px;
+  background-color: #fff;
+  color:#000;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.contact-btn:hover{
+  color: #6a0808;
+}
+
+.magnus-heading{
+  margin-top:40px;
+}
+
+.grey-font{
+  color:#222;
+}
+
+.txtPhone {
+  position: relative;
+}
+
+/* for mobile-bro-new.png */
+
+/* .mobile-hero{
+  transform: scale(1.2);
+} */
+
+.mobile-hero{
+  transform: scale(1.9);
+}
+
+#txtPhone {
+  padding-left: 36px;
+}
+
+#btnSubmitCust{
+  background-color: #BF3131;
+}
+#btnSubmitCust:hover{
+  background-color: #7d0a0a;
+}
+
+.red-text{
+  color:#7d0a0a;
+}
+
+.red-text-light{
+  color:#BF3131;
+}
+
+.brand-container{
+  background-color:#7d0a0a;
+}
+
+
+
+
+
+
+
+.hero-text-wrapper-wrapper{
+  display:flex;
+  justify-content: start;
+  align-items:center;
+}
+
+
+.why-choose-us-div {
+    transition: transform 0.3s ease-in-out; 
+}
+
+.why-choose-us-div:hover {
+    transform: scale(1.1);
+}
+
+
+        .accordion-button.collapsed {
+            color: white; 
+            background-color: #BF3131;
+            
+            
+            outline: none;
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: white; 
+            /* background-color: #7d0a0a; */
+            /* background-color: #ec6533; */
+            background-color: #0A7D7D;
+            outline: none;
+        }
+        .accordion-button:not(.collapsed)::after{
+            color:#fff;
+        }
+        .accordion-button.collapsed::after{
+            /* background-color:#fff; */
+            /* border-radius: 50%; */
+            /* border:1px solid white; */
+            /* padding:3px; */
+            /* filter: grayscale(100%); */
+        }
+        .accordion-body {
+            /* color: white; 
+            background-color: #BF3131;  */
+            color: #000; 
+            background-color: #fff; 
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+        }
+        .accordion-button:focus {
+    z-index: 3;
+    border-color: none;
+    outline: 0;
+    box-shadow: none;
+}
+body{
+    /* background-color:#7d0a0a; */
+    /* font-family:Montserrat; */
+    font-family: sans-serif;
+    
+}
+
+
+#txtName{
+    padding-left: 12px;
+}
+.phone-book{
+    padding-left: 12px;
+}
+
+#txtEmail{
+    padding-left: 12px;
+
+}#txtName::placeholder,.phone-book::placeholder,#txtEmail::placeholder{
+
+   color:#444;
+}
+
+
+
+.floating-image {
+            position: relative;
+            animation: float 2s infinite alternate ease-in-out;
+        }
+
+
+
+        .bounce {
+        
+            color:#0A7D7D;
+        }
+
+        /* @keyframes bouncer {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                color:#0A7D7D;
+                
+                transform: translateY(-5px); 
+            }
+        } */
+
+        .hero-description{
+            font-size:16px;
+        }
+
+
+        /* Extra small devices (phones) */
+@media only screen and (max-width: 576px) {
+  /* Your styles for xs devices go here */
+  .hero-container{
+    padding-left:50px;
+  padding-right:50px;
+  /* background-size: contain;
+  background-repeat: no-repeat; */
+  padding-top:50px;
+  padding-bottom:90px;
+  background-color: #f2f3f5;
+}
+
+.nav-item-list{
+    display:none;
+}
+
+
+.star-2{
+
+top:600px;
+ right:-200px;
+
+}
+
+.hero-img{
+    width:100%;
+}
+
+.hero-container-row{
+    padding:0px 10px;
+}
+
+
+.hero-text{
+ 
+  font-size:30px;
+  line-height:1.3;
+  color:#444;
+  letter-spacing: 2px;
+  
+}
+.bounce {
+        
+        color:#0A7D7D;
+    }
+  
+}
+/* Small devices (tablets) */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* Your styles for sm devices go here */
+
+  /* .hero-text-wrapper-booking {
+   
+    margin-top: 70px;
+    margin-bottom: 50px;
+    margin-left: 30px;
+  } */
+
+ 
+}
+
+
+/* Medium devices (desktops) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+  /* .hero-text-wrapper-booking {
+   
+    margin-top: 70px;
+    margin-bottom: 50px;
+    margin-left: 30px;
+  } */
+
+}
+/* Large devices (large desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* Your styles for lg devices go here */
+}
+/* Extra large devices (extra large desktops) */
+@media only screen and (min-width: 1200px) {
+  /* Your styles for xl devices go here */
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px) {
+    .hero-text-wrapper-booking {
+    /* text-align: center; */
+   
+    margin-bottom: 50px;
+   
+  }
+  /* .hero-text{
+      font-size:10px;
+  } */
+  }
+
+
+
+        /* .accordion-button.collapsed::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23#FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+} */
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+}
+
+.accordion-button::after {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+    content: "";
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.contact-btn-wrapper{
+    border: 2px solid #BF3131;
+    border-radius:5px;
+
+}
+.contact-btn-wrapper a,.contact-btn-wrapper a i{
+    color:#bf3131
+}
+
+.nav-item-list{
+    color:#111
+}
+
+.nav-item-list:hover{
+    color:#bf3131
+}
+
+.book-repair-btn:hover {
+    /* z-index: 10000 !important;
+    cursor: pointer !important; */
+}
+    </style>
+
+
+<!-- <div class="outer-container"> -->
+
+    <div class="hero-container-outer">
+    <nav class="navbar  customer-service-entry-nav  shadow"  >
+
+        <!-- <div class="containerr "> -->
+
+            <a href="" class="navbar-brandd ">
+                <img src="{% static 'images/magnuscare-logo.png' %}" class="logo-cust" alt="">
+            </a>
+
+<div class="d-flex justify-content-between align-items-center gap-5">
+    <a href="#services" class="text-decoration-none nav-item-list">Services</a>
+    <a href="#faq" class="text-decoration-none nav-item-list">FAQ</a>
+            <a href="#about-us" class="text-decoration-none  nav-item-list">About Us</a>
+
+        <div class="contact-btn-wrapper d-flex justify-content-end align-items-center ">
+            
+            <a href="" class=" contact-btn fs-7  "><i class="fa-solid fa-phone-volume "></i> +917902443344</a>
+        </div>
+    </div>
+       
+    
+
+       
+
+        <!-- </div> -->
+    </nav>
+
+ 
+
+
+
+   
+
+
+<div class=" hero-container ">
+
+    <img class="star-1" src="{% static 'images/decoration-star.svg' %}" alt="">
+    <div class="container" >
+    
+
+
+        <div class="row hero-container-row  px-1">
+
+
+
+         
+
+        <div class="col-lg-12 ">
+            <div class="row">
+            <div class="col-lg-6  hero-text-wrapper-wrapper mb-4" >
+                <div class="hero-text-wrapper-booking">
+                <h2 class="hero-text mb-2 fw-bold" >Get Doorstep <span class="replace-me me-5"
+                 style="display:none">Mobile, Laptop, IPhone, Macbook, IMac, IWatch</span> 
+                    </h2>
+                    <h2 class="hero-text mb-4 fw-bold" style="line-height:1.5;">Repairs
+                        Anywhere In Kerala, Without Leaving Home</h2>
+                    
+                  
+                    <h2 class="bounce hero-text mb-4 fw-bold">1 Year Warranty*</h2>
+
+                <a class="btn btn-danger book-repair-btn fw-bolder  cursor-pointer bg-danger"  href="#book-a-repair">Book a repair &darr;</a>
+                <!-- <span class="text-danger fs-4 fw-bold text-capitalize font-italic" >Book a repair &darr;</span> -->
+                <!-- <button>Button</button> -->
+                
+                
+                
+          
+            </div>
+        </div>
+
+        
+            <div class="col-lg-6 d-flex justify-content-center align-items-center hero-image-container" >
+           <!-- <svg class="hero-image-shape-1" id="sw-js-blob-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">                    <defs>                         <linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">                            <stop id="stop1" stop-color="rgba(219, 217, 218, 1)" offset="0%"></stop>                            <stop id="stop2" stop-color="rgba(219, 217, 218, 1)" offset="100%"></stop>                        </linearGradient>                    </defs>                <path fill="url(#sw-gradient)" d="M23.8,-28.3C30.1,-23,34.1,-14.9,36,-6C38,2.8,38,12.4,34.4,20.9C30.7,29.4,23.4,36.8,14.6,39.7C5.9,42.7,-4.3,41.3,-13,37.4C-21.7,33.5,-28.9,27.2,-34.1,19.2C-39.3,11.2,-42.4,1.6,-41.1,-7.5C-39.8,-16.6,-34.1,-25.2,-26.5,-30.3C-18.9,-35.4,-9.4,-37,-0.4,-36.6C8.7,-36.1,17.4,-33.6,23.8,-28.3Z" width="100%" height="100%" transform="translate(50 50)" stroke-width="0" style="transition: all 0.3s ease 0s;"></path>              </svg> -->
+           <img class="hero-image-shape-1" src="{% static 'images/decoration-star.svg' %}" alt="">
+    <img class="hero-img"   src="{% static 'images/fhero-sidiq.png' %}" alt="">
+    <!-- <svg  class="hero-image-shape-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#DBD9DA" d="M32.1,-51.6C45.2,-41.7,61.7,-38.7,67.9,-29.6C74.2,-20.6,70.2,-5.5,65.4,7.5C60.5,20.5,54.8,31.5,46.4,38.9C38,46.4,27,50.3,14.3,58.5C1.7,66.6,-12.6,79,-27.5,80.6C-42.4,82.2,-58.1,73,-64.9,59.4C-71.7,45.8,-69.7,27.8,-65.4,13.5C-61,-0.8,-54.3,-11.2,-49,-22.2C-43.7,-33.1,-39.8,-44.5,-31.9,-56.8C-23.9,-69.1,-12,-82.3,-1.2,-80.4C9.6,-78.6,19.1,-61.6,32.1,-51.6Z" transform="translate(100 100)" />
+      </svg> -->
+
+               <!-- <svg  class="hero-image-shape-3" id="sw-js-blob-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">                    <defs>                         <linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">                            <stop id="stop1" stop-color="rgba(219, 217, 218, 1)" offset="0%"></stop>                            <stop id="stop2" stop-color="rgba(219, 217, 218, 1)" offset="100%"></stop>                        </linearGradient>                    </defs>                <path fill="url(#sw-gradient)" d="M22.2,-27.2C29,-20.8,34.8,-14,38,-5.3C41.2,3.4,41.8,13.9,37.4,21.8C33.1,29.7,23.9,35,14.5,37.3C5.2,39.5,-4.3,38.6,-13.5,35.9C-22.8,33.1,-31.9,28.3,-36.6,20.8C-41.4,13.2,-41.9,2.9,-40.5,-7.4C-39,-17.7,-35.5,-27.9,-28.4,-34.3C-21.4,-40.6,-10.7,-43.1,-1.5,-41.3C7.7,-39.5,15.4,-33.6,22.2,-27.2Z" width="100%" height="100%" transform="translate(50 50)" stroke-width="0" style="transition: all 0.3s ease 0s;"></path>              </svg> -->
+               <img class="hero-image-shape-2" src="{% static 'images/decoration-star.svg' %}" alt="">
+        
+                </div>
+           
+            </div>
+
+                
+        </div>
+
+
+    
+    </div>
+
+</div>
+<img class="star-2" src="{% static 'images/decoration-star.svg' %}" alt="">
+</div>
+
+
+
+                
+
+    <div id="book-a-repair py-5" style="padding-top:20px;padding-bottom:20px;">
+
+
+        <div class="container py-2" id="book-a-repair">
+           <div class="text-center fw-bold mb-5">
+               <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Book a Repair</h2>
+               <p style="font-size:16px;letter-spacing:0.2px;line-height:1.5;">You can book your phone repair appointment by filling up the form given below.</p>
+           </div>
+
+    
+           <div>
+               <div class="row">
+
+
+                
+    
+                <form id="customerServiceEntryForm">
+                    <div class="row p-3" >
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3">
+                            <input type="text" id="txtName"  maxlength="100" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 txtPhone mb-2">
+                            <!-- <input type="text" id="txtPhone" required="required" maxlength="10" class="form-control" placeholder="Phone No." onkeyup="numberMobile(event);"> -->
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text" style="color:#444;">{{calling_code}}</div>
+                                </div>
+                                <input type="text" class="form-control phone-book" id="inlineFormInputGroup" placeholder="Phone No." >
+                              </div>
+                        </div>
+                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-1">
+                            <input type="text" id="txtEmail" style="margin-bottom:18px !important; " required="required" maxlength="50" class="form-control" placeholder="Email">
+                        </div> -->
+                    
+                    
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3">
+                    
+                            <select id="ddlCity" class="form-control border " name="City" style="height:34px !important;" >
+                                            <option value="0">City</option>
+                                            {% for city in cities %}
+                                            <option value="{{city.name}}">{{city.name}}</option>
+                                            {% endfor %}
+                                            
+                                  
+                            </select>
+                    
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3">
+                    
+                            <input type="email" id="txtEmail" class="form-control"  placeholder="Email">
+                    
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                            <select  class="form-control border" name="ddlproduct" id="ddlproduct"  >
+                                
+                                <option value="0">Product *</option>
+                                {% for prod in products %}
+                                <option data-id="{{prod.id}}" value="{{prod.name}}">{{prod.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3">
+                            <select  class="form-control border" name="ddlbrand" id="ddlbrand"  >
+                                <option selected value='0'>Brand *</option>
+                              
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-3">
+                            <select id="problemDescription" class="form-control border" name="ProblemDescription"  >
+                                <option value="0">Issue *</option>
+                                {% for issue in issues %}
+                                <option value="{{issue.name}}">{{issue.name}}</option>
+                                {% endfor %}
+                                
+                    
+                            </select>
+                        </div>
+                    
+                        <div class=" d-flex justify-content-center align-items-center mt-3 mb-2">
+                            <button type="submit" id="btnSubmitCust" value="submit" class="btn text-white  " >SUBMIT</button>
+                        </div>
+                    </div>
+                </form>
+    
+    
+    
+               </div>
+    
+    
+    
+           </div>
+        </div>
+
+
+
+       
+    
+    </div>
+
+
+{% if url %}
+    <div class=" py-5" id="book-a-repair py-5" style="padding-top:20px;padding-bottom:20px;">
+       
+        <div class="text-center fw-bold mb-5">
+            <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Live Repair Stream</h2>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <iframe width="560" height="315" src="{{url.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+       </div>
+       
+       
+        </div>
+        {% endif %}
+
+
+<div class="how-it-works py-5" style="background-color:#f2f5f3">
+
+
+    <div class="container ">
+       <div class="text-center fw-bold mb-5">
+           <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">How Does It Work?</h2>
+       </div>
+
+       <div>
+           <div class="row p-3">
+
+
+
+
+
+
+            <div class="col mb-2">
+
+                <div style="width:80px;height:80px;"   class="bg-danger  mb-3 rounded-circle p-3 d-flex justify-content-center align-items-center" >
+                    <i class="fa-solid fa-mobile-screen fs-1 text-white "></i>
+                </div> 
+                <div>
+                    <h4 style="font-size:17px;letter-spacing:0.5px;line-height:1.5;" class="mb-2 fw-bold">
+                        
+                        Book a Service
+                    </h4>
+                    <p style="font-size:14px;letter-spacing:0.2px;">
+                        Call us or book our doorstep service online. Tell us where and
+                        when to pick up your item.
+                    </p>
+                </div>
+                
+            </div>
+            <div class="col mb-2">
+                <div style="width:80px;height:80px;"  class="bg-danger  mb-3 rounded-circle p-3 d-flex justify-content-center align-items-center" >
+                   
+                    <i class="fa-solid fa-door-open fs-1 text-white"></i>
+                </div> 
+                <div>
+                    <h4 style="font-size:17px;letter-spacing:0.5px;line-height:1.5;" class="mb-2 fw-bold">
+                        Device Collection
+                    </h4>
+                    <p style="font-size:14px;letter-spacing:0.2px;">
+                        Our technicians will arrive at your location to collect the device
+and understand the issues.
+                    </p>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div style="width:80px;height:80px;"  class="bg-danger  mb-3 rounded-circle p-3 d-flex justify-content-center align-items-center" >
+                    <!-- <i class="fa-solid fa-mobile-screen fs-1 text-white "></i> -->
+                    <i class="fa-solid fa-screwdriver-wrench fs-1 text-white "></i>
+                </div> 
+                <div>
+                    <h4 style="font-size:17px;letter-spacing:0.5px;line-height:1.5;" class="mb-2 fw-bold">
+                        Thorough Inspection
+                    </h4>
+                    <p style="font-size:14px;letter-spacing:0.2px;">
+                        Your device will undergo a comprehensive check in our
+advanced lab to identify the problem.
+                    </p>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div style="width:80px;height:80px;"  class="bg-danger  mb-3 rounded-circle p-3 d-flex justify-content-center align-items-center" >
+                    <!-- <i class="fa-solid fa-mobile-screen fs-1 text-white "></i> -->
+                    <i class="fa-solid fa-square-check  fs-1 text-white "></i>
+                </div> 
+                <div>
+                    <h4 style="font-size:17px;letter-spacing:0.5px;line-height:1.5;" class="mb-2 fw-bold">
+                        Issue Resolution
+                    </h4>
+                    <p style="font-size:14px;letter-spacing:0.2px;">
+                        Our technicians will contact you to discuss the problem and
+inform you of the repair cost. Once we receive confirmation, our expert technician
+will repair your phone.
+                    </p>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div style="width:80px;height:80px;"  class="bg-danger  mb-3 rounded-circle p-3 d-flex justify-content-center align-items-center" >
+                    <i class="fa-solid fa-truck text-white fs-1"></i>
+                </div> 
+                <div>
+                    <h4 style="font-size:17px;letter-spacing:0.5px;line-height:1.5;" class="mb-2 fw-bold">
+                        Device Delivery
+                    </h4>
+                    <p style="font-size:14px;letter-spacing:0.2px;">
+                        Once repaired, our team will return your device to you, making it
+                        feel like new again.
+                    </p>
+                </div>
+            </div>
+           </div>
+
+
+
+
+       </div>
+    </div>
+
+</div>
+
+
+
+<div class="services" id="services" >
+
+
+    <div class="container   py-5">
+       <div class="text-center fw-bold ">
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Our Services</h2>
+       </div>
+
+       <div>
+           <div class="row p-3">
+
+
+
+
+            <div class="col-lg-6 col-md-6 col-sm-12 p-3">
+                <div class="card  iphone ">
+                    <div class="w-100 d-flex justify-content-center align-items-center mb-4">
+                        <img style="max-width:400px;" class="rounded" src="{% static 'images/iphone-comp.jpeg' %}" alt="">
+                    </div>
+                   <div class="d-flex justify-content-center align-items-center mb-3">
+                    <h4 style="font-size:20px;letter-spacing:0.5px;;" class="fw-bold">IPhone</h4>
+                   </div>
+                    <div class="mb-3 text-center">
+                        <p style="font-size:16px;line-height:1.5;">30000+ iPhones repaired!</p>
+                        <p style="font-size:16px;line-height:1.5;">The best iPhone service centers in Kerala.</p>
+                        <p style="font-size:16px;line-height:1.5;">Get your iPhone fixed by the hands of the most experienced iPhone service professionals in
+                            Kerala, with 16 years of experience and over 30,000 iPhones repaired!</p>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a class="btn btn-danger bg-danger" href="{% url 'customerserviceentryservices' service='iphone' %}">Details</a> 
+                    </div>
+               
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 p-3">
+                <div class="card  iphone ">
+                    <div class="w-100 d-flex justify-content-center align-items-center mb-4">
+                        <img style="max-width:400px;" class="rounded" src="{% static 'images/smartphone-comp.jpeg' %}" alt="">
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <h4 style="font-size:20px;letter-spacing:0.5px;;" class="fw-bold">Smartphone</h4>
+                       </div>
+                        <div class="mb-3 text-center">
+                            <!-- <p style="font-size:14px;letter-spacing:0.2px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus qui quasi, illum cumque sunt aut iste ad provident quibusdam vel corporis, amet eum nobis ullam obcaecati, deleniti nam ratione dolorem!</p> -->
+                        
+                        
+                            <p style="font-size:16px;letter-spacing:0.2px;">400000+ Smartphones repaired!</p>
+                            <p style="font-size:16px;letter-spacing:0.2px;">The best smartphone repair centers in Kerala.</p>
+                            <p style="font-size:16px;letter-spacing:0.2px;">Get your smartphones fixed by the hands of the most experienced smartphone service
+                                professionals in Kerala, with 16 years of experience and over 400000+ smartphones
+                                repaired!</p>
+                        
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a class="btn  btn-danger bg-danger" href="{% url 'customerserviceentryservices' service='smartphone' %}">Details</a> 
+                        </div>
+               
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 p-3">
+                <div class="card  iphone ">
+                    <div class="w-100 d-flex justify-content-center align-items-center mb-4">
+                        <img style="max-width:400px;" class="rounded" src="{% static 'images/laptop-comp.jpeg' %}" alt="">
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <h4 style="font-size:20px;letter-spacing:0.5px;;" class="fw-bold">Laptop and Computer</h4>
+                       </div>
+                        <div class="mb-3 text-center">
+                            <!-- <p style="font-size:14px;letter-spacing:0.2px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus qui quasi, illum cumque sunt aut iste ad provident quibusdam vel corporis, amet eum nobis ullam obcaecati, deleniti nam ratione dolorem!</p> -->
+                        
+                        
+                            <p style="font-size:16px;letter-spacing:0.2px;">45000+ Laptop&amp;Computers repaired</p>
+                            <p style="font-size:16px;letter-spacing:0.2px;">The best laptop service centers in Kerala.</p>
+                            <p style="font-size:16px;letter-spacing:0.2px;">Get your laptops and desktops expertly repaired by Kerala&#39;s most experienced
+                                professionals, with 16 years of expertise and over 45,000+ devices repaired!</p>
+                        
+                        
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a class="btn btn-danger bg-danger" href="{% url 'customerserviceentryservices' service='laptop' %}">Details</a> 
+                        </div>
+               
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 p-3">
+                <div class="card  iphone ">
+                    <div class="w-100 d-flex justify-content-center align-items-center mb-4">
+                        <img style="max-width:400px;" class="rounded" src="{% static 'images/apple-comp.jpeg' %}" alt="">
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <h4 style="font-size:20px;letter-spacing:0.5px;;" class="fw-bold">Apple Product</h4>
+                       </div>
+                        <div class="mb-3 text-center">
+                            <!-- <p style="font-size:14px;letter-spacing:0.2px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus qui quasi, illum cumque sunt aut iste ad provident quibusdam vel corporis, amet eum nobis ullam obcaecati, deleniti nam ratione dolorem!</p> -->
+                       
+                            <p style="font-size:16px;letter-spacing:0.2px;">Best Apple product repair centers in Kerala</p>
+                            <!-- <p style="font-size:14px;letter-spacing:0.2px;">The best laptop service center in Kannur.</p> -->
+                            <p style="font-size:16px;letter-spacing:0.2px;">Repair your iPad, iMac, iPod, and other Apple gadgets with the best Apple product repair
+                                experts in Kerala.</p>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a class="btn btn-danger bg-danger" href="{% url 'customerserviceentryservices' service='apple' %}">Details</a> 
+                        </div>
+               
+                </div>
+            </div>
+
+
+
+
+
+
+           </div>
+
+
+
+
+       </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="about-us" id="about-us">
+
+    <div class="container   py-5 rounded" style="background-color:#f2f3f4">
+        <div class="text-center fw-bold mb-4">
+            <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">About Us</h2>
+        </div>
+ 
+        <div>
+            <div class=" p-3">
+
+                <div class="d-flex justify-content-center align-items-center mb-5">
+                    <img class="rounded" src="{% static 'images/aboutus.png' %}" alt="">
+                </div> 
+                <div class="w-75 my-0 mx-auto text-center mb-5">
+                    <h4 style="font-size:22px;letter-spacing:0.5px;line-height:1.5;" class="mb-4">The Best Laptop/Smartphone/iPhone Service Centers  <span class="fw-bold">across Kerala</span> </h4>
+                    <p style="font-size:16px;letter-spacing:0.5px;line-height:1.5;">Magnus stands as the oldest, most experienced, trusted, and best
+                        Laptop/Smartphone/iPhone service and training center in Kerala, with 16
+                        years of expertise. With a global presence of 50+ stores and 400+ support centers
+                        worldwide, Magnus leads the industry in technology and customer satisfaction..</p>
+                </div>
+                <div>
+<div class="row p-5 border">
+    <div class="col-lg-4 text-center py-4">
+        <div>
+       
+        <div class="d-flex  gap-2 justify-content-center align-items-center mb-1">
+       
+            <p class="fs-1">16</p><p class="fs-1"><i class="fa-solid fa-calendar-days"></i></p>
+        </div>
+        <div>
+            <p style="font-size:16px;letter-spacing:0.5px;line-height:1.5;">Years</p>
+        </div>
+        </div>
+
+        
+       
+        
+    </div>
+    <div class="col-lg-4 text-center py-4">
+      
+        <div>
+       
+            <div class="d-flex  gap-2 justify-content-center align-items-center mb-1">
+                <p class="fs-1">50+</p><p class="fs-1"><i class="fa-solid fa-store"></i></p>
+            </div>
+            <div>
+                <p style="font-size:16px;letter-spacing:0.5px;line-height:1.5;">   Stores</p>
+            </div>
+            </div>
+    </div>
+    <div class="col-lg-4 text-center py-4">
+        
+        <div>
+       
+            <div class="d-flex  gap-2 justify-content-center align-items-center mb-1">
+                
+                <p class="fs-1">400+</p><p class="fs-1"><i class="fa-solid fa-headset"></i></p>
+            </div>
+            <div>
+                <p style="font-size:16px;letter-spacing:0.5px;line-height:1.5;">   Support centers</p>
+            </div>
+            </div>
+    </div>
+</div>
+                </div>
+                
+            </div>
+</div>
+
+</div>
+</div>
+
+
+
+
+<div class="why-choose-us py-5" >
+
+
+    <div class="container ">
+       <div class="text-center fw-bold mb-5">
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Why choose us</h2>
+       </div>
+
+       <div>
+           <div class="row p-3">
+
+
+
+
+
+
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/expert-technician.png' %}" alt="">
+                    </div>
+                    
+                    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Expert Technicians
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Our team consists of highly skilled and experienced Telecom Sector Skill Council-certified
+                        technicians only. They are specialized in diagnosing and repairing a wide range of mobile
+                        and laptop issues.
+                    </p>
+                </div>
+                
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/door-step.png' %}" alt="">
+                    </div>
+                    
+                    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Convenient Doorstep Service
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Say goodbye to the hassle of visiting repair centers. We bring our repair services to your
+                        doorstep, providing you with the convenience of getting your mobile device fixed without
+                        leaving your home or office.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/spare.png' %}" alt="">
+                    </div>
+                    
+                    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        High-Quality Spare Parts
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Quality is our priority. We only use high-quality spare parts for all repairs, guaranteeing the
+                        longevity and optimal performance of your mobile and laptop.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/efficient-service.png' %}" alt="">
+                    </div>
+                    
+                    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Prompt and Efficient Service
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        We value your time and prioritize efficiency. At Magnus Store &amp; Care, we are committed to
+                        providing quick and efficient repair services, ensuring that your device is back in your
+                        hands as soon as possible.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/affordable-price.png' %}" alt="">
+                    </div>
+                    
+                    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Affordable Pricing
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        We believe in providing value for your money. Our repair services come with competitive
+and transparent pricing, offering cost-effective solutions for all your mobile and laptop
+issues.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/warranty.png' %}" alt="">
+                    </div>
+                    
+                    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        1-year Warranty on Repairs
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Making you satisfied and worry-free is what matters most to us! That&#39;s why we provide a
+                        1-year warranty on all repairs we undertake, ensuring the quality of our services and
+                        giving you assurance in the parts we fix.
+                        
+                        </p>
+                </div>
+            </div>
+           </div>
+
+
+
+
+       </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class=" "  style="background-color:#f2f5f3"  id="faq">
+
+
+    <div class="container py-5">
+
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold text-center">
+            Frequently asked questions
+        </h2>
+    
+        <div class="row py-5">
+            <div class="col-lg-6 mb-2">
+                <div class="accordion accordion-flush" id="accordionFlushExample1">
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Q. What types of damages does Magnus Store & Care repair?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Magnus Store &amp; Care repairs various types of damages including cracked screens,
+                                    hardware issues, water damage, battery replacement, and Everything related to Mobile
+                                    Phones &amp; Laptops.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                Q. How long does it take to repair a smartphone at Magnus Store & Care?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    The smartphone/Laptop repair duration depends on the damage&#39;s type and severity.
+Magnus Store &amp; Care ensures a prompt and efficient repair process with the device
+delivered to the customer in the shortest possible time.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Q. Can Magnus Store & Care repair all brands of smartphones?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, Magnus Store &amp; Care can repair all popular brands of smartphones including but not
+limited to Apple, Samsung, Google, OnePlus, Vivo, Oppo, Mi, Nokia, and more.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree3" aria-expanded="false" aria-controls="flush-collapseThree3">
+                                Q. Does Magnus Store &amp; Care have a physical shop in Kerala?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree3" class="accordion-collapse collapse" aria-labelledby="flush-headingThree3" data-bs-parent="#accordionFlushExample13">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, Magnus Store &amp; Care operates a physical shop across Kerala where customers can bring
+their devices for in-shop repairs. Our conveniently located store provides a comfortable
+environment for customers to discuss their repair needs with our expert technicians and
+have their devices serviced on-site. Click here to locate Magnus Store and Care in Kerala
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree4" aria-expanded="false" aria-controls="flush-collapseThree4">
+                                Q. What payment methods does Magnus Store &amp; Care accept?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree4" class="accordion-collapse collapse" aria-labelledby="flush-headingThree4" data-bs-parent="#accordionFlushExample14">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Magnus Store &amp; Care accepts various payment methods including cash, credit/debit
+cards, mobile wallets, and online bank transfers for your convenience.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree5">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree5" aria-expanded="false" aria-controls="flush-collapseThree5">
+                                Q. Does Magnus Store &amp; Care offer data backup services before repairing a device?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree5" class="accordion-collapse collapse" aria-labelledby="flush-headingThree5" data-bs-parent="#accordionFlushExample15">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we understand the importance of your data. Our technicians can assist you with
+data backup services before initiating any repair process to ensure your valuable
+information is safe and secure.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree431">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree431" aria-expanded="false" aria-controls="flush-collapseThree431">
+                                Q. What payment methods does Magnus Store &amp; Care accept?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree431" class="accordion-collapse collapse" aria-labelledby="flush-headingThree431" data-bs-parent="#accordionFlushExample1431">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Magnus Store &amp; Care accepts various payment methods including cash, credit/debit
+                                    cards, mobile wallets, and online bank transfers for your convenience.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="accordion accordion-flush" id="accordionFlushExample2">
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                Q. How does Doorstep Mobile Repair work at Magnus Store & Care?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample2">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    When you book our Doorstep Mobile Repair service, our customer care team will
+                                    coordinate with you to schedule a preferred time slot for our technician's visit. Our service
+                                    team will pick up the device at the scheduled time and bring it to our advanced service
+                                    center. Once we diagnose the problem, we will contact you to address the problem and
+                                    inform the cost of repair. Upon receiving your confirmation, your device will be repaired
+                                    and delivered to your home or office at your preferred time.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                Q. Does Magnus Store & Care provide a warranty for its repairs?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample2">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, Magnus Store &amp; Care provides a 1-year warranty on its repairs. The warranty will
+cover the specific area or spare parts we have repaired.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                Q. Is Magnus Store &amp; Care environmentally conscious in its repair processes?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample2">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont  grey-font head-desc">
+                                    Yes, we are committed to environmental sustainability. We adhere to eco-friendly
+                                    practices by responsibly disposing of electronic waste and promoting the reuse and
+                                    recycling of materials whenever possible.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree41">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree41" aria-expanded="false" aria-controls="flush-collapseThree41">
+                                Q. What should I do if I encounter issues with my repaired device after service?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree41" class="accordion-collapse collapse" aria-labelledby="flush-headingThree41" data-bs-parent="#accordionFlushExample141">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    If you experience any issues with your device after repair, please contact our customer
+                                    support team immediately. We offer post-repair assistance and will work to resolve any
+                                    concerns promptly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree42">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree42" aria-expanded="false" aria-controls="flush-collapseThree42">
+                                Q. Can I arrange to meet somewhere other than my home?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree42" class="accordion-collapse collapse" aria-labelledby="flush-headingThree42" data-bs-parent="#accordionFlushExample142">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Definitely! Our doorstep mobile service is available anywhere in Kerala.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree43">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree43" aria-expanded="false" aria-controls="flush-collapseThree43">
+                                Q. Does the doorstep service cost more than going to a store?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree43" class="accordion-collapse collapse" aria-labelledby="flush-headingThree43" data-bs-parent="#accordionFlushExample143">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    No, our pick-up and drop-off service is free. You only have to pay for the service
+performed on your device.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer-top bg-dark  text-white fw-bold border py-5">
+      
+    <div class="container p-4 pb-0">
+   
+      <section class="mb-0">
+<div class="row">
+        <div class="col-lg-5 mb-5">
+
+            <img src="{% static 'images/magnuscare-logo.png' %}" class="logo-cust py-2" alt="">
+
+            <p class="py-2 ">Magnus store & care being the oldest, most experienced, most trusted and the best gadget training and servicing company,</p>
+
+            <div class="py-2"> <a
+                class="btn text-white btn-floating m-1"
+                style="background-color: #e93f3b;"
+                href="#!"
+                role="button"
+                ><i class="fab fa-instagram"></i
+              ></a>
+           
+              <a
+                class="btn text-white btn-floating m-1"
+                style="background-color: #3b5998;"
+                href="#!"
+                role="button"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+        
+            
+              <a
+                class="btn text-white btn-floating m-1"
+                style="background-color: #55acee;"
+                href="#!"
+                role="button"
+                ><i class="fab fa-twitter"></i
+              ></a></div>
+        </div>
+        <div class="col-lg-2 mb-5">
+
+            <h2 class="py-2">
+                Links
+            </h2>
+
+            <p class="py-2">
+                <a href="#faq" class="text-decoration-none text-white"> FAQ</a>
+               
+            </p>
+            <p class="py-2">
+                <a href="#services" class="text-decoration-none text-white"> Services</a>
+               
+            </p>
+            <p class="py-2">
+                <a href="#read-more" class="text-decoration-none text-white"> About us</a>
+               
+            </p>
+            
+           
+            
+        </div>
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">KASARAGOD</h2>
+
+            <p>Magnus Store & Care</p>
+            <p class="py-2">2nd floor, Apsara Tiger Garden,</p>
+            <p>Kasaragod, Kerala 671121</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+        </div>
+
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">KANNUR</h2>
+
+            <p>Magnus Store & Care</p>
+            <p class="py-2">Oppo-Sunitha Furniture, Thavakkara,</p>
+            <p>Kannur, Kerala 670001</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+        </div>
+
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">MALAPPURAM</h2>
+
+            <p>Magnus Innovative Technical Services Pvt. Ltd.</p>
+            <p class="py-2">JSS Shopping Mall, CH Bypass, Kuthukal Jn.</p>
+            <p>Manjeri, Kerala 676123</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+        </div>
+
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">MALAPPURAM</h2>
+
+            <p>Magnus Innovative Technical Services Pvt. Ltd.</p>
+            <p class="py-2">First Floor, APM Building, Tirur, </p>
+            <p>Thalakkaduthoor, Kerala 676103</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+        </div>
+
+
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">PALAKKAD</h2>
+
+            <p>Magnus Innovative Technical Services Pvt. Ltd.</p>
+            <p class="py-2">Second floor,Parayil Square, Kandath Sudevan Road, Sultanpet,</p>
+            <p>Palakkad, Kerala 678001</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+        </div>
+
+
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">KOCHI</h2>
+
+            <p>Magnus Innovative Technical Services Pvt. Ltd.</p>
+            <p class="py-2">2nd floor, PK Arcade, Ponnurunni Railway Over Bridge,</p>
+            <p>Ernakulam, Kerala 682019</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+        </div>
+
+
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">KOTTAYAM</h2>
+
+            <p>Magnus Innovative Technical Services Pvt. Ltd.</p>
+            <p class="py-2">Fifth Floor, Revenue Tower, Room No: 1234, Changanassery,</p>
+            <p>Kottayam, Kerala 686101</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+
+        </div>
+
+    </div>
+
+
+
+  
+      
+   
+          </section>
+      
+        </div>
+        <!-- <div class="text-center p-3" >
+            © {{current_year}} Copyright:
+            <a class="text-white" href="">magnusstore.in</a>
+          </div> -->
+       
+        </footer>
+
+
+
+
+
+
+
+     <!-- plugins:js -->
+     <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+     <!-- endinject -->
+     <!-- Plugin js for this page -->
+     <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+     <script src="{% static 'vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+     <script src="{% static 'vendors/progressbar.js/progressbar.min.js' %}"></script>
+     <!-- End plugin js for this page -->
+     <!-- inject:js -->
+     <script src="{% static 'js/off-canvas.js' %}"></script>
+     <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+     <script src="{% static 'js/template.js' %}"></script>
+     <script src="{% static 'js/settings.js' %}"></script>
+     <script src="{% static 'js/todolist.js' %}"></script>
+     <!-- endinject -->
+     <!-- Custom js for this page-->
+     <script src="{% static 'js/chart.js' %}"></script>
+     <script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript"></script>
+     <script src="{% static 'js/dashboard.js' %}"></script>
+     <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
+
+     
+    
+     <!-- End custom js for this page-->
+    
+     <!-- endinject -->
+     <script src=
+"https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" 
+       integrity=
+"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+       crossorigin="anonymous">
+   </script>
+   <script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" 
+       integrity=
+"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+       crossorigin="anonymous"></script>
+     <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
+   </script>
+     <!-- Custom js for this page-->
+     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> 
+
+<!-- ------------- for  buttons in datatable -------------- -->
+     <!-- https://code.jquery.com/jquery-3.7.0.js
+https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js -->
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+<!-- ---------------------------------------------- -->
+
+
+
+<!-- ------------- for  filter in datatable -------------- -->
+<script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+
+<!-- ---------------------------------------------- -->
+
+
+
+
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    
+    
+     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.datetimepicker.min.css' %}">
+     <!-- <script src="{% static 'js/jquery.js' %}"></script> -->
+     <script src="{% static 'js/jquery.datetimepicker.full.js' %}"></script>
+     <script src="{% static 'js/table2excel.js' %}"></script>
+     <script src="{% static 'js/jquery.toast.min.js' %}"></script>
+     <script src="{% static 'js/OwlCarousel/dist/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'js/replaceme.min.js' %}"></script>
+     <script>
+         let replaceMeText = document.querySelector('.replace-me');
+         replaceMeText.style.display = 'block'
+        var replace = new ReplaceMe(document.querySelector('.replace-me'), {
+    animation: 'animated fadeIn',                       // Animation class or classes
+    speed: 2000,                                        // Delay between each phrase in miliseconds
+    separator: ',',                                     // Phrases separator
+    hoverStop: false,                                   // Stop rotator on phrase hover
+    clickChange: false,                                 // Change phrase on click
+    loopCount: 'infinite',                              // Loop Count - 'infinite' or number
+    autoRun: true,                                      // Run rotator automatically
+    onInit: false,                                      // Function
+    onChange: false,                                    // Function
+    onComplete: false                                   // Function
+});
+    </script>
+    <script>
+        var csrf_token = '{{csrf_token}}'
+     </script>
+     <script src="{% static 'js/myscripts.js' %}"></script>
+     
+
+
+<script>
+    
+</script>
+</body >
+</html>

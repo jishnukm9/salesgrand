@@ -1,0 +1,85 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+              
+
+
+
+
+
+                 <nav class="nav nav-borders">
+                  <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Product Price List </a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'modalproductform' %}">Product Price Entry</a>  
+              </nav>
+               </div>
+               <br>
+            
+             
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                     <div class="card-header py-3 bg-white">
+                         <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Product Price List </strong> </h5>
+                     </div>
+                     <div class="card-body">
+                         <div class="table-responsive">
+
+
+
+                                 <table class="add-pagination packing_list table-bordered table table-stripedd">
+                                    <thead class="">
+                                       <tr>
+                                          <th width="5%">Sl</th>
+                                          <th > Brand</th>
+                                          <th > Modal</th>
+                                          <th >Product</th>
+                                          <th >Price 1</th>
+                                          <th >Price 2</th>
+                                          <th >Price 3</th>
+                                          <th >Branch</th>
+                                          <th></th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for item in prod_list_obj %}
+                                       <tr>
+                                          <td>{{ forloop.counter }}</td>
+                                          <td> {{ item.brand }} </td>
+                                          <td> {{ item.modal }} </td>
+                                          <td> {{ item.product }} </td>
+                                          <td> {{ item.price1 }} </td>
+                                          <td> {{ item.price2 }} </td>
+                                          <td> {{ item.price3 }} </td>
+                                          <td> {{ item.branch }} </td>
+                                          <td>
+                                             <a href="{% url 'updatemodalproductprice' id=item.id %}"> <span class="edit-btn"><i class="fa-regular fa-eye"></i>  Edit</span> </a>
+                                          </td>
+                                       </tr>
+                                       {% endfor %}
+                                    </tbody>
+                                 </table>
+                              </div>
+                         
+                  </div>
+               </div>
+               <!-- </div> -->
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

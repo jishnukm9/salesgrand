@@ -1,0 +1,1028 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+              
+
+               
+
+                 <nav class="nav nav-borders">
+                  {% if user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' or user.userprofile.role == 'TRC Front Desk' %}
+                  <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'servicecnp' %}">My Service</a>
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                 {% else %}
+                 <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'service' %}">All Service List </a>
+                 {% endif %}
+                 <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"   href="{% url 'serviceform' %}">Service Entry</a>
+                
+                 {% if user.userprofile.role == "TRC Front Desk" or request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}
+                 <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"    href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                 {% endif %}
+                 
+   
+                 
+   
+                  {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}
+                 
+                            
+                              {% endif %}
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="#"> Service Checkout </a>
+                  
+
+                  
+
+
+                 
+              </nav>
+
+
+
+               </div>
+               <br>
+
+
+
+               <div class="div">
+
+                  <ul>
+                     {% for message in messages %}
+
+                  <li class="text-danger fw-bold">{{message}}</li>
+
+
+                     {% endfor %}
+                  </ul>
+                  
+               </div>
+           
+           
+<div class="row">
+   <div class="col-lg-6 col-md-6">
+               <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                  <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                      <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Invoice Details ({{serviceref}})</strong> </h5>
+                  </div>
+                  <div class="card-body p-5">
+
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 " >
+                           <p class="fw-bold">Customer :</p>
+                              
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{firstname}} {{lastname}}</p>
+                           
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Phone :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{customer_phone}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Address :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{address}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Rack No :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{rack_no}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Technician :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{technician}}</p>
+                        
+                        </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Service Ref Number :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{serviceref}}</p>
+                        
+                        </div>
+                     </div>
+
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Received Date :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{receiveddate}}</p>
+                        
+                        </div>
+                     </div>
+
+                     <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6 fw-bold">
+                           <p class="fw-bold">Status :</p>
+                           
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                           <p class="nunito-font">{{status}}</p>
+                        
+                        </div>
+                     </div>
+                    
+<a href="{% url 'servicecalllogs' serviceref=serviceref %}" class="btn btn-success text-white fw-bold mb-0 pb-2">Call logs</a>
+                     
+
+                     </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                     <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;;">
+                        <div class="card-header d-flex justify-content-between align-items-center py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                            <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Billing Details</strong> </h5>
+
+                          
+                        </div>
+                        <div class="card-body p-5">
+                           <form action="{% url 'servicebillingcheckout' servicerefnumber=serviceref %}" method="post">
+                              {% csrf_token %}
+
+
+                            
+
+                               
+
+                              <div class="row mb-2">
+                                 <div class="col-lg-6 col-md-6 " >
+                                    <p class="fw-bold">Service Charge Incl Tax :</p>
+                                       
+                                 </div>
+                                 <div class="col-lg-6 col-md-6">
+                              
+                                    <input readonly  type="number"  value="{{service_charge}}" min="0" id="servicecost2" name="servicecost2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                                    
+                                 </div>
+                              </div>
+                              
+
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 " >
+                                 <p class="fw-bold">Total Incl Tax :</p>
+                                    
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input type="text" name="firstname2" value="{{firstname}}" hidden>
+                              <input type="text" name="lastname2" value="{{lastname}}" hidden>
+                                 <input readonly type="number"  value="{{totalamount}}" min="0" id="finaltotal2" name="finaltotal2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                                 
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Service Tax {{servicetax}}% :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input readonly type="number"  min="0" value="{{totaltax}}" id="totaltaxcheckout2"  name="totaltaxcheckout2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                              
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Spare Tax :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+
+                                 {% if discount > 0 %}
+                                
+                                 <input readonly type="number"  min="0" value="{{sparetax_afterdiscount|floatformat:2}}" id="sparetx22"  name="sparetx22" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                                 {% else %}
+                                 <input readonly type="number"  min="0" value="{{spare_tax|floatformat:2}}" id="sparetx22"  name="sparetx22" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                                   {% endif %}
+                                
+                              
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Discount ({{discountmethod_selected}}) :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 {% if discountmethod_selected == 'Percentage' %}
+                                 <input readonly type="number"  min="0" value="{{discountperc}}" id="finaldiscount2"  name="finaldiscount2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc"style="background:none;" >
+                                 {% else %}
+                                 <input readonly type="number"  min="0" value="{{discount}}" id="finaldiscount2"  name="finaldiscount2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc"style="background:none;" >
+                                 {% endif %}
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Final Amount :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input readonly type="number" readonly value="{{finalamount}}" id="finalfinalamount2"   min="0" name="finalfinalamount2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;">
+                              
+                              </div>
+                           </div>
+                           <div class="row mb-2">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Amount Received :</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input type="number" min="0" value="{{amountrecieved}}" id="finalamountreceivedold2"  hidden  step="0.01" class="form-control border-0 border-bottom" >
+                                 <input readonly type="number" min="0" value="{{amountrecieved}}" id="finalamountreceived2"  name="finalamountreceived2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                              
+                              </div>
+                           </div>
+                           <div class="row" style="margin-bottom:38px;">
+                              <div class="col-lg-6 col-md-6 fw-bold">
+                                 <p class="fw-bold">Due Balance:</p>
+                                 
+                              </div>
+                              <div class="col-lg-6 col-md-6">
+                                 <input readonly type="number" readonly min="0" value="{{duebalance}}" id="finalduebalance2"  name="finalduebalance2" step="0.01" class="form-control border-0 border-bottom no-spinner-pad-sc" style="background:none;" >
+                              
+                              </div>
+                           </div>
+                          
+                        </form>
+
+                        {% if duebalance == 0 and  status == 'Delivered(Ok)' or status == 'Delivered(NotOk)'  %}
+                        <a data-toggle="modal" data-target="#serviceprintmodal"  class="btn btn-primary mt-1 mb-1 text-white fw-bold">Invoice</a>
+                       
+                        
+                        {% else %}
+
+                        <button data-toggle="modal" data-target="#servicecheckoutmodal" class="btn btn-primary mt-1 mb-1 text-white fw-bold" >Checkout</button>
+                        
+                        {% endif %}
+
+                           </div>
+                           </div>
+                  </div>
+                  </div>
+               </div>
+
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="serviceprintmodal">
+   <div class="modal-dialog">
+     <div class="modal-content p-0 w-100">
+       <div
+         class="modal-header   d-flex justify-content-between align-items-center m"
+         style="background-color:#4555B9"
+       >
+         <h5 class="modal-title text-white"><strong>Print</strong></h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="text-white" aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <!-- <hr class="horizontal-line" /> -->
+       <div class="modal-body">
+       <form action="{% url 'serviceprint' serviceref=serviceref %}" id="serivceorderivoiceform" target="_blank" method="POST">
+         {% csrf_token %}
+        
+
+         <div
+                          class="modal-body mt-3 mb-3 "
+                          style="
+                          padding-top: 0px;
+                          padding-bottom: 0px;
+                      " >
+
+                        
+                
+              
+                        <div class="form-check d-flex justify-content-center align-items-center">
+                           <div class="w-50">
+                          <input class="form-check-input" type="radio" name="flexRadioDefault" value="invoice" id="flexRadioDefault1" checked >
+                          <label class="form-check-label text-left" for="flexRadioDefault1" style="text-align:left;">
+                            Invoice
+                          </label>
+                        </div>
+                        </div>
+                                           
+                        </div>
+                    
+       
+      </div>
+
+      <div class="modal-footer ">
+         <button type="submit"  class="btn btn-primary border-0 p-2 ps-3 pe-3" style="background-color:#4555B9">
+            Print
+          </button>
+      </div>
+      </form>
+
+     </div>
+   </div>
+ </div>
+
+
+
+
+
+
+
+
+
+ <!-- <div class="modal fade" tabindex="-1" id="servicecheckoutmodal">
+   <div class="modal-dialog modal-lg">
+       <div class="modal-content p-0 w-50">
+           <div class="modal-header text-white" style="background-color:#4555B9;">
+               <h5 class="modal-title fw-bold">Service Checkout</h5>
+          
+           </div>
+               <form action="{% url 'servicebillingcheckout' servicerefnumber=serviceref %}" method="post">
+         {% csrf_token %}
+           <div class="modal-body">
+               
+
+               <h6 class="mt-0 mb-1 fw-bold text-left text-primary">Spare Parts</h6>
+               <div class="table-responsive">
+                   <table class="table table-striped spare-table-service-checkout border border-primary">
+                       <thead>
+                           <tr>
+                               <th>Sl</th>
+                               <th>Name</th>
+                               <th class="text-end" style="white-space:normal;">Price (ex. tax)</th>
+                              
+                               <th class="text-end">Tax</th>
+                               <th class="text-end">Quantity</th>
+                             
+                           </tr>
+                       </thead>
+                       <tbody>
+                          {% if spare != 0 %}
+                           {% for item in spare %}
+                           <tr>
+                               <td>{{forloop.counter}}</td>
+                               <td class="text-end salename{{forloop.counter}}" style="white-space:normal;">{{item.name}}</td>
+                               <td class="text-end saleprice{{forloop.counter}}">{{item.price}}</td>
+                              
+                               
+                               <td class="text-end salegstsale{{forloop.counter}}">{{item.salegst}}%</td>
+                               <td class="text-end salequantity{{forloop.counter}}">{{item.totalquantity}}</td>
+                             
+                           </tr>
+                           {% endfor %}
+                           {% endif %}
+                       </tbody>
+                   </table>
+               </div>
+              
+
+               <div class="row mt-4">
+                   <div class="col-lg-12 ">
+                       <ul class="list-group border border-primary">
+                        <li class="list-group-item d-flex justify-content-between py-2">
+                           
+                                
+                                <span class="fw-bold">Payment Mode :</span>
+                                <div class="col-lg-4 col-md-4">
+                                   <select style="background-color:#d0ebff;"  class="form-control border-0  {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} " name="paymentmode" id="paymentmode" required>
+                                     <option  value="" style="font-size:12px;">Select Payment Mode</option>
+                                      {% for mode in paymentmode %}
+                                      <option value="{{mode.name}}">{{mode.name}}</option>
+                                      {% endfor %}
+                                  </select>
+                                
+                                </div>
+                          
+                        </li>
+                       
+
+                           <li class="list-group-item d-flex justify-content-between py-2">
+                              <span class="fw-bold">Service Charge Excl Tax :</span>
+                              <div class="col-lg-4 col-md-4">
+
+                               
+                             
+                              {% if discount > 0 %}
+                              <input  readonly  type="number"  value="{{service_charge_excluding_tax_wdiscount}}" min="0" id="servicecostexcltax" name="servicecostexcltax" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                                  
+                                 {% else %}
+                                 <input  readonly  type="number"  value="{{service_charge_excluding_tax}}" min="0" id="servicecostexcltax" name="servicecostexcltax" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                               
+                                 {% endif %}
+
+                              </div>
+                          </li>
+
+                           <li class="list-group-item d-flex justify-content-between py-2">
+                              <span class="fw-bold">Service Charge Excl Tax after discount :</span>
+                              <div class="col-lg-4 col-md-4">
+
+                               
+                              {% if discount > 0 %}
+                              <input  readonly  type="number"  value="{{service_charge_excluding_tax_afterdiscount}}" min="0" id="servicecostexcltaxafterdiscount" name="servicecostexcltaxafterdiscount" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                                 {% else %}
+                                 <input  readonly  type="number"  value="{{service_charge_excluding_tax}}" min="0" id="servicecostexcltaxafterdiscount" name="servicecostexcltaxafterdiscount" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+
+                                 {% endif %}
+
+                            </div>
+                          </li>
+                         
+                          <li class="list-group-item d-flex justify-content-between">
+                           <span class="fw-bold">Service Charge Incl Tax :</span>
+                           <div class="col-lg-4 col-md-4">
+
+                            <input type="number" min="0" step="0.01" value="{{service_charge}}" id="servicecost_old" hidden>
+                            <input  required readonly  type="number"  value="{{service_charge}}" min="0" id="servicecost" name="servicecost" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                         </div>
+                       </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span class="fw-bold">Service Tax {{servicetax}}% :</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input readonly type="number"  min="0" value="{{totaltax}}" id="totaltaxcheckout"  name="totaltaxcheckout" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+                             
+                             
+                             </div>
+                           </li>
+                          
+                           <li class="list-group-item d-flex justify-content-between">
+                            <span class="fw-bold">Spare Cost Incl Tax :</span>
+                            <div class="col-lg-4 col-md-4">
+
+                            
+                           
+                             <input  required readonly  type="number"  value="{{spare_cost_total|floatformat:2}}" min="0" id="spare_cost_total" name="spare_cost_total" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                             
+                           </div>
+                        </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span class="fw-bold">Spare Tax:</span>
+                               <div class="col-lg-4 col-md-4">
+                               
+                             
+
+                               
+                                <input readonly type="number"  min="0" value="{{spare_tax|floatformat:2}}" id="sparetx2"  name="sparetx2" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;" >
+                                  
+                             </div>
+                           </li>
+                       </ul>
+
+
+
+
+
+                     
+                     <div class="text-center mb-1 mt-2">
+                        <h5 class="fw-bold text-primary">Enter Total Here</h5>
+                    </div>
+                    <ul class="list-group border border-primary mb-3 shadow-sm">
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <span class="fw-bold">Total Incl Tax :</span>
+                            <div class="col-lg-4 col-md-4">
+                                <input type="text" name="firstname" value="{{firstname}}" hidden>
+                                <input type="text" name="lastname" value="{{lastname}}" hidden>
+                                <input style="background-color:#e9ecef;" 
+                                       {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} 
+                                       type="number" 
+                                       value="{{totalamount}}" 
+                                       min="0" 
+                                       id="finaltotal" 
+                                       name="finaltotal" 
+                                       step="0.01" 
+                                       class="form-control border border-primary rounded-3 no-spinner-pad-sc {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %}">
+                                <input style="background-color:#e9ecef;" 
+                                       readonly 
+                                       type="number" 
+                                       hidden 
+                                       value="{{totalamount}}" 
+                                       min="0" 
+                                       id="finaltotal_old" 
+                                       step="0.01" 
+                                       class="form-control no-spinner-pad-sc">
+                            </div>
+                        </li>
+                    </ul>
+
+
+
+
+
+
+                     <ul  class="list-group border border-primary">
+                           <li class="list-group-item d-flex justify-content-between ">
+                               <span class="fw-bold">Discount:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <div class="row">
+                                   <div class="col-sm-5 col-md-5 col-lg-5">
+                                      <select name="finaldiscountmethod" style="background-color:#d0ebff;"  id="finaldiscountmethod" class="form-control border-0 border-bottom">
+                                         <option value="{{discountmethod_selected}}" selected>{% if discountmethod_selected == 'Percentage' %}%{% else %}{{discountmethod_selected}}{% endif %}</option>
+                                       
+                                         <option value="Flat">Flat</option>
+                                         <option value="Percentage">%</option>
+                                      
+                                      </select>
+                                   </div>
+                                   <div class="col-sm-7 col-md-7 col-lg-7">
+                              
+                                      {% if discountmethod_selected == 'Percentage' %}
+                                      <input  style="background-color:#d0ebff;"  required {% if status == 'CNP Completed(NotOk)'  %} readonly {% endif %} type="number"  min="0" value="{{discountperc}}" id="finaldiscount"  name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc " style="background:none;" >
+                                      {% else %}
+                                      <input  style="background-color:#d0ebff;"  required {% if status == 'CNP Completed(NotOk)'  %} readonly {% endif %} type="number"  min="0" value="{{discount}}" id="finaldiscount"  name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc " style="background:none;" >
+                                      {% endif %}
+                                   </div>
+                                   
+                                 
+                                </div>
+                              
+                             
+                             </div>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span class="fw-bold">Final Amount:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input type="number" readonly value="{{finalamount}}" id="finalfinalamount"   min="0" name="finalfinalamount" step="0.01" class="form-control finalamountservicecheckout  border-0  no-spinner-pad-sc" style="background:none;">
+                             
+                             </div>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between align-items-center">
+                               <span class="fw-bold">Amount Received:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input style="background-color:#d0ebff;"   type="number" min="0" value="{{amountrecieved}}" id="finalamountreceivedold"  hidden  step="0.01" class="form-control border-0 border-bottom" >
+                                <input style="background-color:#d0ebff;"  required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number" min="0" value="{{amountrecieved}}" id="finalamountreceived"  name="finalamountreceived" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc" style="background:none;" >
+                             
+                             </div>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span class="fw-bold">Due Balance:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input type="number" readonly min="0" value="{{duebalance}}" id="finalduebalance"  name="finalduebalance" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+                             
+                             </div>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button type="submit" class="btn btn-primary w-100">Save</button>
+           </div>
+
+        </form>
+       </div>
+   </div>
+</div> -->
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="servicecheckoutmodal">
+   <div class="modal-dialog modal-lg">
+       <div class="modal-content p-0 w-75">
+           <!-- Header -->
+           <div class="modal-header text-white" style="background-color:#4555B9;">
+               <h5 class="modal-title fw-bold">Service Checkout</h5>
+           </div>
+
+           <form action="{% url 'servicebillingcheckout' servicerefnumber=serviceref %}" method="post">
+               {% csrf_token %}
+               <div class="modal-body">
+                   <!-- Spare Parts Table Section - Full Width -->
+                   <div>
+                     <h6 class="mt-0 mb-1 fw-bold text-left text-primary">Spare Parts</h6>
+                   </div>
+                   
+                   <div class="table-responsive mb-3">
+                       <table class="table table-striped spare-table-service-checkout border border-primary">
+                           <thead>
+                               <tr>
+                                   <th>Sl</th>
+                                   <th>Name</th>
+                                   <th class="text-end" style="white-space:normal;">Price (ex. tax)</th>
+                                   <th class="text-end">Tax</th>
+                                   <th class="text-end">Quantity</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               {% if spare != 0 %}
+                               {% for item in spare %}
+                               <tr>
+                                   <td>{{forloop.counter}}</td>
+                                   <td class="text-end salename{{forloop.counter}}" style="white-space:normal;">{{item.name}}</td>
+                                   <td class="text-end saleprice{{forloop.counter}}">{{item.price}}</td>
+                                   <td class="text-end salegstsale{{forloop.counter}}">{{item.salegst}}%</td>
+                                   <td class="text-end salequantity{{forloop.counter}}">{{item.totalquantity}}</td>
+                               </tr>
+                               {% endfor %}
+                               {% endif %}
+                           </tbody>
+                       </table>
+                   </div>
+
+                   <!-- Two Column Layout -->
+                   <div class="row">
+                       <!-- Left Column -->
+                       <div class="col-md-6">
+                           <ul class="list-group border border-primary">
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Payment Mode :</span>
+                                   <div class="col-lg-6">
+                                       <select style="background-color:#d0ebff;" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %}" name="paymentmode" id="paymentmode" required>
+                                           <option value="" style="font-size:12px;">Select Payment Mode</option>
+                                           {% for mode in paymentmode %}
+                                           <option value="{{mode.name}}">{{mode.name}}</option>
+                                           {% endfor %}
+                                       </select>
+                                   </div>
+                               </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Service Charge Excl Tax :</span>
+                                   <div class="col-lg-6">
+                                       {% if discount > 0 %}
+                                       <input readonly type="number" value="{{service_charge_excluding_tax_wdiscount}}" min="0" id="servicecostexcltax" name="servicecostexcltax" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;">
+                                       {% else %}
+                                       <input readonly type="number" value="{{service_charge_excluding_tax}}" min="0" id="servicecostexcltax" name="servicecostexcltax" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;">
+                                       {% endif %}
+                                   </div>
+                               </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                 <span class="fw-bold">Service Charge Excl Tax after discount :</span>
+                                 <div class="col-lg-4 col-md-4">
+   
+                                  
+                                 {% if discount > 0 %}
+                                 <input  readonly  type="number"  value="{{service_charge_excluding_tax_afterdiscount}}" min="0" id="servicecostexcltaxafterdiscount" name="servicecostexcltaxafterdiscount" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                                    {% else %}
+                                    <input  readonly  type="number"  value="{{service_charge_excluding_tax}}" min="0" id="servicecostexcltaxafterdiscount" name="servicecostexcltaxafterdiscount" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+   
+                                    {% endif %}
+   
+                               </div>
+                             </li>
+
+                             <li class="list-group-item d-flex justify-content-between py-2">
+                              <span class="fw-bold">Service Charge Incl Tax after discount :</span>
+                              <div class="col-lg-4 col-md-4">
+   
+                               <input type="number" min="0" step="0.01" value="{{service_charge}}" id="servicecost_old" hidden>
+                               <input  required readonly  type="number"  value="{{service_charge}}" min="0" id="servicecost" name="servicecost" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                            </div>
+                          </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Service Tax {{servicetax}}% :</span>
+                                   <div class="col-lg-6">
+                                       <input readonly type="number" min="0" value="{{totaltax}}" id="totaltaxcheckout" name="totaltaxcheckout" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;">
+                                   </div>
+                               </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Spare Cost Incl Tax :</span>
+                                   <div class="col-lg-6">
+                                       <input required readonly type="number" value="{{spare_cost_total|floatformat:2}}" min="0" id="spare_cost_total" name="spare_cost_total" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;">
+                                   </div>
+                               </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Spare Tax:</span>
+                                   <div class="col-lg-6">
+                                       <input readonly type="number" min="0" value="{{spare_tax|floatformat:2}}" id="sparetx2" name="sparetx2" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;">
+                                   </div>
+                               </li>
+                           </ul>
+                       </div>
+
+                       <!-- Right Column -->
+                       <div class="col-md-6">
+                           <!-- Total Section -->
+                           <div class="text-center mb-1">
+                               <h5 class="fw-bold text-primary">Enter Total Here</h5>
+                           </div>
+                           <ul class="list-group border border-primary mb-3 shadow-sm">
+                               <li class="list-group-item d-flex justify-content-between bg-light py-2">
+                                   <span class="fw-bold">Total Incl Tax :</span>
+                                   <div class="col-lg-6">
+                                       <input type="text" name="firstname" value="{{firstname}}" hidden>
+                                       <input type="text" name="lastname" value="{{lastname}}" hidden>
+                                       <input style="background-color:#e9ecef;" {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number" value="{{totalamount}}" min="0" id="finaltotal" name="finaltotal" step="0.01" class="form-control border border-primary rounded-3 no-spinner-pad-sc {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %}">
+                                       <input style="background-color:#e9ecef;" readonly type="number" hidden value="{{totalamount}}" min="0" id="finaltotal_old" step="0.01" class="form-control no-spinner-pad-sc">
+                                   </div>
+                               </li>
+                           </ul>
+
+                           <!-- Final Calculations Section -->
+                           <ul class="list-group border border-primary">
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Discount:</span>
+                                   <div class="col-lg-6">
+                                       <div class="row">
+                                           <div class="col-5">
+                                               <select name="finaldiscountmethod" style="background-color:#d0ebff;" id="finaldiscountmethod" class="form-control border-0 border-bottom">
+                                                   <option value="{{discountmethod_selected}}" selected>{% if discountmethod_selected == 'Percentage' %}%{% else %}{{discountmethod_selected}}{% endif %}</option>
+                                                   <option value="Flat">Flat</option>
+                                                   <option value="Percentage">%</option>
+                                               </select>
+                                           </div>
+                                           <div class="col-7">
+                                               {% if discountmethod_selected == 'Percentage' %}
+                                               <input style="background-color:#d0ebff;" required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number" min="0" value="{{discountperc}}" id="finaldiscount" name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc" style="background:none;">
+                                               {% else %}
+                                               <input style="background-color:#d0ebff;" required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number" min="0" value="{{discount}}" id="finaldiscount" name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc" style="background:none;">
+                                               {% endif %}
+                                           </div>
+                                       </div>
+                                   </div>
+                               </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Final Amount:</span>
+                                   <div class="col-lg-6">
+                                       <input type="number" readonly value="{{finalamount}}" id="finalfinalamount" min="0" name="finalfinalamount" step="0.01" class="form-control finalamountservicecheckout border-0 no-spinner-pad-sc" style="background:none;">
+                                   </div>
+                               </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Amount Received:</span>
+                                   <div class="col-lg-6">
+                                       <input style="background-color:#d0ebff;" type="number" min="0" value="{{amountrecieved}}" id="finalamountreceivedold" hidden step="0.01" class="form-control border-0 border-bottom amountreceived-service-checkout-old">
+                                       <input style="background-color:#d0ebff;" required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number" min="0" value="{{amountrecieved}}" id="finalamountreceived" name="finalamountreceived" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc amountreceived-service-checkout" style="background:none;">
+                                   </div>
+                               </li>
+
+                               <li class="list-group-item d-flex justify-content-between py-2">
+                                   <span class="fw-bold">Due Balance:</span>
+                                   <div class="col-lg-6">
+                                       <input type="number" readonly min="0" value="{{duebalance}}" id="finalduebalance" name="finalduebalance" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;">
+                                   </div>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="modal-footer">
+                   <button type="submit" class="btn btn-primary w-100">Save</button>
+               </div>
+           </form>
+       </div>
+   </div>
+</div>
+
+
+
+
+
+
+<!-- 
+
+ <div class="modal fade" tabindex="-1" id="servicecheckoutmodal">
+   <div class="modal-dialog modal-lg">
+       <div class="modal-content p-0 w-50">
+           <div class="modal-header text-white" style="background-color:#4555B9;">
+               <h5 class="modal-title fw-bold">Service Checkout</h5>
+
+           </div>
+               <form action="{% url 'servicebillingcheckout' servicerefnumber=serviceref %}" method="post">
+         {% csrf_token %}
+           <div class="modal-body">
+               
+
+               <h6 class="mt-4 mb-1 fw-bold text-left ">Spare Parts</h6>
+               <div class="table-responsive">
+                   <table class="table table-striped spare-table-service-checkout">
+                       <thead>
+                           <tr>
+                               <th>Sl</th>
+                               <th>Name</th>
+                               <th class="text-end" style="white-space:normal;">Price (ex. tax)</th>
+                              
+                               <th class="text-end">Tax</th>
+                               <th class="text-end">Quantity</th>
+                             
+                           </tr>
+                       </thead>
+                       <tbody>
+                          {% if spare != 0 %}
+                           {% for item in spare %}
+                           <tr>
+                               <td>{{forloop.counter}}</td>
+                               <td class="text-end salename{{forloop.counter}}" style="white-space:normal;">{{item.name}}</td>
+                               <td class="text-end saleprice{{forloop.counter}}">{{item.price}}</td>
+                               
+                               <td class="text-end salegstsale{{forloop.counter}}">{{item.salegst}}%</td>
+                               <td class="text-end salequantity{{forloop.counter}}">{{item.totalquantity}}</td>
+                             
+                           </tr>
+                           {% endfor %}
+                           {% endif %}
+                       </tbody>
+                   </table>
+               </div>
+              
+
+               <div class="row mt-4">
+                   <div class="col-lg-12 ">
+                       <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between">
+                           
+                                
+                                <span>Payment Mode :</span>
+                                <div class="col-lg-4 col-md-4">
+                                   <select style="background-color:#e7f5ff;" class="form-control border-0  {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} " name="paymentmode" id="paymentmode" required>
+                                     <option  value="" style="font-size:12px;">Select Payment Mode</option>
+                                      {% for mode in paymentmode %}
+                                      <option value="{{mode.name}}">{{mode.name}}</option>
+                                      {% endfor %}
+                                  </select>
+                                
+                                </div>
+                          
+                        </li>
+                       
+
+                           <li class="list-group-item d-flex justify-content-between">
+                              <span>Service Charge Excl Tax :</span>
+                              <div class="col-lg-4 col-md-4">
+
+                               
+                             
+                              {% if discount > 0 %}
+                              <input  readonly  type="number"  value="{{service_charge_excluding_tax_wdiscount}}" min="0" id="servicecostexcltax" name="servicecostexcltax" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                                  
+                                 {% else %}
+                                 <input  readonly  type="number"  value="{{service_charge_excluding_tax}}" min="0" id="servicecostexcltax" name="servicecostexcltax" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                               
+                                 {% endif %}
+
+                              </div>
+                          </li>
+
+                           <li class="list-group-item d-flex justify-content-between">
+                              <span>Service Charge Excl Tax after discount :</span>
+                              <div class="col-lg-4 col-md-4">
+
+                               
+                              {% if discount > 0 %}
+                              <input  readonly  type="number"  value="{{service_charge_excluding_tax_afterdiscount}}" min="0" id="servicecostexcltaxafterdiscount" name="servicecostexcltaxafterdiscount" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                                 {% else %}
+                                 <input  readonly  type="number"  value="{{service_charge_excluding_tax}}" min="0" id="servicecostexcltaxafterdiscount" name="servicecostexcltaxafterdiscount" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+
+                                 {% endif %}
+
+                            </div>
+                          </li>
+                         
+                          <li class="list-group-item d-flex justify-content-between">
+                           <span>Service Charge Incl Tax :</span>
+                           <div class="col-lg-4 col-md-4">
+
+                            <input type="number" min="0" step="0.01" value="{{service_charge}}" id="servicecost_old" hidden>
+                            <input  required readonly  type="number"  value="{{service_charge}}" min="0" id="servicecost" name="servicecost" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                         </div>
+                       </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Service Tax {{servicetax}}% :</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input readonly type="number"  min="0" value="{{totaltax}}" id="totaltaxcheckout"  name="totaltaxcheckout" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+                             
+                             
+                             </div>
+                           </li>
+                          
+                           <li class="list-group-item d-flex justify-content-between">
+                            <span>Spare Cost Incl Tax :</span>
+                            <div class="col-lg-4 col-md-4">
+
+                          
+                           
+                             <input  required readonly  type="number"  value="{{spare_cost_total|floatformat:2}}" min="0" id="spare_cost_total" name="spare_cost_total" step="0.01" class="form-control border-0   no-spinner-pad-sc " style="background:none;" >
+                             
+                           </div>
+                        </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Spare Tax:</span>
+                               <div class="col-lg-4 col-md-4">
+                               
+                             
+
+                               
+                                <input readonly type="number"  min="0" value="{{spare_tax|floatformat:2}}" id="sparetx2"  name="sparetx2" step="0.01" class="form-control border-0 no-spinner-pad-sc" style="background:none;" >
+                                  
+                             </div>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                            <span>Total Incl Tax :</span>
+                            <div class="col-lg-4 col-md-4">
+                             <input type="text" name="firstname" value="{{firstname}}" hidden>
+                          <input type="text" name="lastname" value="{{lastname}}" hidden>
+                             <input {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number"  value="{{totalamount}}" min="0" id="finaltotal" name="finaltotal" step="0.01" class="form-control border-0  no-spinner-pad-sc {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %}" style="background:none;" >
+                             <input readonly type="number" hidden  value="{{totalamount}}" min="0" id="finaltotal_old"  step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+                          </div>
+                        </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Discount:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <div class="row">
+                                   <div class="col-sm-5 col-md-5 col-lg-5">
+                                      <select name="finaldiscountmethod" style="background-color:#e7f5ff;" id="finaldiscountmethod" class="form-control border-0 border-bottom">
+                                         <option value="{{discountmethod_selected}}" selected>{% if discountmethod_selected == 'Percentage' %}%{% else %}{{discountmethod_selected}}{% endif %}</option>
+                                       
+                                         <option value="Flat">Flat</option>
+                                         <option value="Percentage">%</option>
+                                      
+                                      </select>
+                                   </div>
+                                   <div class="col-sm-7 col-md-7 col-lg-7">
+                              
+                                      {% if discountmethod_selected == 'Percentage' %}
+                                      <input  required {% if status == 'CNP Completed(NotOk)'  %} readonly {% endif %} type="number"  min="0" value="{{discountperc}}" id="finaldiscount"  name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc " style="background:none;" >
+                                      {% else %}
+                                      <input  required {% if status == 'CNP Completed(NotOk)'  %} readonly {% endif %} type="number"  min="0" value="{{discount}}" id="finaldiscount"  name="finaldiscount" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc " style="background:none;" >
+                                      {% endif %}
+                                   </div>
+                                   
+                                 
+                                </div>
+                              
+                             
+                             </div>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Final Amount:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input type="number" readonly value="{{finalamount}}" id="finalfinalamount"   min="0" name="finalfinalamount" step="0.01" class="form-control finalamountservicecheckout  border-0  no-spinner-pad-sc" style="background:none;">
+                             
+                             </div>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between align-items-center">
+                               <span>Amount Received:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input  type="number" min="0" value="{{amountrecieved}}" id="finalamountreceivedold"  hidden  step="0.01" class="form-control border-0 border-bottom" >
+                                <input required {% if status == 'CNP Completed(NotOk)' %} readonly {% endif %} type="number" min="0" value="{{amountrecieved}}" id="finalamountreceived"  name="finalamountreceived" step="0.01" class="form-control border-0 {% if status == 'CNP Completed(Ok)' %} border-bottom {% endif %} no-spinner-pad-sc" style="background:none;" >
+                             
+                             </div>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                               <span>Due Balance:</span>
+                               <div class="col-lg-4 col-md-4">
+                                <input type="number" readonly min="0" value="{{duebalance}}" id="finalduebalance"  name="finalduebalance" step="0.01" class="form-control border-0  no-spinner-pad-sc" style="background:none;" >
+                             
+                             </div>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+           <div class="modal-footer">
+               <button type="submit" class="btn btn-primary w-100">Save</button>
+           </div>
+
+        </form>
+       </div>
+   </div>
+</div> -->
+
+{% endblock %}

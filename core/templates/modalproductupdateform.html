@@ -1,0 +1,188 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'modalproductlist' %}"> Product Price List </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="#">Update Product Price</a>  
+          </nav>
+          </div>
+          <br>
+
+
+
+          <div class="card-body d-flex justify-content-center">
+                                                                                           
+            <div class="col-lg-9 col-md-6 col-sm-12">
+        
+                <div class="card card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                  <div class="card-body" >
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h3 class="nunito-font " style="color:#444;" ><strong>Update Product Price</strong></h3>
+  
+                      <div>
+                        {% if messages %}
+                          {% for message in messages %}
+                          {% if message.tags == 'success' %}
+                            <span class="text-success fw-bold" style="font-size: 13px; ">{{ message }}</span>
+                          {% elif message.tags == 'error' %}
+                          <span class="text-danger fw-bold" style="font-size: 13px; ">{{ message }}</span>
+                          {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="horizontal-line-dark mb-2 mt-4"></div>
+                    <br />
+  
+                    <form action="{% url 'updateproductpricelist' %}" method="POST">
+                      {% csrf_token %}
+
+                      <div class="form-row row">
+                       <div class="form-group col-lg-4">
+                         <label for="name" class="fs-6"
+                           >Brand</label
+                         >
+                      
+                       </div>
+                       <div class="form-group col-lg-8">
+
+                        <input required class="form-control " value="{{data.brand}}" type="text" name="brand">
+                       
+                       </div>
+                     </div>
+
+
+
+
+                     <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="name" class="fs-6"
+                            >Modal</label
+                          >
+                       
+                        </div>
+                        <div class="form-group col-lg-8">
+ 
+                         <input required class="form-control " value="{{data.modal}}" type="text" name="modal">
+                        
+                        </div>
+                      </div>
+
+
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="name" class="fs-6"
+                            >Product</label
+                          >
+                       
+                        </div>
+                        <div class="form-group col-lg-8">
+ 
+                         <input required class="form-control " value="{{data.product}}" type="text" name="product">
+                        
+                        </div>
+                      </div>
+
+
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="name" class="fs-6"
+                            >Price 1</label
+                          >
+                       
+                        </div>
+                        <div class="form-group col-lg-8">
+ 
+                         <input required class="form-control " value="{{data.price1}}" type="number" name="price1">
+                        
+                        </div>
+                      </div>
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="name" class="fs-6"
+                            >Price 2</label
+                          >
+                       
+                        </div>
+                        <div class="form-group col-lg-8">
+ 
+                         <input class="form-control " value="{{data.price2}}" type="number" name="price2">
+                        
+                        </div>
+                      </div>
+
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="name" class="fs-6"
+                            >Price 3</label
+                          >
+                       
+                        </div>
+                        <div class="form-group col-lg-8">
+ 
+                         <input class="form-control " value="{{data.price3}}" type="number" name="price3">
+                        
+                        </div>
+                      </div>
+                      <input hidden class="form-control " value="{{data.id}}" type="text" name="id">
+
+                     <div class="horizontal-line-dark mt-2"></div>
+                     
+  
+                      <button
+                        type="submit"
+                        class="btn btn-primary text-white mb-1 mt-3 fs-6"
+                      >
+                        Save
+                      </button>
+                      <a
+                        href="{% url 'deletemodalproductprice' id=data.id %}"
+                        class="btn btn-danger text-white mb-1 mt-3 fs-6"
+                      >
+                        Delete
+                    </a>
+                    </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

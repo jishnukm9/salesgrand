@@ -1,0 +1,855 @@
+{% extends "navbar.html" %} {% block content %}
+
+<style>
+  #purchaseConfirmModal .modal-body {
+      max-height: calc(100vh - 210px);
+      overflow-y: auto;
+  }
+  
+  #purchaseConfirmModal .table td,
+  #purchaseConfirmModal .table th {
+      padding: 0.5rem;
+      vertical-align: middle;
+  }
+  
+  #purchaseConfirmModal .list-group-item {
+      padding: 0.75rem 1.25rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content {
+      font-size: 0.9rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content h6 {
+      color: #4555B9;
+      font-size: 1rem;
+  }
+  
+  #purchaseConfirmModal .bill-details p {
+      margin-bottom: 0.25rem;
+  }
+  
+  #purchaseConfirmModal .table thead th {
+      background-color: #e2e6fb3d;
+      font-weight: 600;
+  }
+  
+  #purchaseConfirmModal .list-group-item:last-child {
+      font-weight: bold;
+      background-color: #e2e6fb3d;
+  }
+
+
+
+
+
+
+
+
+
+   /* Add to your existing styles */
+   #purchaseConfirmModal .modal-body {
+      max-height: calc(100vh - 210px);
+      overflow-y: auto;
+  }
+  
+  #purchaseConfirmModal .table td,
+  #purchaseConfirmModal .table th {
+      padding: 0.5rem;
+      vertical-align: middle;
+  }
+  
+  #purchaseConfirmModal .list-group-item {
+      padding: 0.75rem 1.25rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content {
+      font-size: 0.9rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content h6 {
+      color: #4555B9;
+      font-size: 1rem;
+  }
+  
+  #purchaseConfirmModal .bill-details p {
+      margin-bottom: 0.25rem;
+  }
+  
+  #purchaseConfirmModal .table thead th {
+      background-color: #e2e6fb3d;
+      font-weight: 600;
+  }
+  
+  #purchaseConfirmModal .list-group-item:last-child {
+      font-weight: bold;
+      background-color: #e2e6fb3d;
+  }
+  </style>
+
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'purchase' %}"> Purchase List </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'purchaseform' %}">Purchase Entry</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'purchasereturn' %}">Purchase Return</a>
+              <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'addbulkpurchaseform' %}"> Mulitiple Entries  </a>
+          </nav>
+          </div>
+          <br>
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3  bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f;"> <strong>Purchase Entry </strong> </h5>
+
+              <div>
+                {% if messages %}
+                  {% for message in messages %}
+                    <span class="text-danger" style="font-size: 13px; ">{{ message }}</span>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+{% if user.is_superuser %}
+                <form id="purchaseForm" onsubmit="return false"  enctype="multipart/form-data" action="{% url 'addpurchase' %}" method="POST" >
+                  {% else %}
+                  <form id="purchaseForm" onsubmit="return false"  enctype="multipart/form-data" action="{% url 'addbranchpurchase' %}" method="POST" >
+                  {% endif %}
+                  {% csrf_token %}
+                  <div class="row mt-4  borderr p-2 pt-0">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group col-lg-12 mb-2"  >
+
+                            <label class="mb-1" for="invoicenumber"
+                            ><strong>Bill Number</strong></label
+                          >
+                         
+                          <input placeholder="Enter Bill Number" autocomplete="off"  class="form-control " type="text" name="invoicenumber" id="invoicenumber" >
+                         
+                        </div>
+                        </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group col-lg-12" >
+                            <label class="mb-1" for="invoicedate">
+                             <strong>Bill Date</strong></label>
+  
+                            <div id="datepicker" 
+                            name="invoicedate"
+               class="input-group date datepicker-field datepicker-current" 
+           
+               data-date-format="dd-mm-yyyy">
+              <input class="form-control invoicedatepurchase"
+              readonly 
+              autocomplete="off"
+              name="invoicedate"
+              required
+              
+                     type="text"    />
+              <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-calendar"></i>
+              </span>
+          </div>
+          </div>
+        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group col-lg-12 mb-2"  >
+
+                                <label class="mb-1" for="paymentmode"
+                                ><strong>Payment Mode</strong></label
+                              >
+                             
+                             <select
+                            
+                              class="form-control selectizefield" 
+                              name="paymentmode"
+                              autocomplete="off"
+                               id="paymentmode" required>
+<option value="" selected>Select Payment Mode</option>
+                               {% for mode in paymentmode %}
+                              <option value="{{mode.name}}">{{mode.name}}</option>
+                              {% endfor %}
+                             </select>
+                             
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+
+                            <div class="form-group col-lg-12 mb-2"  >
+            
+
+                                <label class="mb-1" for="supplier"
+                                ><strong>Supplier</strong></label
+                              >
+                  
+                              <div class="d-flex flex-row align-items-center justify-content-center">
+                                <select
+                                class="form-control me-2 selectizefield selectsupplierfrompurchase"
+                                name="supplier"
+                                autocomplete="off"
+                              
+                              >
+                                <option value="" >Select Supplier</option>   
+                                {% for supplier in suppliers %} 
+                                <option value="{{ supplier.name }}">
+                                  {{ supplier.name }}
+                                </option>
+                  
+                                {% endfor %}
+                              </select>
+                              <i data-toggle="modal" data-target="#addpurchasemodal" class="fa-solid fa-plus addsupplierbtn"></i>
+                  
+                              </div>      
+                            </div>
+                            </div>
+
+              </div>
+                  <br>
+                        <div class="table-responsive borderr p-4 pt-0 row"> 
+                            <label class="mb-1 mt-2 mb-3 ps-0 " style="font-size:13px;" for="supplier"
+                            ><strong>Invoice Entries</strong></label
+                          >
+                          <table
+                        class="table table-bordered   purchase-entry-table table-responsive"
+                        
+                      
+                      >
+                        <thead    >
+                          <tr style="background-color: #e2e6fb3d">
+                            <th  width="2%"></th>
+                  
+                            <th width="59%">Name <span style="color:#e2e6fb3d;">------------------------------</span> </th>
+                            <th width="7%" class="puchase-qty-right ">Quantity</th>
+                            <th width="15%">Barcode<span style="color:#e2e6fb3d;">----------------</span> </th>
+                            <th width="6%"  >P-Price Excl Tax<span style="color:#e2e6fb3d;"></span> </th>
+                            <th width="5%" >Purchase Tax</th>
+                            <th width="6%">S-Price Excl Tax</th>
+                            <th width="5%">Sale Tax<span style="color:#e2e6fb3d;">--</span> </th>
+                            <th width="12%">MRP<span style="color:#e2e6fb3d;">------</span> </th>
+                            <th width="12%">MOP<span style="color:#e2e6fb3d;">------</span> </th>
+                            
+                            <th width="2%" class="puchase-qty-left">
+                             
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody >
+                          <tr style="background-color:#fff;">
+                            <td>1</td>
+                            <td width="20%;"> 
+                              <input
+                                type="text"
+                                id="search-input-name1"
+                                autocomplete="off"
+                                name="name1"
+                                list="name1"
+                                class="form-control no-spinner"
+                                placeholder="Select Product"
+                             
+                              />
+                              <datalist id="name1">
+                                {% for product in products %}
+                                <option value="{{ product.name }}">
+                                  {{ product.name }}
+                                </option>
+                                {% endfor %}
+                              </datalist>
+                            </td>
+                            <td class="puchase-qty-right">
+                              <input
+                                type="number"
+                                name="quantity1"
+                                min="1"
+                                class="form-control no-spinner"
+                                autocomplete="off"
+                         
+                              />
+                            </td>
+                            <td style="position:relative">
+                              <input
+                                type="text"
+                                name="barcode1"
+                                autocomplete="off"
+                                class="form-control no-spinner"
+                               
+                               
+                             
+                              />
+                              
+                              <a class="barcode-btn "   style="position:absolute;right:7px;top:12px;"><i class="fa-solid fa-plus barcode-btn-icon"></i></a>
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                name="price1"
+                                autocomplete="off"
+                                class="form-control no-spinner"
+                              readonly
+                              />
+                            </td>
+                            <td>
+                              <select
+                                name="purchasegst1"
+                                class="form-control purchasedisabledselect"
+                                style="  border:1px solid #dee2e6;
+                                "
+                                autocomplete="off"
+                                disabled
+                                id="purchasedisabledselect"
+                              >
+                                <option value="" selected></option>
+                                {% for gst in tax %}
+                                <option
+                                  data-purchasegst="{{ gst.percentage }}"
+                                  value="{{ gst.name }}"
+                                  data-gst="{{gst}}"
+                                >
+                                  {{ gst.name }}
+                                </option>
+                                {% endfor %}
+                              </select>
+
+                              
+                            </td>
+
+                            <td>
+                              <input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                name="sellingprice1"
+                                autocomplete="off"
+                                class="form-control no-spinner"
+                                readonly
+                              />
+                            </td>
+                            <td>
+                              <select name="salegst1" class="form-control saledisabledselect"  style="  border:1px solid #dee2e6;"
+                              disabled
+                              id="saledisabledselect"
+                              >
+                                <option value="" selected></option>
+                                {% for gst in tax %}
+                                <option
+                                data-gst="{{gst}}"
+                                 value="{{ gst.name }}">
+                                  {{ gst.name }}
+                                </option>
+                                {% endfor %}
+                              </select>
+                            </td>
+                            <td >
+                              <input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                name="mrp1"
+                                autocomplete="off"
+                                class="form-control no-spinner"
+                              readonly
+                              />
+                            </td>
+                            <td >
+                              <input
+                                type="number"
+                                step="0.01"
+                                name="mop1"
+                                min="0"
+                                autocomplete="off"
+                                class="form-control no-spinner"
+                              readonly
+                              />
+                            </td>                    
+                            <td class="puchase-qty-left ">
+                              <span class="deletebtn"><i class="fa-solid fa-minus"></i></span>
+                             
+                            </td>
+                            </tr>
+                        </tbody>
+                      </table>
+
+                      <div class="d-flex justify-content-end">
+                        <span class="addrowbtn fs-7 " style="font-size:14px;"   >Add Row</span>
+                      </div>
+    
+                        </div>
+                  <br>
+                  <div class=" mt-3 total-amount-table" style="display:none">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th class="table-primary" width="20%">
+                            Total Amount
+                          </th>
+                          <th class="second-th">
+                            <input
+                              type="number"
+                              min="0"
+                              name="totalamount"
+                              readonly
+                              style="display:none"
+                            />
+                          </th>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+<div class="row ">
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <div class="row">
+      <div class="col-8">
+
+        <div class="form-group">
+          <label for="copy" class="fw-bold">Invoice Copy</label>
+          <input class="form-control border center-file-input-text" type="file" name="copy" id="copy" accept="image/*">
+
+        </div>
+      </div>
+      <div class="col-4"></div>
+      
+    </div>
+  </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+
+        <ul class="list-group ">
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Total Amount (incl Tax)</p>
+                    
+                    <input
+                    class="form-control w-50"
+                    type="number"
+                    value="0"
+                    name="totalamount"
+                    readonly
+                    class="border-0"
+                  />
+                  </div>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Total Tax</p>
+                   
+                    <input
+                    class="form-control w-50"
+                    type="number"
+                    value="0"
+                    name="totaltax"
+                    readonly
+                    class="border-0"
+                  />
+                  </div>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Discount</p>
+                    
+                    <div class="discount-div">
+                      <input
+                      type="number"
+                      name="discount"
+                      min="0"
+                      step="0.01"
+                      class="form-control w-50"
+                    />
+                        <select
+                          name="discountmethod"
+                          id="discountmethod"
+                          class="form-control w-50"
+                          style="  border:1px solid #dee2e6;
+                          "
+                        >
+                          <!-- <option value=''> <p class="fw-bold">Method</p>   </option> -->
+                          <option value="percentage">%</option>
+                          <option selected  value="flat">Flat</option>
+                        </select>
+                      </div>
+                  </div>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Final Amount</p>
+                   
+                    <input readonly class="form-control w-50" type="number" min="0" step="0.01" id="totalbillingamount"   name="totalbillingamount" value="0" >
+                  </div>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Amount Paid</p>
+                    <input required class="form-control w-50 " type="number" min="0" step="0.01" id="amountrecieved" name="recieved" value="0">
+                  </div>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Due Balance Amount</p>
+                   
+                    <input readonly class="form-control w-50" type="number" min="0" step="0.01" id="duebalance" name="duebalance" value="0"  >
+                </div>
+            </li>
+          </ul>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary mt-3 float-right text-white fw-bold" type="submit">Purchase</button>
+              
+            </div>
+          
+    </div>
+
+</div>
+                </form>
+              </div>
+              <div>
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" id="addpurchasemodal">
+  <div class="modal-dialog">
+    <div class="modal-content p-0 w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Supplier</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  
+      <form id="addsupplierfrompurchase"  action="#" method="POST">
+        {% csrf_token %}
+        <div
+          class="modal-body mt-3 mb-3"
+        >
+
+        <div class="mb-3 ">
+          <label class=" mb-2" for="">  <strong>Name</strong>      </label>
+          <input type="text"  name="name" class="form-control pursupplername text-center mb-3 " />
+        </div>
+         
+          <div class="mb-3 ">
+            <label class=" mb-2" for="">  <strong>VAT Number</strong>      </label>
+            <input  class="form-control mb-3 text-center pursupplergstin" type="text" name="gst">
+          </div>
+         
+          <div class="mb-3 ">
+            <label class=" mb-2" for="">  <strong>Contact Number</strong>      </label>
+            <input  class="form-control mb-3 text-center pursupplerphone"  step="1"  type="number" name="contact">
+          </div>
+          
+          <div class="mb-3 ">
+            <label class=" mb-2" for="">  <strong>Address</strong>      </label>
+            <textarea    class="form-control mb-3 text-center pursuppleraddress"  style="height:106px;" name="address"  id="address" column="10" rows="3"></textarea>
+          </div>
+          
+          <button style="float:right;" type="submit" class="btn btn-primary p-2 ps-3 pe-3">
+            Add
+          </button>
+         
+        </div>
+      </form>
+    
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Add this right before the closing </div> of your main content -->
+<div class="modal fade" id="purchaseConfirmModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-0 w-50">
+      <div class="modal-header" style="background-color:#4555B9;">
+        <h5 class="modal-title text-white"><strong>Confirm Purchase Details</strong></h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button> -->
+        
+      </div>
+      <div class="modal-body">
+        <!-- Purchase Summary -->
+        <div class="confirm-content">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <h6>Bill Details</h6>
+              <div class="bill-details">
+                <p><strong>Bill Number:</strong> <span id="confirm-bill-number"></span></p>
+                <p><strong>Bill Date:</strong> <span id="confirm-bill-date"></span></p>
+                <p><strong>Supplier:</strong> <span id="confirm-supplier"></span></p>
+                <p><strong>Payment Mode:</strong> <span id="confirm-payment-mode"></span></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="table-responsive">
+            <h6>Purchase Items</h6>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Tax</th>
+                 
+                </tr>
+              </thead>
+              <tbody id="confirm-items">
+                <!-- Items will be populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6 offset-md-6">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total Amount:</span>
+                  <span id="confirm-total-amount"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total Tax:</span>
+                  <span id="confirm-total-tax"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Discount:</span>
+                  <span id="confirm-discount"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Final Amount:</span>
+                  <span id="confirm-final-amount"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Amount Paid:</span>
+                  <span id="confirm-amount-paid"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Due Balance:</span>
+                  <span id="confirm-due-balance"></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <a class="btn btn-secondary cancel-confirm-purchase" >Cancel</a> -->
+        <button type="button" class="btn btn-primary" id="confirmPurchaseBtn">Confirm Purchase</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const purchaseForm = document.getElementById('purchaseForm');
+    const submitButton = purchaseForm.querySelector('button[type="submit"]');
+
+    submitButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        validateAndShowConfirmation();
+    });
+
+    function validateAndShowConfirmation() {
+    // Enable GST selects for validation
+    $(".saledisabledselect").prop("disabled", false);
+    $(".purchasedisabledselect").prop("disabled", false);
+
+    try {
+        // Check for duplicate products and validate entries
+        let products = [];
+        
+        // Validate Invoice Number first
+        const invoicenumber = purchaseForm.querySelector('[name="invoicenumber"]').value;
+        if (!invoicenumber) {
+            throw "Invoice Number is required.";
+        }
+
+        // Validate Supplier
+        const supplier = purchaseForm.querySelector('[name="supplier"]').value;
+        if (!supplier) {
+            throw "Supplier is required.";
+        }
+
+        // Validate Payment Mode
+        const paymentmode = purchaseForm.querySelector('[name="paymentmode"]').value;
+        if (!paymentmode) {
+            throw "Payment Mode is required.";
+        }
+
+        // Validate products table
+        $(".purchase-entry-table tbody tr").each(function () {
+            const product = $(this).find('[name^="name"]').val();
+            
+            // Skip empty rows
+            if (!product) return true;
+
+            // Check duplicates
+            if (products.includes(product)) {
+                throw "Duplicate product in invoice entries.";
+            }
+            products.push(product);
+
+            // Validate required fields
+            const unitprice = $(this).find('[name^="price"]').val();
+            if (!unitprice) {
+                throw "Unit Price is required.";
+            }
+
+            const purchasegst = $(this).find('[name^="purchasegst"]').val();
+            if (!purchasegst) {
+                throw "Purchase GST is required.";
+            }
+
+            const salegst = $(this).find('[name^="salegst"]').val();
+            if (!salegst) {
+                throw "Sales GST is required.";
+            }
+
+            const quantity = $(this).find('[name^="quantity"]').val();
+            if (!quantity) {
+                throw "Quantity is required.";
+            }
+
+            const mrp = $(this).find('[name^="mrp"]').val();
+            if (!mrp) {
+                throw "MRP required.";
+            }
+
+            const mop = $(this).find('[name^="mop"]').val();
+            if (!mop) {
+                throw "MOP is required.";
+            }
+        });
+
+       
+        // Validate amount paid vs final amount
+        let finalAmount = $("#totalbillingamount").val();
+        let amountPaid = $("#amountrecieved").val();
+        if (parseFloat(amountPaid) > parseFloat(finalAmount)) {
+            throw "Amount Paid is larger than Final Amount.";
+        }
+
+        // If we reach here, validation passed
+        showConfirmationModal();
+        return true;
+
+    } catch (errorMessage) {
+        // Show the error message
+        alert(errorMessage);
+        
+        // Re-disable GST selects
+        $(".saledisabledselect").prop("disabled", true);
+        $(".purchasedisabledselect").prop("disabled", true);
+        
+        return false;
+    }
+}
+
+    function showConfirmationModal() {
+        // Populate modal with form data
+        document.getElementById('confirm-bill-number').textContent = document.getElementById('invoicenumber').value;
+        document.getElementById('confirm-bill-date').textContent = document.querySelector('.invoicedatepurchase').value;
+        document.getElementById('confirm-supplier').textContent = document.querySelector('select[name="supplier"]').value;
+        document.getElementById('confirm-payment-mode').textContent = document.getElementById('paymentmode').value;
+
+        // Clear previous items
+        const itemsContainer = document.getElementById('confirm-items');
+        itemsContainer.innerHTML = '';
+
+        // Add current items
+        const rows = document.querySelectorAll('.purchase-entry-table tbody tr');
+
+
+      
+
+        rows.forEach(row => {
+            const rowNum = row.cells[0].textContent;
+            const name = document.querySelector(`input[name="name${rowNum}"]`).value;
+
+
+            
+            if (name) {
+                const quantity = document.querySelector(`input[name="quantity${rowNum}"]`).value;
+                const price = document.querySelector(`input[name="price${rowNum}"]`).value;
+                const purchaseGst = row.querySelector(`select[name="purchasegst${rowNum}"]`).value;
+                const saleGst = row.querySelector(`select[name="salegst${rowNum}"]`).value;
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${name}</td>
+                    <td>${quantity}</td>
+                    <td>${price}</td>
+                    <td>${purchaseGst}</td>
+                   
+                `;
+                itemsContainer.appendChild(tr);
+            }
+        });
+
+        // Populate summary fields
+        document.getElementById('confirm-total-amount').textContent = document.querySelector('input[name="totalamount"]').value;
+        document.getElementById('confirm-total-tax').textContent = document.querySelector('input[name="totaltax"]').value;
+        document.getElementById('confirm-discount').textContent = document.querySelector('input[name="discount"]').value || '0';
+        document.getElementById('confirm-final-amount').textContent = document.querySelector('input[name="totalbillingamount"]').value;
+        document.getElementById('confirm-amount-paid').textContent = document.querySelector('input[name="recieved"]').value;
+        document.getElementById('confirm-due-balance').textContent = document.querySelector('input[name="duebalance"]').value;
+
+        // Show modal
+        $('#purchaseConfirmModal').modal('show');
+    }
+
+    // Handle confirm button click
+    document.getElementById('confirmPurchaseBtn').addEventListener('click', function() {
+        // GST selects are already enabled from validation step
+        $('#purchaseConfirmModal').modal('hide');
+        purchaseForm.submit();
+    });
+
+    // Re-disable selects if modal is cancelled
+    $('#purchaseConfirmModal').on('hidden.bs.modal', function () {
+        const gstSelects = purchaseForm.querySelectorAll('.purchasedisabledselect, .saledisabledselect');
+        gstSelects.forEach(select => {
+            select.disabled = true;
+        });
+    });
+
+    // Add amount received change handler
+    $("#amountrecieved").on("change", function () {
+        validateAndShowConfirmation();
+    });
+});
+
+
+
+  </script>
+
+
+
+{% endblock %}

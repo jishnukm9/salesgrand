@@ -1,0 +1,135 @@
+.logo {
+  width: 100%;
+}
+
+.logo-container {
+  width: 20%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: "border-box";
+}
+
+.w25 {
+  width: 25%;
+}
+.w20 {
+  width: 20%;
+}
+.w55 {
+  width: 55%;
+}
+
+.w100 {
+  width: 100%;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.company-name {
+  font-size: 15px;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin: 0;
+  margin-bottom: 8px;
+}
+.address-1 {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+  padding-bottom: 0;
+  margin-bottom: 3px;
+}
+.address-2 {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+  margin-bottom: 3px;
+}
+.address-3 {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+  margin-bottom: 3px;
+}
+.phone {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+  margin-bottom: 3px;
+}
+.gst {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+  margin-bottom: 3px;
+}
+
+.table-1 {
+  border-collapse: collapse;
+  border: 0.3px solid #444;
+  width: 100%;
+}
+
+.th {
+  border: 0.3px solid #444;
+  padding: 10px;
+}
+
+.grey {
+  color: #444;
+}
+
+.sl {
+  border: 0.3px solid #444;
+  padding: 8px;
+}
+.sl-2 {
+  border: 0.3px solid #444;
+}
+
+.w30 {
+  width: 30%;
+}
+.w20 {
+  width: 20%;
+}
+.w33 {
+  width: 33%;
+}
+
+.table-2 {
+  border-collapse: collapse;
+  border: 0.3px solid #444;
+  width: 100%;
+}
+.table-2-th {
+  border: 0.3px solid #444;
+  width: 20%;
+  padding: 8px;
+}
+
+.bg-grey {
+  background-color: #dee2e6;
+}
+
+.sign-box {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.no-border {
+  border: none;
+}

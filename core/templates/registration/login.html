@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'login/login_style.css' %}">
+  <link rel="stylesheet" href="{% static 'login/update_login_style.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesgrand</title>
+  <!-- senseweave favicon -->
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}"> -->
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}"> -->
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.ico' %}">
+ <style>
+    /* Add CSS styles for mobile responsiveness */
+    @media (max-width: 650px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+      
+      .form-container {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      .overlay-container {
+        display: none;
+      }
+    }
+    body{
+      position:relative;
+      margin:0;
+    }
+
+    .bg-video{
+position: absolute;
+top:0;
+left:0;
+height:100%;
+width:100%;
+z-index:-1;
+opacity: 0.15;
+overflow: hidden;
+
+    }
+    .bg-video__content{
+      height:100%;
+      width:100%;
+      object-fit: cover;
+    }
+
+   
+  </style>
+</head>
+<body>
+<div class="bg-video">
+  <video class="bg-video__content" autoplay muted loop>
+    <source src="/static/video/repairing.mp4" type="video/mp4">
+    
+  </video>
+</div>
+  
+  <div class="container" id="container" >
+   
+    <div class="form-container sign-in-container" >
+      <form method="POST" >
+        {% csrf_token %}
+        <h1>Sign in</h1>
+        <div class="social-container"></div>
+        <input type="text" placeholder="Login Name" name="username" />
+        <input type="password" placeholder="Password" name="password" />
+        <br>
+        <button>Sign In</button>
+        {% if form.errors %}
+        <p style="color:red">Invalid Login Name or Password!.</p>
+        {% endif %}
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-right">
+          
+
+          <img src="/static/images/auth/ai-img.jpg" style="height:100%;" alt="">
+
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+      container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+      container.classList.remove("right-panel-active");
+    });
+  </script>
+</body>
+</html>

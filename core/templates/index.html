@@ -1,0 +1,585 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+
+                
+
+
+                {% if user.userprofile.role != 'Technician' and user.userprofile.role != 'Field Engineer'  %}
+                <div class="table-responsive indexdashtable ">
+                  <table class="table table-bordered bg-white dashboard-table" style="box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                      <thead>
+                          <tr class="fw-bold">
+                              <th style="padding: 10px;">Branch</th>
+                              <th style="padding: 10px;">I/P</th>
+                              <th style="padding: 10px;white-space: normal;">O/P Ok</th>
+                              <th style="padding: 10px;white-space: normal;">O/P NotOk</th>
+                              <th style="padding: 10px;">CWD</th>
+                              <th style="padding: 10px;">PUR</th>
+                              <th style="padding: 10px;white-space: normal;">Service Income</th>
+                              <th style="padding: 10px;white-space: normal;">Spare Cost</th>
+                              <th style="padding: 10px;white-space: normal;">Net Service Income</th>
+                              <th style="padding: 10px;white-space: normal;">Sale Income</th>
+                              <th style="padding: 10px;white-space: normal;">Purchase Cost</th>
+                              <th style="padding: 10px;white-space: normal;">Net Sale Income</th>
+                              <!-- <th style="padding: 10px;">Opening Stock</th>
+                              <th style="padding: 10px;">Closing Stock</th> -->
+                              
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for branch in branch_data %}
+                          <tr {% if forloop.last and not forloop.counter == 1 %}style="font-weight:bold;"{% endif %}>
+                              <td style="padding: 10px;font-weight:bold;">{{ branch.branch }}</td>
+                              <td style="padding: 10px;">{{ branch.input }}</td>
+                              <td style="padding: 10px;">{{ branch.output_ok }}</td>
+                              <td style="padding: 10px;">{{ branch.output_notok }}</td>
+                              <td style="padding: 10px;">{{ branch.completed_waiting_dispatch }}</td>
+                              <td style="padding: 10px;">{{ branch.pending_under_repair }}</td>
+                              <td style="padding: 10px;">{{ branch.service_income | default:0 |floatformat:2 }}</td>
+                              <td style="padding: 10px;">{{ branch.spare_cost | default:0 |floatformat:2 }}</td>
+                              <td style="padding: 10px;">{{ branch.net_service_income |  default:0 |floatformat:2 }}</td>
+                              <td style="padding: 10px;">{{ branch.sale_income | default:0 |floatformat:2  }}</td>
+                              <td style="padding: 10px;">{{ branch.purchase_cost | default:0 |floatformat:2  }}</td>
+                              <td style="padding: 10px;">{{ branch.net_sales_income | default:0 |floatformat:2  }}</td>
+                              <!-- <td style="padding: 10px;"></td>
+                              <td style="padding: 10px;"></td>                             -->
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+              <br>
+
+              <br>
+              <div class="row ">
+                <div class="col-lg-6 d-flex flex-column">
+                  <div class="row flex-grow">
+                    <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                      <div class="card card-rounded" style="height: 470px;padding:24px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                          <div class="d-sm-flex justify-content-between align-items-start">
+                            <div>
+                             <h4 class="card-title card-title-dash">Service Details this month</h4>
+                            
+                             <p class="card-subtitle card-subtitle-dash text-secondary">Performance of Service Engineers this month</p>
+                            </div>
+                            <a class="service-see-more" href="{% url 'servicereport' %}">See More &rarr;</a>   
+                          </div>
+                          <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                            <canvas id="servicechart" ></canvas>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                 
+                </div>
+
+                <div class="col-lg-6 d-flex flex-column ">
+
+                  <div>
+                    {% if request.user.userprofile.role == 'Branch Admin' or request.user.is_superuser or request.user.userprofile.role == 'Franchise Admin' %}
+                    <div class="row  mb-4">
+                      <div class="col-lg-12">
+                        <div class="card card-rounded " style="padding:24px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                       
+                          <div>
+                            <h4 class="card-title card-title-dash mb-4">Quick Links</h4>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center">
+                          
+                          <div class="d-flex gap-5">
+      
+                            <div class="d-flex flex-column align-items-center index-btn-wrapper">
+                              <div class="index-btn">
+                                <a class=" fw-bold text-decoration-none " href="{% url 'serviceform' %}"><img class="w-100" src="../static/images/icons/serviced.png" alt=""></a>
+                        
+                              </div>
+                              <a class="text-decoration-none" href="{% url 'serviceform' %}">   <p class="card-subtitle card-subtitle-dash text-dark mb-0 fw-bold">Service Entry</p></a>
+                            </div>
+                            
+                         
+
+
+
+
+                            <div class="d-flex flex-column align-items-center index-btn-wrapper">
+                              <div class="index-btn">
+                                <a class="fw-bold text-decoration-none"   href="{% url 'saleform' %}"><img class="w-100" src="../static/images/icons/cart.png" alt=""></a>
+                              </div>
+                              <a class="text-decoration-none" href="{% url 'saleform' %}"><p class="card-subtitle card-subtitle-dash text-dark mb-0 fw-bold">Sales Entry</p></a>
+                              
+                            </div>
+
+
+                            
+
+                         
+
+                          <div class="d-flex flex-column align-items-center index-btn-wrapper index-btn-booking">
+                            <p class="booking-count-dashboard"></p>
+                            <div class="index-btn ">
+                              
+                              <a class=" fw-bold text-decoration-none"     href="{% url 'servicebooking' %}"><img class="w-100" src="../static/images/icons/journal-book.png" alt=""></a>
+                            </div>
+                            <a class="text-decoration-none" href="{% url 'servicebooking' %}">  <p class="card-subtitle card-subtitle-dash text-dark mb-0 fw-bold">Booking List</p>
+                            
+                            </a>
+                          </div>
+
+                          <div class="d-flex flex-column align-items-center index-btn-wrapper">
+                            <div class="index-btn">
+                              <a class=" fw-bold text-decoration-none"  data-toggle="modal" data-target=".bd-example-modal-lg"><img class="w-100" src="../static/images/icons/product_list.png" alt=""></a>
+                            </div>
+                            <a class="text-decoration-none" data-toggle="modal" data-target=".bd-example-modal-lg">  <p class="card-subtitle card-subtitle-dash text-dark mb-0 fw-bold">Product List</p></a>
+                          </div>
+
+
+                          
+
+
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+      {% endif %}
+                  </div>
+                  <div>
+                    <div class="row flex-grow ">
+                      <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card ">
+                        <div class="card card-rounded " style="height: 268px;padding:24px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                            <div class="d-sm-flex justify-content-between align-items-start">
+                              <div>
+                               <h4 class="card-title card-title-dash">Customer Details</h4>
+                              
+                               <p class="card-subtitle card-subtitle-dash text-secondary">Number of customers added per month</p>
+                              </div>
+                            </div>
+                            <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                              <canvas id="firstchart" ></canvas>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+               
+              </div>
+              {% endif %}
+
+
+          
+
+{% if user.userprofile.role != 'Technician' and user.userprofile.role != 'Field Engineer'  %}
+
+
+
+
+                
+
+                {% endif %}
+
+
+
+
+
+                {% if user.userprofile.role == "Technician" %}
+
+
+            <div class="border py-5 my-5 bg-white px-4">
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="font-w-bold" >Service</h4>
+
+                    <div class="d-flex">
+
+
+
+
+                      
+
+                      
+
+                        <select class="form-control border" name="servicedate" id="servicedate">
+                            <option value="today">Today</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                          </select>
+
+                          {% if user.is_superuser %}
+
+                          <select class="form-control border" name="servicebranch" id="servicebranch">
+                            <option value="allbranches">Branches</option>
+                            {% for branch in all_branches %}
+                            <option value="{{branch}}">{{branch}}</option>
+                            {% endfor %}
+                            
+                          </select>
+
+                          {% endif %}
+
+                          {% if user.is_superuser or user.userprofile.role == 'Branch Admin' or user.userprofile.role == 'Franchise Admin' %}
+
+                          <select class="form-control border" name="servicetechnician" id="servicetechnician">
+                            <option value="alltechnician">Tehnician</option>
+
+                            {% if user.userprofile.role == 'Branch Admin' or user.userprofile.role == 'Franchise Admin' %}
+                            {% for technician in all_technician %}
+                            <option value="{{technician}}">{{technician}}</option>
+                            {% endfor %}
+                            {% endif %}
+                            
+                          </select>
+                          {% endif %}
+                    
+                    </div>
+
+                  </div>
+                  
+                  <div class="row my-3">
+
+
+
+                    {% if user.userprofile.role == "Technician" %}
+                    
+                      <div class="col-lg-3 col-md-4 my-2">
+                        <a href="{% url 'service' %}" class="text-decoration-none">
+                  
+                          <div class="card card-service-dashboard   bg-c-pink order-card mb-0" style="background-image: linear-gradient(to bottom right, #e49c00, #ffcb03);">
+                              <div class="card-block">
+                                  <h6 class="m-b-20 font-w-bold">Unacknowledged</h6>
+                                  <h2 class="text-right my-4"><i class="fa-solid fa-wrench f-left me-2 "></i><span id="service-unacknowledged">{{service_status.Unacknowledged}}</span></h2>
+                                
+                                 
+                              </div>
+                          </div>
+                        </a>
+                      </div>
+                   
+
+                      <div class="col-lg-3 col-md-4 my-2">
+                        <a href="{% url 'service' %}" class="text-decoration-none">
+                  
+                        <div class="card card-service-dashboard   bg-c-cyan order-card mb-0" style="background-image: linear-gradient(to bottom right, #39b385, #9be15d);">
+                            <div class="card-block">
+                             
+                                <p class="m-b-20 p-0 m-0  font-w-bold">Spare Requested</p>
+                                <h2 class="text-right my-4"><i class="fa-regular fa-square-check f-left me-2"></i><span id="service-sparerequested">{{service_status.SpareRequested}}</span></h2>
+                                
+                               
+                            </div>
+                        </div>
+                   </a>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-4 my-2">
+                      <a href="{% url 'service' %}" class="text-decoration-none">
+                      <div class="card card-service-dashboard bg-c-yellow  order-card mb-0" style="background-image: linear-gradient(to bottom right, #e52a5a, #ff585f);" >
+                          <div class="card-block">
+                              <p class="m-b-20 p-0 m-0  font-w-bold">Spare Allocated</p>
+                              
+                              <h2 class="text-right my-4"><i class="fa-solid fa-truck f-left me-2"></i><span id="service-spareallocated">{{service_status.SpareAllocated}}</span></h2>
+                             
+                          </div>
+                      </div>
+                      </a>
+                  </div>
+
+                  <div class="col-lg-3 col-md-4 my-2">
+                    <a href="{% url 'service' %}" class="text-decoration-none">
+                    <div class="card card-service-dashboard  bg-c-blue order-card mb-0">
+                        <div class="card-block">
+                            <h6 class="m-b-20 font-w-bold">In Progress</h6>
+                            <h2 class="text-right my-4"><i class="fa-solid fa-screwdriver-wrench f-left me-2"></i><span id="service-inprogress">{{service_status.InProgress}}</span></h2>
+                           
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+                  {% else %}
+
+                  <div class="col-lg-4 col-md-4 my-2">
+                  
+                    <div class="card card-service-dashboard   bg-c-pink order-card mb-0" style="background-image: linear-gradient(to bottom right, #e49c00, #ffcb03);">
+                        <div class="card-block">
+                            <h6 class="m-b-20 font-w-bold">Unacknowledged</h6>
+                            <h2 class="text-right my-4"><i class="fa-solid fa-wrench f-left me-2 "></i><span id="service-unacknowledged">{{service_status.Unacknowledged}}</span></h2>
+                           
+                        </div>
+                    </div>
+               
+                </div>
+
+                <div class="col-lg-4 col-md-4 my-2">
+            
+                  <div class="card card-service-dashboard   bg-c-cyan order-card mb-0" style="background-image: linear-gradient(to bottom right, #39b385, #9be15d);">
+                      <div class="card-block">
+                         
+                          <p class="m-b-20 p-0 m-0  font-w-bold">Spare Requested</p>
+                          <h2 class="text-right my-4"><i class="fa-regular fa-square-check f-left me-2"></i><span id="service-sparerequested">{{service_status.SpareRequested}}</span></h2>
+                        
+                      </div>
+                  </div>
+             
+              </div>
+
+
+              <div class="col-lg-4 col-md-4 my-2">
+                <div class="card card-service-dashboard bg-c-yellow  order-card mb-0" style="background-image: linear-gradient(to bottom right, #e52a5a, #ff585f);" >
+                    <div class="card-block">
+                        <p class="m-b-20 p-0 m-0  font-w-bold">Spare Allocated</p>
+                        
+                        <h2 class="text-right my-4"><i class="fa-solid fa-truck f-left me-2"></i><span id="service-spareallocated">{{service_status.SpareAllocated}}</span></h2>
+                       
+                    </div>
+                </div>
+            </div>
+
+                      
+                      <div class="col-lg-4 col-md-4 my-2">
+                          <div class="card card-service-dashboard  bg-c-blue order-card mb-0">
+                              <div class="card-block">
+                                  <h6 class="m-b-20 font-w-bold">In Progress</h6>
+                                  <h2 class="text-right my-4"><i class="fa-solid fa-screwdriver-wrench f-left me-2"></i><span id="service-inprogress">{{service_status.InProgress}}</span></h2>
+                                  
+                              </div>
+                          </div>
+                      </div>
+
+                      
+                      
+                      <div class="col-lg-4 col-md-4 my-2">
+                          <div class="card card-service-dashboard  bg-c-green order-card mb-0" style="background-image: linear-gradient(to bottom right, #ae3ec9, #da77f2);">
+                              <div class="card-block">
+                                  <h6 class="m-b-20 font-w-bold">Completed</h6>
+                                  <h2 class="text-right my-4"><i class="fa-solid fa-square-check f-left me-2"></i><span id="service-completed">{{service_status.Completed}}</span></h2>
+                                 
+                              </div>
+                          </div>
+                      </div>
+                      
+                      
+                      <div class="col-lg-4 col-md-4 my-2">
+                  
+                        <div class="card card-service-dashboard  bg-c-black order-card mb-0">
+                            <div class="card-block">
+                                <h6 class="m-b-20 font-w-bold">Rejected</h6>
+                                <h2 class="text-right my-4"><i class="fa-solid fa-square-xmark f-left me-2"></i><span id="service-rejected">{{service_status.Rejected}}</span></h2>
+                                
+                            </div>
+                        </div>
+                   
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-end align-items-center"> 
+
+                  <a class="service-see-more" href="{% url 'servicereport' %}">See More &rarr;</a>
+
+                </div>
+              </div> 
+
+              {% endif %}
+
+
+
+
+
+
+
+
+                {% if user.userprofile.role != 'Technician'  %}
+
+                <div class="tab-content tab-content-basic pt-0" >
+                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+                    
+
+
+
+
+
+
+
+                    <div class="row ">
+
+
+      
+                    </div>
+
+{% endif %}
+                    
+<!-- service details cards -->
+
+                   
+
+
+
+                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {% if user.userprofile.role != 'Technician' and user.userprofile.role != 'Field Engineer'  %}
+
+                <div class="card card-rounded mt-4 mb-5 " style="height: 490px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                  <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                      <div>
+                        <h4 class="card-title card-title-dash">Total sales by month</h4>
+                       <p class="card-subtitle card-subtitle-dash text-secondary">This graph shows the total sales per month for this year</p>
+                      </div>
+                      <div>
+                        <a class="service-see-more" href="{% url 'reportsmonthlysales' %}">See More &rarr;</a> 
+                      </div>
+                    </div>
+                    <div class="d-sm-flex align-items-center mt-1 justify-content-between">
+                      <div class="d-sm-flex align-items-center mt-4 justify-content-between"><h4 class="me-2 fw-bold netsales"></h4></div>
+                      <div class="me-3"><div id="marketing-overview-legend"></div></div>
+                    </div>
+                    <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                      <canvas id="saleschart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="card card-rounded my-5" style="height: 490px;border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;">
+                  <div class="card-body">
+                    <div class="d-sm-flex justify-content-between align-items-start">
+                      <div>
+                        <h4 class="card-title card-title-dash">Total purchases by month</h4>
+                       <p class="card-subtitle card-subtitle-dash text-secondary">This graph shows the total purchases per month for this year</p>
+                      </div>
+                      <div>
+                        <a class="service-see-more" href="{% url 'reportsmonthlypurchase' %}">See More &rarr;</a> 
+                      </div>
+                    </div>
+                    <div class="d-sm-flex align-items-center mt-1 justify-content-between">
+                      <div class="d-sm-flex align-items-center mt-4 justify-content-between"><h4 class="me-2 fw-bold netpurchase"></h4></div>
+                      <div class="me-3"><div id="marketing-overview-legend"></div></div>
+                    </div>
+                    <div class="chartjs-bar-wrapper mt-3" style="height: 250px">
+                      <canvas id="secondchart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+  
+
+                <div class="modal fade bd-example-modal-lg" tabindex="1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <!-- <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div> -->
+                    <div class="modal-content" style="
+                      background-color: #fefefe;
+                      margin: 50px auto;
+                      padding: 20px;
+                      border: 1px solid #888;
+                      width: 1000px;
+                      text-align: center;
+                  ">
+
+
+<div class="d-flex justify-content-between align-items-center mb-5">
+  <h5 class="modal-title"><strong>Product Price List</strong></h5>
+  <a class="service-see-more" href="{% url 'modalproductform' %}">Add &rarr;</a>   
+</div>
+                      <div class="table-responsive">
+
+
+
+                        <table class="add-pagination packing_list table-bordered table table-stripedd">
+                           <thead class="">
+                              <tr>
+                                 <th width="5%">Sl</th>
+                                 <th > Brand</th>
+                                 <th > Modal</th>
+                                 <th >Product</th>
+                                 <th >Price 1</th>
+                                 <th >Price 2</th>
+                                 <th >Price 3</th>
+                                 <th >Branch</th>
+                                 <th></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for item in prod_list_obj %}
+                              <tr>
+                                 <td>{{ forloop.counter }}</td>
+                                 <td style="white-space:normal;"> {{ item.brand }} </td>
+                                 <td  style="white-space: normal;"> {{ item.modal }} </td>
+                                 <td  style="white-space: normal;"> {{ item.product }} </td>
+                                 <td> {{ item.price1 }} </td>
+                                 <td> {{ item.price2 }} </td>
+                                 <td> {{ item.price3 }} </td>
+                                 <td  style="white-space: normal;"> {{ item.branch }} </td>
+                                 <td>
+                                    <a href="{% url 'updatemodalproductprice' id=item.id %}"> <span class="edit-btn"><i class="fa-regular fa-eye"></i>  Edit</span> </a>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+                        
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+
+        
+
+
+
+
+        {% endblock %}
+

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Purchase Barcode</title>
+    <style>
+      html{
+        padding:0;
+        margin:0;
+      }
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        padding:0;
+        margin:0;
+      }
+      .company{
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+        text-align: center;
+      }
+      .barcode-item {
+        /* width: 30%; */
+        
+        /* margin-right: 12px;
+        margin-bottom: 10px; */
+        display: inline-block;
+        position: relative;
+        
+      }
+      .barcode-image {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        /* transform: rotateX(180deg) */
+      }
+      .barcode-text {
+        padding: 0;
+        margin: 0;
+        font-size: 12px;
+        text-align: center;
+        word-wrap: break-word;
+  overflow-wrap: break-word;
+      }
+
+      .barcode-details {
+        width: 100%;
+        position: absolute;
+        top: 89px;
+        left:0;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div style="width: 100%;margin-left:240px;display:flex; justify-content: center;align-items: center;">
+      {% for barcode in barcode_base64 %}
+      <div class="barcode-item" style="margin-right:80px;">
+      <!-- <p class="company">{{company_name}}</p> -->
+      <img
+        src="data:image/png;base64,{{ barcode }}"
+        class="barcode-image"
+      />
+      <!-- <div class="barcode-details">
+        <p class="barcode-text">{{date}}</p>
+      </div> -->
+    </div>
+    <div class="barcode-item" >
+      <!-- <p class="company">{{company_name}}</p> -->
+      <img
+        src="data:image/png;base64,{{ barcode }}"
+        class="barcode-image"
+      />
+      <!-- <div class="barcode-details">
+        <p class="barcode-text">{{date}}</p>
+      </div> -->
+    </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

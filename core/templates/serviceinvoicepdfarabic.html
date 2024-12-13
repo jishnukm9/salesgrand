@@ -1,0 +1,391 @@
+<html>
+  <head>
+    <title>Service Invoice</title>
+
+    <style>
+
+    </style>
+  </head>
+
+  <body>
+    <div class="">
+      <div>
+        <table>
+          <thead>
+            <th style="width:22%">
+              <img style="width:100%;" src="{{logo}}"  alt="logo">
+           
+            </th>
+
+
+            <th style="width:78%;">
+              <div class="text-right">
+                <h4 class="company-name"  style="font-size:24px;">
+              
+                  <strong >مؤسسة اي لون الدولية للتجارة</strong>
+                </h4>
+                <p class="company-name" style="font-size:13px;">
+                  <strong>EYE LON AL-DAWLIYA EST
+                  </strong>
+                </p>
+                <P class="address-2" style="font-size:13px;color:black"> CR no: 4030167181 : ت س</P>
+                <P class="address-2"  style="font-size:13px;color:black"> VAT : 300115306700003: الرقم الضريبي</P>
+               
+               
+              </div>
+            </th>
+          </thead>
+        </table>
+      </div>
+
+      <hr />
+
+      <div class="text-center">
+        {% if customertype == 'B2B' %}
+        <h3>Tax Invoice / ﻓﺎﺗورة ﺿرﯾﺑﯾﺔ</h3>
+{% else %}
+        <h3>Simplified Tax Invoice / فاتورة ضريبية مبسطة</h3>
+  {% endif %}
+      </div>
+
+
+      <table class="table-cust" style="background-color: #f8f8f8;">
+
+          <thead>
+
+            <tr style="">
+
+                <th  class="th cust-details" style="text-align:left;padding:10px;width: 33.33%;">
+
+                    <p style="margin:0; padding:0;padding-bottom: 18px;font-size:15px;">Customer Details</p>
+
+                    <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">Name : <span style="color:#111;">{{customer}}</span></p>
+                    <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">Phone : <span style="color:#111;">{{phone_customer}}</span> </p>
+                    {% if customertype == 'B2B' %}
+                    <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">VAT : <span style="color:#111;">{{vatnumber}}</span>  </p>
+                    {% endif %}
+                </th>
+                <th  class="th" style="text-align:center;width: 33.33%;">
+
+
+                    <img width="100px" src="{{qrcode_base64}}" alt="">
+                </th>
+                <th  class="th cust-details" style="text-align:right;padding:10px;width: 33.33%;">
+
+                 
+
+                    <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">Date : {{invoicedate}}</p>
+                    <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">Invoice number : {{invoicenumber}}</p>
+                    <p  style="margin:0; padding:0;padding-bottom: 8px;font-size:14px">Bill Mode : {{billmode}}</p>
+                </th>
+            </tr>
+
+          </thead>
+
+
+      </table>
+
+      
+    
+
+      <table class="table-1" style="font-size:15px;">
+       
+        <tbody>
+          <tr>
+            <th class="sl">Sl <br>ﻣﺳﻠﺳل</th>
+            <th class="sl-2">Product Name
+              <br> اسم المنتج</th>
+        
+            <th class="sl-2">Qty <br> اﻟﻛﻣﯾﺔ</th>
+            <th class="sl-2">Rate <br>   ﺳﻌر اﻟوﺣده</th>
+            <th class="sl-2">      {% if totaltax != 0 %}VAT<span style="font-size:13px">(15%)</span>  <br>اﻟﺿرﯾﺑﺔ{% endif %}</th>
+            <th class="sl-2">Total <br> اﻹﺟﻣﺎﻟﻲ</th>
+          </tr>
+
+          
+          <tr>
+            <td class="sl">1</td>
+            <td class="sl">{{product}} / {{brand}} / {{modal}}</td>
+            <td class="sl">1</td>
+           
+            {% if discountdict.discount == 'yes' %}
+              <td class="sl">{{ discountdict.total_excl_tax_beforedic|floatformat:2 }}</td>
+          {% else %}
+              <td class="sl">{{ discountdict.total_excl_tax|floatformat:2 }}</td>
+          {% endif %}
+
+          {% if discountdict.discount == 'yes' %}
+              <td class="sl">{{ discountdict.total_tx_beforedisc|floatformat:2 }}</td>
+          {% else %}
+              <td class="sl">{{ discountdict.total_tx|floatformat:2 }}</td>
+          {% endif %}
+
+             
+          {% if discountdict.discount == 'yes' %}
+          <td class="sl" style="text-align:right">{{ discountdict.tot_beforedisc|floatformat:2 }}</td>
+      {% else %}
+      <td class="sl" style="text-align:right">{{ discountdict.tot|floatformat:2 }}</td>
+      {% endif %}
+           
+          
+          </tr>
+         
+            <td colspan="3">
+                <p style="text-align:left;padding:4px;">Total</p>
+               
+            </td>
+            <td colspan="3">
+              
+                {% if discountdict.discount == 'yes' %}
+                <p style="text-align:right;padding:4px;">{{ discountdict.tot_beforedisc|floatformat:2 }}</p>
+            {% else %}
+            <p style="text-align:right;padding:4px;">{{ discountdict.tot|floatformat:2 }}</p>
+            {% endif %}
+              </td>
+        </tr>
+        
+        </tbody>
+      
+      </table>
+
+      <div  style="margin-top:20px;">
+
+        {% if discount != 0 %}
+        <table class="table-cust-2" >
+            <thead>
+                <tr style="">
+                    <th colspan="5"  style="text-align:right;padding:5px;width: 85%;">
+                        <p style="margin:0; padding:0;font-size:14px">Discount (خصم) :</p>
+                    </th>
+                    <th colspan="1"  style="text-align:right;padding:5px;width: 15%;">
+                        {% if discountmethod == 'Percentage' %}
+                        <p  style="margin:0; padding:0;font-size:14px">{{discountperc}}%</p>
+                        {% else %}
+                        <p  style="margin:0; padding:0;font-size:14px">{{discount}}</p>
+                        {% endif %}
+                    </th>
+                </tr>
+              </thead>
+            </table>
+            {% endif %}
+        <table class="table-cust-2" >
+            <thead>
+                <tr style="">
+                    <th colspan="5"  style="text-align:right;padding:5px;width: 85%;">
+                        <p style="margin:0; padding:0;font-size:14px">Total Excluding VAT (ﺑﺎﺳﺗﺛﻧﺎء اﻟﺿرﯾﺑﺔ ﻋﻠﻰ اﻟﻘﯾﻣﺔ اﻟﻣﺿﺎﻓﺔ) :</p>
+                    </th>
+                    <th colspan="1"  style="text-align:right;padding:5px;width: 15%;">
+                      {% if discountdict.discount == 'yes' %}
+                      <p  style="margin:0; padding:0;font-size:14px">{{ discountdict.total_excl_tax_afterdic|floatformat:2 }}</p>
+                  {% else %}
+                  <p  style="margin:0; padding:0;font-size:14px">{{ discountdict.total_excl_tax|floatformat:2 }}</p>
+                  {% endif %}
+                        
+                    </th>
+                </tr>
+              </thead>
+            </table>
+
+            
+            <table class="table-cust-2" >
+                <thead>
+                    <tr style="">
+                        <th colspan="5"  style="text-align:right;padding:5px;width: 85%;">
+                            <p style="margin:0; padding:0;font-size:14px">Total VAT (إجمالي ضريبة القيمة المضافة) :</p>
+                        </th>
+                        <th colspan="1"  style="text-align:right;padding:5px;width: 15%;">
+                          {% if discountdict.discount == 'yes' %}
+                          <p  style="margin:0; padding:0;font-size:14px">{{discountdict.total_tx_afterdisc|floatformat:2}}</p>
+                  {% else %}
+                  <p  style="margin:0; padding:0;font-size:14px">{{discountdict.total_tx|floatformat:2}}</p>
+                  {% endif %}
+                            
+                        </th>
+                    </tr>
+                  </thead>
+                </table>
+
+               
+
+
+                <table class="table-cust-2" >
+                    <thead>
+                        <tr style="">
+                            <th colspan="5"  style="text-align:right;padding:5px;width: 85%;">
+                                <p style="margin:0; padding:0;">Net Total (إجمالي صافي) :</p>
+                            </th>
+                            <th colspan="1"  style="text-align:right;padding:5px;width: 15%;">
+                                <p  style="margin:0; padding:0;">{{finalamount|floatformat:2}}</p>
+                            </th>
+                        </tr>
+                      </thead>
+                    </table>
+
+
+       
+  
+           
+    </div>
+
+
+    
+
+      <hr  />
+
+      <div  style="">
+
+        <table class="table-cust-2" >
+            <thead>
+                <tr style="">
+                    <th colspan="5"  style="text-align:right;padding:5px;width: 85%;">
+                        <p style="margin:0; padding:0;font-size:14px">Amount Received (المبلغ المستلم)  :</p>
+                    </th>
+                    <th colspan="1"  style="text-align:right;padding:5px;width: 15%;">
+                        <p  style="margin:0; padding:0;font-size:14px">{{amountrecieved|floatformat:2}}</p>
+                    </th>
+                </tr>
+              </thead>
+            </table>
+
+
+            <table class="table-cust-2" >
+                <thead>
+                    <tr style="">
+                        <th colspan="5"  style="text-align:right;padding:5px;width: 85%;">
+                            <p style="margin:0; padding:0;font-size:14px">Due Balance  (الرصيد المستحق)  :</p>
+                        </th>
+                        <th colspan="1"  style="text-align:right;padding:5px;width: 15%;">
+                            <p  style="margin:0; padding:0;font-size:14px">{{duebalance|floatformat:2}}</p>
+                        </th>
+                    </tr>
+                  </thead>
+                </table>
+
+
+       
+    </div>
+
+
+      <hr  />
+
+      <div >
+          <p style="font-weight:bold;font-size:14px">Amount In Word : {{totalworden}}</p>
+          <p style="font-weight:bold;font-size:14px"> {{totalwordar}} : المبلغ بالكلمات </p>
+      </div>
+      <hr>
+      <div>
+        <p style="font-weight:bold;font-size:14px">Remarks (ملاحظات)  </p>
+      </div>
+      <hr>
+   
+     
+
+
+      <!-- Footer text that should appear at the end of the PDF -->
+      <!-- <div style="page-break-before: always;"> -->
+    <div style=" bottom: 0; width: 100%; text-align: center; font-size: 12px;margin-top:90px;">
+      <table class="table-cust" style="margin-top:40px;">
+
+        <thead>
+
+          <tr style="">
+
+              <th colspan="2" class="th cust-details" style="text-align:left;padding:10px;width: 50%;">
+            
+                <p style="font-size:14px">    ماغنس للرعاية <br>For Magnus Care </p>
+              </th>
+              
+              <th colspan="2" class="th cust-details" style="text-align:right;padding:10px;width: 50%;">
+
+                <p style="font-size:14px"> توقيع العميل <br> Customer Signature  </p>
+              </th>
+          </tr>
+
+        </thead>
+
+
+    </table>
+      <p style="text-align:left;font-size:16px;font-weight:bold;font-size:14px">Account Details (تفاصيل الحساب)</p>
+        <table class="table-cust" style="background-color: #f8f8f8;margin:0">
+
+            <thead>
+                <tr>
+                  <th colspan="3" class="th cust-details" style="text-align:right;border: 0.3px solid #444;padding:8px;font-size:14px;">
+                    <img width="70px;" src="https://media.publit.io/file/logo2-c.png" alt="" style="padding-bottom:10px;">
+                    <p style="margin:0; padding:0;"><span style="color:#444;">مؤسسة أي لون الدولية للتجارة (AY LON EST)</span></p>
+                    <p style="margin:0; padding:0;"><span style="color:#444;">ايبان (IBAN)</span></p>
+                    <p style="margin:0; padding:0;"><span style="color:#444;">SA6480000648608010897120</span></p>
+                  </th>
+                  <th colspan="3" class="th cust-details" style="text-align:right;border: 0.3px solid #444;padding:8px;font-size:14px;">
+                    <img width="70px;" src="https://media.publit.io/file/logo1-8.png" alt="" style="padding-bottom:10px;">
+                    <p style="margin:0; padding:0;"> <span style="color:#444;">مؤسسة أي لون الدولية للتجارة (AY LON EST)</span></p>
+                    <p style="margin:0; padding:0;"><span style="color:#444;">ايبان (IBAN)</span></p>
+                    <p style="margin:0; padding:0;"> <span style="color:#444;">SA1620000001860361399940</span></p>
+                  </th>
+                  
+                  
+                </tr>
+              </thead>
+             
+  
+  
+        </table>
+
+
+
+  
+
+       
+      
+        
+    </div>
+
+  
+
+  
+
+
+       
+        <table style="width:100%;">
+          <thead style="background-color:#fff;margin:0;margin-top:0px;width:100%;">
+            <tr>
+              
+                <th colspan="1" >
+
+                  <div style="">
+                    <p style="direction: rtl;text-align:right;font-size:14px;font-weight:bold;margin:0;padding:0;margin-bottom:5px;">نحن نقدر دائ ًما تعليقاتك!!! لأية اقتراحات / شكاوى يرجى الاتصال بمديرنا، الجوال:٤۷٤٥۹۹٥٤٥۰, ٥٥٦۳٦۳۰٥٥</p>
+                    <p style="text-align:left;font-size:14px;font-weight:bold;margin:0;padding:0;line-height: 1.3;">We always Value Your Feedback!!! For any Suggestions/ Complaints Please contact our Manager, Mob: 504595474, 550363655, Email: info@magnusksa.com</p>
+ 
+                  </div>
+                
+                
+  
+                </th>
+                <th colspan="5" class="" style="">
+                  
+
+                  <div>
+                    <img width="75px" src="https://media.publit.io/file/Screenshot-2024-08-19-120811-removebg-preview.png" alt="">
+                  </div>
+                 
+                </th>
+                
+                
+              
+  
+            </tr>
+    </thead>
+  </table>
+  <hr>
+<div>
+  <p style="text-align:center;font-size:14px;font-weight:bold;margin:0;padding:0;color:#292929"> Address - SHOP NO 143 Shamal Market Abdul Qader AI Jabali, AI Salamah – Jeddah / عنوان : - جدة - شارع الحراء،سوق الشمال مقابل سوق حراء الدولى ،ومحل رقم 143</p>
+</div>
+
+
+<hr>
+</div>
+    
+
+
+  </body>
+</html>

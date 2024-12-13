@@ -1,0 +1,271 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+            <!-- <ul class="nav nav-tabs" role="tablist">
+               <li class="nav-item">
+                  <a class="nav-link active ps-0" id="home-tab"  href="{% url 'stock' %}" role="tab" aria-controls="Overview" aria-selected="true">All Stock</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link border-0" id="profile-tab"  href="{% url 'branchstock' %}">My Stock</a>
+               </li>
+            </ul> -->
+
+            <nav class="nav nav-borders">
+               <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="">Detailed Service Report</a>
+
+           </nav>
+         </div>
+         <br>
+          <!-- <br /> -->
+    
+
+
+
+ 
+
+
+            <div class="card card-rounded " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #fff">
+                <div>
+                    <h5 class="m-0 font-weight-bold" style="color:#2c2e2f"> <strong>Detailed Service Report</strong>  </h5>
+                  
+                </div>
+                   
+                
+  
+             
+                       
+                                
+
+                                <div class="d-flex align-items-center gap-3">
+                                  <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#dashboardyearlypurchasemodal" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                  <a class="sales-clear" href="{% url 'detailedservicereport' %}">Clear</a>
+                               </div>
+
+                                  
+                            
+                              
+            </div>
+
+
+            
+
+            <div class="card-body">
+
+                <div class="mb-3">
+
+                    <p>Date Range: <strong>{{startdate}} - {{enddate}}</strong> </p>
+                    <p>Branch : <strong>{{branch}}</strong> </p>
+                </div>
+
+
+              <div class="table-responsive">
+                <table class=" add-pagination-detailed-service  table-bordered  table purchase-list" >
+                   <thead >
+                      <tr>
+                         <th>Sl</th>
+                         <th style="white-space: normal;"> Service ref Number</th>
+                         <th>Customer</th>
+                         <th> Product</th>
+                         <th> Spare </th>
+                         <th style="white-space: normal;"> Service Income</th>
+                         <th style="white-space: normal;"> Spare Cost</th>
+                         <th> Tax</th>
+                         <th> Profit</th>
+                        
+                        
+                      </tr>
+                   </thead>
+                   <tbody>
+                      {% for item in all_sales %}
+                      <tr>
+                         <td>{{ forloop.counter }}</td>
+                         <td>{{ item.servicerefnumber }}</td>
+                         <td style="white-space: normal;">{{item.customer}}</td>
+                         <td>{{ item.product }}</td>
+                         <td style="white-space: normal;">{{ item.spares | safe }}</td>
+                         <td>{{ item.totalserviceincome|floatformat:2 }}</td>
+                         <td>{{ item.totalpurchasecost|floatformat:2 }}</td>
+                         <td>{{ item.totaltax|floatformat:2}}</td>
+                         <td>{{ item.profit|floatformat:2}}</td>
+                         
+                      </tr>
+                      {% endfor %}
+                   
+                   </tbody>
+                </table>
+             </div>
+
+                </div>
+
+                <div class="card-footer " style="background-color: #fff">
+
+<div class="row my-3">
+                    <div class="col-lg-4 col-md-4">
+
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+
+                    </div>
+                  <div class="col-lg-4 col-md-4 ">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h6> <strong>  Total Service Income :</strong>  </h6>
+
+                        <h6>{{total_service_income | default:0 |floatformat:2}}</h6>
+                  </div>
+                  <hr>
+
+                  <div class="d-flex justify-content-between align-items-center">
+
+                    <h6>  <strong>Total Spare Cost :</strong>  </h6>
+
+                      <h6>{{total_purchase_cost | default:0 |floatformat:2}}</h6>
+                  </div>
+                  <hr>
+
+                  <div class="d-flex justify-content-between align-items-center">
+
+                    <h6><strong> Total Tax : </strong> </h6>
+
+                    <h6>{{total_tax | default:0 |floatformat:2}}</h6>
+                  </div>
+                  <hr>
+
+                  <div class="d-flex justify-content-between align-items-center">
+
+                    <h6><strong> Total Profit : </strong> </h6>
+
+                    <h6>{{total_profit | default:0 |floatformat:2}}</h6>
+                  </div>
+
+                  </div>
+                </div>
+
+
+
+                </div>
+
+
+            </div>
+            
+
+
+
+
+
+
+            
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="dashboardyearlypurchasemodal">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'detailedservicereport' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+        
+           
+             <div class="form-group">
+               <label for="date"  class="fw-bold">Start Date</label>
+               <div id="datepicker" 
+               name=""
+  class="input-group date datepicker-current " 
+  data-date-format="dd-mm-yyyy">
+ <input class="form-control  " 
+ name="startdate"
+
+ autocomplete="off" 
+ id="date"
+
+style="text-align:center;"
+        type="text"   />
+ <span class="input-group-addon">
+     <i class="glyphicon glyphicon-calendar"></i>
+ </span>
+</div>
+</div>
+
+<div class="form-group">
+    <label for="date"  class="fw-bold">End Date</label>
+    <div id="datepicker" 
+    name=""
+class="input-group date datepicker-current " 
+data-date-format="dd-mm-yyyy">
+<input class="form-control  " 
+name="enddate"
+
+autocomplete="off" 
+id="date"
+
+style="text-align:center;"
+type="text"   />
+<span class="input-group-addon">
+<i class="glyphicon glyphicon-calendar"></i>
+</span>
+</div>
+             </div>
+   
+           
+             <div class="form-group">
+               <label for="sale_subcategory" class="fw-bold">Select Branch</label>
+               <select class="selectizefield "  name="branch" id="branch">
+
+
+                <option value="{{selected_branch.id}}">{{selected_branch}}</option>
+
+                {% for branch in all_branches %}
+                 <option value="{{branch.id}}">{{branch.name}}</option>
+               {% endfor %}
+                 
+               </select>
+             </div>
+         
+
+          
+            
+             
+
+
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+<!-- main-panel ends -->
+{% endblock %}

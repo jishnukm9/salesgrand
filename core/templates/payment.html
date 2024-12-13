@@ -1,0 +1,109 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                
+
+
+
+
+
+                 <nav class="nav nav-borders">
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'paymentform' %}">Payment Entry</a>
+                    <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Payment List </a>
+                    
+
+      
+                   
+                </nav>
+      
+
+
+
+
+               </div>
+               <br>
+          
+
+
+
+              <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-header py-3">
+                    <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Payment List </strong> </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+
+
+
+
+
+                        <table class="  add-pagination table-hover table-bordered  table table-striped purchase-list" >
+                            <thead >
+                               <tr>
+                                  <th>Sl</th>
+                                  <th>Id</th>
+                                  <th> Date</th>
+                                  <th>Reference No</th>
+                                  <th>Narration</th>
+                                  <th> Amount</th>
+                                  <th> Mode</th>
+                                
+                               </tr>
+                            </thead>
+                            <tbody>
+                               {% for item in payment_data reversed %}
+                               <tr class="clickable-row" data-href="{% url 'paymentdetails' id=item.paymentid %}">
+                                  <td>{{ forloop.counter }}</td>
+                                  <td>{{item.paymentid}}</td>
+                                  <td>{{item.paymentdate }}</td>
+                                  <td>{{item.referenceno}}</td>
+                                  <td>{{item.narration }}</td>
+                                  <td>{{ item.amount }}</td>
+                                  <td>{{ item.paymentmode }}</td>
+
+                         
+                                 
+                                  
+                               </tr>
+                               {% endfor %}
+                            </tbody>
+                         </table>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

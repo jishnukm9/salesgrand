@@ -1,0 +1,163 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+
+
+            <nav class="nav nav-borders">
+                <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'stockadjustment' %}"> Stock Adjustment </a>
+                <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'stockadjustmentlist' %}">Stock Adjustment List</a>
+                <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="">Stock Adjustment Details</a>
+             
+          </nav>
+
+
+
+
+
+          </div>
+          <br>
+
+
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3 d-flex justify-content-between align-items-center bg-white">
+              <h5 class="m-0 fw-bold" > <strong>Stock Adjustment Details </strong> </h5>
+
+              <!-- {% if user.is_superuser or user.userprofile.role == "Branch Admin" or user.userprofile.role == "Franchise Admin"  %}
+                            <div class="d-flex align-items-center gap-3">
+                                <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#salesearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                <a class="sales-clear" href="{% url 'stockadjustmentlist' %}">Clear</a>
+                             </div>
+                             {% endif %} -->
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+
+
+
+
+
+      
+
+
+
+
+                <table
+                class=" table-hover table-bordered table-hover table table-striped sale-list"
+              >
+                <thead>
+                    <tr>
+<th>Sl</th>
+<th>Date</th>
+<th>Ref No</th>
+
+<th>Product</th>
+<th>Branch</th>
+<th>Adjusted Qty</th>
+<th>Adjustment</th>
+<th>Reason</th>
+<th>Status</th>
+
+                    </tr>
+                  
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td>{{item.created_date}}</td>
+                        <td>{{item.sa_number}}</td>
+                        <td>{{item.product}}</td>
+                        <td>{{item.branch}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.adjustment}}</td>
+                        <td>{{item.reason}}</td>
+                      
+                        <td>
+
+{% if item.status == 'Pending' %}
+<span class="px-3 bg-danger text-white rounded">{{item.status}}</span>
+{% elif item.status == 'Confirmed' %}
+<span class="px-3 bg-success text-white rounded">{{item.status}}</span>
+{% else %}
+<span>{{item.status}}</span>
+{% endif %}
+
+                        </td>
+                        
+
+                    </tr>
+                 
+                 
+                </tbody>
+              </table>
+
+
+{% if item.status == 'Pending' %}
+              <div class="d-flex justify-content-end">
+
+                <a class="service-accept  fw-bold float-right cursor-pointer" data-toggle="modal" data-target="#confirmstockadjustment" >Confirm</a>
+              </div>
+
+{% endif %}
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <div class="row flex-grow">
+          <div class="col-12 grid-margin stretch-card"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-sm" id="confirmstockadjustment" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="exampleModalLabel">Confirm Stock Adjustment?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body d-flex gap-3">
+        <form action="{% url 'confirmstockadjustment' %}" method="post">
+          {% csrf_token %}
+          
+                          <input type="text"  name="sa_number" value="{{item.sa_number}}"  hidden>
+                        
+                      
+          <input type="text" value="In Progress" name="status" hidden>
+                          <button class=" service-accept me-1" type="submit">Confirm</button>
+                      </form>
+
+                      <button  class=" me-1 close cancel-popup " data-dismiss="modal" aria-label="Close">Cancel</button>
+      </div>
+    </div>
+
+   
+    </div>
+  </div>
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+           
+            
+          
+           <nav class="nav nav-borders">
+            <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'users' %}"> User List </a>
+            <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="">User Entry</a>
+            
+
+           
+        </nav>
+
+          </div>
+          <br>
+
+
+
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                    <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+                        <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Add User </strong> </h5>
+                    </div>
+                    <div class="card-body p-5">
+
+
+
+
+
+
+                      <form id="add-user-form" action="{% url 'adduser' %}" method="POST">
+                        {% csrf_token %}
+<div class="row">
+                      <div class="col-lg-6 col-md-6 col-sm-12 ">
+                      <div class="form-group col-lg-12 ">
+
+
+                        {% if messages %}
+                                {% for message in messages %}
+                                <label for="username"
+                          ><strong>Username</strong><span class="user-form-validation text-danger">{{message}}</span></label
+                        >
+                                
+                                {% endfor %}
+                                {% else %}
+                                <label for="username"
+                                ><strong>Username</strong><span class="user-form-validation usernameValidation"></span></label
+                              >
+                                
+                                {% endif %}
+
+                        
+
+                        <input  type="text" autocomplete="off" class="form-control " id="username" name="username" >
+                    </div>
+                    <div class="form-group col-lg-12">
+
+                      <label for="firstname"
+                        ><strong>First Name</strong></label
+                      >
+
+                      <input  autocomplete="off"  type="text" class="form-control " id="firstname" name="firstname" >
+                    </div>
+                      <div class="form-group col-lg-12">
+
+                        <label for="email"
+                          ><strong>Email</strong><span class="user-form-validation emailValidation"></span></label
+                        >
+
+                        <input  autocomplete="off"  type="email" class="form-control " id="email" name="email" >
+                    </div>
+
+
+
+                    <div class="form-group col-lg-12">
+
+                      <label for="password"
+                        ><strong>Password</strong><span class="user-form-validation passwordValidation"></span></label
+                      >
+
+                      <input  autocomplete="off"  type="password" class="form-control " id="password" name="password" >
+                  </div>
+
+                  <div class="form-group col-lg-12">
+
+                    <label for="confirm"
+                      ><strong>Confirm Password</strong><span class="user-form-validation passwordMatch"></span></label
+                    >
+
+                    <input  type="password" class="form-control " id="passwordConfirmation" >
+                </div>
+
+
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+
+
+                    <div class="form-group col-lg-12">
+
+                      <label for="mobile"
+                        ><strong>Mobile</strong><span class="user-form-validation mobileValidation"></span></label
+                      >
+  
+                      <input autocomplete="off"  type="text" class="form-control " id="mobile" name="mobile" >
+                  </div>
+                  <div class="form-group col-lg-12">
+
+                    <label for="lastname"
+                      ><strong>Last Name</strong></label
+                    >
+
+                    <input  autocomplete="off"  type="text" class="form-control " id="lastname" name="lastname" >
+                  </div>
+
+                  <div class="form-group col-lg-12">
+
+                    <label for="branch"
+                      ><strong>Branch</strong><span class="user-form-validation branchValidation"></span></label
+                    >
+
+                    <select  autocomplete="off" style=""  class="form-control selectizefield" id="branch" name="branch">
+                      <option value=""></option>
+                      {% for branch in branches %}
+                      <option value="{{branch.id}}">{{branch.name}}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="form-group col-lg-12">
+
+                  <label for="role"
+                    ><strong>Role</strong><span class="user-form-validation roleValidation"></span></label
+                  >
+
+                  <select  autocomplete="off" style="" class="form-control selectizefield" id="role" name="role">
+                    <option value=""></option>
+                    <option value="Field Engineer">Field Engineer</option>
+                    <option value="Branch Admin">Branch Admin</option>
+              
+                    <option value="Technician">Technician</option>
+                    <option value="TRC Front Desk">TRC Front Desk</option>
+                    <option value="Sales Representative">Sales Representative</option>
+<!--              
+                    <option value="TRC QC">TRC QC</option>
+                    <option value="TRC Cleaning and Packing">TRC Cleaning and Packing</option> -->
+                  </select>
+              </div>
+
+
+
+
+                  </div>
+
+
+                </div>
+                <button type="submit" class="btn btn-primary text-white me-0">Submit</button>
+                </form>
+
+
+
+
+
+
+
+
+
+               
+
+
+                </div>
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

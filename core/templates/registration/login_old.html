@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'login/login_style.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Add CSS styles for mobile responsiveness */
+    @media (max-width: 650px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+      
+      .form-container {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      .overlay-container {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  {% if form.errors %}
+  <p>Your Username or Password was incorrect. Try again.</p>
+  {% endif %}
+  
+  <div class="container" id="container">
+    <div class="form-container sign-in-container">
+      <form method="POST">
+        {% csrf_token %}
+        <h1>Sign in</h1>
+        <div class="social-container"></div>
+        <input type="text" placeholder="Username" name="username" />
+        <input type="password" placeholder="Password" name="password" />
+        <br>
+        <button>Sign In</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-right">
+          <h1>Sense4 login</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <h4>www.senseweave.com</h4>
+  </footer>
+
+  <script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+      container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+      container.classList.remove("right-panel-active");
+    });
+  </script>
+</body>
+</html>

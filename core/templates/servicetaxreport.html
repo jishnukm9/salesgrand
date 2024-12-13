@@ -1,0 +1,324 @@
+{% extends "navbar.html" %} {% block content %}
+{% load custom_filters %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+           
+
+            <nav class="nav nav-borders">
+               <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="#">Service Tax Report</a>
+              
+  
+           </nav>
+         </div>
+         <br>
+        
+    
+
+
+
+ 
+
+
+            <div class="card card-rounded " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #fff">
+                <h5 class="m-0 font-weight-bold" style="color:#2c2e2f"> <strong>Service Tax Report</strong> 
+                
+                
+              
+                </h5>
+  
+             
+                       
+                                
+
+                             
+
+                               <div class="d-flex align-items-center gap-3">
+                                <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#searchsaletaxreport" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                <a class="sales-clear" href="{% url 'servicetaxreport' %}">Clear</a>
+                             </div>
+
+                                  
+                            
+                              
+            </div>
+
+            <div class="card-body">
+
+
+
+
+              <div class="row mb-2">
+
+                <div class="col-lg-4">
+                  <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 " style="background-color:#f3f4f6">
+                    <p class="m-0 p-0 fw-bold">From</p>
+                    <p class="m-0 px-1 bg-white"><b><i class="fa-solid fa-calendar-days me-2"></i> {{search_params.start_date}}</b></p>
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 " style="background-color:#f3f4f6">
+                    <p class="m-0 p-0 fw-bold">To</p>
+                    <p class="m-0 px-1 bg-white"><b><i class="fa-solid fa-calendar-days me-2"></i> {{search_params.end_date}}</b></p>
+                  </div>
+                </div>
+                {% if request.user.is_superuser %}
+                <div class="col-lg-4">
+                  <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 " style="background-color:#f3f4f6">
+                    <p class="m-0 p-0 fw-bold">Branch</p>
+                    <p class="m-0 px-1 bg-white"><b>{{search_params.branch}}</b></p>
+                  </div>
+                </div>
+                {% endif %}
+
+                
+              </div> 
+              
+
+              <div class="mb-4">
+
+                <div class="row">
+
+                  {% for key,value in data.total.items %}
+
+                  <div class="col-lg-3">
+                    <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 " style="background-color:#f3f4f6">
+                      <p class="m-0 p-0 fw-bold"> Total {{key}}</p>
+                      <p class="m-0 px-1 bg-white text-success"><b>{{value|floatformat:2}}</b></p>
+                    </div>
+                  </div>
+
+                  {% endfor %}
+                
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 " style="background-color:#f3f4f6">
+                      <p class="m-0 p-0 fw-bold">Service Total</p>
+                      <p class="m-0 px-1 bg-white text-success"><b>{{data.service_total_combined|floatformat:2}}</b></p>
+                    </div>
+                  </div>
+                  <div class="col-lg-3"></div>
+                  <div class="col-lg-3"></div>
+
+                  <div class="col-lg-3">
+                    <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 " style="background-color:#f3f4f6">
+                      <p class="m-0 p-0 fw-bold">Total Tax</p>
+                      <p class="m-0 px-1 bg-white text-success"><b>{{data.total_tax|floatformat:2}}</b></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+             
+              <div class="table-responsive">
+                <table class="add-pagination-servicetax table-bordered  table purchase-list" >
+                   <thead >
+                      <tr>
+                         <th>Sl</th>
+                         <th> Date</th>
+                         <th  style="white-space: normal;"> Service Ref Number</th>
+                         <th  style="white-space: normal;">Invoice Number</th>
+                         <th> Customer</th>
+                         <th  style="white-space: normal;">Total Amnt</th>
+                         <th>Discount</th>
+                         <th  style="white-space: normal;">Final Amnt</th>
+                         <th  style="white-space: normal;"> Service Total</th>
+                      
+                         {% for tax in taxes %}
+                         <th>{{tax.percentage}}% Service</th>
+                         {% endfor %}
+                         <!-- {% for gst in gsts %}
+                         <th>{{gst}}</th>
+                         {% endfor %} -->
+                         <th>Total Tax</th>
+                    
+                        
+                      </tr>
+                   </thead>
+                   <tbody>
+                      {% for item in data.data %}
+                      <tr>
+                         <td>{{ forloop.counter }}</td>
+                         <td>{{ item.memodate }}</td>
+                         <td>{{ item.servicerefnumber }}</td>
+                         <td>{{ item.invoicenumber }}</td>
+                       
+                         <td  style="white-space: normal;">{{ item.firstname }} {{ item.lastname }}</td>
+                         <td>{{ item.totalamount |floatformat:2 }}</td>
+                         <td>{{ item.discount |floatformat:2 }}</td>
+                         <td>{{ item.finalamount |floatformat:2 }}</td>
+                         
+                         <td>{{ item.total |floatformat:2 }}</td>
+                       
+
+                     
+                         
+                         {% for tax in taxes %}
+                        {% for tx in item.sale_taxes %}
+
+                        {% if tx.percentage == tax.percentage %}
+                                <td>{{ tx.perc_sale|floatformat:2 }}</td>
+                        {% endif %}
+
+                        {% endfor %}
+                         {% endfor %}
+
+
+
+<!-- 
+                         {% for tax in gsts %}
+                        {% for tx in item.gst_taxes %}
+
+                          {% for key,value in tx.items %}
+                          {% if key == tax %}
+                          <td>{{value |floatformat:2}}</td>
+                          {% endif %}
+                          {% endfor %}
+                        {% endfor %}
+                         {% endfor %} -->
+
+                
+                         <td>{{ item.totaltaxamount |floatformat:2 }}</td>
+                        
+                         
+                      </tr>
+                      {% endfor %}
+                   
+                   </tbody>
+                </table>
+             </div>
+
+                </div>
+
+               
+
+            </div>
+            
+
+
+
+
+
+
+            
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="searchsaletaxreport">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'servicetaxreport' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+        
+           
+             
+   
+            {% if request.user.is_superuser %}
+             <div class="form-group">
+               <label for="sale_subcategory" class="fw-bold">Select Branch</label>
+               <select required class="selectizefield "  name="branch" id="branch">
+
+
+                <option value=""></option>
+
+                {% for branch in all_branches %}
+                 <option value="{{branch.id}}">{{branch.name}}</option>
+               {% endfor %}
+                 
+               </select>
+             </div>
+
+           
+
+            {% endif %}
+
+
+             
+
+          
+
+            <div class="form-group">
+              <label class=" mb-2" for="">  <strong>Start Date</strong>      </label>
+              <div id="datepicker" 
+                        
+           class="input-group date datepicker-field" 
+           data-date-format="dd-mm-yyyy">
+          <input class="form-control " 
+          name="startdate"
+          autocomplete="off" 
+          required
+                 type="text"  />
+          <span class="input-group-addon">
+              <i class="glyphicon glyphicon-calendar"></i>
+          </span>
+      </div>
+            </div>
+            <div class="form-group">
+              <label class=" mb-2" for="">  <strong>End Date</strong>      </label>
+              <div id="datepicker" 
+                        
+           class="input-group date datepicker-field" 
+           data-date-format="dd-mm-yyyy">
+          <input class="form-control " 
+          name="enddate"
+          autocomplete="off" 
+          required
+                 type="text"  />
+          <span class="input-group-addon">
+              <i class="glyphicon glyphicon-calendar"></i>
+          </span>
+      </div>
+            </div>
+
+           
+
+          
+            
+             
+
+
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+<!-- main-panel ends -->
+{% endblock %}

@@ -1,0 +1,275 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+{% load deletespace %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  
+              
+
+                <nav class="nav nav-borders">
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="">Payment Entry </a>
+                  <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'payment' %}">Payment List</a>
+        
+                   
+                </nav>
+
+
+
+     
+               </div>
+
+               <br>
+         
+
+
+
+
+
+
+
+               
+
+            
+                        <div class="card-body d-flex justify-content-center">
+                       
+                           
+                           
+                          
+                          
+
+                            <div class="col-lg-9 col-md-6 col-sm-12">
+                        
+                                <div class="card card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                                  <div class="card-body" >
+                                    <h3 class="nunito-font " style="color:#444;" ><strong>Payment Details</strong></h3>
+                                   
+                                    <div class="horizontal-line-dark mb-2 mt-4"></div>
+                                    <br />
+                  
+                                    <form
+                                      action="{% url 'addpayment' %}"
+                                      method="post"
+                                      enctype="multipart/form-data"
+                                    >
+                                      {% csrf_token %}
+         
+                                      
+                                      <div class="form-row row">
+                                        <div class="form-group col-lg-4">
+                                          <label for="narration" class="fs-6"
+                                            >Narration</label
+                                          >
+                                         
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                        
+                                          <input
+                                          required
+                                            type="text"
+                                            name="narration"
+                                            id="narration"
+                                            class="form-control cmp-input "
+                                            value=""
+
+                                          />
+                                        </div>
+                                      </div>
+
+
+                                      <div class="form-row row">
+                                        <div class="form-group col-lg-4">
+                                          <label for="referenceno" class="fs-6"
+                                            >Reference Number</label
+                                          >
+                                         
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                        
+                                          <input
+                                          
+                                            type="text"
+                                            name="referenceno"
+                                            id="referenceno"
+                                            class="form-control cmp-input "
+                                            value=""
+
+                                          />
+                                        </div>
+                                      </div>
+
+                          
+                                      <div class="form-row row">
+                                        <div class="form-group col-lg-4">
+                                          <label for="debitaccount" class="fs-6"
+                                            >Debit Account</label
+                                          >
+                                         
+                                        </div>
+                                        <div class="form-group col-lg-8">
+          
+                                          <select required  style=" border:1px solid #dee2e6;" class="form-control" name="debitaccount" id="debitaccount">
+                                            <option value=""></option>
+                                            
+                                            {% for item in debit_dropdown %}
+                                            <option value="{{ item.title }}" >{{ item.title }}</option>
+                                             {% endfor %}
+                                            <!-- <option value="office" >Office Expenses</option>
+                                            <option value="salary">Network And Communication</option> -->
+                                          </select>
+                                        
+                                       
+                                        </div>
+                                      </div>
+
+                                      <div class="form-row row">
+                                        <div class="form-group col-lg-4">
+                                          <label for="creditaccount" class="fs-6"
+                                            >Credit Account</label
+                                          >
+                                         
+                                        </div>
+                                        <div class="form-group col-lg-8">
+          
+                                          <select required  style=" border:1px solid #dee2e6;" class="form-control" name="creditaccount" id="creditaccount">
+                                            <option value=""></option>
+                                            
+                                            {% for item in credit_dropdown %}
+                                            <option value="{{ item.name }}" >{{ item.name }}</option>
+                                             {% endfor %}
+                                            <!-- <option value="office" >Office Expenses</option>
+                                            <option value="salary">Network And Communication</option> -->
+                                          </select>
+                                        
+                                       
+                                        </div>
+                                      </div>
+
+                                     <div class="form-row row">
+                                       <div class="form-group col-lg-4">
+                                         <label for="paidamount" class="fs-6"
+                                           >Paid Amount</label
+                                         >
+                                        
+                                       </div>
+                                       <div class="form-group col-lg-8">
+                                       
+                                         <input
+                                         required
+                                           type="number"
+                                           name="paidamount"
+                                           id="paidamount"
+                                           class="form-control cmp-input "
+                                           value=""
+                                           step="0.01"
+                                           min="0"
+                                          
+                           
+                             
+                                         />
+                                       </div>
+                                     </div>
+
+                                     <div class="form-row row">
+                                        <div class="form-group col-lg-4">
+                                          <label for="paymentmode" class="fs-6"
+                                            >Payment Mode</label
+                                          >
+                                         
+                                        </div>
+                                        <div class="form-group col-lg-8">
+          
+                                          <select required  style=" border:1px solid #dee2e6;" class="form-control" name="paymentmode" id="paymentmode">
+                                            <option  value=""></option>
+                                            <option value="Cash" >Cash</option>
+                                            <option value="Bank" >Bank</option>
+                                            
+                                            <option value="Card" >Card</option>
+                                            <option value="UPI" >UPI</option>
+                                          </select>
+                                        
+                                       
+                                        </div>
+                                      </div>
+
+  
+                                      <div class="form-row row">
+                                       <div class="form-group col-lg-4">
+                                         <label for="description" class="fs-6"
+                                           >Description</label
+                                         >
+                                      
+                                       </div>
+                                       <div class="form-group col-lg-8">
+
+                                        <textarea required   class="form-control "  style="height:106px;" name="description"  id="description" column="10" rows="3"></textarea>
+                                        <!-- <textarea  class="form-control" style="height:106px;  border:1px solid #dee2e6;" name="remarks" id="remarks"  rows="10"></textarea> -->
+                                       
+                                       </div>
+                                     </div>
+                                     <div class="horizontal-line-dark mt-2"></div>
+                                     
+                  
+                                      <button
+                                        type="submit"
+                                        class="btn btn-primary text-white mb-1 mt-3 fs-6"
+                                      >
+                                        Save Payment
+                                      </button>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+
+
+
+
+                        </div>
+                     <!-- </div>
+                  </div>
+               </div> -->
+               <!-- </div> -->
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+
+
+
+        </div>
+      </form>
+      <!-- <hr class="horizontal-line" /> -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+        </div>
+      </form>
+      <!-- <hr class="horizontal-line" /> -->
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

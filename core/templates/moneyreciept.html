@@ -1,0 +1,329 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+{% load deletespace %}
+
+
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                
+
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="">Transactions</a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'cashbook' %}">Cash book</a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'generalledger' %}">General Ledger</a>
+
+                    
+                 </nav>
+
+
+
+               </div>
+         
+<br>
+            
+
+
+
+
+
+
+
+
+
+                <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                  <div class="card-header py-3 d-flex justify-content-between bg-white">
+                      <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Transactions</strong> </h5>
+                      
+                      
+
+                      <div class="d-flex align-items-center gap-3">
+
+                      
+                     <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#moneyrecieptsearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+
+                     <a class="moneyreciept-clear" href="{% url 'accounts' %}">Clear</a>
+                  </div>
+                      
+                     </div>
+                  <div class="card-body">
+
+
+
+                     <div class="total-container mt-0 p-3 mb-4 border" style="background-color:#f3f4f6">
+                        <!-- <p class="fw-bold fs-6 mb-4">Summary</p> -->
+
+                        <!-- <div class="row pt-2">
+
+                           <div class="col-md-4 col-sm-12 col-lg-4" >
+                              <p class="fw-bold">Total Purchase Due Balance: <span class="text-success">{{purchase_due_balance}}</span></p>
+                           </div>
+                           <div class="col-md-4 col-sm-12 col-lg-4" >
+                              <p class="fw-bold">Total Sale Due Balance: <span class="text-success">{{sale_due_balance}}</span></p>
+                            
+                           </div>
+                           <div class="col-md-4 col-sm-12 col-lg-4" >
+                              <p class="fw-bold">Total Service Due Balance: <span class="text-success">{{service_due_balance}}</span></p>
+                             
+                           </div>
+                           
+                           
+                           
+                           
+                        
+
+
+
+                        </div> -->
+
+                     </div>
+
+
+                     <div class="table-responsive">
+                
+
+                        <table class="add-pagination-transaction table-bordered  table purchase-list" id="moneyreciept-table" >
+                           <thead>
+                              <tr>
+                                 <th>Sl</th>
+                                 <th> Date</th>
+                                 <th> Invoice/Bill No</th>
+                                 <th> Accounts</th>
+                                 <th> Narration</th>
+                                 <th>Paid by</th>
+                                 <th>Cash</th>
+                                 <th>Branch</th>
+                                 <th>Id</th>
+                                 <!-- <th>Print</th> -->
+               
+                        
+                              </tr>
+                           </thead>
+                           <tbody>
+                              
+                              {% for item in transaction %}
+                              <tr class="search_results  {{ item.accounts | deletespace }} {{ item.invoicenumber }}">
+                                 <td>{{ forloop.counter }}</td>
+                                 <!-- <td>{{ item.date }}</td> -->
+                                 <td>{{ item.createddate }}</td>
+                                 <td>{{ item.invoicenumber }}</td>
+                                 <td style="white-space: normal;">{{ item.accounts }}</td>
+                                 {% if item.transaction.transactiontype == 'purchase' %}
+                                 <td style="white-space: normal;">Amount Paid By Purchase</td>
+                                 {% elif item.transaction.transactiontype == 'sale'  %}
+                                 <td style="white-space: normal;">Amount Recieved by Sale</td>
+                                 {% elif item.transaction.transactiontype == 'salereturn'  %}
+                                 <td style="white-space: normal;">Amount Paid By SalesReturn</td>
+                                 {% elif item.transaction.transactiontype == 'purchasereturn'  %}
+                                 <td style="white-space: normal;">Amount Recieved By PurchaseReturn</td>
+                                 {% elif item.transaction.transactiontype == 'expense' or item.transaction.transactiontype == 'payment' or item.transaction.transactiontype == 'receipt' or item.transaction.transactiontype == 'journal'  %}
+                                 <td style="white-space: normal;">{{item.remarks}}</td>
+                                 {% elif item.transaction.transactiontype == 'service' %}
+                                 <td style="white-space: normal;">Amount Recieved By Service</td>
+                                 {% endif %}
+                                 <td>{{ item.paymentmode }}</td>
+                                 <td>{{ item.transaction.amount | floatformat:2 }}</td>
+                                 <td>{{item.branch}}</td>
+                                 {% if item.transaction.transactiontype == 'purchase' %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'purchaseview' pid=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+                                 {% elif item.transaction.transactiontype == 'payment'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'paymentdetails' id=item.transaction.transactionid %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+                                 {% elif item.transaction.transactiontype == 'receipt'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'receiptdetails' id=item.transaction.transactionid %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+                                 {% elif item.transaction.transactiontype == 'sale'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'saleview' pid=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+                                 {% elif item.transaction.transactiontype == 'service'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'serviceupdateform' servicerefnumber=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+                                 {% elif item.transaction.transactiontype == 'salereturn'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'salesreturndetails' returnid=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+                                 {% elif item.transaction.transactiontype == 'purchasereturn'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'purchasereturndetails' returnid=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+
+                                 {% elif item.transaction.transactiontype == 'journal'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'journaldetails' id=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+                              
+                              
+                                 
+                                 {% else %}
+                                 <td></td>
+                                 {% endif %}
+                                 <!-- <td><a href=""><i class="fa-solid fa-print label-moneyreciept-print"></i></a></td> -->
+                              
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+
+
+
+                     
+
+                          
+                      </div>
+                
+              </div>
+
+
+
+               
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+ <div class="modal fade" tabindex="-1" id="moneyrecieptsearch">
+   <div class="modal-dialog">
+     <div class="modal-content w-100">
+       <div
+         class="modal-header d-flex justify-content-between align-items-center m"
+       >
+         <h5 class="modal-title"><strong>Search Transactions</strong></h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+     
+       <form action="{% url 'search_money_reciept' %}" method="POST">
+         {% csrf_token %}
+         <div class="modal-body">
+            
+              <div class="form-group">
+                <label for="supplier_customer"  class="fw-bold">Supplier/Customer</label>
+               <select class="selectizefield" name="supplier_customer_money" id="supplier_customer_money">
+                  <option value="">Select Supplier/Customer</option>
+                  {% for ac in accounts_list %}
+                  <option value="{{ac}}">{{ac}}</option>
+                  {% endfor %}
+               </select>
+              </div>
+              <div class="form-group">
+                <label for="invoice_number_money" class="fw-bold">Invoice Number</label>
+                <select class="selectizefield" name="invoice_number_money" id="invoice_number_money">
+                  <option value="">Select Invoice Number</option>
+                  {% for inv in invoicenumber_list %}
+                  <option value="{{inv}}">{{inv}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="form-group">
+               <label for="invoice_number_money" class="fw-bold">Payment Method</label>
+               <select class="selectizefield" name="payment_mode" id="payment_mode">
+                 <option value="">Select Payment Method</option>
+                 {% for inv in paymentmodes %}
+                 <option value="{{inv.name}}">{{inv}}</option>
+                 {% endfor %}
+               </select>
+             </div>
+
+             <div class="form-group">
+               <label class=" mb-2" for="">  <strong>Start Date</strong>      </label>
+               <div id="datepicker" 
+                         
+            class="input-group date datepicker-field" 
+            data-date-format="dd-mm-yyyy">
+           <input class="form-control " 
+           name="startdate"
+           autocomplete="off" 
+           
+                  type="text"  />
+           <span class="input-group-addon">
+               <i class="glyphicon glyphicon-calendar"></i>
+           </span>
+       </div>
+             </div>
+             <div class="form-group">
+               <label class=" mb-2" for="">  <strong>End Date</strong>      </label>
+               <div id="datepicker" 
+                         
+            class="input-group date datepicker-field" 
+            data-date-format="dd-mm-yyyy">
+           <input class="form-control " 
+           name="enddate"
+           autocomplete="off" 
+           
+                  type="text"  />
+           <span class="input-group-addon">
+               <i class="glyphicon glyphicon-calendar"></i>
+           </span>
+       </div>
+             </div>
+            
+          </div>
+          <div class="modal-footer">
+
+
+
+         
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+       </form>
+       
+      
+     </div>
+   </div>
+ </div>
+
+
+
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

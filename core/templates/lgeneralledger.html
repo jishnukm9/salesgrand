@@ -1,0 +1,244 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+
+           <nav class="nav nav-borders">
+            <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color: #444 ; " href="{% url 'accounts' %}">Transactions</a>
+            <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'cashbook' %}">Cash book</a>
+            <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#4555B9; border-bottom:2px solid #4555B9"  href="">General Ledger</a>
+
+        </nav>
+          </div>
+       <br>
+     
+
+       <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+        <div class="card-header py-3 d-flex justify-content-between bg-white">
+            <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>General Ledger </strong> </h5>
+
+
+            <div class="d-flex align-items-center gap-3">
+
+                      
+              <i id="fa-magnifying-glass-moneyreciept"   data-toggle="modal" data-target="#ledgersearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+
+              <a class="moneyreciept-clear" href="{% url 'generalledger' %}">Clear</a>
+           </div>
+        </div>
+        <div class="card-body">
+
+          <div class="mb-5">
+            <div class="row">
+              
+              <div class="col-lg-4">
+                <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                  <p class="m-0 p-0 fw-bold">Debit</p>
+                  <p class="m-0 px-1 bg-white"><b>{{ totaldebit }}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                  <p class="m-0 p-0 fw-bold">Credit</p>
+                  <p class="m-0 px-1 bg-white"><b>{{ totalcredit }}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                  <p class="m-0 p-0 fw-bold">Balance</p>
+                  <p class="m-0 px-1 bg-white"><b>{{ balance }}&nbsp;{{ balancetype }}</b></p>
+                </div>
+              </div>
+              {% if search == "Yes" %}
+              <div class="col-lg-4">
+                <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                  <p class="m-0 p-0 fw-bold">Filtered Debit</p>
+                  <p class="m-0 px-1 bg-white"><b>{{ filteredtotaldebit }}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                  <p class="m-0 p-0 fw-bold">Filtered Credit</p>
+                  <p class="m-0 px-1 bg-white"><b>{{ filteredtotalcredit }}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
+                  <p class="m-0 p-0 fw-bold">Filtered Balance</p>
+                  <p class="m-0 px-1 bg-white"><b>{{ filteredbalance }}&nbsp;{{ filteredbalancetype }}</b></p>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+
+
+
+            <div class="table-responsive">
+
+
+
+
+                      <table class="add-pagination-ledger branch_list table-bordered table table-striped">
+                        <thead>
+                          <tr>
+                            <th width="5%">Date</th>
+                            <th width="5%">Reference No</th>
+                            <th width="5%">Account head</th>
+                            <th width="5%">Narration</th>
+                            <th width="5%">Debit</th>
+                            <th width="5%">Credit</th>
+                            <th width="5%">Customer/Vendor</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% if search == "Yes" %}
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>OPENING BALANCE [as on {{ startdate }} ]</td>
+                            {% if openingbalancetype == "Dr" %}
+                            <td>{{ openingbalance }}&nbsp;{{ openingbalancetype }}</td>
+                            <td></td>
+                            {% else %}
+                            <td></td>
+                            <td>{{ openingbalance }}&nbsp;{{ openingbalancetype }}</td>
+                            {% endif %}
+                            <td></td>
+                          </tr>
+                          {% endif %}
+                          {% for item in data reversed %}
+                          <tr>
+                            <td>{{ item.date }} </td>
+                            <td>{{ item.refernceno }} </td>
+                            <td>{{ item.account_subhead }} </td>
+                            <td>{{ item.narration }} </td>
+                            <td>{{ item.debit_amount }} </td>
+                            <td>{{ item.credit_amount }} </td>
+                            <td>{{ item.customer_or_vendor }} </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+
+            </div>
+          </div>
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="ledgersearch">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search General Ledger</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'generalledgersearch' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="branch" class="fw-bold">Branch</label>
+            <select class="selectizefield" name="branch" id="branch">
+              {% if request.user.is_superuser %}
+              <option value="">Select Branch</option>
+              {% for branch in branch_list %}
+              <option value="{{branch}}">{{branch}}</option>
+              {% endfor %}
+              {% else %}
+             
+              <option selected value="{{request.user.userprofile.branch}}">{{request.user.userprofile.branch}}</option>
+              
+              {% endif %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="head" class="fw-bold">Account Head</label>
+            <select class="selectizefield" name="head" id="head">
+             
+              <option value="">Select Account Head</option>
+              {% for item in account_heads %}
+
+              <option value="{{item.account_subhead}}">{{item.account_subhead}}</option>
+              {% endfor %}
+             
+             
+             
+            </select>
+          </div>
+
+           
+             <div class="form-group">
+               <label for="supplier_customer"  class="fw-bold">Start Date</label>
+               <div id="datepicker" 
+                          
+               class="input-group date datepicker-field" 
+               data-date-format="dd-mm-yyyy">
+              <input class="form-control " 
+              name="startdate"
+              autocomplete="off" 
+              
+                     type="text"  />
+              <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-calendar"></i>
+              </span>
+          </div>
+             </div>
+             <div class="form-group">
+              <label for="supplier_customer"  class="fw-bold">End Date</label>
+              <div id="datepicker" 
+                          
+              class="input-group date datepicker-field" 
+              data-date-format="dd-mm-yyyy">
+             <input class="form-control " 
+             name="enddate"
+             autocomplete="off" 
+             
+                    type="text"  />
+             <span class="input-group-addon">
+                 <i class="glyphicon glyphicon-calendar"></i>
+             </span>
+         </div>
+            </div>
+             
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,258 @@
+2024-11-06 * INV7676767675444 (Purchase Transaction)
+     Expenses:Purchase        3000.0  INR 
+     Assets:Purchase:Cash 
+
+2024-11-06 * SR1 (Service Transaction)
+    Assets:Service:Cash   1000.01 INR
+    Income:Service
+    Liabilities:Service:TaxPayable                     -130.44   INR
+
+2024-11-06 * SR2 (Service Transaction)
+    Assets:Service:Cash   900.01 INR
+    Income:Service
+    Liabilities:Service:TaxPayable                     -130.44   INR
+
+2024-11-08 * INV7878666 (Purchase Transaction)
+     Expenses:Purchase        3000.0  INR 
+     Assets:Purchase:Cash 
+
+2024-11-08 * INV7676767675444 (Purchase Return Transaction)
+     Assets:PurchaseReturn:Cash      3000.0 INR 
+     Income:PurchaseReturn
+
+2024-11-08 * INV-24113 (Sale Transaction)
+    Assets:Sale:Cash              400.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -52.17  INR
+
+2024-11-08 * INV-24114 (Sale Transaction)
+    Assets:Sale:Cash              400.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -52.17  INR
+
+2024-11-08 * INV-24113 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       400.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      52.17  INR
+
+2024-11-08 * SR3 (Service Transaction)
+    Assets:Service:Cash   600.0 INR
+    Income:Service
+    Liabilities:Service:TaxPayable                     -78.26   INR
+
+2024-11-08   *  TEA EXPENSE (Payment) 
+     Expenses:EXPENSES:Tea expense     1000 INR
+     Expenses:EXPENSES:EXPENSES
+
+2024-11-08  *  sample  (Receipt) 
+     Assets:CASH ACCOUNT:CASH ACCOUNT      200  INR
+     Expenses:EXPENSES:Tea expense
+
+2024-11-01 * INV-24116 (Sale Transaction)
+    Assets:Sale:Cash              400.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -52.17  INR
+
+2024-11-08 * SR4 (Service Transaction)
+    Assets:Service:Cash   600.0 INR
+    Income:Service
+    Liabilities:Service:TaxPayable                     -78.26   INR
+
+2024-11-28 * INV334443 (Purchase Credit Transaction)
+     Expenses:Purchase        9999.83 SAR 
+     Assets:Purchase:Cash
+     Liabilities:Purchase:AccountPayable:Rony electronics  -8999.83 SAR
+
+2024-11-28 * INV-24111 (Sale Credit Transaction)
+    Assets:Sale:Cash              100.0 SAR
+    Assets:Sale:AccountReceivable:jishnu        200.0 SAR
+    Income:Sale
+    Liabilities:Sale:TaxPayable                                   -39.13  SAR
+
+2024-11-28 * INV-24112 (Sale Transaction)
+    Assets:Sale:Cash              250.0 SAR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -39.13  SAR
+
+2024-11-28 * SR2 (Service Due Transaction)
+    Assets:Service:AccountReceivable:jishnu       -200.0 SAR
+    Assets:Service:Card
+
+2024-11-28 * SR1 (Service Due full Transaction)
+    Assets:Service:AccountReceivable:jishnu   -400.0   SAR 
+    Assets:Service:Bank
+
+2024-11-28 * INV334443 (Purchase Due Transaction)
+     Liabilities:Purchase:AccountPayable:Rony electronics    8999.83 INR
+     Assets:Purchase:Cash
+
+2024-11-28 * INV-24111 (Sale Due full Transaction)
+    Assets:Sale:AccountReceivable:jishnu     -200.0 INR 
+    Assets:Sale:Card 
+
+2024-11-28 * SR2 (Service Due full Transaction)
+    Assets:Service:AccountReceivable:jishnu   -300.0   INR 
+    Assets:Service:Card
+
+2024-11-05 * INV-24115 (Sale Transaction)
+    Assets:Sale:Cash              300.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -39.13  INR
+
+2024-12-02   *  Tea expense 2 (Payment) 
+     Expenses:EXPENSES:Tea expense     200 INR
+     Assets:CASH AT BANKS:CASH AT BANKS
+
+2024-12-04   *  Rent Expence Paid By Account Receivable (Journal) 
+     Expenses:EXPENSES:Rent Expense     2000 INR
+     Assets:OTHER ASSETS:Rajesh Account Receivable
+
+2024-12-04 * INV-241210 (Sale Transaction)
+    Assets:Sale:Cash              400.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -52.17  INR
+
+2024-12-04 * INV-24114 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       400.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      52.17  INR
+
+2024-12-04 * INV-241211 (Sale Credit Transaction)
+    Assets:Sale:Cash              0.0 INR
+    Assets:Sale:AccountReceivable:jishnu        400.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable                                   -52.17  INR
+
+2024-12-04 * INV-241211 (Sale Due Transaction)
+    Assets:Sale:AccountReceivable:jishnu        -100 INR
+    Assets:Sale:Cash 
+
+2024-12-04 * INV-241211 (Sale Due Transaction)
+    Assets:Sale:AccountReceivable:jishnu        -200 INR
+    Assets:Sale:Cash 
+
+2024-12-04 * INV-241211 (Sale Due full Transaction)
+    Assets:Sale:AccountReceivable:jishnu     -100 INR 
+    Assets:Sale:Cash 
+
+2024-12-04 * INV65652542222 (Purchase Credit Transaction)
+     Expenses:Purchase        1500.0 INR 
+     Assets:Purchase:Cash
+     Liabilities:Purchase:AccountPayable:Rony electronics  -1500.0 INR
+
+2024-12-04 * INV65652542222 (Purchase Due Transaction)
+     Liabilities:Purchase:AccountPayable:Rony electronics    500.0 INR
+     Assets:Purchase:Cash
+
+2024-12-04 * INV65652542222 (Purchase Due Transaction)
+     Liabilities:Purchase:AccountPayable:Rony electronics    1000.0 INR
+     Assets:Purchase:Cash
+
+2024-12-04   *  vehicle expense December (Payment) 
+     Expenses:EXPENSES:Vehicle Expense/Expenses     560 INR
+     Assets:CASH AT BANKS:CASH AT BANKS
+
+2024-12-12 * INV54354353 (Purchase Transaction)
+     Expenses:Purchase        1150.0  INR 
+     Assets:Purchase:Cash 
+
+2024-12-12 * IMNV45555 (Purchase Transaction)
+     Expenses:Purchase        374900.0  INR 
+     Assets:Purchase:Cash 
+
+2024-12-12 * INV-24121 (Sale Transaction)
+    Assets:Sale:Cash              17825.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -2325.0  INR
+
+2024-12-13 * INV-24122 (Sale Transaction)
+    Assets:Sale:Cash              15065.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -1965.0  INR
+
+2024-12-13 * INV-24123 (Sale Transaction)
+    Assets:Sale:Cash              17825.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -2325.0  INR
+
+2024-12-13 * INV54354353 (Purchase Transaction)
+     Expenses:Purchase        252885.0  INR 
+     Assets:Purchase:Cash 
+
+2024-12-13 * INV-24121 (Sale Transaction)
+    Assets:Sale:Cash              14375.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -1875.0  INR
+
+2024-12-13 * INV-24122 (Sale Transaction)
+    Assets:Sale:Cash              14325.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -1868.48  INR
+
+2024-12-13 * INV-24121 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       575.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      75.0  INR
+
+2024-12-13 * INV-24123 (Sale Transaction)
+    Assets:Sale:Cash              59800.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -7800.0  INR
+
+2024-12-13 * INV-24123 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       22425.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      2925.0  INR
+
+2024-12-13 * INV-24124 (Sale Transaction)
+    Assets:Sale:Cash              82800.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -10800.0  INR
+
+2024-12-13 * INV-24124 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       27600.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      3600.0  INR
+
+2024-12-13 * INV-24124 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       27600.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      3600.0  INR
+
+2024-12-13 * INV-24124 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       27600.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      3600.0  INR
+
+2024-12-13 * INV-24125 (Sale Transaction)
+    Assets:Sale:Cash              7705.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -1005.0  INR
+
+2024-12-13 * INV-24126 (Sale Transaction)
+    Assets:Sale:Cash              2300.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -300.0  INR
+
+2024-12-13 * INV-24126 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       1150.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      150.0  INR
+
+2024-12-13 * INV-24126 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       1150.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      150.0  INR
+
+2024-12-13 * INV54533333 (Purchase Transaction)
+     Expenses:Purchase        218500.0  INR 
+     Assets:Purchase:Cash 
+
+2024-12-13 * INV6566 (Purchase Transaction)
+     Expenses:Purchase        3450.0  INR 
+     Assets:Purchase:Cash 
+
+2024-12-09 * INV65625323 (Purchase Transaction)
+     Expenses:Purchase        10350.0  INR 
+     Assets:Purchase:Cash 
+

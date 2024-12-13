@@ -1,0 +1,395 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  
+
+                  <nav class="nav nav-borders">
+                     <a class="nav-link active ps-0 pe-0 ms-0 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href=""> Edit User </a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"   href="{% url 'users' %}">User List</a>
+                     
+         
+                    
+                 </nav>
+
+               </div>
+               <br>
+        
+                  <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                     <div class="card-header py-3">
+                         <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Update User </strong> </h5>
+                     </div>
+                     <div class="card-body">
+
+
+
+
+
+                        <form id="add-user-form" action="{% url 'userupdate' %}" method="POST">
+                           {% csrf_token %}
+   <div class="row">
+                         <div class="col-lg-6 col-md-6 col-sm-12 ">
+                         <div class="form-group col-lg-12 ">
+   
+   
+                           {% if messages %}
+                                   {% for message in messages %}
+                                   <label for="username"
+                             ><strong>Username</strong><span class="user-form-validation text-danger">{{message}}</span></label
+                           >
+                                   
+                                   {% endfor %}
+                                   {% else %}
+                                   <label for="username"
+                                   ><strong>Username</strong><span class="user-form-validation usernameValidation"></span></label
+                                 >
+                                   
+                                   {% endif %}
+
+
+
+                               
+   
+                           
+                                   <input  type="text" class="form-control " id="username" name="username" value="{{user.username}}" placeholder="Enter username">
+                           <!-- <input style=" border: 0.0625rem solid #b7bcbf;" type="text" autocomplete="off" class="form-control" id="username" name="username" placeholder="Enter username"> -->
+                       </div>
+                         <div class="form-group col-lg-12">
+   
+                           <label for="email"
+                             ><strong>Email</strong><span class="user-form-validation emailValidation"></span></label
+                           >
+
+
+                           <input  type="text" class="form-control " id="email" name="email" value="{{user.email}}" placeholder="Enter email">
+   
+                           <!-- <input style=" border: 0.0625rem solid #b7bcbf;" autocomplete="off"  type="text" class="form-control" id="email" name="email" placeholder="Enter email"> -->
+                       </div>
+   
+   
+   
+                       <div class="form-group col-lg-12">
+   
+                         <label for="password"
+                           ><strong>New Password</strong><span class="user-form-validation passwordValidation"></span></label
+                         >
+                         <input   type="password" class="form-control " value="" id="password" name="password" placeholder="Enter password">
+                         <!-- <input style=" border: 0.0625rem solid #b7bcbf;" autocomplete="off"  type="password" class="form-control" id="password" name="password" placeholder="Enter password"> -->
+                     </div>
+   
+                     <div class="form-group col-lg-12">
+   
+                       <label for="confirm"
+                         ><strong>Confirm Password</strong><span class="user-form-validation passwordMatch"></span></label
+                       >
+                       <input   type="password" class="form-control " value="" id="passwordConfirmation"  placeholder="Confirm password">
+                       <!-- <input style=" border: 0.0625rem solid #b7bcbf;" type="password" class="form-control" id="passwordConfirmation" placeholder="Confirm password"> -->
+                   </div>
+   
+   
+                     </div>
+                     <div class="col-lg-6 col-md-6 col-sm-12">
+   
+   
+                       <div class="form-group col-lg-12">
+   
+                         <label for="mobile"
+                           ><strong>Mobile</strong><span class="user-form-validation mobileValidation"></span></label
+                         >
+                         <input  type="text" class="form-control " id="mobile" name="mobile" value="{{user.userprofile.mobile}}" placeholder="Enter mobile number" >
+                         <!-- <input  autocomplete="off"  type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter mobile number"> -->
+                     </div>
+   
+                     <div class="form-group col-lg-12">
+   
+                       <label for="branch"
+                         ><strong>Branch</strong><span class="user-form-validation branchValidation"></span></label
+                       >
+   
+                       <!-- <select style=" border: 0.0625rem solid #b7bcbf;" autocomplete="off"  class="form-control" id="branch" name="branch">
+                         <option value="">Select branch</option>
+                         {% for branch in branches %}
+                         <option value="{{branch.id}}">{{branch.name}}</option>
+                         {% endfor %}
+                       </select> -->
+
+                       <select style=""  class="form-control selectizefield" id="branch" name="branch">
+                        <option value="{{user.userprofile.branch.id}}">{{user.userprofile.branch.name}}</option>
+                        {% for branch in branches %}
+                        <option value="{{branch.id}}">{{branch.name}}</option>
+                        {% endfor %}
+                     </select>
+
+                   </div>
+   
+   
+                   <div class="form-group col-lg-12">
+   
+                     <label for="role"
+                       ><strong>Role</strong><span class="user-form-validation roleValidation"></span></label
+                     >
+   
+                     <!-- <select style=" border: 0.0625rem solid #b7bcbf;" autocomplete="off"  class="form-control" id="role" name="role">
+                       <option value="">Select Role</option>
+                       <option value="Field Engineer">Field Engineer</option>
+                       <option value="Branch Admin">Branch Admin</option>
+                       <option value="Franchise Admin">Franchise Admin</option>
+                     </select> -->
+
+                     <select  style="" class="form-control selectizefield" id="role" name="role">
+                                     
+                        <option value="{{user.userprofile.role}}">{{user.userprofile.role}}</option>
+                        <option value="Field Engineer">Field Engineer</option>
+                        <option value="Branch Admin">Branch Admin</option>
+                  
+                        <option value="Technician">Technician</option>
+                        <option value="TRC Front Desk">TRC Front Desk</option>
+                 
+                        <option value="TRC QC">TRC QC</option>
+                        <option value="TRC Cleaning and Packing">TRC Cleaning and Packing</option>
+                      </select>
+
+                 </div>
+   
+   
+   
+   
+                     </div>
+   
+   
+                   </div>
+                   <div class="container" style="display:none;">
+                     <div class="row" >
+                        <div class="col-md-12 remove-padding-left-right">
+                           <table class="table table-bordered">
+                              <tr class="table-secondary">
+                                 <th>USER ID</th>
+                              </tr>
+                              <tr >
+                                 <td   >
+                                    <input type="text" style="display:none" value="{{user.id}}" name="user_id">
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+                   <button type="submit" class="btn btn-primary text-white me-0">Save Changes</button>
+                   </form>
+
+
+
+
+
+
+
+
+
+
+
+
+                           <!-- <form id="add-user-form" action="{% url 'userupdate' %}" method="POST">
+                              {% csrf_token %}
+                              <div style="padding-left:15px;padding-right:15px;">
+                                 <div class="row" >
+                                    <div class="col-md-4 remove-padding-left-right">
+                                       <table class="table table-bordered">
+                                          <thead>
+                                             <tr class="table-primary">
+                                                {% if messages %}
+                                                {% for message in messages %}
+                                                <th>Username<span class="user-form-validation text-danger" >{{message}}</span></th>
+                                                {% endfor %}
+                                                {% else %}
+                                                <th>Username<span class="user-form-validation usernameValidation" ></span></th>
+                                                {% endif %}
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr >
+                                                <td > 
+                                                   <input type="text" class="form-control" id="username" name="username" value="{{user.username}}" placeholder="Enter username">
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="col-md-4 remove-padding-left-right">
+                                       <table class="table table-bordered" >
+                                          <thead>
+                                             <tr class="table-primary">
+                                                <th>Email<span class="user-form-validation emailValidation"></span></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr >
+                                                <td > 
+                                                   <input type="text" class="form-control" id="email" name="email" value="{{user.email}}" placeholder="Enter email">
+                                                </td >
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="col-md-4 remove-padding-left-right">
+                                       <table class="table table-bordered">
+                                          <thead>
+                                             <tr class="table-primary">
+                                                <th>Mobile<span class="user-form-validation mobileValidation"></span></th>
+                                             </tr >
+                                          </thead>
+                                          <tbody>
+                                             <tr >
+                                                <td>
+                                                   <input type="text" class="form-control" id="mobile" name="mobile" value="{{user.userprofile.mobile}}" placeholder="Enter mobile number" >
+                                                </td >
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                                 <br>
+                            
+                                 <div class="row" >
+                                    <div class="col-md-4 remove-padding-left-right">
+                                       <table class="table table-bordered">
+                                          <thead>
+                                             <tr class="table-secondary">
+                                                <th>New Password<span class="user-form-validation passwordValidation"></span></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr >
+                                                <td  > 
+                                                   <input type="password" class="form-control" value="" id="password" name="password" placeholder="Enter password">
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="col-md-4 remove-padding-left-right">
+                                       <table class="table table-bordered" >
+                                          <thead>
+                                             <tr class="table-secondary ">
+                                                <th>Confirm Password<span class="user-form-validation passwordMatch"></span></th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr >
+                                                <td>
+                                                   <input type="password" class="form-control" value="" id="passwordConfirmation"  placeholder="Confirm password">
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="col-md-4 remove-padding-left-right">
+                                       <table class="table table-bordered">
+                                          <thead>
+                                             <tr class="table-secondary ">
+                                                <th>Branch<span class="user-form-validation branchValidation"></span></th>
+                                             </tr >
+                                          </thead>
+                                          <tbody>
+                                             <tr >
+                                                <td>
+                                                   <select class="form-control" id="branch" name="branch">
+                                                      <option value="{{user.userprofile.branch.id}}">{{user.userprofile.branch.name}}</option>
+                                                      {% for branch in branches %}
+                                                      <option value="{{branch.id}}">{{branch.name}}</option>
+                                                      {% endfor %}
+                                                   </select>
+                                                </td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                                 <br>
+                             
+                                 <div class="row" >
+                                    <div class="col-md-4 remove-padding-left-right">
+                                    
+                                       <table class="table table-bordered">
+                                          <thead>
+                                            <tr class="table-secondary">
+                                              <th>Role<span class="user-form-validation roleValidation"></span></th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr>
+                                              <td>
+                                                <select class="form-control" id="role" name="role">
+                                     
+                                                  <option value="{{user.userprofile.role}}">{{user.userprofile.role}}</option>
+                                                  <option value="Field Engineer">Field Engineer</option>
+                                                  <option value="Branch Admin">Branch Admin</option>
+                                                  <option value="Franchise Admin">Franchise Admin</option>
+                                                </select>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                       
+                                    </div>
+                                   
+                                 </div>
+                              </div>
+                              <div class="container" style="display:none;">
+                                 <div class="row" >
+                                    <div class="col-md-12 remove-padding-left-right">
+                                       <table class="table table-bordered">
+                                          <tr class="table-secondary">
+                                             <th>USER ID</th>
+                                          </tr>
+                                          <tr >
+                                             <td   >
+                                                <input type="text" style="display:none" value="{{user.id}}" name="user_id">
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                              <button type="submit" class="btn btn-primary text-white me-0" >Update</button>
+                           </form> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         
+         </div>
+         <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,863 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+
+
+
+
+
+    
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+
+
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'sale' %}"> Sales List </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'saleform' %}">Sales Entry</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'salesreturn' %}">Sales Return</a>
+              <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'comingsoon' %}">Sales Settlement</a> -->
+
+             
+          </nav>
+
+
+
+          </div>
+          <br>
+        
+
+
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3 bg-white" >
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Sales Entry </strong> </h5>
+          </div>
+          <div class="card-body">
+              <!-- <div class="table-responsive"> -->
+
+
+                <form id="salesForm" class="loader-form" action="{% url 'addsale' %}" method="POST">
+                  {% csrf_token %}
+
+
+
+
+
+
+
+
+
+                  <div class="row mt-4   p-2 pt-0">
+
+
+
+
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+
+
+                        <div class="form-group col-lg-12 mb-2"  >
+
+                            <label class="mb-1" for="saleinvoicenumber"
+                            ><strong>Invoice Number</strong></label
+                          >
+                         
+                          <input autocomplete="off" readonly   class="form-control" value="{{invoice_number}}" type="text" name="saleinvoicenumber" id="invoicenumber" >
+                         
+                        </div>
+
+  
+                        </div>
+
+
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group col-lg-12" >
+
+
+
+                            <label class="mb-1" for="saleinvoicedate"
+                              ><strong>Invoice Date</strong></label
+                            >
+  
+                            
+                          <div id="datepicker" 
+                          name="saleinvoicedate"
+             class="input-group date datepicker-field datepicker-current" 
+         
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control  " 
+            autocomplete="off"
+            required
+            readonly 
+            name="saleinvoicedate"
+        
+                   type="text"    />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+          </div>
+                        </div>
+                        
+
+
+
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group col-lg-12 mb-2"  >
+
+                                <label class="mb-1" for="salepaymentmode"
+                                ><strong>Payment Mode</strong></label
+                              >
+                             
+                              <select
+                              style=" border:1px solid #dee2e6;"
+                               class="form-control selectizefield" 
+                               name="salepaymentmode"
+                                id="paymentmode" required>
+                                <option value="" selected>Select Payment Mode</option>
+                                {% for mode in paymentmode %}
+                                <option value="{{mode.name}}">{{mode.name}}</option>
+                                {% endfor %}
+       
+                              </select>
+                             
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+
+                            <div class="form-group col-lg-12 mb-2"  >
+            
+
+                                <label class="mb-1" for="customer"
+                                ><strong>Customer</strong></label
+                              >
+                  
+                              <div class="d-flex flex-row align-items-center justify-content-center">
+
+                                {% if user.is_superuser %}
+                                  <select
+                                      class="form-control me-2 selectizefield customerdropdownsaleswarehouse"
+                                      name="customer"
+                                      style=" border:1px solid #dee2e6;"
+                                    >
+      
+                                    
+      
+                                    
+                                      <option value="" ></option>
+                                     
+      
+                          
+                                      {% for customer in customers %}
+                                      {% if customer.name != 'WAREHOUSE' %}
+                                      <option value="{{ customer.id }}">
+                                        {{ customer }} - {{customer.branchtype}}
+                                      </option>
+                                      {% endif %}
+                                      {% endfor %}
+                                    </select>
+                                    <i data-toggle="modal" data-target="#addcustomermodal"  class="fa-solid fa-plus addcustomerbtn"></i>
+                            {% endif %}
+      
+      
+                            {% if user.userprofile.role == "Branch Admin" or user.userprofile.role == "Franchise Admin"  %}
+                            <select
+                            class="form-control me-2 selectizefield customerinsales customerdropdownsales"
+                            name="customer"
+                            style=" border:1px solid #dee2e6;"
+                          >
+      
+                          <option value=""></option>
+                          {% for cust in regular_customers %}
+                          <option value="{{cust.id}}" >{{cust.firstname}} {{cust.lastname}} - {{cust.phone}}</option>
+                          {% endfor %}
+      
+      
+                          
+      
+                    
+                          </select>
+      
+                            <a href="" data-toggle="modal" data-target="#customermodal"><i class="fa-solid fa-plus addcustomerbtn"></i></a>
+      
+                            {% endif %}
+                                </div>
+                             
+                             
+                             
+                            </div>
+                            </div>
+
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+                 
+                        <div class="table-responsive  p-4 pt-0 row">
+
+                            <label class="mb-1 nunito-font fs-9 mt-2 mb-3 ps-0"  style="font-size:13px;"  for="supplier"
+                            ><strong>Invoice Entries</strong></label
+                          >
+                      <table
+                        class="table table-bordered sale-entry-table"
+                        
+                      >
+                        <thead  >
+                          <tr >
+                            <th width="2%"></th>
+                            <th width="18%" >Barcode<span style="color:#e2e6fb3d;">----------------</span>  </th>
+                            <th width="7%"  class="puchase-qty-right">Quantity</th>
+                            <th width="30%">Name<span data-toggle="modal" data-target="#stockmodal" class="technician-quick-details"><i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></span><span style="color:#e2e6fb3d;">------------------------------</span></th>
+                           <th width="3%">Avail. Qty</th>
+                            
+                            
+                            <th width="12%" >Price Excl Tax<span style="color:#e2e6fb3d;"></span></th>
+                            <th width="12%" >Price After Disc.<span style="color:#e2e6fb3d;"></span></th>
+                            <th width="2%">Sale Tax<span style="color:#e2e6fb3d;">--</span> </th>
+                            <th width="12%" >MRP<span style="color:#e2e6fb3d;">--------</span> </th>
+                            <th width="12%" >MOP<span style="color:#e2e6fb3d;">--------</span></th>
+                            
+                            <th width="2%" class="puchase-qty-left"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr style="background-color:#fff;">
+                            <td>1</td>
+                            <td>
+                              <input
+                                type="text"
+                                name="salebarcode1"
+                                autocomplete="off" 
+                                class="form-control no-spinner"
+                             
+                              />
+                            </td>
+                            <td class="puchase-qty-right">
+                              <input
+                                type="number"
+                                name="salequantity1"
+                                min="1"
+                                autocomplete="off" 
+                                class="form-control no-spinner"
+                        
+                              />
+                              
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                id="sale-search-input-name1"
+                                autocomplete="off"
+                                name="salename1"
+                                list="salename1"
+                                class="form-control no-spinner"
+                              
+                              />
+                              <datalist id="salename1">
+                                {% for product in products %}
+                                <option  data-id="{{ product.id }}" value="{{ product.name }}">
+                                  {{ product.name }}
+                                </option>
+                                {% endfor %}
+                              </datalist>
+                            </td>
+                            <td>
+                              <input 
+                              type="number"
+                               class="form-control no-spinner"
+                                readonly 
+                                value="" 
+                                 name="availablesaleqty1">
+                            </td>
+                            
+                           
+                           
+                            <td>
+                              <input
+                                type="number"
+                                name="saleprice1"
+                                min="0"
+                                step="0.01"
+                                autocomplete="off" 
+                                class="form-control no-spinner"
+                       
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                name="sale_priceafterdiscount1"
+                                min="0"
+                                step="0.01"
+                                autocomplete="off" 
+                                class="form-control no-spinner"
+                       
+                              />
+                            </td>
+                         
+                            <td>
+                              <select name="salegstsale1"  class="form-control saledisabledselectinsale"  style=" border:1px solid #dee2e6;">
+                                <option value=""  selected></option>
+                                {% for gst in tax %}
+                                <option value="{{ gst.name }}"
+                                 data-salegstsale="{{ gst.percentage }}">
+                                  {{ gst.name }}
+                                </option>
+                                {% endfor %}
+                              </select>
+                            </td>
+                            <td >
+                              <input
+                                type="number"
+                                step="0.01"
+                                name="salemrp1"
+                                min="0"
+                                autocomplete="off" 
+                                class="form-control no-spinner"
+                           
+                              />
+                            </td>
+                            <td >
+                              <input
+                                type="number"
+                                step="0.01"
+                                name="salemop1"
+                                min="0"
+                                autocomplete="off" 
+                                class="form-control no-spinner "
+                                style="color:#e9ecef"
+                            
+                         
+                              />
+                            </td>
+                            
+                            <td class="puchase-qty-left">
+                              <!-- <span class="addrowbtn"   ><i class="fa-solid fa-plus"></i></span> -->
+                              <span class="deletebtnsales"><i class="fa-solid fa-minus"></i></span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <div class="d-flex justify-content-end">
+                        <span class="addrowbtn fs-7 " style="font-size:14px;"   >Add Row</span>
+                       
+                      </div>
+    
+                    </div>
+
+
+<br>
+
+
+
+
+                  <div class="table-responsive  total-amount-table" style="display:none">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th class="table-primary" width="20%">
+                            Total Amount
+                          </th>
+                          <th class="second-th">
+                            <input
+                              type="number"
+                              min="0"
+                              name="saletotalamount"
+                              readonly
+                              style="display:none"
+                              
+                            />
+                          </th>
+                        </tr>
+                      </thead>
+                    </table>
+
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+
+                  <div class="row ">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+
+
+                      <div class="row mb-3">
+                        <div class="col-8">
+                  
+                          <div class="form-group">
+                            <label for="salesperson" class="fw-bold">Sales Person</label>
+                            
+
+                             <select
+                             required
+                              style=" border:1px solid #dee2e6;"
+                               class="form-control selectizefield" 
+                               name="salesperson" id="salesperson">
+
+                               <option value="" selected>Select Salesperson</option>
+                               {% for usr in salespersons %}
+                               <option
+                              
+                                 value="{{ usr.id }}"
+                               >
+                                 {{ usr.username }}
+                               </option>
+                               {% endfor %}
+       
+                              </select>
+                  
+                          </div>
+                        </div>
+                        <div class="col-4"></div>
+                        
+                      </div>
+
+
+
+                      <div class="row">
+                        <div class="col-8">
+                  
+                          <div class="form-group">
+                            <label for="customergst" class="fw-bold">Customer VAT Number</label>
+                            
+
+                             <input class="form-control" type="text" name="customergst" id="customergst">
+                  
+                          </div>
+                        </div>
+                        <div class="col-4"></div>
+                        
+                      </div>
+                      
+                    
+                    </div>
+
+
+
+                    <!-- <div class="col-lg-6 col-md-6 col-sm-12">
+                        
+                    </div> -->
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                
+                        <ul class="list-group ">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Total Amount (Excl Tax)</p>
+                                    <!-- <input readonly class="form-control w-50" type="text" value="0.00" name="totalamount" id="totalamount" type="number" step="0.01" min="0"> -->
+                                    <input readonly class="form-control w-50" type="number" min="0" step="0.01"  name="saletotalamount" value="0" >
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Total Tax</p>
+                                    <!-- <input type="text" class="form-control w-50" name="adjustment" id="adjustment" type="number" step="0.01" min="0"> -->
+                                    <input
+                                    type="number"
+                                    value="0"
+                                    name="saletotaltax"
+                                    readonly
+                                    class="form-control w-50"
+                                  />
+                                
+                                   
+                                  </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Discount</p>
+                                    <!-- <input readonly class="form-control w-50" type="text" value="0.00" name="nettotal" id="nettotal" type="number" step="0.01" min="0"> -->
+                                    <div class="discount-div">
+                                        <input
+                                          type="number"
+                                          name="salediscount"
+                                          min="0"
+                                          class="form-control w-50"
+                                          step="0.01"
+                                        />
+                                        <select
+                                          name="salediscountmethod"
+                                          id="salediscountmethod"
+                                          class="form-control w-50"
+                                          style="  border:1px solid #dee2e6;
+                                          "
+                                        >
+                                          <!-- <option value=''>Method</option> -->
+                                          <option value="flat">Flat</option>
+                                          <option value="percentage">%</option>
+                                          
+                                        </select>
+                                      </div>
+                                  </div>
+                                  
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Final Amount</p>
+                                    <!-- <input readonly class="form-control w-50" type="text" value="0" name="totalqty" id="totalqty" type="number"  min="0"> -->
+                                    <input readonly class="form-control w-50 saletotalbillingamount" type="number" min="0" step="0.01"  name="saletotalbillingamount" value="0" >
+                                  </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Amount Recieved</p>
+                                    <input required class="form-control w-50 amountrecievedsales"" type="number" min="0" step="0.01"  id="amountrecieved" name="salerecieved" value="0">
+                                  </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Due Balance Amount</p>
+                                    <!-- <input class="form-control w-50 " type="number" min="0" step="0.01" id="amountrecieved" name="recieved" value="0"> -->
+                                    <input readonly class="form-control w-50" type="number" min="0" step="0.01" id="duebalance" name="saleduebalance" value="0"  >
+                                </div>
+                            </li>
+                          
+                            
+                            <!-- <li class="list-group-item">Vestibulum at eros</li> -->
+                          </ul>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary text-white ms-0 ps-4 pe-4 mt-3 fw-bold float-right" type="submit">Save</button>
+                                <!-- <button type="submit" class="btn btn-primary mt-3 float-right text-white"> <strong>Save</strong> </button> -->
+                            </div>
+                          
+                    </div>
+                
+                </div>
+
+
+
+                </form>
+
+
+
+                </div>
+                
+                
+                
+                
+                <div>
+
+
+
+
+
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" id="addcustomermodal" >
+  <div class="modal-dialog">
+    <div class="modal-content p-0 w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add External Customer</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    
+      <form class="loader-form" id="customerentryinsalesformwarehouse" action="" method="POST">
+        {% csrf_token %}
+        <div
+          class="modal-body "
+        >
+
+        <div class="mb-3 ">
+          <label class=" mb-2" for="">  <strong>Name</strong>      </label>
+          <input required type="text"  name="name" class="whcustomername form-control me-3  text-center" />
+        </div>
+         
+
+        <div class="mb-3 ">
+          <label class=" mb-2" for="">  <strong>Contact Number</strong>      </label>
+          <input type="number"    name="phone" class="whcustphone form-control me-3  text-center" />
+        </div>
+    
+
+
+         <div class="my-3">
+          <label class=" mb-2" for=""> <strong>Type</strong> </label>
+          <select required class="whcusttype form-control selectizefield " name="branchtype" id="branchtype">
+            <option value=""></option>
+            <option value="Franchise">Franchise</option>
+         
+            <option value="External">External</option>
+          </select>
+         </div>
+
+         <div class="my-3">
+          <label class=" mb-2" for=""> <strong>Category</strong> </label>
+          <select required class="whcustcatagoty form-control selectizefield " name="branchcategory" id="branchcategory">
+           
+            <option value="Standard" selected>Standard</option>
+          
+          </select>
+         </div>
+
+
+         <div class="mb-3 ">
+          <label class=" mb-2" for="">  <strong>VAT Number</strong>      </label>
+          <input required class="form-control whcustgstin" type="text" name="gstin">
+        </div>
+
+         <div class="my-3 ">
+          <label class=" mb-2 text-left" for="">  <strong>Address</strong>      </label>
+          <textarea  class="form-control mb-3 text-center whcustaddress"  style="height:106px;" name="address"  id="address" column="10" rows="3"></textarea>
+        </div>
+
+
+         
+
+            
+            
+           
+<div class="modal-footer mt-5">
+  <button type="submit" class="btn btn-primary p-2 ps-3 pe-3">
+    Add
+  </button>
+</div>
+
+         
+        </div>
+      </form>
+    
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="stockmodal">
+  <div class="modal-dialog">
+    <div class="modal-content p-0 w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Available Stocks</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+          <div class="table-responsive">
+
+          <table class="table add-pagination-modal table-bordered w-100 m-0">
+            <thead>
+              <tr>
+                <td >Product</td>
+                <td>Pur.Price</td>
+                <td>Pur.Tax</td>
+                <td>Pur.Total</td>
+                <td>Qty</td>
+                
+              </tr>
+            </thead>
+         <tbody>
+{% for value in stock_list %}
+              <tr>
+                <td style="white-space: normal;">{{value.product}}</td>
+                <td>{{value.purchase_rate}}</td>
+                <td>{{value.purchase_tax}}</td>
+                <td>{{value.purchase_total}}</td>
+                <td>{{value.quantity}}</td>
+              </tr>
+             
+
+{% endfor %}
+</tbody>
+
+          </table>
+            
+             
+        </div> 
+
+           
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- SG-29 -->
+<div class="modal fade" tabindex="-1" id="customermodal">
+  <div class="modal-dialog">
+    <div class="modal-content p-0 w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+        style="background-color:#4555B9;"
+        >
+        <h5 class="modal-title text-white"><strong>Add Customer</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span class="text-white" aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      
+        <div class="modal-body">
+
+        
+           
+          <form class="customerentryinsalesform loader-form">
+            <div class="form-group">
+              <label for="firstname"
+                          ><strong>First Name</strong></label
+                        >
+                       
+                        <input  class="form-control customerfirstname" type="text" name="firstname" placeholder="First Name" required>
+             
+            </div>
+            <div class="form-group">
+              <label for="lastname"
+              ><strong>Last Name</strong></label
+            >
+
+            <input  class="form-control customerlastname" type="text" name="lastname" placeholder="Last Name" >
+            </div>
+
+
+
+
+
+
+          <div class="form-group ">
+
+            <label for="phone"
+            ><strong>Mobile Number</strong></label
+          >
+          <input  class="form-control customerphone" type="number" name="phone" placeholder="Mobile Number" required>
+         
+        </div>
+
+
+        <div class="form-group ">
+
+          <label for="phone"
+          ><strong>VAT Number</strong></label
+        >
+        <input  class="form-control vatnumbersale" type="text" name="vatnumber" placeholder="VAT Number">
+       
+      </div>
+
+
+
+
+      <div class="form-group ">
+
+        <label for="phone"
+        ><strong>Customer Type</strong></label
+      >
+      <select required name="customertype" id="customertype" class="form-control border customertypesale">
+        <option value=""></option>
+        <option value="B2C">B2C</option>
+        <option value="B2B">B2B</option>
+
+
+
+      </select>
+     
+     
+    </div>
+        <div class="form-group ">
+
+          <label for="lastname"
+            ><strong>Address</strong></label
+          >
+
+          <textarea  class="ps-4 pt-2 customeraddress" name="address" rows="4" cols="40"  style="width: 100%; max-width: 100%;"></textarea>
+      </div>
+
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+         </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+
+
+
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+

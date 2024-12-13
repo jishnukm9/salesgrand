@@ -1,0 +1,342 @@
+{% extends "navbar.html" %} 
+{% load custom_filters %}
+{% block content %}
+
+<style>
+.custom-header {
+    background-color: #f8f9fa;
+}
+
+
+
+</style>
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom pb-3">
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9; border-bottom:2px solid #4555B9; font-weight: 500;" href="">
+                Balancesheet
+              </a>
+             
+            </nav>
+          </div>
+          <br />
+
+          <div class="card shadow-sm mb-4" style="border-radius:8px; border:1px solid #e9ecef;">
+            
+            <div class="card-header py-3 d-flex justify-content-between bg-white">
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Balance Sheet</strong> </h5>
+          
+              <div class="d-flex align-items-center gap-3">
+  
+                        
+                <i id="fa-magnifying-glass-moneyreciept"   data-toggle="modal" data-target="#balancesheetsearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+  
+                <a class="moneyreciept-clear" href="{% url 'balancesheet_new' %}">Clear</a>
+             </div>
+            </div>
+            <div class="card-body p-4">
+              
+              <div>
+
+                <p>  <strong>Date</strong> : {{enddate_text}} </p>
+            </div>
+              <!-- Filter Controls -->
+              
+
+              <!-- Balance Tables -->
+              <div class="row">
+                <!-- Liabilities and Equity Tables -->
+                <div class="col-md-6">
+                  <!-- Liabilities Table -->
+                  <div class="table-responsive mb-4">
+                    <table class="table table-bordered">
+                      <thead  class="custom-header">
+                        <tr >
+                          <th class="py-3 px-4 fs-5" style="width: 70%; color: #2c2e2f; font-weight: 600;">
+                            Liabilities
+                          </th>
+                          <th class="py-3 px-4 text-end" style="width: 30%; color: #2c2e2f; font-weight: 600;">
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in receipt_list_liability %}
+                        {% for key, value in item.items %}
+                        
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold "  >{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px- text-end align-middle">{{ value | floatformat:2 }}</td>
+                        </tr>
+
+                        {% endfor %}
+                        {% endfor %}
+
+                        {% for item in payment_list_liability %}
+                        {% for key, value in item.items %}
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px- text-end align-middle">({{ value | floatformat:2 }})</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+
+                        <tr>
+                          <td class="fw-bold fs-7 py-3">Accounts Payable</td>
+                          <td></td>
+                        </tr>
+                        {% for item in account_payable_list %}
+                        {% for key, value in item.items %}
+                        <tr>
+                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+                        <!-- <tr>
+                          <td class="fw-bold fs-7 py-3">
+
+                          </td>
+                        </tr> -->
+                        <tr>
+                          <td class="fw-bold fs-7 py-3">Tax Payable</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td class="py-3 px-4 align-middle">Sale Tax Payable</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ sale_tax_payable | floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                          <td class="py-3 px-4 align-middle">Less: Tax on Sales Returns</td>
+                          <td class="py-3 px-4 text-end align-middle">({{ sale_return_tax | floatformat:2 }})</td>
+                        </tr>
+                        <tr>
+                          <td class="py-3 px-4 align-middle">Service Tax Payable</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ service_tax_payable | floatformat:2 }}</td>
+                        </tr>
+
+
+
+
+
+
+
+
+                        <tr class="table-light fw-bold">
+                          <td class="py-3 px-4 align-middle">Total Liabilities</td>
+                          <td class="py-3 px-4 text-end align-middle">{{total_liability | floatformat:2}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Equity Table -->
+                  <div class="table-responsive">
+                    <table class="table table-bordered" >
+                      <thead  class="custom-header">
+                        <tr >
+                          <th class="py-3 px-4 fs-5" style="width: 70%; color: #2c2e2f; font-weight: 600;">
+                            Equity
+                          </th>
+                          <th class="py-3 px-4 text-end" style="width: 30%; color: #2c2e2f; font-weight: 600;">
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in receipt_list_equity %}
+                        {% for key, value in item.items %}
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px- text-end align-middle">{{ value | floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+                        {% for item in payment_list_equity %}
+                        {% for key, value in item.items %}
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px- text-end align-middle">({{ value | floatformat:2 }})</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold">Retained Earnings ({{retained_earnings.pnl}})</td>
+                          <td class="py-3 px- text-end align-middle">{{ retained_earnings.balance }}</td>
+                        </tr>
+
+                        <tr class="table-light fw-bold">
+                          <td class="py-3 px- align-middle">Total Equity</td>
+                          <td class="py-3 px- text-end align-middle">{{total_equity | floatformat:2}}</td>
+                        </tr>
+                        <tr class="table-secondary fw-bold">
+                          <td class="py-3 px- align-middle">Total Liabilities and Equity</td>
+                          <td class="py-3 px- text-end align-middle">{{total_liability_equity | floatformat:2}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Assets Table -->
+                <div class="col-md-6">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" >
+                      <thead  class="custom-header">
+                        <tr >
+                          <th class="py-3 px-4 fs-5" style="width: 70%; color: #2c2e2f; font-weight: 600;">
+                            Assets
+                          </th>
+                          <th class="py-3 px-4 text-end" style="width: 30%; color: #2c2e2f; font-weight: 600;">
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold fs-7 py-3">Cash In Hand</td>
+                          <td></td>
+                        </tr>
+                        {% for item in asset %}
+                          {% for key, value in item.items %}
+                          <tr>
+                              <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                              <td class="py-3 px-4 text-end align-middle">{{ value }}</td>
+                          </tr>
+                          {% endfor %}
+                      {% endfor %}
+                        {% for item in payment_list_asset %}
+                        {% for key, value in item.items %}
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px- text-end align-middle">{{ value | floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+                        {% for item in receipt_list_asset %}
+                        {% for key, value in item.items %}
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px- text-end align-middle">({{ value | floatformat:2 }})</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+                        <tr>
+                          <td class="py-3 px- align-middle fw-bold">Closing Stock</td>
+                          <td class="py-3 px- text-end align-middle">{{ closing_stock_value | floatformat:2 }}</td>
+                        </tr>
+
+
+                        <tr>
+                          <td class="fw-bold fs-7 py-3">Accounts Receivable</td>
+                          <td></td>
+                        </tr>
+
+                        {% for item in account_receivable %}
+                        {% for key, value in item.items %}
+                        <tr>
+                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+
+                        <!-- <tr>
+                          <td class="fw-bold fs-7 py-3">
+
+                          </td>
+                        </tr> -->
+                        <tr>
+                          <td class="fw-bold fs-7 py-3">Tax Receivable</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td class="py-3 px-4 align-middle">Purchase Tax Receivable</td>
+                          <td class="py-3 px-4 text-end align-middle">{{ purchase_tax_receivable | floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                          <td class="py-3 px-4 align-middle">Less: Tax on Purchase Returns</td>
+                          <td class="py-3 px-4 text-end align-middle">({{ purchase_return_tax | floatformat:2 }})</td>
+                        </tr>
+
+
+                        
+                        <tr class="table-light fw-bold">
+                          <td class="py-3 px-4 align-middle">Total Assets</td>
+                          <td class="py-3 px-4 text-end align-middle">{{total_asset | floatformat:2}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="balancesheetsearch">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search Balance Sheet</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'balancesheet_new' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+           
+       
+
+            <div class="form-group">
+              <label class=" mb-2" for="">  <strong>As of Date</strong>      </label>
+              <div id="datepicker" 
+                        
+           class="input-group date datepicker-field" 
+           data-date-format="dd-mm-yyyy">
+          <input class="form-control " 
+          name="enddate"
+          autocomplete="off" 
+          
+                 type="text"  />
+          <span class="input-group-addon">
+              <i class="glyphicon glyphicon-calendar"></i>
+          </span>
+      </div>
+            </div>
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+
+{% endblock %}

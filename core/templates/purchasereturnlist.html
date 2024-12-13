@@ -1,0 +1,146 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+              
+
+       
+
+
+
+                 <nav class="nav nav-borders">
+                    <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'purchasereturn' %}"> Purchase Return </a>
+                    <a class="nav-link active ps-0 pe-0 ms-0 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'purchasereturnlist' %}"> Purchase Return List</a>
+   
+                 
+              </nav>
+
+
+
+               </div>
+               <br>
+           
+           
+
+
+
+
+
+
+
+
+              <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+               <div class="card-header py-3  bg-white">
+                   <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Purchase Return List </strong> </h5>
+               </div>
+               <div class="card-body">
+                   <div class="table-responsive">
+
+
+
+                     <div class="mt-3">
+                        <div class="table-responsive">
+                           <table class="  add-pagination table-hover table-bordered  table table-striped purchase-return-list" >
+                              <thead >
+                                 <tr>
+                                    <th>Sl</th>
+                                    <th> Return Id</th>
+                                    <th> Invoice Number</th>
+                                    <th> Date</th>
+                                    <th> Supplier</th>
+
+                                  
+                                    <th> Status</th>
+                                  
+                                    <th>Quantity</th>
+                                    <th>Refund Amount</th>
+                                 <th>Branch</th>
+                                    <th>Action</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for item in data %}
+                                 <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.purchasereturnid }}</td>
+                                    <td>{{ item.invoicenumber }}</td>
+                                    <td>{{ item.createddate }}</td>
+                                    <td>
+                                       {% if item.supplier == None %}
+                                       
+                                       {{ item.externalsupplier }}
+
+                                       {% else %}
+                                       {{ item.supplier }}
+                                       {% endif %}
+
+
+
+                                    </td>
+                                    
+                                    <td>
+                                        {% if item.status == 'Pending' %}
+                                        <p class="label-saleview label-saleview-pending">{{item.status}}</p>
+                                        {% else %}
+                                        <p class="label-saleview label-saleview-recieved">{{item.status}}</p>
+                                        {% endif %}
+                                        
+                                    </td>
+                                    <td>{{ item.totalquantity }}</td>
+                                    <td>{{ item.nettotal}}</td>
+                                    <td>{{ item.branch}}</td>
+                                    
+                                    
+                                    <td>
+                                       
+                                       <div class="d-flex gap-2">
+                                       <a data-toggle="tooltip" data-placement="top" title="View"  href="{% url 'purchasereturndetails' returnid=item.purchasereturnid %}"><i class="fa-solid fa-eye label-purchase-view"></i></a>
+                                       {% if item.status == 'Pending' %}
+                                       <a data-toggle="tooltip" data-placement="top" title="Delete"    href="{% url 'deletepurchasereturn' returnid=item.purchasereturnid %}"> <span class="delete-btn "><i class="fa-regular fa-trash-can"></i></span> </a>
+                                          {% endif %}
+                                    </div>
+                                 </td>
+                                    </tr>
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+
+
+                   </div>
+                  </div>
+               </div>
+
+
+
+
+
+
+
+           
+
+
+
+               <!-- -->
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

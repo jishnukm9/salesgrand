@@ -1,0 +1,166 @@
+<html>
+  <head>
+    <title>Sales Details</title>
+  </head>
+
+  <body>
+    <div>
+      <div>
+        <table>
+          <thead>
+            <th class="w20">
+              <img style="width:100%;" src="{{logo}}"  alt="logo">
+              <!-- {% if current_host == '127.0.0.1:8000' %}
+                     <img style="width:100%;" src="http://{{current_host}}{{logo}}"  alt="logo">
+                     {% else %}
+                     <img style="width:100%;" src="https://magnus.salesgrand.com{{logo}}"  alt="logo">
+                     {% endif %} -->
+            </th>
+
+            <th class="w25"></th>
+            <th class="w55">
+              <div class="text-right">
+                <h4 class="company-name">
+                  <strong>{{company_name}}</strong>
+                </h4>
+                {% if current_user.is_superuser %}
+                <p class="address-1">{{address_line1}}</p>
+                <p class="address-2">{{address_line2}}</p>
+                <p class="address-3">{{address_line3}}</p>
+                {% else %}
+                <p class="address-1">{{address_line1}}</p>
+                <p class="phone">{{phone}}</p>
+
+                {% endif %}
+                {% if branch.gstin %}
+                <p class="gst">GSTIN : {{branch.gstin}}</p>
+                {% endif %}
+              </div>
+            </th>
+          </thead>
+        </table>
+      </div>
+
+      <hr />
+
+      <div class="text-center">
+        <h2>INVOICE #{{invoicenumber}}</h2>
+        <p>{{invoicedate}}</p>
+      </div>
+
+      <table class="table-1">
+        <thead>
+          <tr>
+            <th colspan="3" class="th">Invoice Number رقم الفاتورة : {{ invoicenumber }}</th>
+            <th colspan="3" class="th">Invoice Date تاريخ الفاتورة : {{ invoicedate }}</th>
+          </tr>
+          <tr>
+            <td colspan="3" class="th">
+              <strong>Sale Id : </strong>{{saleid}}<br /><br />
+              <strong>Customer اسم الزبون : </strong>{{customer}}
+            </td>
+            <td colspan="3" class="th">
+              <strong>Payment Mode طريقة الدفع : </strong>{{type}}<br /><br />
+              <strong>Branch فرع : </strong>{{branch}}
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="sl">Sl</th>
+            <th class="sl-2">Name <br> منتج</th>
+            <th class="sl-2">Barcode <br> الباركود</th>
+            <th class="sl-2">Unit Price <br>  سعر الوحدة</th>
+            <th class="sl-2">      {% if totaltax != 0 %}Sale Tax <br> ضريبة البيع{% endif %}</th>
+            <th class="sl-2">Quantity <br> كمية</th>
+          </tr>
+
+          {% for item in data %}
+          <tr>
+            <td class="sl">{{ forloop.counter }}</td>
+            <td class="sl">{{ item.name }}</td>
+            <td class="sl">{{ item.barcodenumber | default:'' }}</td>
+            <td class="sl">{{ item.price }}</td>
+
+            <td class="sl">
+              {% if item.salegst_percentage.percentage != '0' %}
+              {{ item.salegst }}
+              {% endif %}
+            </td>
+            <td class="sl">{{ item.totalquantity }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4"></td>
+            <th colspan="1" class="sl">Total Amount <br> المبلغ الإجمالي</th>
+            <td colspan="1" class="sl">{{totalamount}}</td>
+          </tr>
+          {% if totaltax != 0 %}
+          <tr>
+            <td colspan="4"></td>
+            <th colspan="1" class="sl">Total Tax <br> مجموع الضريبة</th>
+            <td colspan="1" class="sl">{{totaltax}}</td>
+          </tr>
+          {% endif %}
+          {% if discount != 0 %}
+          <tr>
+            <td colspan="4" class="no-border"></td>
+            <th colspan="1" class="sl">Discount <br> تخفيض</th>
+            {% if discountmethod == 'percentage' %}
+            <td colspan="1" class="sl">{{discount}}%</td>
+            {% else %}
+            <td colspan="1" class="sl">{{discount}}</td>
+            {% endif %}
+          </tr>
+          {% endif %}
+          <tr>
+            <td colspan="4"></td>
+            <th colspan="1" class="sl">Final Amount <br> لقيمة النهائية</th>
+            <td colspan="1" class="sl">{{totalbillingamount}}</td>
+          </tr>
+          <tr>
+            <td colspan="4" class="no-border"></td>
+            <th colspan="1" class="sl">Amount Recieved <br> استلام المبلغ </th>
+            <td colspan="1" class="sl">{{amountrecieved}}</td>
+          </tr>
+          {% if duebalance != 0 %}
+          <tr>
+            <td colspan="4" class="no-border"></td>
+            <th colspan="1" class="sl">Due Balance <br> الرصيد المستحق </th>
+            <td colspan="1" class="sl">{{duebalance}}</td>
+          </tr>
+          {% endif %}
+        </tfoot>
+      </table>
+    </div>
+    <div>
+      <h4 class="text-center">Thank you for your bussiness!</h4>
+
+      <p>
+        By accepting this sales invoice from Magnus store & care, you agree to
+        the following terms and conditions:
+      </p>
+      <!-- <p>By accepting this sales invoice from Magnus store & care, you agree to the following terms and conditions: All products and services listed here are subject to payment as specified on the invoice. Payment is due within the agreed-upon terms, and late payments may incur additional charges. Any discrepancies or issues with the invoice must be reported to Magnus store & care within 10 days of receipt. Title to the products listed in this invoice passes to the buyer upon full payment. All sales are final, and no returns or refunds are accepted unless otherwise specified.</p> -->
+    </div>
+    <br /><br />
+    <table>
+      <thead>
+        <th class="w25">
+          <div class="text-left">
+            <p>Manager Signature <br> توقيع المدير </p>
+          </div>
+        </th>
+
+        <th class="w25"></th>
+        <th class="w25"></th>
+        <th class="w25">
+          <div class="text-right">
+            <p>Client Signature <br> توقيع العميل</p>
+          </div>
+        </th>
+      </thead>
+    </table>
+  </body>
+</html>

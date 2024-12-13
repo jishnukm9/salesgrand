@@ -1,0 +1,230 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+            
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item fs-6"><a class="text-decoration-none " href="{% url 'index' %}"><strong>Dashboard</strong></a></li>
+              <li class="breadcrumb-item fs-6 active" aria-current="page"> <strong>Daily Sales</strong>  </li>
+            </ol>
+          </nav>
+
+
+
+          </div>
+          <!-- <br /> -->
+    
+
+
+
+ 
+
+
+            <div class="card card-rounded " style="border-radius:5px;border:0.5px solid #e2e2e2;">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: rgba(89, 99, 158, 0.24)">
+                <h5 class="m-0 font-weight-bold" style="color:#2c2e2f"> <strong>Daily Sales </strong> </h5>
+  
+             
+                       
+                                
+
+                                <div class="d-flex align-items-center gap-3">
+                                  <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#dashboardyearlypurchasemodal" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                  <a class="sales-clear" href="{% url 'dashboard_daily_sales' %}">Clear</a>
+                               </div>
+
+                                  
+                            
+                              
+            </div>
+
+            <div class="card-body">
+
+
+              <div class="table-responsive">
+                <table class="  add-pagination  table-bordered  table purchase-list" >
+                   <thead >
+                      <tr>
+                         <th>Sl</th>
+                         <th> Sale Id</th>
+                         <th> Invoice Number</th>
+                         <th> Invoice Date</th>
+                         <th> Customer</th>
+
+                         
+                         <th>Bill Amount</th>
+                         <th>Amount Paid</th>
+                         <th>Due Balance</th>
+                         <th>Branch</th>
+                        
+                      </tr>
+                   </thead>
+                   <tbody>
+                      {% for item in daily_sales %}
+                      <tr>
+                         <td>{{ forloop.counter }}</td>
+                         <td>{{ item.saleid }}</td>
+                         <td>{{ item.invoicenumber }}</td>
+                         <td>{{ item.invoicedate }}</td>
+                         <td>{{ item.customer }}</td>
+                         
+                         <td>{{ item.totalbillingamount }}</td>
+                         <td>{{ item.amountrecieved }}</td>
+                         <td>{{ item.duebalance }}</td>
+                         <td>{{ item.branch }}</td>
+                      
+                         
+                      </tr>
+                      {% endfor %}
+                   
+                   </tbody>
+                </table>
+             </div>
+
+                </div>
+
+                <div class="card-footer " style="background-color: rgba(89, 99, 158, 0.24)">
+
+<div class="row my-3">
+                    <div class="col-lg-4 col-md-4">
+
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+
+                    </div>
+                  <div class="col-lg-4 col-md-4 ">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5> <strong>  Total :</strong>  </h5>
+
+                        <h5>{{day_sales_total}}</h5>
+                  </div>
+                  <hr>
+
+                  <div class="d-flex justify-content-between align-items-center">
+
+                    <h5>  <strong>Total Recieved :</strong>  </h5>
+
+                      <h5>{{day_sales_recieved}}</h5>
+                  </div>
+                  <hr>
+
+                  <div class="d-flex justify-content-between align-items-center">
+
+                    <h5><strong> Due : </strong> </h5>
+
+                    <h5>{{day_sales_duebalance}}</h5>
+                  </div>
+
+                  </div>
+                </div>
+
+
+
+                </div>
+
+
+            </div>
+            
+
+
+
+
+
+
+            
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" id="dashboardyearlypurchasemodal">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'search_daily_sales' page='dashboard' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+        
+           
+             <div class="form-group">
+               <label for="date"  class="fw-bold">Select Date</label>
+               <div id="datepicker" 
+               name=""
+  class="input-group date datepicker-current " 
+  data-date-format="dd-mm-yyyy">
+ <input class="form-control  " 
+ name="date"
+
+ autocomplete="off" 
+ id="date"
+
+style="text-align:center;"
+        type="text"   />
+ <span class="input-group-addon">
+     <i class="glyphicon glyphicon-calendar"></i>
+ </span>
+</div>
+             </div>
+   
+            {% if request.user.is_superuser %}
+             <div class="form-group">
+               <label for="sale_subcategory" class="fw-bold">Select Branch</label>
+               <select class="selectizefield "  name="branch" id="branch">
+
+
+                <option value="{{selected_branch.id}}">{{selected_branch}}</option>
+
+                {% for branch in all_branches %}
+                 <option value="{{branch.id}}">{{branch.name}}</option>
+               {% endfor %}
+                 
+               </select>
+             </div>
+             {% endif %}
+
+          
+            
+             
+
+
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+<!-- main-panel ends -->
+{% endblock %}

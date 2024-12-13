@@ -1,0 +1,231 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+
+
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href=""> Sales List  </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'saleform' %}">Sales Entry</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'salesreturn' %}">Sales Return</a>
+              <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'comingsoon' %}">Sales Settlement</a> -->
+
+             
+          </nav>
+
+
+
+
+
+          </div>
+          <br>
+
+
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3 d-flex justify-content-between align-items-center bg-white">
+              <h5 class="m-0 fw-bold" > <strong>Sales List </strong> </h5>
+
+              {% if user.is_superuser or user.userprofile.role == "Branch Admin" or user.userprofile.role == "Franchise Admin"  %}
+                            <div class="d-flex align-items-center gap-3">
+                                <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#salesearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                <a class="sales-clear" href="{% url 'sale' %}">Clear</a>
+                             </div>
+                             {% endif %}
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+
+
+
+
+
+      
+
+
+
+
+                <table
+                class="add-pagination-sales table-hover table-bordered table-hover table table-striped sale-list"
+              >
+                <thead>
+                  <tr>
+                    <th>Sl</th>
+                    <th>Sale Id</th>
+                    <th>Invoice Number</th>
+                    <th>Invoice Date</th>
+                    <th>Customer</th>
+                    <th>Bill Amount</th>
+                    <th>Amount Received</th>
+                    <th>Due Balance</th>
+                    <th>Collect</th>
+                    {% if user.is_superuser %}
+                    <th>Branch</th>
+                    {% endif %}
+                    <th style="white-space: normal;">Sales Person</th>
+                    <th>Action</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in data %}
+                  <tr
+            
+                  >
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.saleid }}</td>
+                    <td>{{ item.invoicenumber }}</td>
+                    <td style="white-space: normal;">{{ item.invoicedate }}</td>
+                    <td style="white-space: normal;">{{ item.customer }}</td>
+                    <td>{{ item.totalbillingamount  | floatformat:2  }}</td>
+
+
+
+
+
+
+               
+
+                   
+
+
+
+
+
+
+                    <td>{{ item.amountrecieved  | floatformat:2  }}</td>
+                    <td>{{ item.duebalance  | floatformat:2  }}</td>
+
+
+
+                    {% if item.duebalance == 0 %}
+                    <td><span class="sales-collect"><strong>Collected</strong> </span></td>
+                    {% else %}
+                    {% if request.user.userprofile.branch == item.branch %}
+                    <td> <a href="{% url 'saledueform' saleid=item.saleid%}"> <span class="label-sales-collect">Collect</span> </a></td>
+                    {% else %}
+                    
+                    <td><span class=" text-danger "><strong>Not Collected</strong> </span></td>
+                    
+                    {% endif %}
+
+
+                    {% endif %}
+
+
+
+
+
+
+                    {% if user.is_superuser %}
+                    <td style="white-space: normal;">{{item.branch}}</td>
+                    {% endif %}
+                    <td>{{item.added_by}}</td>
+                    <td><a class="me-2" href="../saleview/{{ item.saleid }}/"><i class="fa-solid fa-eye label-sale-view"></i></a>
+                  <!-- <a href="{% url 'generate_sale_pdf' id=item.saleid action='view' %}" target="_blank"><i class="fa-solid fa-print label-sale-view"></i></a></td> -->
+                  <a href="{% url 'saleinvoicepage' id=item.saleid %}" ><i class="fa-solid fa-print label-sale-view"></i></a></td>
+                </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <div class="row flex-grow">
+          <div class="col-12 grid-margin stretch-card"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="salesearch">
+  <div class="modal-dialog">
+    <div class="modal-content w-100">
+      <div
+        class="modal-header d-flex justify-content-between align-items-center m"
+      >
+        <h5 class="modal-title"><strong>Search Sales</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+    
+      <form action="{% url 'search_sale' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+        
+           
+             <div class="form-group">
+               <label for="sale_category"  class="fw-bold">Select Category</label>
+              <select class="selectizefield sale_category" name="sale_category" id="sale_category">
+                 <option value="">Select Category</option>
+                 {% for b in categories %}
+                  <option value="{{b}}">{{b}}</option>
+                  {% endfor %}
+              </select>
+             </div>
+   
+            
+             <div class="form-group">
+               <label for="sale_subcategory" class="fw-bold">Select SubCategory</label>
+               <select class="selectizefield sale_subcategory"  name="sale_subcategory" id="sale_subcategory">
+                 <option value="">Select SubCategory</option>
+               
+                 
+               </select>
+             </div>
+
+             <div class="form-group">
+              <label for="sale_brand" class="fw-bold">Select Brand</label>
+              <select class="selectizefield"  name="sale_brand" id="sale_brand">
+                <option value="">Select Brand</option>
+                {% for ad in brands %}
+                <option value="{{ad}}">{{ad}}</option>
+                {% endfor %}
+                
+              </select>
+            </div>
+            
+             
+
+
+           
+         </div>
+         <div class="modal-footer">
+
+
+
+        
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+      </form>
+      
+     
+    </div>
+  </div>
+</div>
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doorstep Mobile Repair Service at Best Price | Magnus Store & Care</title>
+    {% load static %}
+  
+      <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/typicons/typicons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/simple-line-icons/css/simple-line-icons.css' %}">
+      <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+      
+      <!-- endinject -->
+      <!-- Plugin css for this page -->
+      <!-- senseweave favicon -->
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+      <link rel="manifest"  href="{% static 'images/site.webmanifest' %}">
+      <!-- added new datatable bootstrap cdn 15-06-2023 -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+      <!-- End plugin css for this page -->
+      <!-- inject:css -->
+     <!-- ----------------------- for buttons in datatable --------------------------- -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+     
+     <!-- https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css -->
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+           <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+     
+     <!-- ---------------------------------------------- -->
+
+
+      <link rel="stylesheet" href=
+      "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+
+      <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+      <!-- endinject -->
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" /> -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+      <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <script src="https://kit.fontawesome.com/8b32c96dee.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="{% static 'css/mystyles.css' %}">
+      <!-- <link rel="stylesheet" href="{% static 'css/updatestyle.css' %}"> -->
+      <link rel="stylesheet" href="{% static 'css/jquery.toast.min.css' %}">
+      <link rel="stylesheet" href="{% static 'js/OwlCarousel/dist/assets/owl.carousel.min.css' %}">
+      <link rel="stylesheet" href="{% static 'js/OwlCarousel/dist/assets/owl.theme.default.min.css' %}">
+
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400;1,500&family=Nunito&family=Roboto:ital@1&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400;1,500&family=Nunito&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Enriqueta&family=Montserrat:ital,wght@0,200;0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+      <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css" media="all"> -->
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+<body > 
+
+
+    <style>
+
+        /* ### Customer service entry page styles #### */
+
+
+        .hero-container-row{
+    padding-top:50px;
+    padding-bottom:50px;
+}
+
+.hero-container {
+    position:relative;
+    z-index: -50;
+    overflow: hidden;
+}
+
+.hero-img{
+    z-index: -50;
+    width:60%;
+  clip-path: polygon(0% 10%, 10% 0%, 100% 0%, 100% 100%, 0% 100%);
+  /* clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); */
+
+/* transform: scale(1.2); */
+
+}
+
+.star-1{
+    position:absolute;
+    height:500px;
+    width:500px;
+    top:15px;
+    left:-200px;
+    /* overflow: hidden; */
+    z-index: -100;
+
+}
+
+.star-2{
+    position:absolute;
+    height:500px;
+    width:500px;
+    top:0;
+    right:-200px;
+    z-index: -100;
+}
+.secondary-text{
+   color:#0A7D7D
+}
+
+
+.text-enquiry{
+  color:#7D0A0A;
+}
+
+.customer-service-entry-nav{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #BF3131; */
+  background-color: #ffff;
+  padding:15px 30px;
+}
+.footer-top{
+  background-color: #BF3131;
+}
+
+.landing-form .col-md-6 {
+  margin: 8px 0px;
+  padding-right: 3px;
+  padding-left: 5px;
+}
+.banner-form .col-md-6 {
+  margin: 8px 0px;
+  padding-right: 3px;
+  padding-left: 5px;
+}
+
+.head-desc{
+  line-height: 1.7;
+}
+
+.font-family-mont{
+  /* font-family:Rubik;  */
+  /* font-family:Inter; */
+  /* font-family:Merriweather;  */
+  font-family:Montserrat;
+  /* font-family: Nunito; */
+}
+
+.hero-text{
+  /* font-family: Enriqueta; */
+  /* font-size:45px; */
+  font-size:42px;
+  line-height:1.3;
+  color:#fff;
+  letter-spacing: 2px;
+  
+}
+
+.head-magnus{
+  line-height:1.5;
+  font-size:30px;
+  font-weight: bold;
+}
+.head{
+    line-height: 1.5;
+}
+
+/* .hero-text-wrapper{
+  padding-top:145px;
+} */
+
+.read-more{
+  display:inline-block;
+  text-decoration: none;
+  /* background-color: #bf3131; */
+  color:#bf3131;
+  font-size:20px;
+  /* padding:4px 8px; */
+  border-radius: 5px;
+}
+
+.read-more:hover{
+  
+  color: #bf3131;
+}
+
+.red-color-text{
+  color: #BF3131;
+}
+
+/* .hero-container {
+ 
+    
+ 
+
+
+    background-image: linear-gradient(
+            to bottom right,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+          ),
+          url("https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+      
+} */
+
+
+/* .why-choose-us-container{
+    background-image: url('../static/images/man-img-2.jpg');
+background-size: cover;
+} */
+
+.iphone{
+    padding:20px;
+   border-radius: 5px;
+}
+.iphone:hover{
+
+    background-color: #fff;
+   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    /* width:300px;
+    height:300px; */
+    /* height:300px;
+    background-image: url(' https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+background-size: cover; */
+   
+}
+
+
+.hero-container-outer{
+  /* background-color: #f7f7f7;
+   */
+   /* background-color: #fcfcfe; */
+  
+  
+}
+/* .hero-container{
+    padding-top:140px;
+} */
+
+.logo-cust{
+  width:150px;
+}
+
+
+
+.contact-btn{
+  padding:8px 16px;
+  background-color: #fff;
+  color:#000;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.contact-btn:hover{
+  color: #6a0808;
+}
+
+.magnus-heading{
+  margin-top:40px;
+}
+
+.grey-font{
+  color:#222;
+}
+
+.txtPhone {
+  position: relative;
+}
+
+/* for mobile-bro-new.png */
+
+/* .mobile-hero{
+  transform: scale(1.2);
+} */
+
+.mobile-hero{
+  transform: scale(1.9);
+}
+
+#txtPhone {
+  padding-left: 36px;
+}
+
+#btnSubmitCust{
+  background-color: #BF3131;
+}
+#btnSubmitCust:hover{
+  background-color: #7d0a0a;
+}
+
+.red-text{
+  color:#7d0a0a;
+}
+
+.red-text-light{
+  color:#BF3131;
+}
+
+.brand-container{
+  background-color:#7d0a0a;
+}
+
+
+
+
+
+
+
+.hero-text-wrapper-wrapper{
+  display:flex;
+  justify-content: start;
+  align-items:center;
+}
+
+
+.why-choose-us-div {
+    transition: transform 0.3s ease-in-out; 
+}
+
+.why-choose-us-div:hover {
+    transform: scale(1.1);
+}
+
+
+        .accordion-button.collapsed {
+            color: white; 
+            background-color: #BF3131;
+            
+            
+            outline: none;
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: white; 
+            /* background-color: #7d0a0a; */
+            /* background-color: #ec6533; */
+            background-color: #0A7D7D;
+            outline: none;
+        }
+        .accordion-button:not(.collapsed)::after{
+            color:#fff;
+        }
+        .accordion-button.collapsed::after{
+            /* background-color:#fff; */
+            /* border-radius: 50%; */
+            /* border:1px solid white; */
+            /* padding:3px; */
+            /* filter: grayscale(100%); */
+        }
+        .accordion-body {
+            /* color: white; 
+            background-color: #BF3131;  */
+            color: #000; 
+            background-color: #fff; 
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+        }
+        .accordion-button:focus {
+    z-index: 3;
+    border-color: none;
+    outline: 0;
+    box-shadow: none;
+}
+body{
+    /* background-color:#7d0a0a; */
+    /* font-family:Montserrat; */
+    font-family: sans-serif;
+    
+}
+
+
+#txtName{
+    padding-left: 12px;
+}
+.phone-book{
+    padding-left: 12px;
+}
+
+#txtEmail{
+    padding-left: 12px;
+
+}#txtName::placeholder,.phone-book::placeholder,#txtEmail::placeholder{
+
+   color:#444;
+}
+
+
+
+.floating-image {
+            position: relative;
+            animation: float 2s infinite alternate ease-in-out;
+        }
+
+
+
+        .bounce {
+        
+            background: linear-gradient(to right, #e3636a, #dc3c45);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;  
+    display: inline-block; 
+        }
+
+        /* @keyframes bouncer {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                color:#0A7D7D;
+                
+                transform: translateY(-5px); 
+            }
+        } */
+
+        .hero-description{
+            font-size:16px;
+        }
+
+
+        /* Extra small devices (phones) */
+@media only screen and (max-width: 576px) {
+  /* Your styles for xs devices go here */
+  .hero-container{
+    padding-left:50px;
+  padding-right:50px;
+
+  padding-top:50px;
+  padding-bottom:90px;
+  background-color: #f2f3f5;
+}
+
+.nav-item-list{
+    display:none;
+}
+
+
+
+
+
+.hero-container-row{
+    padding:0px 10px;
+}
+
+
+.hero-text{
+ 
+  font-size:35px;
+  line-height:1.3;
+  color:#fff;
+  letter-spacing: 2px;
+  
+}
+
+        
+    .bounce {
+        
+        background: linear-gradient(to right, #e3636a, #dc3c45);
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;  
+display: inline-block; 
+    }
+    }
+  
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* Your styles for sm devices go here */
+ 
+}
+
+
+/* Medium devices (desktops) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* Your styles for md devices go here */
+  
+
+}
+/* Large devices (large desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* Your styles for lg devices go here */
+}
+/* Extra large devices (extra large desktops) */
+@media only screen and (min-width: 1200px) {
+  /* Your styles for xl devices go here */
+}
+
+
+
+        /* .accordion-button.collapsed::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23#FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+} */
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+}
+
+.accordion-button::after {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+    content: "";
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.contact-btn-wrapper{
+    border: 2px solid #BF3131;
+    border-radius:5px;
+
+}
+.contact-btn-wrapper a,.contact-btn-wrapper a i{
+    color:#bf3131
+}
+
+.nav-item-list{
+    color:#111
+}
+
+.nav-item-list:hover{
+    color:#bf3131
+}
+    </style>
+
+
+<!-- <div class="outer-container"> -->
+
+    <div class="hero-container-outer">
+    <nav class="navbar  customer-service-entry-nav  shadoww   " >
+
+        <!-- <div class="containerr "> -->
+
+            <a href="{% url 'customerserviceentry' %}" class="navbar-brandd ">
+                <img src="{% static 'images/magnuscare-logo.png' %}" class="logo-cust" alt="">
+            </a>
+
+<div class="d-flex justify-content-between align-items-center gap-5">
+    <a href="#services" class="text-decoration-none nav-item-list">Services</a>
+    <a href="#faq" class="text-decoration-none nav-item-list">FAQ</a>
+            <a href="#about-us" class="text-decoration-none  nav-item-list">About Us</a>
+
+        <div class="contact-btn-wrapper d-flex justify-content-end align-items-center ">
+            
+            <a href="" class=" contact-btn fs-7  "><i class="fa-solid fa-phone-volume "></i> +917902443344</a>
+        </div>
+    </div>
+       
+    
+
+       
+
+        <!-- </div> -->
+    </nav>
+
+ 
+<!-- 
+<div class="bredcrum">
+   
+        <nav aria-label="breadcrumb" class="border-0">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Library</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Data</li>
+            </ol>
+          </nav>
+ 
+
+
+</div> -->
+
+   
+
+
+{% if service == 'iphone' %}
+<div class="hero-container" style="background-image: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ),
+  url('{% static 'images/iphone-comp.jpeg' %}');
+  background-size: cover;
+  background-position: center;
+  color: #fff;">
+    <div class="container">
+        <div class="row hero-container-row px-1">
+            <div class="col-lg-12">
+                <div class="hero-text-wrapper">
+                    <h2 class="hero-text mb-2 fw-bold">30000+ iPhones repaired!</h2>
+                    <h2 class="hero-text mb-4 fw-bold" style="line-height:1.5;">The best iPhone service center in Kannur.</h2>
+                    <h2 class="bounce hero-text mb-4 fw-bold">1 Year Warranty*</h2>
+                </div>     
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif service == 'smartphone' %}
+
+<div class="hero-container" style="background-image: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ),
+  url('{% static 'images/smartphone-comp.jpeg' %}');
+  background-size: cover;
+  background-position: center;
+  color: #fff;">
+    <div class="container" >
+        <div class="row hero-container-row  px-1">
+        <div class="col-lg-12 ">
+                <div class="hero-text-wrapper">
+                <h2 class="hero-text mb-2 fw-bold" >400000+ Smartphones repaired! 
+                    </h2>
+                    <h2 class="hero-text mb-4 fw-bold" style="line-height:1.5;">The best smartphone repair center in Kannur.</h2>
+                    <h2 class="bounce hero-text mb-4 fw-bold">1 Year Warranty*</h2>
+            </div>     
+        </div>
+    </div>
+</div>
+</div>
+
+{% elif service == 'laptop' %}
+<div class="hero-container" style="background-image: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ),
+  url('{% static 'images/laptop-comp.jpeg' %}');
+  background-size: cover;
+  background-position: center;
+  color: #fff;">
+    <div class="container" >
+        <div class="row hero-container-row  px-1">
+        <div class="col-lg-12 ">
+                <div class="hero-text-wrapper">
+                <h2 class="hero-text mb-2 fw-bold" >45000+ Laptop&amp;Computers repaired
+                    </h2>
+                    <h2 class="hero-text mb-4 fw-bold" style="line-height:1.5;">The best laptop service center in Kannur</h2>
+                    <h2 class="bounce hero-text mb-4 fw-bold">1 Year Warranty*</h2>
+            </div>     
+        </div>
+    </div>
+</div>
+</div>
+{% elif service == 'apple' %}
+<div class="hero-container" style="background-image: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ),
+  url('{% static 'images/apple-comp.jpeg' %}');
+  background-size: cover;
+  background-position: center;
+  color: #fff;">
+    <div class="container" >
+        <div class="row hero-container-row  px-1">
+        <div class="col-lg-12 ">
+                <div class="hero-text-wrapper">
+                <!-- <h2 class="hero-text mb-2 fw-bold" >400000+ Smartphones repaired! 
+                    </h2> -->
+                    <h2 class="hero-text mb-4 fw-bold" style="line-height:1.5;">Best Apple product iPad/iMac/iPod repair center in Kannur</h2>
+                    <h2 class="bounce hero-text mb-4 fw-bold">1 Year Warranty*</h2>
+            </div>     
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+{% if service == 'iphone' %}
+<div class="why-choose-us py-5"  id="services" >
+    <div class="container ">
+       <div class="text-center fw-bold mb-5">
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Services Offered</h2>
+       </div>
+
+       <div class="text-center mb-5">
+           <h4  style="font-size:16px;letter-spacing:0.5px;line-height:1.5;" >Get your iPhone fixed by the hands of the most experienced iPhone service professionals in
+            Kerala, with 16 years of experience and over 30,000 iPhones repaired!</h4>
+       </div>
+
+       <div>
+           <div class="row p-3">
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-screen.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Screen Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Replace cracked or shattered screens with high-quality
+replacements, ensuring your iPhone looks and functions like new.
+                    </p>
+                </div>
+                
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-battery.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Battery Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Restore your iPhone&#39;s battery life with a new, long-lasting
+battery.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-charger.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Charging Port Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Resolve issues with charging ports to ensure your iPhone
+charges properly.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-camera.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Camera Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Repair malfunctioning front or rear cameras to ensure high-
+                        quality and clear photo performance.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-speeker.png' %}" alt="">
+                    </div>    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Speaker Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Address problems with speakers or microphones for clear sound
+during calls.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-button.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Button Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Replace damaged or unresponsive buttons such as home
+buttons or volume buttons.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-water-damage.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Water Damage Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Restore functionality after water damage incidents with
+thorough cleaning and repairs.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-software.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Software Troubleshooting
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Resolve software glitches, update issues, or
+                        performance problems.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-data.png' %}" alt="">
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Data Recovery
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Retrieve lost or deleted data such as photos, contacts, or messages.
+
+Is your problem not listed above? Don't worry, we’ve got the solution for your every iPhone
+complaint.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-software-check.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPhone Diagnosis and Assessment
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Identify and diagnose any other issues affecting your
+iPhone's performance.
+                        
+                        </p>
+                </div>
+            </div>
+           </div>
+       </div>
+    </div>
+
+</div>
+{% elif service == 'smartphone' %}
+
+<div class="why-choose-us py-5"  id="services" >
+    <div class="container ">
+       <div class="text-center fw-bold mb-5">
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Services Offered</h2>
+       </div>
+
+       <div class="text-center mb-5">
+           <h4  style="font-size:16px;letter-spacing:0.5px;line-height:1.5;" >Get your iPhone fixed by the hands of the most experienced iPhone service professionals in
+            Get your smartphones fixed by the hands of the most experienced smartphone service
+professionals in Kerala, with 16 years of experience and over 400000+ smartphones
+repaired!</h4>
+       </div>
+
+       <div>
+           <div class="row p-3">
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-screen.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Screen Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Replace cracked or shattered screens with high-
+quality replacements.
+                    </p>
+                </div>
+                
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-battery.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Battery Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Restore your smartphone&#39;s battery life with a new,
+                        long-lasting battery.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-charger.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Charging Port Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Resolve issues with charging ports to ensure your
+                        smartphone charges properly.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-camera.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Camera Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Fix malfunctioning front or rear cameras for clear and crisp
+photos.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-speeker.png' %}" alt="">
+                    </div>    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Speaker Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Address problems with speakers or microphones for clear
+                        sound during calls.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-button.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Button Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Replace damaged or unresponsive buttons such as
+home buttons or volume buttons.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-water-damage.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Water Damage Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Restore functionality after water damage incidents
+                        with thorough cleaning and repairs.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-software.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Software Troubleshooting
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Resolve software glitches, update issues or
+                        performance problems.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-data.png' %}" alt="">
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Data Recovery
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Retrieve lost or deleted data such as photos, contacts, or
+                        messages.
+                        Not sure about your smartphone&#39;s problem? No problem!
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-software-check.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Smartphone Diagnosis and Assessment
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Identify and diagnose any issues affecting your
+                        smartphone&#39;s performance.
+                        
+                        </p>
+                </div>
+            </div>
+           </div>
+       </div>
+    </div>
+
+</div>
+
+
+{% elif service == 'laptop' %}
+
+<div class="why-choose-us py-5"  id="services" >
+    <div class="container ">
+       <div class="text-center fw-bold mb-5">
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Services Offered</h2>
+       </div>
+
+       <div class="text-center mb-5">
+           <h4  style="font-size:16px;letter-spacing:0.5px;line-height:1.5;" >Get your iPhone fixed by the hands of the most experienced iPhone service professionals in
+            Get your laptops and desktops expertly repaired by Kerala&#39;s most experienced
+            professionals, with 16 years of expertise and over 45,000+ devices repaired!</h4>
+       </div>
+
+       <div>
+           <div class="row p-3">
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-screen.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Screen Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Replace cracked or malfunctioning screens with high-
+                        quality panels, ensuring your laptop’s display is as vibrant and clear as when it was new.
+                    </p>
+                </div>
+                
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-battery.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Battery Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Swap out your old battery for a new, high-capacity one to
+extend your laptop&#39;s usage time significantly.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-charger.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Charging Port Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Fix issues with your laptop&#39;s charging port to ensure it
+                        charges efficiently and without interruption.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-keyboard.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Keyboard Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Repair or change sticky or unresponsive keys, making your
+                        typing experience smooth and error-free.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-cooling.png' %}" alt="">
+                    </div>    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Cooling System Maintenance
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Clean fans and heat sinks, and replace thermal
+paste to prevent overheating and keep your laptop running at optimal temperatures.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-motherboard.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Motherboard Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Diagnose and repair complex motherboard issues, reviving
+the core functionality of your laptop.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-chip.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Chip-Level Repairs
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Expertly handle microchip and circuitry repairs on
+                        motherboards and other integral components, addressing problems at the root level.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-data.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Data Recovery and Backup
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Retrieve crucial data lost to hardware or software
+                        malfunctions and offer strong backup solutions to protect against future losses.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-os.png' %}" alt="">
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Operating System Installation and Upgrades
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Install new operating systems or
+upgrade existing ones to improve security and boost performance.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-software-ts.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Software Troubleshooting and Support
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Resolve software conflicts and issues,
+ensuring smooth and efficient operation of your applications.
+                        
+                        </p>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-hardware.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Hardware Upgrades
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Upgrade RAM, SSD/HDD, processors, and more to boost
+                        your device’s speed and storage capacity.
+                        
+                        </p>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-networking.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Networking and Connectivity Solutions
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Establish and resolve issues with Wi-Fi,
+                        Ethernet, and Bluetooth connections to ensure uninterrupted connectivity.
+                        
+                        </p>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-virus.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Virus and Malware Removal
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Eradicate harmful software to protect your data
+                        and enhance your device&#39;s security.
+                        </p>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-custom.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Custom PC Builds
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Tailor-make PCs to meet your specific needs, whether for gaming,
+professional work, or media production.
+                        </p>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-maintanance.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Preventive Maintenance Services
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Conduct regular maintenance to foresee and
+                        prevent potential hardware and software issues.
+                        </p>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-support.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Remote Support Services
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Offer diagnostic and repair services remotely for
+software-related problems that don&#39;t require physical intervention.
+Encountering an issue not mentioned above? Rest assured, we possess the comprehensive
+expertise to tackle every laptop and computer issue.
+                        </p>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-diagnosis.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Laptop Comprehensive Diagnosis and Assessment
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Perform an in-depth analysis to
+                        identify and diagnose any obscure or complex problems affecting your device&#39;s
+                        performance.
+                        </p>
+                </div>
+            </div>
+
+
+
+           </div>
+       </div>
+    </div>
+
+</div>
+
+
+
+{% elif service == 'apple' %}
+
+
+
+
+<div class="why-choose-us py-5" id="services" >
+    <div class="container ">
+       <div class="text-center fw-bold mb-5">
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold">Services Offered</h2>
+       </div>
+
+       <div class="text-center mb-5">
+           <h4  style="font-size:16px;letter-spacing:0.5px;line-height:1.5;" >Get your iPhone fixed by the hands of the most experienced iPhone service professionals in
+            Repair your iPad, iMac, iPod, and other Apple gadgets with the best Apple product repair
+            experts in Kerala.</h4>
+       </div>
+
+       <div>
+           <div class="row p-3">
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/apple-screen.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPad Screen Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Expertly replace damaged or cracked iPad screens with
+                        premium quality glass, restoring its pristine display.
+                    </p>
+                </div>
+                
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-hardware.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iMac Hardware Upgrades
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Enhance your iMac&#39;s performance with upgrades to RAM, SSD,
+and more, ensuring faster and more efficient operation.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-battery.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        iPod Battery Replacement
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Replace old or worn-out iPod batteries with new, high-
+capacity ones to enjoy longer music playback and usage.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-keyboard.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        MacBook Keyboard Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Fix or replace faulty MacBook keyboards, including sticky or
+                        unresponsive keys, for a smoother typing experience.
+photos.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/apple-watch.png' %}" alt="">
+                    </div>    
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Apple Watch Screen Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Carefully replace cracked or scratched screens on Apple
+Watches, maintaining its functionality and aesthetics.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-software-ts.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Apple Software Troubleshooting
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Resolve issues related to macOS, iOS, watchOS, and
+                        other Apple software, including updates and glitches.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-data.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Data Recovery for Apple Devices
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Employ advanced methods to recover lost or deleted
+data from all types of Apple devices.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-chip.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Logic Board Repairs
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Conduct chip-level repairs on Apple device motherboards,
+                        addressing the most complex hardware issues.
+                        
+                        </p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-charger.png' %}" alt="">
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Charging Port and Connector Repairs
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Fix problems with charging ports and connectors
+on all Apple devices to ensure proper charging and connectivity.
+                        
+                        </p>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-camera.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Camera Replacement and Repair
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Replace or repair malfunctioning cameras on Apple
+devices, ensuring superior performance in capturing photos and videos.
+                        
+                        </p>
+                </div>
+            </div>
+
+
+
+
+
+ <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/iphone-speeker.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Sound and Microphone Issues
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Address issues with speakers and microphones across
+                        Apple devices for clear audio output and call quality.
+                        
+                        </p>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/apple-accessories.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Apple Accessory Repairs
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Repair or replace damaged Apple accessories, including cables,
+chargers, and AirPods, ensuring they work perfectly with your devices.
+                        </p>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-maintanance.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Preventive Maintenance and Cleaning
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Offer preventive maintenance and professional
+cleaning services to extend the life of your Apple devices.
+                        </p>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-custom.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        Personalized Setup and Configuration
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Provide personalized setup and configuration for
+new or reset Apple devices, including iCloud, email, and app installations.
+                       
+
+Encountering an issue not covered above? Worry not, as we offer comprehensive solutions
+for every Apple device concern you might encounter.</p>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-4 text-center">
+                <div style=""  class="  mb-3 p-3 d-flex justify-content-center align-items-center" >
+                    <div style="width:80px;height:80px;" class="">
+                        <img class="w-100" src="{% static 'images/laptop-diagnosis.png' %}" alt="">
+                    </div>
+                </div> 
+                <div>
+                    <h4 class="mb-2 fw-bold" style="font-size:20px;line-height:1.5;">
+                        In-depth Apple Device Diagnostics
+                    </h4>
+                    <p style="font-size:16px;line-height:1.5;">
+                        Perform thorough diagnostics to accurately identify
+and address any underlying issues with your Apple devices, ensuring optimal performance.
+                        </p>
+                </div>
+            </div>
+
+
+
+
+           </div>
+       </div>
+    </div>
+
+</div>
+
+
+{% endif %}
+
+
+
+
+
+{% if service == 'iphone' %}
+
+<div class=" "  style="background-color:#f2f5f3"  id="faq">
+
+
+    <div class="container py-5">
+
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold text-center">
+            Frequently asked questions
+        </h2>
+    
+        <div class="row py-5">
+            <div class="col-lg-6 mb-2">
+                <div class="accordion accordion-flush" id="accordionFlushExample1">
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Q. What sets your iPhone repair center apart from others?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    We&#39;re proud to be known as the best iPhone service center in Kannur. With over 16
+years of experience and 50+ branches, we&#39;ve been in the field since the early days of the
+iPhone. Our dedication to quality, professionalism, and ensuring customer satisfaction
+distinguishes us from others.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                Q. What should I do if my specific iPhone issue is not listed in your services?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    If your specific iPhone issue is not listed above, don&#39;t worry! We have solutions for every
+iPhone complaint. Our expert technicians can diagnose and assess any other issues
+affecting your iPhone&#39;s performance and provide tailored solutions to address them
+effectively.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Q. Do you offer a warranty on your iPhone repair services?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we stand behind the quality of our workmanship and offer a 1-year warranty on the
+                                    serviced portion of all repair services. If you encounter any issues specifically related to the
+                                    serviced components of your repaired iPhone within the warranty period, simply reach out
+                                    to us, and we&#39;ll be happy to assist you further. This warranty ensures that you can have
+                                    peace of mind knowing that your iPhone repair is backed by our commitment to excellence
+                                    and customer satisfaction.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                   
+
+
+                </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="accordion accordion-flush" id="accordionFlushExample2">
+                    
+                   
+                    
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree41">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree41" aria-expanded="false" aria-controls="flush-collapseThree41">
+                                Q. How quickly can you repair an iPhone?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree41" class="accordion-collapse collapse" aria-labelledby="flush-headingThree41" data-bs-parent="#accordionFlushExample141">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    The time required for iPhone repair depends on the nature and severity of the issue. Our
+goal is to provide timely and efficient repair services without compromising on quality. We
+strive to complete repairs as quickly as possible while ensuring thoroughness and
+precision in every step of the process.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree42">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree42" aria-expanded="false" aria-controls="flush-collapseThree42">
+                                Q. How can I schedule an appointment for iPhone repair?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree42" class="accordion-collapse collapse" aria-labelledby="flush-headingThree42" data-bs-parent="#accordionFlushExample142">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Scheduling an appointment for iPhone repair is easy! Simply contact us through our
+website or give us a call, and our friendly staff will assist you in scheduling a convenient
+appointment at our repair center in Kannur. We look forward to serving you and restoring
+your iPhone to its optimal condition.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree43">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree43" aria-expanded="false" aria-controls="flush-collapseThree43">
+                                Q. Is doorstep service available for iPhone repairs?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree43" class="accordion-collapse collapse" aria-labelledby="flush-headingThree43" data-bs-parent="#accordionFlushExample143">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we understand the convenience of doorstep service, especially for iPhone repairs.
+                                    We offer doorstep repair services for iPhones, bringing our expertise and quality repair
+                                    solutions right to your doorstep. Whether you&#39;re located anywhere in Kannur, our skilled
+                                    technicians will come to you, saving you time and hassle. Simply contact us to schedule a
+                                    
+                                    doorstep repair appointment, and we&#39;ll take care of the rest, ensuring your iPhone is
+                                    repaired quickly and conveniently.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif service == 'smartphone' %}
+
+<div class=" "  style="background-color:#f2f5f3"  id="faq">
+
+
+    <div class="container py-5">
+
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold text-center">
+            Frequently asked questions
+        </h2>
+    
+        <div class="row py-5">
+            <div class="col-lg-6 mb-2">
+                <div class="accordion accordion-flush" id="accordionFlushExample1">
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Q. What distinguishes your smartphone repair center from others?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    We pride ourselves on being recognized as the best smartphone service center in
+                                    Kannur. With over 16 years of experience and 50+ branches, we&#39;ve been at the forefront of
+                                    smartphone repair since the early days. Our dedication to professionalism, quality and
+                                    ensuring customer satisfaction distinguishes us from others. Repairing smartphones from
+                                    every major brand since their inception, our commitment to transparency, efficiency, and
+                                    excellence shines through in every repair job we undertake.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                Q. What should I do if my specific smartphone issue is not listed among your
+                                services?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    If you encounter an issue with your smartphone not listed above, don&#39;t worry! We
+                                    possess solutions for every smartphone problems. Our expert technicians can diagnose and
+                                    assess any additional issues affecting your smartphone&#39;s performance, providing tailored
+                                    solutions effectively and efficiently.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Q. Do your smartphone repair services come with a warranty?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Absolutely, we stand firmly behind the quality of our workmanship and offer a 1-year
+warranty on the serviced portion of all repairs. Should you experience any issues related to
+the serviced components of your repaired smartphone within the warranty period, simply
+reach out to us, and we&#39;ll gladly assist you further. This warranty affords you peace of
+mind, knowing that your smartphone repair is backed by our unwavering commitment to
+excellence and customer satisfaction.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree111">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree111" aria-expanded="false" aria-controls="flush-collapseThree111">
+                                Q. Will you repair keypad mobile phones?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree111" class="accordion-collapse collapse" aria-labelledby="flush-headingThree111" data-bs-parent="#accordionFlushExample111">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we will. While smartphones are trending, keypad mobiles remain an inevitable part
+of many people&#39;s lives due to their convenient calling features. We understand the
+importance of keypad mobiles and are experts in delivering repairs for these devices.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                   
+
+
+                </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="accordion accordion-flush" id="accordionFlushExample2">
+                    
+                   
+                    
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree41">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree41" aria-expanded="false" aria-controls="flush-collapseThree41">
+                                Q. How long does the repair of a smartphone typically take?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree41" class="accordion-collapse collapse" aria-labelledby="flush-headingThree41" data-bs-parent="#accordionFlushExample141">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    The duration of smartphone repair depends on the nature and severity of the issue. Our
+aim is to deliver timely and efficient repair services without compromising quality. We
+strive to complete repairs quickly while ensuring they are done thoroughly and accurately
+in every step of the process.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree42">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree42" aria-expanded="false" aria-controls="flush-collapseThree42">
+                                Q. Is doorstep service available for smartphone repairs ?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree42" class="accordion-collapse collapse" aria-labelledby="flush-headingThree42" data-bs-parent="#accordionFlushExample142">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we comprehend the convenience doorstep service offers, particularly for
+smartphone repairs. Therefore, we extend doorstep repair services, bringing our expertise
+and superior repair solutions directly to you. If you reside anywhere in Kannur, our
+proficient technicians will travel to your location, saving you time and inconvenience.
+Simply reach out to us to schedule a doorstep repair appointment, and we&#39;ll handle the
+rest, ensuring your smartphone is swiftly and conveniently restored.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree43">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree43" aria-expanded="false" aria-controls="flush-collapseThree43">
+                                Q. Which companie's smartphones will you repair?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree43" class="accordion-collapse collapse" aria-labelledby="flush-headingThree43" data-bs-parent="#accordionFlushExample143">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    We repair smartphones from every major company, including Samsung, Oppo, Redmi,
+Huawei, and Honor. No matter the brand, we have the expertise to diagnose and repair
+your smartphone efficiently.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% elif service == 'laptop' %}
+
+
+
+
+
+<div class=" "  style="background-color:#f2f5f3"  id="faq">
+
+
+    <div class="container py-5">
+
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold text-center">
+            Frequently asked questions
+        </h2>
+    
+        <div class="row py-5">
+            <div class="col-lg-6 mb-2">
+                <div class="accordion accordion-flush" id="accordionFlushExample1">
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Q. Which companies&#39; laptops do you repair?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    We repair laptops from all major brands, including Apple (iMac), Asus, Lenovo, Dell, and
+more.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                Q. Is laptop chip-level service available?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we provide chip-level repair services for laptops, ensuring thorough diagnosis and
+repair of complex motherboard issues.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Q. I have a laptop that hasn&#39;t been used for 2 years. Will you repair it?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we can repair laptops that have been unused for an extended period. Our skilled
+                                    technicians will assess the condition of your laptop and provide the necessary repairs to
+                                    get it back up and running smoothly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree111">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree111" aria-expanded="false" aria-controls="flush-collapseThree111">
+                                Q. What makes Magnus laptop repair center stand out?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree111" class="accordion-collapse collapse" aria-labelledby="flush-headingThree111" data-bs-parent="#accordionFlushExample111">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    We&#39;re proud to be recognized as the best laptop repair center in Kannur. With over 16
+years of expertise in laptop repair, we&#39;ve become leaders in the industry. Our commitment
+to delivering top-notch service, maintaining professionalism, and ensuring customer
+happiness makes us unique.
+From routine maintenance to intricate motherboard repairs, we handle every task with
+precision and care.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                   
+
+
+                </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="accordion accordion-flush" id="accordionFlushExample2">
+                    
+                   
+                    
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree41">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree41" aria-expanded="false" aria-controls="flush-collapseThree41">
+                                Q. What types of laptop issues do you repair?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree41" class="accordion-collapse collapse" aria-labelledby="flush-headingThree41" data-bs-parent="#accordionFlushExample141">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Our skilled technicians specialize in addressing a wide array of laptop issues, ranging
+                                    from hardware malfunctions to software glitches and connectivity problems. Whether it&#39;s a
+                                    cracked screen, unresponsive keyboard, or sluggish performance, we have the skills and
+                                    knowledge to diagnose and fix the issue promptly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree42">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree42" aria-expanded="false" aria-controls="flush-collapseThree42">
+                                Q. Do your laptop repair services include a warranty?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree42" class="accordion-collapse collapse" aria-labelledby="flush-headingThree42" data-bs-parent="#accordionFlushExample142">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes! We stand behind the quality of our work and offer a 1 year warranty on all repair
+services. If you encounter any issues related to the repaired components within the
+warranty period, simply reach out to us, and we&#39;ll address them promptly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree43">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree43" aria-expanded="false" aria-controls="flush-collapseThree43">
+                                Q. What&#39;s the typical turnaround time for laptop repairs?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree43" class="accordion-collapse collapse" aria-labelledby="flush-headingThree43" data-bs-parent="#accordionFlushExample143">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    The duration of laptop repairs varies depending on the complexity of the issue. However,
+                                    our aim is to minimize time and complete repairs efficiently without compromising on
+                                    quality. Rest assured, we prioritize timely service while ensuring thoroughness and
+                                    accuracy.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree431">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree431" aria-expanded="false" aria-controls="flush-collapseThree431">
+                                Q. Do you offer doorstep service for laptop repairs?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree431" class="accordion-collapse collapse" aria-labelledby="flush-headingThree431" data-bs-parent="#accordionFlushExample1431">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we understand the importance of convenience, especially when it comes to laptop
+repairs. That&#39;s why we provide doorstep repair services, bringing our expertise directly to
+your location. If you’re anywhere in Kannur, our skilled technicians will come to you,
+saving you time and hassle. Simply schedule a doorstep repair appointment, and we&#39;ll take
+care of the rest.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% elif service == 'apple' %}
+
+
+
+
+
+<div class=" "  style="background-color:#f2f5f3"  id="faq">
+
+
+    <div class="container py-5">
+
+        <h2 style="font-size:30px;letter-spacing:0.5px;line-height:1.5;" class="fw-bold text-center">
+            Frequently asked questions
+        </h2>
+    
+        <div class="row py-5">
+            <div class="col-lg-6 mb-2">
+                <div class="accordion accordion-flush" id="accordionFlushExample1">
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Q. What sets your Apple product repair center apart from others?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    We&#39;re proud to be a leading Apple product repair center in Kannur. With 16 years of
+                                    experience and a dedicated team of technicians, we specialize in providing top-notch repair
+                                    services for all Apple devices. Our commitment to excellence, attention to detail, and
+                                    customer satisfaction make us stand out. From iPhones to MacBooks, we handle every
+                                    repair with precision and care, ensuring your Apple device is restored to its optimal
+                                    condition.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                Q. What types of issues can you address for Apple devices?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Our skilled technicians are trained to address a wide range of issues for all Apple devices
+(iPhone, iPad, iMac, watch), including screen replacements, hardware upgrades, battery
+replacements, keyboard repairs, software troubleshooting, data recovery, logic board
+repairs, charging port repairs, camera replacements, and more. Whether it&#39;s a hardware
+malfunction or a software glitch specific to your iPhone, iPad, or iMac, we have the
+expertise to diagnose and fix the problem efficiently.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Q. Do your Apple product repair services come with a warranty?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample1">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we stand behind the quality of our work and offer a 1-year warranty on all repair
+                                    services. If you experience any issues related to the repaired components within the
+                                    warranty period, simply reach out to us, and we&#39;ll address them promptly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree111">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree111" aria-expanded="false" aria-controls="flush-collapseThree111">
+                                Q. How long does it typically take to repair an Apple device?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree111" class="accordion-collapse collapse" aria-labelledby="flush-headingThree111" data-bs-parent="#accordionFlushExample111">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    The time required for Apple device repair depends on the complexity of the issue. We
+                                    aim complete repairs as quickly as possible with exceptional quality. Our goal is to
+                                    minimize downtime and ensure that your Apple device is returned to you in optimal
+                                    working condition in a timely manner.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree1112">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree1112" aria-expanded="false" aria-controls="flush-collapseThree1112">
+                                Q. Are you specialized in iMac repairs?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree1112" class="accordion-collapse collapse" aria-labelledby="flush-headingThree1112" data-bs-parent="#accordionFlushExample1112">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, iMac repairs are one of our specialties. Our technicians are expert at diagnosing and
+fixing a wide range of issues specific to iMac models.Whether it&#39;s a hardware malfunction,
+software issue, or any other concern affecting your iMac&#39;s performance, you can trust us to
+restore it to optimal condition.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                   
+
+
+                </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="accordion accordion-flush" id="accordionFlushExample2">
+                    
+                   
+                    
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree41">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree41" aria-expanded="false" aria-controls="flush-collapseThree41">
+                                Q. Do you offer doorstep service for Apple device repairs?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree41" class="accordion-collapse collapse" aria-labelledby="flush-headingThree41" data-bs-parent="#accordionFlushExample141">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we understand the importance of convenience, especially when it comes to Apple
+device repairs. That&#39;s why we provide doorstep repair services, delivering our expertise
+right to your doorstep. If you are anywhere in Kannur, our experienced technicians will
+come to you, saving you time and hassle. Simply schedule a doorstep repair appointment,
+and we&#39;ll take care of the rest.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree42">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree42" aria-expanded="false" aria-controls="flush-collapseThree42">
+                                Q. Can you repair accessories such as cables, chargers, and AirPods?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree42" class="accordion-collapse collapse" aria-labelledby="flush-headingThree42" data-bs-parent="#accordionFlushExample142">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we also provide repair services for damaged Apple accessories, including cables,
+                                    chargers, and AirPods. Our technicians are skilled in repairing and replacing components to
+                                    ensure that your accessories work perfectly with your Apple devices.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree43">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree43" aria-expanded="false" aria-controls="flush-collapseThree43">
+                                Q. I have an Apple device that hasn&#39;t been used for a while. Can you repair it?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree43" class="accordion-collapse collapse" aria-labelledby="flush-headingThree43" data-bs-parent="#accordionFlushExample143">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    Yes, we&#39;re equipped to handle Apple devices that have been inactive for extended
+periods. Our experienced technicians will assess the condition of your device and provide
+the necessary repairs to restore its functionality.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header" id="flush-headingThree431">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree431" aria-expanded="false" aria-controls="flush-collapseThree431">
+                                Q. Which Apple devices do you repair?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree431" class="accordion-collapse collapse" aria-labelledby="flush-headingThree431" data-bs-parent="#accordionFlushExample1431">
+                            <div class="accordion-body">
+                                <p class="fs-6 font-family-mont grey-font head-desc">
+                                    We repair a wide range of Apple devices, including iPhones, iPads, iMacs, MacBooks,
+                                    Apple Watches, and AirPods.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer-top bg-dark  text-white fw-bold border py-5">
+      
+    <div class="container p-4 pb-0">
+   
+      <section class="mb-0">
+<div class="row">
+        <div class="col-lg-5 mb-5">
+
+            <img src="{% static 'images/magnuscare-logo.png' %}" class="logo-cust py-2" alt="">
+
+            <p class="py-2 ">Magnus store & care being the oldest, most experienced, most trusted and the best gadget training and servicing company,</p>
+
+            <div class="py-2"> <a
+                class="btn text-white btn-floating m-1"
+                style="background-color: #e93f3b;"
+                href="#!"
+                role="button"
+                ><i class="fab fa-instagram"></i
+              ></a>
+           
+              <a
+                class="btn text-white btn-floating m-1"
+                style="background-color: #3b5998;"
+                href="#!"
+                role="button"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+        
+            
+              <a
+                class="btn text-white btn-floating m-1"
+                style="background-color: #55acee;"
+                href="#!"
+                role="button"
+                ><i class="fab fa-twitter"></i
+              ></a></div>
+        </div>
+        <div class="col-lg-2 mb-5">
+
+            <h2 class="py-2">
+                Links
+            </h2>
+
+            <p class="py-2">
+                <a href="#faq" class="text-decoration-none text-white"> FAQ</a>
+               
+            </p>
+            <p class="py-2">
+                <a href="#services" class="text-decoration-none text-white"> Services</a>
+               
+            </p>
+            <p class="py-2">
+                <a href="#read-more" class="text-decoration-none text-white"> About us</a>
+               
+            </p>
+            
+           
+            
+        </div>
+        <div class="col-lg-5 text-align-left mb-5">
+
+            <h2 class="py-2">Get in touch</h2>
+
+            <p>Magnus Store & Care</p>
+            <p class="py-2">Oppo-Sunitha Furniture, Thavakkara, Kannur, Kerala 670001</p>
+            <!-- <p class="py-2">khadra@magnusstoreandcareoman.com</p> -->
+            <p>+917902443344</p>
+        </div>
+    </div>
+
+
+
+  
+      
+   
+          </section>
+      
+        </div>
+        <!-- <div class="text-center p-3" >
+            © {{current_year}} Copyright:
+            <a class="text-white" href="">magnusstore.in</a>
+          </div> -->
+       
+        </footer>
+
+
+
+
+
+
+
+     <!-- plugins:js -->
+     <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+     <!-- endinject -->
+     <!-- Plugin js for this page -->
+     <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+     <script src="{% static 'vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+     <script src="{% static 'vendors/progressbar.js/progressbar.min.js' %}"></script>
+     <!-- End plugin js for this page -->
+     <!-- inject:js -->
+     <script src="{% static 'js/off-canvas.js' %}"></script>
+     <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+     <script src="{% static 'js/template.js' %}"></script>
+     <script src="{% static 'js/settings.js' %}"></script>
+     <script src="{% static 'js/todolist.js' %}"></script>
+     <!-- endinject -->
+     <!-- Custom js for this page-->
+     <script src="{% static 'js/chart.js' %}"></script>
+     <script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript"></script>
+     <script src="{% static 'js/dashboard.js' %}"></script>
+     <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
+
+     
+    
+     <!-- End custom js for this page-->
+    
+     <!-- endinject -->
+     <script src=
+"https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" 
+       integrity=
+"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+       crossorigin="anonymous">
+   </script>
+   <script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" 
+       integrity=
+"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+       crossorigin="anonymous"></script>
+     <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
+   </script>
+     <!-- Custom js for this page-->
+     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> 
+
+<!-- ------------- for  buttons in datatable -------------- -->
+     <!-- https://code.jquery.com/jquery-3.7.0.js
+https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js -->
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+<!-- ---------------------------------------------- -->
+
+
+
+<!-- ------------- for  filter in datatable -------------- -->
+<script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+
+<!-- ---------------------------------------------- -->
+
+
+
+
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    
+    
+     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.datetimepicker.min.css' %}">
+     <!-- <script src="{% static 'js/jquery.js' %}"></script> -->
+     <script src="{% static 'js/jquery.datetimepicker.full.js' %}"></script>
+     <script src="{% static 'js/table2excel.js' %}"></script>
+     <script src="{% static 'js/jquery.toast.min.js' %}"></script>
+     <script src="{% static 'js/OwlCarousel/dist/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'js/replaceme.min.js' %}"></script><script>
+        var replace = new ReplaceMe(document.querySelector('.replace-me'), {
+    animation: 'animated fadeIn',                       // Animation class or classes
+    speed: 2000,                                        // Delay between each phrase in miliseconds
+    separator: ',',                                     // Phrases separator
+    hoverStop: false,                                   // Stop rotator on phrase hover
+    clickChange: false,                                 // Change phrase on click
+    loopCount: 'infinite',                              // Loop Count - 'infinite' or number
+    autoRun: true,                                      // Run rotator automatically
+    onInit: false,                                      // Function
+    onChange: false,                                    // Function
+    onComplete: false                                   // Function
+});
+    </script>
+    <script>
+        var csrf_token = '{{csrf_token}}'
+     </script>
+     <script src="{% static 'js/myscripts.js' %}"></script>
+     
+
+     <script type="module" src="{% static 'js/index.js' %}"></script>
+
+
+<script>
+    //  $(document).ready(function(){
+    //     $(".owl-carousel").owlCarousel();
+    //   });
+      var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items:4,
+            loop:true,
+            margin:10,
+            autoplay:true,
+            autoplayTimeout:2000,
+            autoplayHoverPause:true
+        });
+        $('.play').on('click',function(){
+            owl.trigger('play.owl.autoplay',[1000])
+        })
+        $('.stop').on('click',function(){
+            owl.trigger('stop.owl.autoplay')
+        })
+    </script>
+
+
+<script>
+    
+</script>
+</body >
+</html>

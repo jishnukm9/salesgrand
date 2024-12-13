@@ -1,0 +1,75 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <ul class="nav nav-tabs" role="tablist">
+                     <li class="nav-item">
+                        <a class="nav-link active ps-0" id="home-tab"  href="{% url 'products' %}" role="tab" aria-controls="Overview" aria-selected="true">Products</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="profile-tab"  href="{% url 'catagories' %}">Catagories</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="contact-tab"  href="{% url 'subcatagories' %}">SubCatagories</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" " href="{% url 'supplier' %}" role="tab">Supplier</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="more-tab"  href="{% url 'brand' %}" role="tab">Brand</a>
+                        </l>
+                     <li class="nav-item">
+                        <a class="nav-link" id="more-tab" href="{% url 'packing' %}" role="tab">Packing</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link border-0" id="more-tab"  href="{% url 'tax' %}" role="tab">Tax</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link border-0" id="more-tab"  href="{% url 'type' %}" role="tab">Product Type</a>
+                     </li>
+                  </ul>
+               </div>
+               <br>
+               <!-- <div class="row"> -->
+               <div class="row flex-grow">
+                  <div class="col-12 grid-margin stretch-card">
+                     <div class="card card-rounded">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-lg-12">
+                                 <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                       <h4 class="card-title card-title-dash">Products</h4>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="mt-3">
+                              Reports page
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- </div> -->
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+{% endblock %}

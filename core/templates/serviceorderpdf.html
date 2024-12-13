@@ -1,0 +1,246 @@
+<html>
+  <head>
+    <title>Job Sheet</title>
+  </head>
+  <body>
+    <div>
+      <div>
+        <table>
+          <thead>
+            <th class="w20">
+              <!-- {% if current_host == '127.0.0.1:8000' %}
+                     <img style="width:100%;" src="http://{{current_host}}{{logo}}"  alt="logo">
+                     {% else %}
+                     <img style="width:100%;" src="https://magnus.salesgrand.com{{logo}}"  alt="logo">
+                     {% endif %} -->
+
+                     <img style="width:100%;" src="{{logo}}"  alt="logo">
+            </th>
+
+            <th class="w25"></th>
+            <th class="w55">
+              <div class="text-right">
+                <h4 class="company-name">
+                  <strong>{{company_name}}</strong>
+                </h4>
+                {% if current_user.is_superuser %}
+                <p class="address-1">{{address_line1}}</p>
+                <p class="address-2">{{address_line2}}</p>
+                <p class="address-3">{{address_line3}}</p>
+                {% else %}
+                <p class="address-1">{{address_line1}}</p>
+                <p class="phone">{{phone}}</p>
+
+                {% endif %}
+                <p class="gst">GSTIN : {{branch.gstin}}</p>
+              </div>
+            </th>
+          </thead>
+        </table>
+      </div>
+      <hr />
+
+      <div class="text-center">
+        <h2>ORDER #{{serviceref}}</h2>
+        <p>{{currentdate}}</p>
+      </div>
+      <table class="table-1">
+        <thead>
+          <tr>
+            <th colspan="3" class="th-left">Customer Name </th>
+            <th colspan="3" class="th-right">{{firstname}} {{lastname}}</th>
+            <th colspan="3" class="th-left">Due Date </th>
+            <th colspan="3" class="th-right">{{estimateddate}}</th>
+          </tr>
+          <tr>
+            <th colspan="3" class="th-left">Phone </th>
+            <th colspan="3" class="th-right">{{phone_customer}}</th>
+            <th colspan="3" class="th-left">Estimated Price </th>
+            <th colspan="3" class="th-right">{{price}}</th>
+          </tr>
+
+          <tr>
+            <td colspan="6" class="tr-left">
+              <strong>Device : </strong>{{brand}} {{modal}} <br /><br />
+              <strong>IMEI : </strong>{{imei}}
+            </td>
+            <td colspan="6" class="tr-right">
+              <strong>Malfunction : </strong>{{malfunction}}<br /><br />
+              <strong>Service ref No : </strong>{{serviceref}}
+            </td>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="sign-box">
+        <div class="w100">
+          {% if image1 %}
+    
+          <!-- {% if current_host == '127.0.0.1:8000' %}
+                     <img class="w33" src="http://{{current_host}}{{image1}}"  alt="">
+                     {% else %}
+                     <img class="w33" src="https://magnus.salesgrand.com{{image1}}"  alt="">
+                     {% endif %} -->
+         
+                     <img class="w33" src="{{image1}}"  alt="">
+                     {% endif %}
+          
+          {% if image2 %}
+
+
+          <!-- {% if current_host == '127.0.0.1:8000' %}
+          <img class="w33" src="http://{{current_host}}{{image2}}"  alt="">
+          {% else %}
+          <img class="w33" src="https://magnus.salesgrand.com{{image2}}"  alt="">
+          {% endif %} -->
+          
+          <img class="w33" src="{{image2}}"  alt="">
+          
+          {% endif %} 
+          
+          
+          
+          {% if image3 %}
+
+
+          <!-- {% if current_host == '127.0.0.1:8000' %}
+          <img class="w33" src="http://{{current_host}}{{image3}}"  alt="">
+          {% else %}
+          <img class="w33" src="https://magnus.salesgrand.com{{image3}}"  alt="">
+          {% endif %} -->
+
+          <img class="w33" src="{{image3}}"  alt="">
+          {% endif %}
+        </div>
+
+        <div class="w100">
+          {% if image4 %}
+
+
+          <!-- {% if current_host == '127.0.0.1:8000' %}
+          <img class="w33" src="http://{{current_host}}{{image4}}"  alt="">
+          {% else %}
+          <img class="w33" src="https://magnus.salesgrand.com{{image4}}"  alt="">
+          {% endif %} -->
+
+          <img class="w33" src="{{image4}}"  alt="">
+
+          {% endif %}
+          
+          {% if image5 %}
+          <!-- {% if current_host == '127.0.0.1:8000' %}
+          <img class="w33" src="http://{{current_host}}{{image5}}"  alt="">
+          {% else %}
+          <img class="w33" src="https://magnus.salesgrand.com{{image5}}"  alt="">
+          {% endif %} -->
+
+          <img class="w33" src="{{image5}}"  alt="">
+
+          {% endif %} 
+          
+          
+          {% if image6 %}
+
+
+          <!-- {% if current_host == '127.0.0.1:8000' %}
+          <img class="w33" src="http://{{current_host}}{{image6}}"  alt="">
+          {% else %}
+          <img class="w33" src="https://magnus.salesgrand.com{{image6}}"  alt="">
+          {% endif %} -->
+          <img class="w33" src="{{image6}}"  alt="">
+
+          {% endif %}
+        </div>
+      </div>
+
+     
+
+      <br /><br />
+
+      <div>
+        <h4 class="text-center">Thank you for your bussiness!</h4>
+
+        <p>
+          By submitting your mobile device for repair to Magnus store & Care,
+          you agree to the following terms and conditions:
+        </p>
+
+        <ol>
+          <li>All service charges are cash on delivery</li>
+          <li>Service Memo must be produced to collect the item</li>
+          <li>
+            Warranty claim, if any must be supported with relevant documents
+          </li>
+          <li>
+            Laptop mother board repair warranty period is one month. No warranty
+            for Graphic Chip
+          </li>
+          <li>
+            Service Center Will not be responsible for the goods under service
+            if there are any reported theft or fire within the premise
+          </li>
+          <li>
+            Service item must be collected within one month, failing which
+            MAGNUS deserves the right to dispose of at its discretion to recover
+            the storage and service cost
+          </li>
+        </ol>
+      </div>
+      <br />
+      <br /><br />
+
+      <table>
+        <thead>
+          <th class="w25">
+            <div class="text-left">
+              <p>Received By </p>
+            </div>
+          </th>
+
+          <th class="w25"></th>
+          <th class="w25"></th>
+          <th class="w25">
+            <div class="text-right">
+              <p>Customer Signature </p>
+            </div>
+          </th>
+        </thead>
+      </table>
+
+      <br><br><br>
+      <!-- <hr> -->
+      <br><br><br>
+
+      <div >
+        <h4 class="text-center">Delivery</h4>
+        <p>
+         I have collected my product in good condition
+        </p>
+        <br><br>
+      <table>
+        <div></div>
+        <thead>
+          <th class="w25">
+            <div class="text-left">
+              <p>Delivered By </p>
+            </div>
+          </th>
+
+          <th class="w25"></th>
+          <th class="w25"></th>
+          <th class="w25">
+            <div class="text-right">
+              <p>Customer Signature </p>
+            </div>
+          </th>
+        </thead>
+      </table>
+    </div>
+      <div class="bcode-container">
+        <div>
+          <img class="w30" src="data:image/png;base64,{{ barcode }}" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

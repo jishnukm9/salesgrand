@@ -1,0 +1,1511 @@
+
+{% extends "navbar.html" %}
+
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+
+
+
+
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between " role="alert">
+           <p> <strong>{{ message }}</strong> </p> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background:none;border:1px solid #444;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+         {% endif %}
+
+
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+           
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'settings' %}">Company Settings </a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'customersettings' %}">Customer Settings</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="#" >Service Settings</a>
+              
+  
+             
+          </nav>
+
+
+          </div>
+          <br>
+       
+          <div class="row">
+
+
+{% if request.user.userprofile.role == 'Branch Admin' %}
+
+            <div class="col-lg-5">
+              <div class="col-lg-12">
+
+                <div class="settings-div-shadow p-4 bg-white mb-4" >
+
+                  <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                      <h5 class="fw-bold">Rack Numbers</h5>
+                      <i data-toggle="modal" data-target="#servicerack-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                  </div>
+
+                  <table class="table table-bordered settings-add-pagination">
+                      <thead>
+                          <tr>
+                            <th width="5%">Sl</th>
+                              <th>Rack Number</th>
+                              
+                              <th>Action</th>
+                          </tr>
+                        
+
+                      </thead>
+                      <tbody>
+
+                          
+                              {% for item in racks %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                              <td>{{item.name}}</td>
+                            
+                              <td>
+                                <a href="{% url 'deleterack' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                              </td>
+                          </tr>
+                              {% endfor %}
+
+                   
+
+                      </tbody>
+                  </table>
+
+
+
+              </div>
+
+              </div>
+              
+            </div>
+
+{% else %}
+
+            <div class="col-lg-7">
+
+                <div class="col-lg-12">
+
+
+
+                    <div class="settings-div-shadow p-4 bg-white mb-4" >
+
+                        <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold">Service Charges</h5>
+                            <i data-toggle="modal" data-target="#servicecharge-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                        </div>
+
+                        <table class="table table-bordered settings-add-pagination">
+                            <thead>
+                                <tr>
+                                  <th width="5%">Sl</th>
+                                  <th>Product</th>
+                                    <th>brand</th>
+                                    <th>Modal</th>
+                                    <th>Issue</th>
+                                    <th>Charge</th>
+                                    <th>Action</th>
+                                </tr>
+                              
+
+                            </thead>
+                            <tbody>
+
+                                
+                                    {% for item in charges %}
+                                    <tr>
+                                      <td>{{forloop.counter}}</td>
+                                      <td>{{item.product}}</td>
+                                    <td>{{item.brand}}</td>
+                                    <td>{{item.modal}}</td>
+                                    <td>{{item.issue}}</td>
+                                    <td>{{item.charge}}</td>
+                                    <td>
+                                      <a href="{% url 'deleteservicecharge' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                    </td>
+                                </tr>
+                                    {% endfor %}
+
+                         
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+
+                    <div class="settings-div-shadow p-4 bg-white mb-4" >
+
+                        <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold">Issues</h5>
+                            <i data-toggle="modal" data-target="#serviceissues-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                        </div>
+
+                        <table class="table table-bordered settings-add-pagination service-issue-table">
+                            <thead>
+                                <tr>
+                                  <th width="5%">Sl</th>
+                                    <th>Issue</th>
+                                    <!-- <th>Code</th> -->
+                                
+                                    <th>Action</th>
+                                </tr>
+                              
+
+                            </thead>
+                            <tbody>
+
+                                
+                                    {% for item in issues %}
+                                    <tr>
+                                      <td>{{forloop.counter}}</td>
+                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.code}}</td> -->
+                               
+                                    <td class="d-flex gap-2">
+                                      <a href="{% url 'deleteissues' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                      <a  data-toggle="modal" data-target="#serviceissue-edit-modal" ><i data-id="{{item.id}}" class="fa-regular fa-pen-to-square cursor-pointer edit-issue"></i></a>
+                                    </td>
+                                </tr>
+                                    {% endfor %}
+
+                         
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+
+                    
+
+
+
+
+                    <div class="settings-div-shadow p-4 bg-white mb-4" >
+
+                        <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold">Countries</h5>
+                            <i data-toggle="modal" data-target="#country-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                        </div>
+
+                        <table class="table table-bordered settings-add-pagination">
+                            <thead>
+                                <tr>
+                                  <th>Sl</th>
+                                    <th>Name</th>
+                                    <!-- <th>Code</th> -->
+                                    <th>Calling Code</th>
+                                    <th>Action</th>
+                                </tr>
+                              
+
+                            </thead>
+                            <tbody>
+
+                               
+                                    {% for item in countries %}
+                                    <tr>
+                                      <td>{{forloop.counter}}</td>
+                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.code}}</td> -->
+                                    <td>{{item.calling_code}}</td>
+                                    <td>
+                                      <a href="{% url 'deletecountry' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                    </td>
+                                </tr>
+                                    {% endfor %}
+
+                               
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                    <div class="settings-div-shadow p-4 bg-white mb-4" >
+
+                        <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold">Cities</h5>
+                            <i data-toggle="modal" data-target="#city-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                        </div>
+
+                        <table class="table table-bordered settings-add-pagination">
+                            <thead>
+                                <tr>
+                                  <th>Sl</th>
+                                    <th>Name</th>
+                                    <!-- <th>Code</th> -->
+                                    <th>Country</th>
+                                    <th>Action</th>
+                                </tr>
+                              
+
+                            </thead>
+                            <tbody>
+
+                                
+                                    {% for item in cities %}
+                                    <tr>
+                                      <td>{{forloop.counter}}</td>
+                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.code}}</td> -->
+                                    <td>{{item.country}}</td>
+                                    <td>
+                                      <a href="{% url 'deletecity' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                    </td>
+                                </tr>
+                                    {% endfor %}
+
+                         
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+
+                   
+
+
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-5">
+
+                <div class="col-lg-12">
+
+
+
+                  <div class="settings-div-shadow p-4 bg-white mb-3" >
+
+                    <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold">Products</h5>
+                        <i data-toggle="modal" data-target="#serviceproduct-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                    </div>
+
+                    <table class="table table-bordered settings-add-pagination">
+                        <thead>
+                            <tr>
+                              <th>Sl</th>
+                                <th>Name</th>
+                                <!-- <th>Code</th> -->
+                                <th>Action</th>
+                            </tr>
+                          
+
+                        </thead>
+                        <tbody class="service-product-table-body">
+
+                           
+                                {% for item in products %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                <td>{{item.name}}</td>
+                                <!-- <td>{{item.code}}</td> -->
+                            
+                                <td class="d-flex gap-2">
+                                  <a href="{% url 'deleteserviceproduct' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                               <a  data-toggle="modal" data-target="#serviceproduct-edit-modal" ><i data-id="{{item.id}}" class="fa-regular fa-pen-to-square cursor-pointer edit-product"></i></a>
+                               
+                                </td>
+                            </tr>
+                                {% endfor %}
+
+                           
+
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+
+
+
+                    <div class="settings-div-shadow p-4 bg-white mb-3" >
+
+                        <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold">Brands</h5>
+                            <i data-toggle="modal" data-target="#phonebrand-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                        </div>
+
+                        <table class="table table-bordered settings-add-pagination">
+                            <thead>
+                                <tr>
+                                  <th>Sl</th>
+                                  <th>Product</th>
+                                    <th>Name</th>
+                                    <!-- <th>Code</th> -->
+                                    <th>Action</th>
+                                </tr>
+                              
+
+                            </thead>
+                            <tbody class="phone-brand-body">
+
+                               
+                                    {% for item in brands %}
+                                    <tr>
+                                      <td>{{forloop.counter}}</td>
+                                      <td>{{item.product}}</td>
+                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.code}}</td> -->
+                                
+                                    <td class="d-flex gap-2">
+                                      <a href="{% url 'deletephonebrand' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                      <a  data-toggle="modal" data-target="#phonebrand-edit-modal" ><i data-id="{{item.id}}" class="fa-regular fa-pen-to-square cursor-pointer edit-brand"></i></a>
+                                   
+                                    </td>
+                                </tr>
+                                    {% endfor %}
+
+                               
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+
+
+
+
+
+
+                    <div class="settings-div-shadow p-4 bg-white mb-3" >
+
+                        <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold">Modals</h5>
+
+                            <i data-toggle="modal" data-target="#phonemodal-modal" class="fa-regular fa-square-plus cursor-pointer"></i>
+                        </div>
+
+                        <table class="table table-bordered settings-add-pagination">
+                            <thead>
+                                <tr>
+                                  <th>Sl</th>
+                                    <th>Name</th>
+                                    <!-- <th>Code</th> -->
+                                    <th>Brand</th>
+                                    <th>Product</th>
+                                    <th>Action</th>
+                                </tr>
+                              
+
+                            </thead>
+                            <tbody class="phone-modal-table-body">
+
+                               
+                                    {% for item in modals %}
+                                    <tr>
+                                      <td>{{forloop.counter}}</td>
+                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.code}}</td> -->
+                                    
+                                    <td>{{item.brand}}</td>
+                                    <td>{{item.product}}</td>
+                                    <td class="d-flex gap-2">
+                                      <a href="{% url 'deletephonemodal' id=item.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                      <a  data-toggle="modal" data-target="#phonemodal-edit-modal" ><i data-id="{{item.id}}" class="fa-regular fa-pen-to-square cursor-pointer edit-modal"></i></a>
+                                    </td>
+                                </tr>
+                                    {% endfor %}
+
+                               
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+
+
+
+
+
+                    <div class="settings-div-shadow p-4 bg-white mb-3" >
+
+                      <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                          <h5 class="fw-bold">Service Tax</h5>
+
+                          <!-- <i data-toggle="modal" data-target="#servicetax-modal" class="fa-regular fa-square-plus cursor-pointer"></i> -->
+                          <i data-toggle="modal" data-target="#servicetax-modal" class="fa-solid fa-pen-to-square cursor-pointer"></i>
+                      </div>
+
+                      <table class="table table-bordered ">
+                          <thead>
+                              <tr>
+                                <th>Sl</th>
+                                  <th>Tax</th>
+                                
+                              </tr>
+                            
+
+                          </thead>
+                          <tbody>
+
+                             
+                                 
+                                  <tr>
+                                    <td>1</td>
+                                  <td>{{servicetax.tax}}</td>
+                                 
+                              </tr>
+                               
+
+                             
+
+                          </tbody>
+                      </table>
+
+
+
+                  </div>
+
+                  <div class="settings-div-shadow p-4 bg-white mb-3" >
+
+                    <div class="border-bottom mb-3 pb-2 d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold">Live Stream Embed Url</h5>
+
+                        <!-- <i data-toggle="modal" data-target="#servicetax-modal" class="fa-regular fa-square-plus cursor-pointer"></i> -->
+                        <i data-toggle="modal" data-target="#livestreamurl-modal" class="fa-solid fa-pen-to-square cursor-pointer"></i>
+                    </div>
+
+                    <div class="table-responsive">
+
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                              <!-- <th>Sl</th> -->
+                                <th>Url</th>
+                                <th>Action</th>
+                              
+                            </tr>
+                          
+
+                        </thead>
+                        <tbody>
+
+                           
+                               
+                                <tr>
+                                  <!-- <td>1</td> -->
+                                <td>{{url.url}}</td>
+                                <td>
+                                  {% if url %}
+                                  <a href="{% url 'deletelivestreamurl' url_id=url.id %}"><i class="fa-solid fa-trash text-danger"></i></a>
+                               {% endif %}
+                                </td>
+                               
+                            </tr>
+                             
+
+                           
+
+                        </tbody>
+                    </table>
+
+                  </div>
+
+                </div>
+
+
+                   
+                </div>
+                
+            </div>
+            
+            
+            {% endif %}
+       
+            
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+<!-- main-panel ends -->
+
+
+
+
+
+<div class="modal fade" style="z-index:1000;" id="phonemodal-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add Phone Modal</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'addphonemodal' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+
+
+
+            <div class="form-group">
+              <label for="brand" class="fw-bold">Product</label>
+              
+              <select required class="selectizefield productinmodal" name="product" id="product">
+                  <option value=""></option>
+                  {% for prod in products %}
+                  <option value="{{prod.id}}">{{prod.name}}</option>
+                  {% endfor %}
+              </select>
+             
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="brand" class="fw-bold">Brand</label>
+                
+                <select required class="selectizefield brandinmodal" name="brand" id="brand">
+                    
+                </select>
+               
+              </div>
+
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="modal" id="modal">
+              </div>
+
+
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name in Arabic</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="modal_arabic" id="modal_arabic">
+              </div>
+
+              
+
+              
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="phonebrand-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add Phone Brand</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'addphonebrand' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+           
+
+            
+ <div class="form-group">
+  <label for="brand" class="fw-bold">Product</label>
+  
+  <select required class="selectizefield " name="product" id="product">
+      <option value=""></option>
+      {% for prod in products %}
+      <option value="{{prod.id}}">{{prod.name}}</option>
+      {% endfor %}
+  </select>
+ 
+</div>
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="brand" id="brand">
+              </div>
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name in Arabic</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="brand_arabic" id="brand_arabic">
+              </div>
+              
+
+              
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="serviceproduct-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add Product</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'addserviceproduct' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+           
+
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="product" id="product">
+              </div>
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name in Arabic</label>
+                
+
+                <input type="text" class="form-control text-center"   name="product_arabic" id="product_arabic">
+              </div>
+
+              
+
+              
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="serviceissues-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add Issue</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'addissues' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Issue</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="issue" id="issue">
+              </div>
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Issue in Arabic</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="issues-arabic" id="">
+              </div>
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="serviceissue-edit-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Edit Issue</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'editissue' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+              <div class="form-group">
+                <input  type="text" class="form-control text-center"   name="issue-id" id="issue-id-edit" hidden>
+                <label for="modal" class="fw-bold">Issue</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="issue" id="issue-edit">
+              </div>
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Issue in Arabic</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="issue-arabic" id="issue-arabic-edit">
+              </div>
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <script>
+    const serviceIssueTable = document.querySelector(".service-issue-table")
+    serviceIssueTable.addEventListener('click',function(e){
+   
+   if(e.target.classList.contains('edit-issue')){
+   
+   const editBtn = e.target
+   const id = editBtn.dataset.id
+
+
+   console.log(id)
+   
+   var csrftoken = csrf_token;
+
+  $.ajax({
+    url: "/get_service_issue_by_id/",
+    type: "POST",
+    data: { id: id },
+    contentType: "application/json",
+
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+    success: function (response) {
+      console.log(response);
+
+      $("#issue-edit").val(response.name)
+      $("#issue-arabic-edit").val(response.arabic_name)
+      $("#issue-id-edit").val(response.id)
+    },
+    error: function (xhr, textStatus, errorThrown) {
+      console.log(errorThrown);
+    },
+  });
+   
+   
+   
+   }
+  
+  
+  })
+   
+   </script>
+
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="country-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add Country</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'addcountry' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="country" id="country">
+              </div>
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Calling Code</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="calling_code" id="calling_code">
+              </div>
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Mobile Number Digits</label>
+                
+
+                <input required type="number" min="0"  class="form-control text-center"   name="digits" id="digits">
+              </div>
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Currency Code</label>
+                
+
+                <input required type="text"  class="form-control text-center"   name="currencycode" id="currencycode">
+              </div>
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="city-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add City</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'addcity' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+
+            <div class="form-group">
+                <label for="brand" class="fw-bold">Country</label>
+                
+                <select required class="selectizefield" name="country" id="country">
+                    <option value=""></option>
+                    {% for country in countries %}
+                    <option value="{{country.id}}">{{country.name}}</option>
+                    {% endfor %}
+                </select>
+               
+              </div>
+
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="city" id="city">
+              </div>
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="servicecharge-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add Service Charge</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'saveservicecharge' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+
+
+            <div class="form-group">
+              <label for="brand" class="fw-bold">Product</label>
+              
+              <select required class="selectizefield productinservicecharge" name="product" id="product">
+                  <option value=""></option>
+                  {% for prod in products %}
+                  <option value="{{prod.id}}">{{prod.name}}</option>
+                  {% endfor %}
+              </select>
+             
+            </div>
+
+            <div class="form-group">
+                <label for="brand" class="fw-bold">Brand</label>
+                
+                <select required class="selectizefield brandinservicecharge" name="brand" id="servicebrand">
+                    
+                </select>
+               
+              </div>
+
+
+              <div class="form-group">
+                <label for="brand" class="fw-bold">Modal</label>
+                
+                <select required class="selectizefield" name="modal" id="servicemodal">
+                    <option value=""></option>
+                    {% for modal in modals %}
+                    <option value="{{modal.id}}">{{modal.name}}</option>
+                    {% endfor %}
+                </select>
+               
+              </div>
+
+              <div class="form-group">
+                <label for="brand" class="fw-bold">Issue</label>
+                
+                <select required class="selectizefield" name="issue" id="issue">
+                    <option value=""></option>
+                    {% for issue in issues %}
+                    <option value="{{issue.id}}">{{issue.name}}</option>
+                    {% endfor %}
+                </select>
+               
+              </div>
+
+
+              <div class="form-group">
+                <label  for="modal" class="fw-bold">Charge</label>
+                
+
+                <input required type="number" min="0" step="0.01" class="form-control text-center"   name="charge" id="charge">
+              </div>
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="servicerack-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Add Rack Number</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'addrack' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="rack" id="rack">
+              </div>
+             
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="servicetax-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Edit Service Tax</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'editservicetax' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Tax</label>
+                
+
+                <input required type="number" min="0" step="0.01" class="form-control text-center"   name="tax" id="tax">
+              </div>
+             
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Edit</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="livestreamurl-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Edit Live Stream Url</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'editlivestreamurl' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Url</label>
+                
+
+                <input required type="text" min="0"  class="form-control text-center"   name="url" id="url">
+              </div>
+             
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="phonemodal-edit-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Edit Phone Modal</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'editphonemodal' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+
+
+
+            <!-- <div class="form-group">
+              <label for="brand" class="fw-bold">Product</label>
+              
+              <select required class="selectizefield productinmodal" name="product" id="product">
+                  <option value=""></option>
+                  {% for prod in products %}
+                  <option value="{{prod.id}}">{{prod.name}}</option>
+                  {% endfor %}
+              </select>
+             
+            </div> -->
+
+
+
+            <!-- <div class="form-group">
+                <label for="brand" class="fw-bold">Brand</label>
+                
+                <select required class="selectizefield brandinmodal" name="brand" id="brand">
+                    
+                </select>
+               
+              </div> -->
+              <input type="text" hidden id="modal_id_edit" name="modal_id_edit">
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="modal_edit" id="modal_edit">
+              </div>
+
+
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name in Arabic</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="modal_arabic_edit" id="modal_arabic_edit">
+              </div>
+
+              
+
+              
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const phoneModalTable = document.querySelector(".phone-modal-table-body")
+    phoneModalTable.addEventListener('click',function(e){
+   
+   if(e.target.classList.contains('edit-modal')){
+   
+   const editBtn = e.target
+   const id = editBtn.dataset.id
+
+
+   console.log(id)
+   
+   var csrftoken = csrf_token;
+
+  $.ajax({
+    url: "/get_phone_modal_by_id/",
+    type: "POST",
+    data: { id: id },
+    contentType: "application/json",
+
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+    success: function (response) {
+      console.log(response);
+
+      $("#modal_edit").val(response.name)
+      $("#modal_arabic_edit").val(response.arabic_name)
+      $("#modal_id_edit").val(response.id)
+    },
+    error: function (xhr, textStatus, errorThrown) {
+      console.log(errorThrown);
+    },
+  });
+   
+   
+   
+   }
+  
+  
+  })
+   
+   </script>
+
+
+
+
+  <div class="modal fade" style="z-index:1000;" id="phonebrand-edit-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Edit Phone Brand</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'editphonebrand' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+           
+
+            
+ <!-- <div class="form-group">
+  <label for="brand" class="fw-bold">Product</label>
+  
+  <select required class="selectizefield " name="product" id="product">
+      <option value=""></option>
+      {% for prod in products %}
+      <option value="{{prod.id}}">{{prod.name}}</option>
+      {% endfor %}
+  </select>
+ 
+</div> -->
+<input type="text" hidden id="brand_id_edit" name="brand_id_edit">
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="brand_edit" id="brand_edit">
+              </div>
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name in Arabic</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="brand_arabic_edit" id="brand_arabic_edit">
+              </div>
+              
+
+              
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const phoneBrandTable = document.querySelector(".phone-brand-body")
+    phoneBrandTable.addEventListener('click',function(e){
+   
+   if(e.target.classList.contains('edit-brand')){
+   
+   const editBtn = e.target
+   const id = editBtn.dataset.id
+
+
+   console.log(id)
+   
+   var csrftoken = csrf_token;
+
+  $.ajax({
+    url: "/get_phone_brand_by_id/",
+    type: "POST",
+    data: { id: id },
+    contentType: "application/json",
+
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+    success: function (response) {
+      console.log(response);
+
+      $("#brand_edit").val(response.name)
+      $("#brand_arabic_edit").val(response.arabic_name)
+      $("#brand_id_edit").val(response.id)
+    },
+    error: function (xhr, textStatus, errorThrown) {
+      console.log(errorThrown);
+    },
+  });
+   
+   
+   
+   }
+  
+  
+  })
+   
+   </script>
+
+
+
+ 
+  <div class="modal fade" style="z-index:1000;" id="serviceproduct-edit-modal">
+    <div class="modal-dialog">
+      <div class="modal-content p-0 w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center text-white"
+          style="background-color:#4555B9;"
+        >
+          <h5 class="modal-title"><strong>Edit Product</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span class="text-white" aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'editserviceproduct' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+
+           <input type="text" hidden id="product_id_edit" name="product_id_edit">
+
+
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name</label>
+                
+
+                <input required type="text" class="form-control text-center"   name="product_edit" id="product_edit">
+              </div>
+              <div class="form-group">
+                <label for="modal" class="fw-bold">Name in Arabic</label>
+                
+
+                <input type="text" class="form-control text-center"   name="product_arabic_edit" id="product_arabic_edit">
+              </div>
+
+              
+
+              
+           </div>
+           <div class="modal-footer">
+             <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script>
+    const serviceProductTable = document.querySelector(".service-product-table-body")
+   serviceProductTable.addEventListener('click',function(e){
+   
+   if(e.target.classList.contains('edit-product')){
+   
+   const editBtn = e.target
+   const id = editBtn.dataset.id
+
+
+   console.log(id)
+   
+   var csrftoken = csrf_token;
+
+  $.ajax({
+    url: "/get_service_product_by_id/",
+    type: "POST",
+    data: { id: id },
+    contentType: "application/json",
+
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+    success: function (response) {
+      console.log(response);
+
+      $("#product_edit").val(response.name)
+      $("#product_arabic_edit").val(response.arabic_name)
+      $("#product_id_edit").val(response.id)
+    },
+    error: function (xhr, textStatus, errorThrown) {
+      console.log(errorThrown);
+    },
+  });
+   
+   
+   
+   }
+  
+  
+  })
+   
+   </script>
+{% endblock %}
+
+
+
+
+
+
