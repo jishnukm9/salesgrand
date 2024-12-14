@@ -6216,14 +6216,15 @@ def salesReturnSearch(request):
     branch = request.user.userprofile.branch
     for i in salesdata:
         dic = {}
-
         ############### checking balance qty ##################
         if already_returned:
             product = i.name
             product_exist = SaleReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber)).exists()
             if product_exist:
                 salereturnobj = SaleReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber))
-                returned_qty = salereturnobj.aggregate(Sum('totalquantity'))["totalquantity__sum"]
+                returned_qty = 0
+                for j in salereturnobj:
+                    returned_qty = returned_qty + j.returnquantity
                 balance_qty = i.totalquantity - returned_qty
                 dic['balance_qty'] = balance_qty
             else:

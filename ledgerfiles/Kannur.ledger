@@ -256,3 +256,28 @@
      Expenses:Purchase        10350.0  INR 
      Assets:Purchase:Cash 
 
+2024-12-14 * INV-24121 (Sale Transaction)
+    Assets:Sale:Cash              142600.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -18600.0  INR
+
+2024-12-14 * INV-24121 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       71300.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      9300.0  INR
+
+2024-12-14 * INV-24122 (Sale Transaction)
+    Assets:Sale:Cash              92000.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -12000.0  INR
+
+2024-12-14 * INV-24122 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       11500.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      1500.0  INR
+
+2024-12-14 * INV-24122 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       11500.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      1500.0  INR
+
