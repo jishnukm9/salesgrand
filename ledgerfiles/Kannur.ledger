@@ -281,3 +281,31 @@
      Assets:SaleReturn
      Liabilities:Sale:TaxPayable      1500.0  INR
 
+2024-12-14 * INV65665 (Purchase Transaction)
+     Expenses:Purchase        58650.0  INR 
+     Assets:Purchase:Cash 
+
+2024-12-14 * INV-24121 (Sale Transaction)
+    Assets:Sale:Cash              17020.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -2220.0  INR
+
+2024-12-14 * INV-24121 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       17020.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      2220.0  INR
+
+2024-12-14 * INV-24122 (Sale Transaction)
+    Assets:Sale:Cash              21275.0 INR
+    Income:Sale
+    Liabilities:Sale:TaxPayable      -2775.0  INR
+
+2024-12-14 * INV-24122 (Sale Return Transaction)
+     Expenses:SaleReturn:Cash       21275.0 INR
+     Assets:SaleReturn
+     Liabilities:Sale:TaxPayable      2775.0  INR
+
+2024-12-14  *  Loan took from Canara Bank  (Receipt) 
+     Assets:CASH ACCOUNT:CASH ACCOUNT      30000  INR
+     Liabilities:BORROWINGS:Loan Taken From Canara Bank
+

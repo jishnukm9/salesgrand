@@ -299,6 +299,7 @@ class StockTransferList(models.Model):
 class PurchaseReturn(models.Model):
     purchasereturnid = models.CharField(max_length=200)
     invoicenumber = models.CharField(max_length=200)
+    purchaseid = models.CharField(max_length=200,default=None, null=True, blank=True)
     supplier = models.ForeignKey(
         Branch,
         on_delete=models.PROTECT,
@@ -342,6 +343,7 @@ class PurchaseReturn(models.Model):
 class SaleReturn(models.Model):
     salereturnid = models.CharField(max_length=200)
     invoicenumber = models.CharField(max_length=200)
+    saleid = models.CharField(max_length=200,default=None, null=True, blank=True)
     barcode = models.CharField(max_length=200)
     customer = models.CharField(max_length=200)
     paymentmode = models.CharField(max_length=200, null=True, blank=True, default=None)

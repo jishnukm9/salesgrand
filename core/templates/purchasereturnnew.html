@@ -29,9 +29,27 @@
                                   <div class="card-header py-3 bg-white d-flex justify-content-between" >
                                       <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Purchase Return </strong> </h5>
                                       {% if already_returned == True %}
-                                    <p class="fw-bold text-danger m-0 p-0">Note : This Purchase Invoice is already returned once</p>
+                                      <div>
+                                        <p class="fw-bold text-danger m-0 p-0">Note : This Purchase Invoice is already returned once</p>
+                                      
+                                        <div>
+                                          {% if messages %}
+                                            {% for message in messages %}
+                                              <span class="text-danger fw-bold" style="font-size: 13px; ">{{ message }}</span>
+                                            {% endfor %}
+                                          {% endif %}
+                                        </div>
+
+                                      </div>
+                                    
                                     {% else %}
-                                    <p></p>
+                                    <div>
+                                    {% if messages %}
+                                      {% for message in messages %}
+                                        <span class="text-danger  fw-bold" style="font-size: 13px; ">{{ message }}</span>
+                                      {% endfor %}
+                                    {% endif %}
+                                  </div>
                                     {% endif %}
                                   </div>
                                   <div class="card-body">
@@ -86,6 +104,9 @@
 
                                         <form id="purchasereturnform" action="{% url 'addpurchasereturn' %}" method="POST"> 
                                             {% csrf_token %}
+
+
+                                            <input type="text" hidden name="purchaseid" value="{{purchaseid}}">
 
 
                                         <div class="table-responsive mb-4">

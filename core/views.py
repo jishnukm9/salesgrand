@@ -4026,6 +4026,10 @@ def addPurchaseReturn(request):
     length_count = list(filter(check_status_with_constant, request.POST.keys()))
 
 
+    already_pending_returned = PurchaseReturn.objects.filter(Q(purchaseid=request.POST["purchaseid"])&Q(status="Pending")).exists()
+    if already_pending_returned:
+        messages.error(request, "Pending return already exists of this purchase")
+        return redirect("purchasereturn")
     purchasereturnid = generate_unique_id("PurchaseReturn", "PRT")
     for i in range(1, ((len(length_count)+10))):
         data = PurchaseReturn()
@@ -4048,7 +4052,7 @@ def addPurchaseReturn(request):
             ).first()
 
         data.purchasereturnid = purchasereturnid
-
+        data.purchaseid =  request.POST["purchaseid"]
         data.product = Products.objects.filter(
             Q(name=request.POST["product" + i])
             & Q(branch=request.user.userprofile.branch)
@@ -6292,7 +6296,7 @@ def addSalesReturn(request):
         if productcheck != "on":
             continue
         data.invoicenumber = request.POST["invno-sale"]
-
+        data.saleid = request.POST['saleid']
         data.customer = return_customer
         data.customertype = request.POST["custtype"]
         data.customerid = request.POST["custid"]

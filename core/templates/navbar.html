@@ -581,8 +581,8 @@
                           
                            <li class="nav-item"><a class="nav-link" href="{% url 'stocktransferlist' %}">Stock Transfer List</a></li>
                            <li class="nav-item"><a class="nav-link" href="{% url 'transferedstocklist' %}">Transfered Stock List</a></li>
-                           <li class="nav-item"><a class="nav-link" href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a></li>
-                           <li class="nav-item"><a class="nav-link" href="{% url 'bulkstocklist' %}">Bulk Stock List</a></li>
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a></li> -->
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'bulkstocklist' %}">Bulk Stock List</a></li> -->
 
                            {% if request.user.is_superuser or request.user.userprofile.role == 'Branch Admin' or request.user.userprofile.role == 'Franchise Admin'  %}
                            <li class="nav-item"><a class="nav-link" href="{% url 'stockadjustment' %}">Stock Adjustment</a></li>
