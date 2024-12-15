@@ -127,28 +127,30 @@
                                         </div>
                                       </div>
 
+
                                       <div class="form-row row">
                                         <div class="form-group col-lg-4">
-                                          <label for="creditaccount" class="fs-6"
+                                          <label for="paymentmode" class="fs-6"
                                             >Credit Account</label
                                           >
                                          
                                         </div>
                                         <div class="form-group col-lg-8">
           
-                                          <select required  style=" border:1px solid #dee2e6;" class="form-control" name="creditaccount" id="creditaccount">
-                                            <option value=""></option>
+                                          <select required  style=" border:1px solid #dee2e6;" class="form-control" name="paymentmode" id="paymentmode">
+                                            <option  value=""></option>
+                                            <option value="Cash" >Cash</option>
+                                            <option value="Bank" >Bank</option>
                                             
-                                            {% for item in credit_dropdown %}
-                                            <option value="{{ item.name }}" >{{ item.name }}</option>
-                                             {% endfor %}
-                                            <!-- <option value="office" >Office Expenses</option>
-                                            <option value="salary">Network And Communication</option> -->
+                                            <option value="Card" >Card</option>
+                                            <option value="UPI" >UPI</option>
                                           </select>
                                         
                                        
                                         </div>
                                       </div>
+
+                                  
 
                                      <div class="form-row row">
                                        <div class="form-group col-lg-4">
@@ -175,27 +177,7 @@
                                        </div>
                                      </div>
 
-                                     <div class="form-row row">
-                                        <div class="form-group col-lg-4">
-                                          <label for="paymentmode" class="fs-6"
-                                            >Payment Mode</label
-                                          >
-                                         
-                                        </div>
-                                        <div class="form-group col-lg-8">
-          
-                                          <select required  style=" border:1px solid #dee2e6;" class="form-control" name="paymentmode" id="paymentmode">
-                                            <option  value=""></option>
-                                            <option value="Cash" >Cash</option>
-                                            <option value="Bank" >Bank</option>
-                                            
-                                            <option value="Card" >Card</option>
-                                            <option value="UPI" >UPI</option>
-                                          </select>
-                                        
-                                       
-                                        </div>
-                                      </div>
+                                     
 
   
                                       <div class="form-row row">

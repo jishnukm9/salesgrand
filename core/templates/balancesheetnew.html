@@ -84,121 +84,208 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <!-- Account Payable Section -->
-                        <tr class="section-header" data-section="accountPayable">
-                          <td class="fw-bold fs-7 py-3">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            Account Payable
-                          </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ accounts_payable_total }}</td>
+
+
+
+
+                        
+                        {% if is_current_liabilities %}
+                        {% for main_category, main_data in grouped_liabilities.items %}
+                            <!-- Main category header -->
+                            <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                <td class="fw-bold fs-7 py-3">
+                                    <i class="fas fa-chevron-down me-2"></i>
+                                    {{ main_category }}
+                                </td>
+                                <td class="py-3 px-4 text-end align-middle"></td>
+                            </tr>
+                        
+                            {% if main_category == 'CURRENT LIABILITIES' %}
+                                <!-- Account Payable Section -->
+                                <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-accountpayable">
+                                    <td class="fw-bold fs-7 py-3">
+                                        <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                        ACCOUNT PAYABLE(Purchase)
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">{{ accounts_payable_total }}</td>
+                                </tr>
+                                {% for item in account_payable_list %}
+                                    {% for key, value in item.items %}
+                                    <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-accountpayable">
+                                        <td class="py-3 px-4 align-middle">
+                                            <span class="ms-5">{{ key | replaceunderscore }}</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                        
+                                <!-- Tax Payable Section -->
+                                <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-taxpayable">
+                                    <td class="fw-bold fs-7 py-3">
+                                        <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                        TAX PAYABLE
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">{{ total_tax_payable }}</td>
+                                </tr>
+                                <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-taxpayable">
+                                    <td class="py-3 px-4 align-middle">
+                                        <span class="ms-5">SALE TAX PAYABLE</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">{{ sale_tax_payable | floatformat:2 }}</td>
+                                </tr>
+                                <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-taxpayable">
+                                    <td class="py-3 px-4 align-middle">
+                                        <span class="ms-5">LESS: TAX ON SALE RETURNS</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">({{ sale_return_tax | floatformat:2 }})</td>
+                                </tr>
+                                <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-taxpayable">
+                                    <td class="py-3 px-4 align-middle">
+                                        <span class="ms-5">SERVICE TAX PAYABLE</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">{{ service_tax_payable | floatformat:2 }}</td>
+                                </tr>
+                            {% endif %}
+                        
+                            {% for subcategory in main_data.data %}
+                                <!-- Rest of your subcategories -->
+                                <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                    <td class="fw-bold fs-7 py-3">
+                                        <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                        {{ subcategory.title }}
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                                </tr>
+                        
+                                {% for item in subcategory.data %}
+                                <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                    <td class="py-3 px-4 align-middle">
+                                        <span class="ms-5">{{ item.title }}</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">
+                                        {% if item.value|first == "(" %}
+                                            {{ item.value }}
+                                        {% else %}
+                                            {{ item.value|floatformat:2 }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            {% endfor %}
+                        
+                        {% else %}
+
+
+
+
+
+
+                        <tr class="main-section-header" data-section="currentliabilities">
+                            <td class="fw-bold fs-7 py-3">
+                                <i class="fas fa-chevron-down me-2"></i>
+                                CURRENT LIABILITIES
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">
+                                
+                            </td>
+                        </tr>
+
+                        <tr class="section-header" data-section="currentliabilities-accountpayable">
+                            <td class="fw-bold fs-7 py-3">
+                                <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                ACCOUNT PAYABLE(Purchase)
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ accounts_payable_total }}</td>
                         </tr>
                         {% for item in account_payable_list %}
-                        {% for key, value in item.items %}
-                        <tr class="section-content" data-section="accountPayable">
-                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                          <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
-                        </tr>
-                        {% endfor %}
-                        {% endfor %}
-
-                        <!-- Tax Payable Section -->
-                        <tr class="section-header" data-section="taxPayable">
-                          <td class="fw-bold fs-7 py-3">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            Tax Payable
-                          </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ total_tax_payable }}</td>
-                        </tr>
-                        <tr class="section-content" data-section="taxPayable">
-                          <td class="py-3 px-4 align-middle">Sale Tax Payable</td>
-                          <td class="py-3 px-4 text-end align-middle">{{ sale_tax_payable | floatformat:2 }}</td>
-                        </tr>
-                        <tr class="section-content" data-section="taxPayable">
-                          <td class="py-3 px-4 align-middle">Less: Tax on Sales Returns</td>
-                          <td class="py-3 px-4 text-end align-middle">({{ sale_return_tax | floatformat:2 }})</td>
-                        </tr>
-                        <tr class="section-content" data-section="taxPayable">
-                          <td class="py-3 px-4 align-middle">Service Tax Payable</td>
-                          <td class="py-3 px-4 text-end align-middle">{{ service_tax_payable | floatformat:2 }}</td>
-                        </tr>
-
-
-
-
-<!-- {% merge_keys receipt_list_liability payment_list_liability journal_list_liability as merged_keys %}
-                        {% for key in merged_keys %}
-                          <tr class="section-header" data-section="{{ key }}">
-                            <td class="fw-bold fs-7 py-3">
-                              <i class="fas fa-chevron-right me-2"></i>
-                              {{ key | replaceunderscore }}
-                            </td>
-                            {% for itemt in list_liability_total %}
-                            {% for keyt,valuet in itemt.items %}
-                            {% if key == keyt %}
-                            <td class="py-3 px-4 text-end align-middle">{{valuet}}</td>
-                            {% endif %}
-                            {% endfor %}
-                            {% endfor %}
-                          </tr>
-                          
-                          {% with receipt_value=receipt_list_liability|get_value:key %}
-                            {% if receipt_value != 0 %}
-                              <tr class="section-content" data-section="{{ key }}">
-                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                <td class="py-3 px-4 text-end align-middle">{{ receipt_value|floatformat:2 }}</td>
-                              </tr>
-                            {% endif %}
-                          {% endwith %}
-                          
-                          {% with payment_value=payment_list_liability|get_value:key %}
-                            {% if payment_value != 0 %}
-                              <tr class="section-content" data-section="{{ key }}">
-                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                <td class="py-3 px-4 text-end align-middle">({{ payment_value|floatformat:2 }})</td>
-                              </tr>
-                            {% endif %}
-                          {% endwith %}
-                        
-                          {% with journal_value=journal_list_liability|get_value:key %}
-                            {% if journal_value != 0 %}
-                              <tr class="section-content" data-section="{{ key }}">
-                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                <td class="py-3 px-4 text-end align-middle">
-                                  {% if journal_value < 0 %}
-                                  ({{ journal_value|floatformat:2|slice:"1:" }})
-                                  {% else %}
-                                    {{ journal_value|floatformat:2 }}
-                                  {% endif %}
+                            {% for key, value in item.items %}
+                            <tr class="section-content" data-section="currentliabilities-accountpayable">
+                                <td class="py-3 px-4 align-middle">
+                                    <span class="ms-5">{{ key | replaceunderscore }}</span>
                                 </td>
-                              </tr>
-                            {% endif %}
-                          {% endwith %}
-                        {% endfor %} -->
-                    
-                        
-
-                        {% for head_root, group in grouped_liabilities.items %}
-                        <tr class="section-header" data-section="{{ head_root|lower|cut:' ' }}">
-                          <td class="fw-bold fs-7 py-3">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            {{ head_root }}
-                          </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ group.total }}</td>
-                        </tr>
-                        
-                        {% for item in group.data %}
-                          <tr class="section-content" data-section="{{ head_root|lower|cut:' ' }}">
-                            <td class="py-3 px-4 align-middle">{{ item.title }}</td>
-                            <td class="py-3 px-4 text-end align-middle">
-                              {% if item.value|first == "(" %}
-                                {{ item.value }}
-                              {% else %}
-                                {{ item.value|floatformat:2 }}
-                              {% endif %}
-                            </td>
-                          </tr>
+                                <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
                         {% endfor %}
-                      {% endfor %}
+                
+                        <!-- Tax Payable Section -->
+                        <tr class="section-header" data-section="currentliabilities-taxpayable">
+                            <td class="fw-bold fs-7 py-3">
+                                <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                TAX PAYABLE
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ total_tax_payable }}</td>
+                        </tr>
+                        <tr class="section-content" data-section="currentliabilities-taxpayable">
+                            <td class="py-3 px-4 align-middle">
+                                <span class="ms-5">SALE TAX PAYABLE</span>
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ sale_tax_payable | floatformat:2 }}</td>
+                        </tr>
+                        <tr class="section-content" data-section="currentliabilities-taxpayable">
+                            <td class="py-3 px-4 align-middle">
+                                <span class="ms-5">LESS: TAX ON SALE RETURNS</span>
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">({{ sale_return_tax | floatformat:2 }})</td>
+                        </tr>
+                        <tr class="section-content" data-section="currentliabilities-taxpayable">
+                            <td class="py-3 px-4 align-middle">
+                                <span class="ms-5">SERVICE TAX PAYABLE</span>
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ service_tax_payable | floatformat:2 }}</td>
+                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+                        {% for main_category, main_data in grouped_liabilities.items %}
+
+                            <!-- For non-current liabilities -->
+                            <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                <td class="fw-bold fs-7 py-3">
+                                    <i class="fas fa-chevron-down me-2"></i>
+                                    {{ main_category }}
+                                </td>
+                                <td class="py-3 px-4 text-end align-middle"></td>
+                            </tr>
+                            {% for subcategory in main_data.data %}
+                                <!-- Same subcategory structure as above -->
+                                <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                    <td class="fw-bold fs-7 py-3">
+                                        <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                        {{ subcategory.title }}
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                                </tr>
+                        
+                                {% for item in subcategory.data %}
+                                <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                    <td class="py-3 px-4 align-middle">
+                                        <span class="ms-5">{{ item.title }}</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-end align-middle">
+                                        {% if item.value|first == "(" %}
+                                            {{ item.value }}
+                                        {% else %}
+                                            {{ item.value|floatformat:2 }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                       
 
 
 
@@ -232,74 +319,34 @@
                       <tbody>
 
 
-
                       
-                      <!-- {% merge_keys receipt_list_equity payment_list_equity journal_list_equity as merged_keys %}
-                      {% for key in merged_keys %}
-                          
-                            <tr class="section-header" data-section="{{ key }}">
-                              <td class="fw-bold fs-7 py-3">
-                                <i class="fas fa-chevron-right me-2"></i>
-                                {{ key | replaceunderscore }}
-                              </td>
-                              {% for itemt in list_equity_total %}
-                              {% for keyt,valuet in itemt.items %}
-                              {% if key == keyt %}
-                              <td class="py-3 px-4 text-end align-middle">{{valuet}}</td>
-                              {% endif %}
-                              {% endfor %}
-                              {% endfor %}
-                            </tr>
-                            
-                       
-                            {% with receipt_value=receipt_list_equity|get_value:key %}
-                              {% if receipt_value != 0 %}
-                                <tr class="section-content" data-section="{{ key }}">
-                                  <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                  <td class="py-3 px-4 text-end align-middle">{{ receipt_value|floatformat:2 }}</td>
-                                </tr>
-                              {% endif %}
-                            {% endwith %}
-                            
-                         
-                            {% with payment_value=payment_list_equity|get_value:key %}
-                              {% if payment_value != 0 %}
-                                <tr class="section-content" data-section="{{ key }}">
-                                  <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                  <td class="py-3 px-4 text-end align-middle">({{ payment_value|floatformat:2 }})</td>
-                                </tr>
-                              {% endif %}
-                            {% endwith %}
-
-                         
-                            {% with journal_value=journal_list_equity|get_value:key %}
-                              {% if journal_value != 0 %}
-                                <tr class="section-content" data-section="{{ key }}">
-                                  <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                  <td class="py-3 px-4 text-end align-middle">
-                                    {% if journal_value < 0 %}
-                                    ({{ journal_value|floatformat:2|slice:"1:" }})
-                                    {% else %}
-                                      {{ journal_value|floatformat:2 }}
-                                    {% endif %}
-                                  </td>
-                                </tr>
-                              {% endif %}
-                            {% endwith %}
-                          {% endfor %} -->
+                        {% for main_category, main_data in grouped_equity.items %}
+                        <!-- Main category header -->
+                        <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                          <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-down me-2"></i>
+                            {{ main_category }}
+                          </td>
+                          <!-- <td class="py-3 px-4 text-end align-middle">{{ main_data.total }}</td> -->
+                          <td class="py-3 px-4 text-end align-middle"></td>
+                        </tr>
                       
-                          {% for head_root, group in grouped_equity.items %}
-                          <tr class="section-header" data-section="{{ head_root|lower|cut:' ' }}">
+                        {% for subcategory in main_data.data %}
+                          <!-- Subcategory header -->
+                          <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
                             <td class="fw-bold fs-7 py-3">
-                              <i class="fas fa-chevron-right me-2"></i>
-                              {{ head_root }}
+                              <i class="fas fa-chevron-right me-2 ms-4"></i>
+                              {{ subcategory.title }}
                             </td>
-                            <td class="py-3 px-4 text-end align-middle">{{ group.total }}</td>
+                            <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
                           </tr>
-                          
-                          {% for item in group.data %}
-                            <tr class="section-content" data-section="{{ head_root|lower|cut:' ' }}">
-                              <td class="py-3 px-4 align-middle">{{ item.title }}</td>
+                      
+                          <!-- Individual items -->
+                          {% for item in subcategory.data %}
+                            <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                              <td class="py-3 px-4 align-middle">
+                                <span class="ms-5">{{ item.title }}</span>
+                              </td>
                               <td class="py-3 px-4 text-end align-middle">
                                 {% if item.value|first == "(" %}
                                   {{ item.value }}
@@ -310,6 +357,7 @@
                             </tr>
                           {% endfor %}
                         {% endfor %}
+                      {% endfor %}
 
 
 
@@ -328,12 +376,12 @@
                         <tr class="section-header" data-section="retEarning">
                           <td class="fw-bold fs-7 py-3">
                             <i class="fas fa-chevron-right me-2"></i>
-                            Retained Earnings ({{retained_earnings.pnl}})
+                            RETAINED EARNINGS ({{retained_earnings.pnl}})
                           </td>
                           <td class="py-3 px-4 text-end align-middle">{{ retained_earnings.balance }}</td>
                         </tr>
                         <tr class="section-content" data-section="retEarning">
-                          <td class="py-3 px-4 align-middle">Retained Earnings ({{retained_earnings.pnl}})</td>
+                          <td class="py-3 px-4 align-middle">RETAINED EARNINGS ({{retained_earnings.pnl}})</td>
                           <td class="py-3 px-4 text-end align-middle">{{ retained_earnings.balance }}</td>
                         </tr>
 
@@ -365,137 +413,266 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <!-- Cash in Hand Section -->
-                        <tr class="section-header" data-section="cashInHand">
-                          <td class="fw-bold fs-7 py-3">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            Cash and Cash Equivalents
-                          </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ total_cash_in_hand }}</td>
-                        </tr>
-                        {% for item in asset %}
-                        {% for key, value in item.items %}
-                        <tr class="section-content" data-section="cashInHand">
-                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                          <td class="py-3 px-4 text-end align-middle">{{ value }}</td>
-                        </tr>
-                        {% endfor %}
-                        {% endfor %}
-
-                        <!-- Account Receivable Section -->
-                        <tr class="section-header" data-section="accountReceivable">
-                          <td class="fw-bold fs-7 py-3">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            Account Receivable
-                          </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ accounts_receivable_total | floatformat:2 }}</td>
-                        </tr>
-                        {% for item in account_receivable %}
-                        {% for key, value in item.items %}
-                        <tr class="section-content" data-section="accountReceivable">
-                          <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                          <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
-                        </tr>
-                        {% endfor %}
-                        {% endfor %}
-
-                        <!-- Tax Receivable Section -->
-                        <tr class="section-header" data-section="taxReceivable">
-                          <td class="fw-bold fs-7 py-3">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            Tax Receivable
-                          </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ total_tax_receivable }}</td>
-                        </tr>
-                        <tr class="section-content" data-section="taxReceivable">
-                          <td class="py-3 px-4 align-middle">Purchase Tax Receivable</td>
-                          <td class="py-3 px-4 text-end align-middle">{{ purchase_tax_receivable | floatformat:2 }}</td>
-                        </tr>
-                        <tr class="section-content" data-section="taxReceivable">
-                          <td class="py-3 px-4 align-middle">Less: Tax on Purchase Returns</td>
-                          <td class="py-3 px-4 text-end align-middle">({{ purchase_return_tax | floatformat:2 }})</td>
-                        </tr>
 
 
 
 
-                        {% for head_root, group in grouped_assets.items %}
-                        <tr class="section-header" data-section="{{ head_root|lower|cut:' ' }}">
-                          <td class="fw-bold fs-7 py-3">
-                            <i class="fas fa-chevron-right me-2"></i>
-                            {{ head_root }}
-                          </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ group.total }}</td>
-                        </tr>
-                        
-                        {% for item in group.data %}
-                          <tr class="section-content" data-section="{{ head_root|lower|cut:' ' }}">
-                            <td class="py-3 px-4 align-middle">{{ item.title }}</td>
-                            <td class="py-3 px-4 text-end align-middle">
-                              {% if item.value|first == "(" %}
-                                {{ item.value }}
-                              {% else %}
-                                {{ item.value|floatformat:2 }}
-                              {% endif %}
+                       
+
+
+
+
+
+
+
+
+
+
+
+                      {% if is_current_assets %}
+                      
+                      {% for main_category, main_data in grouped_assets.items %}
+                        <!-- Main category header -->
+                        <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                            <td class="fw-bold fs-7 py-3">
+                            <i class="fas fa-chevron-down me-2"></i>
+                            {{ main_category }}
                             </td>
-                          </tr>
+                            <!-- <td class="py-3 px-4 text-end align-middle">{{ main_data.total }}</td> -->
+                            <td class="py-3 px-4 text-end align-middle"></td>
+                        </tr>
+
+                        <!-- HARD CODED ASSETS  -->
+                         {% if main_category == 'CURRENT ASSETS' %}
+                          <!-- Cash in Hand Section -->
+                        <!-- CASH AND CASH EQUIVALENT Section -->
+<tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-cashandcashequivalent">
+    <td class="fw-bold fs-7 py-3">
+        <i class="fas fa-chevron-right me-2 ms-4"></i>
+        CASH AND CASH EQUIVALENT
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ total_cash_in_hand }}</td>
+</tr>
+{% for item in asset %}
+    {% for key, value in item.items %}
+    <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-cashandcashequivalent">
+        <td class="py-3 px-4 align-middle">
+            <span class="ms-5">{{ key | replaceunderscore }}</span>
+        </td>
+        <td class="py-3 px-4 text-end align-middle">{{ value }}</td>
+    </tr>
+    {% endfor %}
+{% endfor %}
+
+<!-- ACCOUNT RECEIVABLE Section -->
+<tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-accountreceivable">
+    <td class="fw-bold fs-7 py-3">
+        <i class="fas fa-chevron-right me-2 ms-4"></i>
+        ACCOUNT RECEIVABLE(Sale,Service)
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ accounts_receivable_total | floatformat:2 }}</td>
+</tr>
+{% for item in account_receivable %}
+    {% for key, value in item.items %}
+    <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-accountreceivable">
+        <td class="py-3 px-4 align-middle">
+            <span class="ms-5">{{ key | replaceunderscore }}</span>
+        </td>
+        <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+{% endfor %}
+
+<!-- TAX RECEIVABLE Section -->
+<tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-taxreceivable">
+    <td class="fw-bold fs-7 py-3">
+        <i class="fas fa-chevron-right me-2 ms-4"></i>
+        TAX RECEIVABLE
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ total_tax_receivable }}</td>
+</tr>
+<tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-taxreceivable">
+    <td class="py-3 px-4 align-middle">
+        <span class="ms-5">Purchase Tax Receivable</span>
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ purchase_tax_receivable | floatformat:2 }}</td>
+</tr>
+<tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-taxreceivable">
+    <td class="py-3 px-4 align-middle">
+        <span class="ms-5">Less: Tax on Purchase Returns</span>
+    </td>
+    <td class="py-3 px-4 text-end align-middle">({{ purchase_return_tax | floatformat:2 }})</td>
+</tr>
+                           <!-- HARD CODED ASSETS  -->
+
+                            {% endif %}
+
+
+                        {% for subcategory in main_data.data %}
+                            <!-- Subcategory header -->
+                            <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                            <td class="fw-bold fs-7 py-3">
+                                <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                {{ subcategory.title }}
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                            </tr>
+
+                            <!-- Individual items -->
+                            {% for item in subcategory.data %}
+                            <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                <td class="py-3 px-4 align-middle">
+                                <span class="ms-5">{{ item.title }}</span>
+                                </td>
+                                <td class="py-3 px-4 text-end align-middle">
+                                {% if item.value|first == "(" %}
+                                    {{ item.value }}
+                                {% else %}
+                                    {{ item.value|floatformat:2 }}
+                                {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
                         {% endfor %}
-                      {% endfor %}
+                        {% endfor %}
+                        {% else %}
+
+
 
 
 
       
+                            
+                        <!-- Main category (CURRENT ASSETS) -->
+<tr class="main-section-header" data-section="currentassets">
+    <td class="fw-bold fs-7 py-3">
+        <i class="fas fa-chevron-down me-2"></i>
+        CURRENT ASSETS
+    </td>
+    <td class="py-3 px-4 text-end align-middle">
+        
+    </td>
+</tr>
 
-<!-- 
-                        {% merge_keys receipt_list_asset payment_list_asset journal_list_asset as merged_keys %}
-                        {% for key in merged_keys %}
-                          <tr class="section-header" data-section="{{ key }}">
+<!-- CASH AND CASH EQUIVALENT Section -->
+<tr class="section-header" data-section="currentassets-cashandcashequivalent">
+    <td class="fw-bold fs-7 py-3">
+        <i class="fas fa-chevron-right me-2 ms-4"></i>
+        CASH AND CASH EQUIVALENT
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ total_cash_in_hand }}</td>
+</tr>
+{% for item in asset %}
+    {% for key, value in item.items %}
+    <tr class="section-content" data-section="currentassets-cashandcashequivalent">
+        <td class="py-3 px-4 align-middle">
+            <span class="ms-5">{{ key | replaceunderscore }}</span>
+        </td>
+        <td class="py-3 px-4 text-end align-middle">{{ value }}</td>
+    </tr>
+    {% endfor %}
+{% endfor %}
+
+<!-- ACCOUNT RECEIVABLE Section -->
+<tr class="section-header" data-section="currentassets-accountreceivable">
+    <td class="fw-bold fs-7 py-3">
+        <i class="fas fa-chevron-right me-2 ms-4"></i>
+        ACCOUNT RECEIVABLE(Sale,Service)
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ accounts_receivable_total | floatformat:2 }}</td>
+</tr>
+{% for item in account_receivable %}
+    {% for key, value in item.items %}
+    <tr class="section-content" data-section="currentassets-accountreceivable">
+        <td class="py-3 px-4 align-middle">
+            <span class="ms-5">{{ key | replaceunderscore }}</span>
+        </td>
+        <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+{% endfor %}
+
+<!-- TAX RECEIVABLE Section -->
+<tr class="section-header" data-section="currentassets-taxreceivable">
+    <td class="fw-bold fs-7 py-3">
+        <i class="fas fa-chevron-right me-2 ms-4"></i>
+        TAX RECEIVABLE
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ total_tax_receivable }}</td>
+</tr>
+<tr class="section-content" data-section="currentassets-taxreceivable">
+    <td class="py-3 px-4 align-middle">
+        <span class="ms-5">Purchase Tax Receivable</span>
+    </td>
+    <td class="py-3 px-4 text-end align-middle">{{ purchase_tax_receivable | floatformat:2 }}</td>
+</tr>
+<tr class="section-content" data-section="currentassets-taxreceivable">
+    <td class="py-3 px-4 align-middle">
+        <span class="ms-5">Less: Tax on Purchase Returns</span>
+    </td>
+    <td class="py-3 px-4 text-end align-middle">({{ purchase_return_tax | floatformat:2 }})</td>
+</tr>
+
+
+
+
+{% for main_category, main_data in grouped_assets.items %}
+
+                        <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
                             <td class="fw-bold fs-7 py-3">
-                              <i class="fas fa-chevron-right me-2"></i>
-                              {{ key | replaceunderscore }}
+                            <i class="fas fa-chevron-down me-2" ></i>
+                            {{ main_category }}
                             </td>
-                            {% for itemt in list_asset_total %}
-                            {% for keyt,valuet in itemt.items %}
-                            {% if key == keyt %}
-                            <td class="py-3 px-4 text-end align-middle">{{valuet}}</td>
-                            {% endif %}
-                            {% endfor %}
-                            {% endfor %}
-                          </tr>
-                          
-                          {% with payment_value=payment_list_asset|get_value:key %}
-                            {% if payment_value != 0 %}
-                              <tr class="section-content" data-section="{{ key }}">
-                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                <td class="py-3 px-4 text-end align-middle">{{ payment_value|floatformat:2 }}</td>
-                              </tr>
-                            {% endif %}
-                          {% endwith %}
-                          
-                          {% with receipt_value=receipt_list_asset|get_value:key %}
-                            {% if receipt_value != 0 %}
-                              <tr class="section-content" data-section="{{ key }}">
-                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                <td class="py-3 px-4 text-end align-middle">({{ receipt_value|floatformat:2 }})</td>
-                              </tr>
-                            {% endif %}
-                          {% endwith %}
-                        
-                          {% with journal_value=journal_list_asset|get_value:key %}
-                            {% if journal_value != 0 %}
-                              <tr class="section-content" data-section="{{ key }}">
-                                <td class="py-3 px-4 align-middle">{{ key | replaceunderscore }}</td>
-                                <td class="py-3 px-4 text-end align-middle">
-                                  {% if journal_value < 0 %}
-                                  ({{ journal_value|floatformat:2|slice:"1:" }})
-                                  {% else %}
-                                    {{ journal_value|floatformat:2 }}
-                                  {% endif %}
+                            <!-- <td class="py-3 px-4 text-end align-middle">{{ main_data.total }}</td> -->
+                            <td class="py-3 px-4 text-end align-middle"></td>
+                        </tr>
+                        {% for subcategory in main_data.data %}
+                            <!-- Subcategory header -->
+                            <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                            <td class="fw-bold fs-7 py-3">
+                                <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                {{ subcategory.title }}
+                            </td>
+                            <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                            </tr>
+
+                            <!-- Individual items -->
+                            {% for item in subcategory.data %}
+                            <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                <td class="py-3 px-4 align-middle">
+                                <span class="ms-5">{{ item.title }}</span>
                                 </td>
-                              </tr>
-                            {% endif %}
-                          {% endwith %}
-                        {% endfor %} -->
+                                <td class="py-3 px-4 text-end align-middle">
+                                {% if item.value|first == "(" %}
+                                    {{ item.value }}
+                                {% else %}
+                                    {{ item.value|floatformat:2 }}
+                                {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+
+                        {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        {% endif %}
+               
+
+
+
+    
                       
 
 
@@ -504,12 +681,12 @@
                           <tr class="section-header" data-section="closeStock">
                             <td class="fw-bold fs-7 py-3">
                               <i class="fas fa-chevron-right me-2"></i>
-                              Closing Stock
+                           CLOSING STOCK
                             </td>
                             <td class="py-3 px-4 text-end align-middle">{{ closing_stock_value | floatformat:2 }}</td>
                           </tr>
                           <tr class="section-content" data-section="closeStock">
-                            <td class="py-3 px-4 align-middle">Closing Stock</td>
+                            <td class="py-3 px-4 align-middle">CLOSING STOCK</td>
                             <td class="py-3 px-4 text-end align-middle">{{ closing_stock_value | floatformat:2 }}</td>
                           </tr>
                       

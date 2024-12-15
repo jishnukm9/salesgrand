@@ -1,0 +1,366 @@
+{% extends "navbar.html" %}
+{% load custom_filters %}
+{% block content %}
+
+
+
+<style>
+  .table {
+        background-color: #ffffff;
+        color: #333333;
+        margin-bottom: 0; /* Remove bottom margin */
+    }
+    
+    .custom-header {
+        background-color: #f8f9fa;
+        color: #333333;
+        font-weight: bold;
+    }
+    
+    .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+    
+    .table td, .table th {
+        border-color: #dee2e6;
+        padding: 8px;
+    }
+    
+    .text-danger {
+        color: #dc3545 !important;
+    }
+    
+    .table-secondary {
+        background-color: #f8f9fa !important;
+    }
+    
+    .table-light {
+        background-color: #f8f9fa !important;
+    }
+    
+    .text-end {
+        text-align: right !important;
+    }
+
+    /* Ensure borders align perfectly */
+    .row.g-0 {
+        border-collapse: collapse;
+    }
+
+    /* Handle mobile view */
+    @media (max-width: 767px) {
+        .border-end-0 {
+            border-right: 1px solid #dee2e6 !important;
+        }
+        .border-start-0 {
+            border-left: 1px solid #dee2e6 !important;
+        }
+        .col-md-6:first-child {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+
+           <nav class="nav nav-borders">
+            <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="">Profit & Loss Account</a>
+            
+        </nav>
+          </div>
+       <br>
+     
+
+       <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+        <div class="card-header py-3 d-flex justify-content-between bg-white">
+            <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>Profit & Loss Account</strong> </h5>
+        
+            <div class="d-flex align-items-center gap-3">
+
+                      
+              <i id="fa-magnifying-glass-moneyreciept"   data-toggle="modal" data-target="#placcountsearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
+
+              <a class="moneyreciept-clear" href="{% url 'placcount_new' %}">Clear</a>
+           </div>
+          </div>
+        <div class="card-body">
+            <div class="table-responsive">
+
+
+                <div>
+                    <p><strong>Start Date</strong> : {{startdate_text}}, <strong>End Date</strong> : {{enddate_text}} </p>
+                </div>
+
+
+                <div class="">
+                    <div class="row g-0"> <!-- Added g-0 class to remove gap -->
+                        <!-- Left Table (Expenses) -->
+                        <div class="col-md-6">
+                            <table class="table table-bordered border-end-0"> <!-- Added border-end-0 to remove right border -->
+                                <thead class="custom-header">
+                                    <tr>
+                                        <th scope="col">Particulars (Dr)</th>
+                                        <th scope="col">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary ">
+                                        <td><strong>Expenses:</strong></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr >
+                                        <td class="py-2">Opening Stock</td>
+                                        <td class="text-end py-2">{{opening_stock_value | floatformat:2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2">Purchases</td>
+                                        <td class="text-end py-2">{{purchase_expense | floatformat:2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sales Return</td>
+                                        <td class="text-end py-2">{{sale_return_total | floatformat:2}}</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td class="py-2">Spare Costs</td>
+                                        <td class="text-end py-2">{{spare_cost}}</td>
+                                    </tr> -->
+                                    {% for item in payment_list_expense %}
+                                    {% for key, value in item.items %}
+                                    <tr>
+                                    <td class="py-2">{{ key | replaceunderscore }}</td>
+                                    <td class="text-end py-2">{{ value | floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% for item in receipt_list_expense %}
+                                    {% for key, value in item.items %}
+                                    <tr>
+                                    <td class="py-2">{{ key | replaceunderscore }}</td>
+                                    <td class="text-end py-2">{{ value | floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% for item in journal_list_expense %}
+                                    {% for key, value in item.items %}
+                                    <tr>
+                                    <td class="py-2">{{ key | replaceunderscore }}</td>
+                                    <td class="text-end py-2">{{ value | floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}
+                            
+                            
+                                  
+                                   
+                                    <tr class="table-light">
+                                        <td></td>
+                                        <td class="text-end py-2"><strong>{{expense_total | floatformat:2}}</strong></td>
+                                    </tr>
+                                    {% if pnl == 'Profit' %}
+                                    <tr>
+                                        <td class="py-2">{{balance_text}}</td>
+                                        <td class="text-end py-2">{{balance | floatformat:2}}</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-end"><strong>{{final | floatformat:2}}</strong></td>
+                                    </tr>
+                                    {% endif %}
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                
+                        <!-- Right Table (Income) -->
+                        <div class="col-md-6">
+                            <table class="table table-bordered border-start-0"> <!-- Added border-start-0 to remove left border -->
+                                <thead class="custom-header">
+                                    <tr>
+                                        <th scope="col">Particulars (Cr)</th>
+                                        <th scope="col">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <td><strong>Income:</strong></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sales</td>
+                                        <td class="text-end">{{sale_income | floatformat:2}}</td>
+                                    </tr>
+                                   
+                                    <tr>
+                                        <td class="py-2">Purchase Return</td>
+                                        <td class="text-end py-2">{{purchase_return_total | floatformat:2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Service Income</td>
+                                        <td class="text-end">{{service_income | floatformat:2}}</td>
+                                    </tr>
+                                    {% for item in payment_list_income %}
+                                    {% for key, value in item.items %}
+                                    <tr>
+                                    <td class="py-2">{{ key | replaceunderscore }}</td>
+                                    <td class="text-end py-2">{{ value | floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% for item in receipt_list_income %}
+                                    {% for key, value in item.items %}
+                                    <tr>
+                                    <td class="py-2">{{ key | replaceunderscore }}</td>
+                                    <td class="text-end py-2">{{ value | floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% for item in journal_list_income %}
+                                    {% for key, value in item.items %}
+                                    <tr>
+                                    <td class="py-2">{{ key | replaceunderscore }}</td>
+                                    <td class="text-end py-2">{{ value | floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="py-2">Closing Stock</td>
+                                        <td class="text-end py-2">{{closing_stock_value | floatformat:2}}</td>
+                                    </tr>
+                                 
+                                    <tr class="table-light">
+                                        <td></td>
+                                        <td class="text-end"><strong>{{income_total | floatformat:2}}</strong></td>
+                                    </tr>
+                                    {% if pnl == 'Loss' %}
+                                    <tr>
+                                        <td class="py-2">{{balance_text}}</td>
+                                        <td class="text-end py-2">{{balance | floatformat:2}}</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-end"><strong>{{final | floatformat:2}}</strong></td>
+                                    </tr>
+                                    {% endif %}
+                                  
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+              <!-- <table class="add-pagination-placcount branch_list table-bordered table table-striped">
+
+
+
+
+              </table> -->
+            </div>
+
+            </div>
+          </div>
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="placcountsearch">
+    <div class="modal-dialog">
+      <div class="modal-content w-100">
+        <div
+          class="modal-header d-flex justify-content-between align-items-center m"
+        >
+          <h5 class="modal-title"><strong>Search PL Account</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+      
+        <form action="{% url 'placcount_new' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+             
+         
+ 
+              <div class="form-group">
+                <label class=" mb-2" for="">  <strong>Start Date</strong>      </label>
+                <div id="datepicker" 
+                          
+             class="input-group date datepicker-field" 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control " 
+            name="startdate"
+            autocomplete="off" 
+            required
+                   type="text"  />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+              </div>
+              <div class="form-group">
+                <label class=" mb-2" for="">  <strong>End Date</strong>      </label>
+                <div id="datepicker" 
+                          
+             class="input-group date datepicker-field" 
+             data-date-format="dd-mm-yyyy">
+            <input class="form-control " 
+            name="enddate"
+            autocomplete="off" 
+            required
+                   type="text"  />
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+              </div>
+             
+           </div>
+           <div class="modal-footer">
+ 
+ 
+ 
+          
+             <button type="submit" class="btn btn-primary">Search</button>
+           </div>
+        </form>
+        
+       
+      </div>
+    </div>
+  </div>
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+ 
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('#fa-magnifying-glass-moneyreciept'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl, {
+      title: "Search PL Account", 
+      delay: { "show": 100, "hide": 100 } 
+    });
+  });
+});
+
+</script>
+
+{% endblock %}

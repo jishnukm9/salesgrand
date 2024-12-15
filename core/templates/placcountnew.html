@@ -59,6 +59,36 @@
             margin-bottom: 1rem;
         }
     }
+
+
+
+ 
+.custom-header {
+    background-color: #f8f9fa;
+}
+
+.section-content {
+    display: none;
+}
+
+.section-header {
+    cursor: pointer;
+}
+
+.section-header i {
+    transition: transform 0.3s;
+}
+
+.section-header.expanded i {
+    transform: rotate(90deg);
+}
+
+.checkbox-container {
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+}
+
 </style>
 
 
@@ -93,8 +123,22 @@
             <div class="table-responsive">
 
 
-                <div>
+
+                <!-- <div>
                     <p><strong>Start Date</strong> : {{startdate_text}}, <strong>End Date</strong> : {{enddate_text}} </p>
+                </div> -->
+
+
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <p><strong>Start Date</strong> : {{startdate_text}}, <strong>End Date</strong> : {{enddate_text}} </p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="expandAllSections">
+                            <label class="form-check-label p-0 m-0 fw-bold" style="padding-top:16px" for="expandAllSections">
+                                Expand All
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -114,23 +158,39 @@
                                         <td><strong>Expenses:</strong></td>
                                         <td></td>
                                     </tr>
-                                    <tr >
-                                        <td class="py-2">Opening Stock</td>
-                                        <td class="text-end py-2">{{opening_stock_value | floatformat:2 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2">Purchases</td>
-                                        <td class="text-end py-2">{{purchase_expense | floatformat:2}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sales Return</td>
-                                        <td class="text-end py-2">{{sale_return_total | floatformat:2}}</td>
-                                    </tr>
-                                    <!-- <tr>
-                                        <td class="py-2">Spare Costs</td>
-                                        <td class="text-end py-2">{{spare_cost}}</td>
-                                    </tr> -->
-                                    {% for item in payment_list_expense %}
+
+                                    <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2"></i>
+                                          OPENING STOCK
+                                        </td>
+                                    
+                                        <td class="py-3 px-4 text-end align-middle">{{opening_stock_value | floatformat:2 }}</td>
+                                      </tr>
+
+
+                                      <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2"></i>
+                                          PURCHASE
+                                        </td>
+                                    
+                                        <td class="py-3 px-4 text-end align-middle">{{purchase_expense | floatformat:2}}</td>
+                                      </tr>
+
+                                      <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2"></i>
+                                          SALE RETURN
+                                        </td>
+                                    
+                                        <td class="py-3 px-4 text-end align-middle">{{sale_return_total | floatformat:2}}</td>
+                                      </tr>
+
+                                    
+
+
+                                    <!-- {% for item in payment_list_expense %}
                                     {% for key, value in item.items %}
                                     <tr>
                                     <td class="py-2">{{ key | replaceunderscore }}</td>
@@ -153,7 +213,52 @@
                                     <td class="text-end py-2">{{ value | floatformat:2 }}</td>
                                     </tr>
                                     {% endfor %}
+                                    {% endfor %} -->
+
+
+
+
+
+
+
+                                    {% for main_category, main_data in grouped_expense.items %}
+                                    <!-- Main category header -->
+                                    <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                      <td class="fw-bold fs-7 py-3">
+                                        <i class="fas fa-chevron-down me-2"></i>
+                                        {{ main_category }}
+                                      </td>
+                                      <!-- <td class="py-3 px-4 text-end align-middle">{{ main_data.total }}</td> -->
+                                      <td class="py-3 px-4 text-end align-middle"></td>
+                                    </tr>
+                                  
+                                    {% for subcategory in main_data.data %}
+                                      <!-- Subcategory header -->
+                                      <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                          {{ subcategory.title }}
+                                        </td>
+                                        <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                                      </tr>
+                                  
+                                      <!-- Individual items -->
+                                      {% for item in subcategory.data %}
+                                        <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                          <td class="py-3 px-4 align-middle">
+                                            <span class="ms-5">{{ item.title }}</span>
+                                          </td>
+                                          <td class="py-3 px-4 text-end align-middle">
+                                            {% if item.value|first == "(" %}
+                                              {{ item.value }}
+                                            {% else %}
+                                              {{ item.value|floatformat:2 }}
+                                            {% endif %}
+                                          </td>
+                                        </tr>
+                                      {% endfor %}
                                     {% endfor %}
+                                  {% endfor %}
                             
                             
                                   
@@ -164,8 +269,8 @@
                                     </tr>
                                     {% if pnl == 'Profit' %}
                                     <tr>
-                                        <td class="py-2">{{balance_text}}</td>
-                                        <td class="text-end py-2">{{balance | floatformat:2}}</td>
+                                        <td class="py-2 fw-bold">{{balance_text}}</td>
+                                        <td class="text-end py-2  fw-bold">{{balance | floatformat:2}}</td>
                                     </tr>
                                     <tr class="table-secondary">
                                         <td><strong>Total</strong></td>
@@ -191,19 +296,37 @@
                                         <td><strong>Income:</strong></td>
                                         <td></td>
                                     </tr>
-                                    <tr>
-                                        <td>Sales</td>
-                                        <td class="text-end">{{sale_income | floatformat:2}}</td>
-                                    </tr>
+                                    
+                                    <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2"></i>
+                                          SALES
+                                        </td>
+                                    
+                                        <td class="py-3 px-4 text-end align-middle">{{sale_income | floatformat:2}}</td>
+                                      </tr>
+
+                                      <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2"></i>
+                                          PURCHASE RETURN
+                                        </td>
+                                    
+                                        <td class="py-3 px-4 text-end align-middle">{{purchase_return_total | floatformat:2}}</td>
+                                      </tr>
+
+
+                                      <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2"></i>
+                                          SERVICE INCOME
+                                        </td>
+                                    
+                                        <td class="py-3 px-4 text-end align-middle">{{service_income | floatformat:2}}</td>
+                                      </tr>
                                    
-                                    <tr>
-                                        <td class="py-2">Purchase Return</td>
-                                        <td class="text-end py-2">{{purchase_return_total | floatformat:2}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Service Income</td>
-                                        <td class="text-end">{{service_income | floatformat:2}}</td>
-                                    </tr>
+                               
+<!--                                    
                                     {% for item in payment_list_income %}
                                     {% for key, value in item.items %}
                                     <tr>
@@ -227,11 +350,59 @@
                                     <td class="text-end py-2">{{ value | floatformat:2 }}</td>
                                     </tr>
                                     {% endfor %}
-                                    {% endfor %}
-                                    <tr>
-                                        <td class="py-2">Closing Stock</td>
-                                        <td class="text-end py-2">{{closing_stock_value | floatformat:2}}</td>
+                                    {% endfor %} -->
+                                    
+
+                                    {% for main_category, main_data in grouped_income.items %}
+                                    <!-- Main category header -->
+                                    <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                      <td class="fw-bold fs-7 py-3">
+                                        <i class="fas fa-chevron-down me-2"></i>
+                                        {{ main_category }}
+                                      </td>
+                                      <!-- <td class="py-3 px-4 text-end align-middle">{{ main_data.total }}</td> -->
+                                      <td class="py-3 px-4 text-end align-middle"></td>
                                     </tr>
+                                  
+                                    {% for subcategory in main_data.data %}
+                                      <!-- Subcategory header -->
+                                      <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2 ms-4"></i>
+                                          {{ subcategory.title }}
+                                        </td>
+                                        <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                                      </tr>
+                                  
+                                      <!-- Individual items -->
+                                      {% for item in subcategory.data %}
+                                        <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
+                                          <td class="py-3 px-4 align-middle">
+                                            <span class="ms-5">{{ item.title }}</span>
+                                          </td>
+                                          <td class="py-3 px-4 text-end align-middle">
+                                            {% if item.value|first == "(" %}
+                                              {{ item.value }}
+                                            {% else %}
+                                              {{ item.value|floatformat:2 }}
+                                            {% endif %}
+                                          </td>
+                                        </tr>
+                                      {% endfor %}
+                                    {% endfor %}
+                                  {% endfor %}
+
+
+                                    <tr class="main-section-header" data-section="{{ main_category|lower|cut:' ' }}">
+                                        <td class="fw-bold fs-7 py-3">
+                                          <i class="fas fa-chevron-right me-2"></i>
+                                          CLOSING STOCK
+                                        </td>
+                                    
+                                        <td class="py-3 px-4 text-end align-middle">{{closing_stock_value | floatformat:2}}</td>
+                                      </tr>
+
+
                                  
                                     <tr class="table-light">
                                         <td></td>
@@ -239,8 +410,8 @@
                                     </tr>
                                     {% if pnl == 'Loss' %}
                                     <tr>
-                                        <td class="py-2">{{balance_text}}</td>
-                                        <td class="text-end py-2">{{balance | floatformat:2}}</td>
+                                        <td class="py-2  fw-bold">{{balance_text}}</td>
+                                        <td class="text-end py-2  fw-bold">{{balance | floatformat:2}}</td>
                                     </tr>
                                     <tr class="table-secondary">
                                         <td><strong>Total</strong></td>
@@ -347,7 +518,36 @@
   </div>
 
 
-
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const expandAllCheckbox = document.getElementById('expandAllSections');
+        const sectionHeaders = document.querySelectorAll('.section-header');
+        const sectionContents = document.querySelectorAll('.section-content');
+    
+        // Handle expand all checkbox
+        expandAllCheckbox.addEventListener('change', function() {
+            const isExpanded = this.checked;
+            sectionHeaders.forEach(header => {
+                header.classList.toggle('expanded', isExpanded);
+            });
+            sectionContents.forEach(content => {
+                content.style.display = isExpanded ? 'table-row' : 'none';
+            });
+        });
+    
+        // Handle individual section toggles
+        sectionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const sectionName = this.dataset.section;
+                const contents = document.querySelectorAll(`.section-content[data-section="${sectionName}"]`);
+                this.classList.toggle('expanded');
+                contents.forEach(content => {
+                    content.style.display = this.classList.contains('expanded') ? 'table-row' : 'none';
+                });
+            });
+        });
+    });
+    </script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function(){

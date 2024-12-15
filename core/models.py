@@ -29,6 +29,44 @@ class Branch(models.Model):
         return self.name
 
 
+
+class AccountHead(models.Model):
+    name = models.CharField(max_length=200,unique=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return self.name
+
+
+class AccountGroup(models.Model):
+    account_head = models.ForeignKey(AccountHead, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200,unique=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return self.name
+
+
+class AccountLedger(models.Model):
+    account_group = models.ForeignKey(AccountGroup, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200,unique=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return self.name
+
+
+class CoASubAccounts(models.Model):
+    # head_root = models.CharField(max_length=200)
+    head_root = models.ForeignKey(AccountLedger, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    gstring = models.CharField(max_length=200, blank=True, null=True)
+    title = models.CharField(max_length=200, unique=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    branch=models.ForeignKey(Branch, on_delete=models.PROTECT,default=None, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+
 class Catagories(models.Model):
     name = models.CharField(max_length=200)
     branch = models.ForeignKey(
@@ -694,7 +732,9 @@ class Payments(models.Model):
     referenceno = models.CharField(blank=True, max_length=200, null=True)
     paymentdate = models.DateField(max_length=200, default=None, null=True, blank=True)
     creditaccount = models.CharField(blank=True, max_length=200, null=True)
-    debitaccount = models.CharField(blank=True, max_length=200, null=True)
+    # debitaccount = models.CharField(blank=True, max_length=200, null=True)
+    # creditaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="creditaccount_payment",default=None,null=True,blank=True)
+    debitaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="debitaccount_payment",default=None,null=True,blank=True)
     narration = models.CharField(blank=True, max_length=2000, null=True)
     amount = models.FloatField()
     branch = models.ForeignKey(Branch, on_delete=models.PROTECT, related_name="payment")
@@ -710,8 +750,8 @@ class Journals(models.Model):
     journalid = models.CharField(blank=True, max_length=200, null=True)
     referenceno = models.CharField(blank=True, max_length=200, null=True)
     journaldate = models.DateField(max_length=200, default=None, null=True, blank=True)
-    creditaccount = models.CharField(blank=True, max_length=200, null=True)
-    debitaccount = models.CharField(blank=True, max_length=200, null=True)
+    creditaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="creditaccount_journal",default=None,null=True,blank=True)
+    debitaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="debitaccount_journal",default=None,null=True,blank=True)
     narration = models.CharField(blank=True, max_length=2000, null=True)
     amount = models.FloatField()
     branch = models.ForeignKey(Branch, on_delete=models.PROTECT, related_name="journal")
@@ -727,8 +767,10 @@ class Receipts(models.Model):
     receiptid = models.CharField(blank=True, max_length=200, null=True)
     referenceno = models.CharField(blank=True, max_length=200, null=True)
     receiptdate = models.DateField(max_length=200, default=None, null=True, blank=True)
-    creditaccount = models.CharField(blank=True, max_length=200, null=True)
+    # creditaccount = models.CharField(blank=True, max_length=200, null=True)
     debitaccount = models.CharField(blank=True, max_length=200, null=True)
+    creditaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="creditaccount_receipt",default=None,null=True,blank=True)
+    # debitaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="debitaccount_receipt",default=None,null=True,blank=True)
     narration = models.CharField(blank=True, max_length=2000, null=True)
     amount = models.FloatField()
     branch = models.ForeignKey(Branch, on_delete=models.PROTECT, related_name="receipt")
@@ -1188,15 +1230,7 @@ class CashBook(models.Model):
         return self.description
 
 
-class CoASubAccounts(models.Model):
-    head_root = models.CharField(max_length=200)
-    gstring = models.CharField(max_length=200, blank=True, null=True)
-    title = models.CharField(max_length=200, unique=True)
-    description = models.CharField(max_length=200, blank=True, null=True)
-    created_date = models.DateTimeField(default=timezone.now)
 
-    def __str__(self):
-        return self.title
 
 
 class SingleLedger(models.Model):

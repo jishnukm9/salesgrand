@@ -723,6 +723,10 @@ urlpatterns = [
                   path("balancesheet_new/", balancesheet, name="balancesheet_new"),
                   path("placcount_new/", placcountnew, name="placcount_new"),
                   path("cashtocash_form/", cashtocash_form, name="cashtocash_form"),
+
+                  path("get_account_details/", get_account_details, name="get_account_details"),
+path("get_account_groups/", get_account_groups, name="get_account_groups"),
+path("get_account_ledgers/", get_account_ledgers, name="get_account_ledgers"),
 ]
 
 

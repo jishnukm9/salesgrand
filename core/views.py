@@ -2649,19 +2649,19 @@ def addPurchase(request):
         "invoicedate": invoicedate,
     }
 
-    purchase_ledger = ledgercli.LedgerBook(data.branch)
+    # purchase_ledger = ledgercli.LedgerBook(data.branch)
 
-    params = {
-        "billdate": invoicedate,
-        "billno": data.invoicenumber,
-        "totalamount": data.totalbillingamount,
-        "mode": data.paymentmode,
-        "amountpaid": data.amountrecieved,
-        "supplier": supplierform,
-        "duebalance": data.duebalance,
-    }
+    # params = {
+    #     "billdate": invoicedate,
+    #     "billno": data.invoicenumber,
+    #     "totalamount": data.totalbillingamount,
+    #     "mode": data.paymentmode,
+    #     "amountpaid": data.amountrecieved,
+    #     "supplier": supplierform,
+    #     "duebalance": data.duebalance,
+    # }
 
-    purchase_ledger.post_purchase(**params)
+    # purchase_ledger.post_purchase(**params)
 
     financial_statement.add_cashbook("Purchase", cashbook_params)
 
@@ -3314,19 +3314,19 @@ def addBranchPurchase(request):
 
     financial_statement.add_cashbook("Purchase", cashbook_params)
 
-    purchase_ledger = ledgercli.LedgerBook(data.branch)
+    # purchase_ledger = ledgercli.LedgerBook(data.branch)
 
-    params = {
-        "billdate": invoicedate,
-        "billno": data.invoicenumber,
-        "mode": data.paymentmode,
-        "amountpaid": data.amountrecieved,
-        "totalamount": data.totalbillingamount,
-        "supplier": supplierform,
-        "duebalance": data.duebalance,
-    }
+    # params = {
+    #     "billdate": invoicedate,
+    #     "billno": data.invoicenumber,
+    #     "mode": data.paymentmode,
+    #     "amountpaid": data.amountrecieved,
+    #     "totalamount": data.totalbillingamount,
+    #     "supplier": supplierform,
+    #     "duebalance": data.duebalance,
+    # }
 
-    purchase_ledger.post_purchase(**params)
+    # purchase_ledger.post_purchase(**params)
 
     # return func_generate_purchase_pdf(request,lastPurchaseId,'view')
     # Your code here
@@ -3429,18 +3429,18 @@ def addPurchaseDue(request):
 
     financial_statement.add_cashbook("Purchase", cashbook_params)
 
-    purchase_ledger = ledgercli.LedgerBook(transaction.branch)
+    # purchase_ledger = ledgercli.LedgerBook(transaction.branch)
 
-    params = {
-        "billdate": date.today(),
-        "billno": transaction.invoice_number,
-        "mode": paymentmode,
-        "amountpaid": float(amountrecieved),
-        "supplier": transaction.accounts,
-        "duebalance": purchase.duebalance,
-    }
+    # params = {
+    #     "billdate": date.today(),
+    #     "billno": transaction.invoice_number,
+    #     "mode": paymentmode,
+    #     "amountpaid": float(amountrecieved),
+    #     "supplier": transaction.accounts,
+    #     "duebalance": purchase.duebalance,
+    # }
 
-    purchase_ledger.post_purchase_due(**params)
+    # purchase_ledger.post_purchase_due(**params)
 
     return redirect("purchase")
 
@@ -4295,14 +4295,14 @@ def changePurchaseReturnStatus(request):
     financial_statement.add_cashbook("PurchaseReturn", cashbook_params)
 
 
-    purchase_return_ledger = ledgercli.LedgerBook(branch)
-    params = {
-        "billdate": date.today(),
-        "billno": invoicenumber,
-        "totalamount": nettotal,
-        "mode": paymentmode,
-    }
-    purchase_return_ledger.post_purchase_return(**params)
+    # purchase_return_ledger = ledgercli.LedgerBook(branch)
+    # params = {
+    #     "billdate": date.today(),
+    #     "billno": invoicenumber,
+    #     "totalamount": nettotal,
+    #     "mode": paymentmode,
+    # }
+    # purchase_return_ledger.post_purchase_return(**params)
 
 
     return redirect(reverse("purchasereturndetails", kwargs={"returnid": returnid}))
@@ -6436,22 +6436,22 @@ def addSalesReturn(request):
 
     financial_statement.add_cashbook("SaleReturn", cashbook_params)
 
-    sale_return_ledger = ledgercli.LedgerBook(transaction.branch)
+    # sale_return_ledger = ledgercli.LedgerBook(transaction.branch)
   
 
     ledger_paymentmode = request.POST["paymentmode"]
     ledger_totaltax = float(request.POST["totaltax-sale"])
     ledger_invoiceno = request.POST["invno-sale"]
  
-    params = {
-        "invoicedate": date.today(),
-        "mode": ledger_paymentmode,
-        "taxamount": ledger_totaltax,
-        "invoiceno": ledger_invoiceno,
-        "amountpaid": float(request.POST["nettotal-sale"]),
-    }
+    # params = {
+    #     "invoicedate": date.today(),
+    #     "mode": ledger_paymentmode,
+    #     "taxamount": ledger_totaltax,
+    #     "invoiceno": ledger_invoiceno,
+    #     "amountpaid": float(request.POST["nettotal-sale"]),
+    # }
 
-    sale_return_ledger.post_sale_return(**params)
+    # sale_return_ledger.post_sale_return(**params)
 
 
     return redirect("salesreturn")
@@ -7137,19 +7137,19 @@ def addSale(request):
 
     financial_statement.add_cashbook("Sale", cashbook_params)
 
-    sale_ledger = ledgercli.LedgerBook(data.branch)
+    # sale_ledger = ledgercli.LedgerBook(data.branch)
 
-    params = {
-        "invoicedate": invoicedate,
-        "mode": data.paymentmode,
-        "taxamount": data.totaltax,
-        "invoiceno": data.invoicenumber,
-        "amountreceived": data.amountrecieved,
-        "customer": data.customer,
-        "duebalance": data.duebalance,
-    }
+    # params = {
+    #     "invoicedate": invoicedate,
+    #     "mode": data.paymentmode,
+    #     "taxamount": data.totaltax,
+    #     "invoiceno": data.invoicenumber,
+    #     "amountreceived": data.amountrecieved,
+    #     "customer": data.customer,
+    #     "duebalance": data.duebalance,
+    # }
 
-    sale_ledger.post_sale(**params)
+    # sale_ledger.post_sale(**params)
 
     generate_unique_id("Invoice", "INV")
 
@@ -7429,18 +7429,18 @@ def addSaleDue(request):
 
     financial_statement.add_cashbook("SaleDue", cashbook_params)
 
-    sale_ledger = ledgercli.LedgerBook(request.user.userprofile.branch)
+    # sale_ledger = ledgercli.LedgerBook(request.user.userprofile.branch)
 
-    params = {
-        "invoicedate": date.today(),
-        "mode": paymentmode,
-        "invoiceno": transaction.invoice_number,
-        "amountreceived": amountrecieved,
-        "customer": transaction.accounts,
-        "duebalance": sale.duebalance,
-    }
+    # params = {
+    #     "invoicedate": date.today(),
+    #     "mode": paymentmode,
+    #     "invoiceno": transaction.invoice_number,
+    #     "amountreceived": amountrecieved,
+    #     "customer": transaction.accounts,
+    #     "duebalance": sale.duebalance,
+    # }
 
-    sale_ledger.post_sale_due(**params)
+    # sale_ledger.post_sale_due(**params)
 
     return redirect("sale")
 
@@ -9460,7 +9460,7 @@ def daybook(request):
             else:
                 amount_type = ''
                 accounts = ''
-                # cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+                # cash_list = ['CASH ACCOUNT']
 
                 if journal.creditaccount == tr.accounts:
                     amount_type = 'Credit'
@@ -10111,7 +10111,7 @@ def search_daybook(request):
 
                 amount_type = ''
                 accounts = ''
-                # cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+                # cash_list = ['CASH ACCOUNT']
 
                 if journal.creditaccount == tr.accounts:
                     amount_type = 'Credit'
@@ -10269,23 +10269,95 @@ def ChartofAccounts(request):
     return render(request, "chartofaccounts.html", {"rootsubcoa": data})
 
 
+
+def get_account_details(request):
+    ledger_name = request.GET.get('ledger_name')
+    try:
+        ledger = AccountLedger.objects.get(name=ledger_name)
+        account_group = ledger.account_group
+        account_head = account_group.account_head
+        
+        data = {
+            'success': True,
+            'account_group': account_group.name,
+            'account_head': account_head.name
+        }
+    except AccountLedger.DoesNotExist:
+        data = {
+            'success': False,
+            'message': 'Ledger not found'
+        }
+    return JsonResponse(data)
+
+def get_account_groups(request):
+    head_name = request.GET.get('head_name')
+    try:
+        head = AccountHead.objects.get(name=head_name)
+        groups = AccountGroup.objects.filter(account_head=head)
+        data = {
+            'success': True,
+            'groups': list(groups.values('name'))
+        }
+    except AccountHead.DoesNotExist:
+        data = {
+            'success': False,
+            'message': 'Account head not found'
+        }
+    return JsonResponse(data)
+
+def get_account_ledgers(request):
+    group_name = request.GET.get('group_name')
+    try:
+        group = AccountGroup.objects.get(name=group_name)
+        ledgers = AccountLedger.objects.filter(account_group=group)
+        data = {
+            'success': True,
+            'ledgers': list(ledgers.values('name'))
+        }
+    except AccountGroup.DoesNotExist:
+        data = {
+            'success': False,
+            'message': 'Account group not found'
+        }
+    return JsonResponse(data)
+
 def ChartofAccountsForm(request):
-    root_coa = coa.COA_GROUP_LIST
-    return render(request, "chartofaccountsform.html", {"root_coa": root_coa})
+    all_heads = AccountHead.objects.all()
+    all_groups = AccountGroup.objects.all()
+    all_ledgers = AccountLedger.objects.all()
+    all_ledgers_new = []
+    for item in all_ledgers:
+        if item.name != "CASH ACCOUNT":
+            all_ledgers_new.append(item)
+    
+    context = {
+        "account_heads": all_heads,
+        "account_groups": all_groups,
+        "account_ledgers": all_ledgers_new ,
+    }
+    return render(request, "chartofaccountsform.html", context)
+
+
+# def ChartofAccountsForm(request):
+#     root_coa = AccountLedger.objects.all()
+#     return render(request, "chartofaccountsform.html", {"root_coa": root_coa})
 
 
 def addChartOfAccounts(request):
     data = CoASubAccounts()
     expensecatagory = ExpenseCategory()
-    rootcoasub = request.POST["coa"]
+    # rootcoasub = request.POST["coa"]
+    rootcoasub = request.POST["accountledger"]
+    accountledgerobj = AccountLedger.objects.filter(name=rootcoasub).first()
     title = request.POST["title"]
     if '_' in title:
         messages.error(request, "There should not be '_' in the title!")
         return redirect("chartofaccountsform")
-    data.head_root = rootcoasub
+    data.head_root = accountledgerobj
     gstring = rootcoasub.replace(" ", "_")
     data.gstring = gstring
     data.title = title
+    data.branch = request.user.userprofile.branch
     if CoASubAccounts.objects.filter(title=request.POST['title']).first():
         messages.error(request, "Title already exist!")
         return redirect("chartofaccountsform")
@@ -10309,11 +10381,36 @@ def deleteChartofAccounts(request, id):
     return render(request, "chartofaccounts.html", {"rootsubcoa": data})
 
 
+# def editChartofAccounts(request, id):
+#     root_coa = coa.COA_GROUP_LIST
+#     obj = CoASubAccounts.objects.filter(id=int(id)).first()
+#     return render(
+#         request, "chartofaccountsupdateform.html", {"root_coa": root_coa, "coa": obj}
+#     )
+
 def editChartofAccounts(request, id):
-    root_coa = coa.COA_GROUP_LIST
+
     obj = CoASubAccounts.objects.filter(id=int(id)).first()
+    print("obj title",obj.title)
+    print("obj head root",obj.head_root)
+    all_heads = AccountHead.objects.all()
+    all_groups = AccountGroup.objects.all()
+    all_ledgers = AccountLedger.objects.all()
+    all_ledgers_new = []
+    for item in all_ledgers:
+        if item.name != "CASH ACCOUNT":
+            all_ledgers_new.append(item)
+    
+    context = {
+        "account_heads": all_heads,
+        "account_groups": all_groups,
+        "account_ledgers": all_ledgers_new,
+        "coa": obj,
+        "account_group":obj.head_root.account_group,
+        "account_head":obj.head_root.account_group.account_head
+    }
     return render(
-        request, "chartofaccountsupdateform.html", {"root_coa": root_coa, "coa": obj}
+        request, "chartofaccountsupdateform.html",context
     )
 
 
@@ -10321,11 +10418,14 @@ def updateChartOfAccounts(request):
     id_no = request.POST["id"]
     data = CoASubAccounts.objects.filter(id=int(id_no)).first()
     expensecatagory = ExpenseCategory()
-    rootcoasub = request.POST["coa"]
-    data.head_root = rootcoasub
+    rootcoasub = request.POST["accountledger"]
+    accountledgerobj = AccountLedger.objects.filter(name=rootcoasub).first()
+    # rootcoasub = request.POST["coa"]
+    data.head_root = accountledgerobj
     gstring = rootcoasub.replace(" ", "_")
     data.gstring = gstring
     data.title = request.POST["title"]
+    data.branch = request.user.userprofile.branch
     # if CoASubAccounts.objects.filter(title=request.POST['title']).first():
     #     messages.error(request, "Title already exist!")
     #     return redirect(reverse("editchartofaccounts", kwargs={"id": id_no}))
@@ -11477,15 +11577,17 @@ def payment(request):
 
 def payment_form(request):
     debit_dropdown = CoASubAccounts.objects.all()
-    cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+    cash_list = ['CASH ACCOUNT']
     debit_dropdown_new = []
     for item in debit_dropdown:
-        if item.head_root not in cash_list:
+        if item.head_root.name not in cash_list:
             debit_dropdown_new.append(item)
     # Below filter filters only cash related accounts because credits in payments are always cash related
-    credit_dropdown = coa.COA_GROUP_LIST
-    credit_dropdown = [account for account in credit_dropdown 
-                if account['name'] in ['CASH ACCOUNT']]
+    # credit_dropdown = coa.COA_GROUP_LIST
+    # credit_dropdown = CoASubAccounts.objects.all()
+    # credit_dropdown = [account.head_root.name for account in credit_dropdown 
+    #             if account.head_root.name in ['CASH ACCOUNT']]
+    credit_dropdown = ['CASH ACCOUNT']
 
     return render(
         request,
@@ -11517,8 +11619,10 @@ def add_payment(request):
             data.referenceno = request.POST.get("referenceno")
         else:
             data.referenceno = None
-        data.creditaccount = request.POST.get("creditaccount")
-        data.debitaccount = request.POST.get("debitaccount")
+        # print("accounts payment :- ",request.POST.get("creditaccount"),request.POST.get("debitaccount"))
+        data.creditaccount = 'CASH ACCOUNT'
+        debit_acc = CoASubAccounts.objects.filter(title=request.POST.get("debitaccount")).first()
+        data.debitaccount = debit_acc
         data.narration = request.POST.get("narration")
         data.amount = request.POST.get("paidamount")
         data.branch = currentuser.userprofile.branch
@@ -11563,24 +11667,24 @@ def add_payment(request):
 
         financial_statement.add_cashbook(transaction_type, cashbook_params)
 
-        payment_ledger = ledgercli.LedgerBook(data.branch)
+        # payment_ledger = ledgercli.LedgerBook(data.branch)
 
-        debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
-        credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
+        # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
+        # credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
 
-        params = {
-            "paymentdate": today_date,
-            "narration": data.narration,
-            "debit_head": debit_coa,
-            "debit_coa_level1": debit_coa_level1,
-            "debit_sub_head": data.debitaccount,
-            "credit_head": credit_coa,
-            "credit_coa_level1": credit_coa_level1,
-            "credit_sub_head": data.creditaccount,
-            "amount": data.amount,
-        }
+        # params = {
+        #     "paymentdate": today_date,
+        #     "narration": data.narration,
+        #     "debit_head": debit_coa,
+        #     "debit_coa_level1": debit_coa_level1,
+        #     "debit_sub_head": data.debitaccount,
+        #     "credit_head": credit_coa,
+        #     "credit_coa_level1": credit_coa_level1,
+        #     "credit_sub_head": data.creditaccount,
+        #     "amount": data.amount,
+        # }
 
-        payment_ledger.post_payment(**params)
+        # payment_ledger.post_payment(**params)
 
     return redirect("payment")
 
@@ -11683,10 +11787,10 @@ def journal_form(request):
  
     all_coa = []
     db_dropdown = CoASubAccounts.objects.all()
-    cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+    cash_list = ['CASH ACCOUNT']
     coa_dropdown = coa.COA_GROUP_LIST
     for item in db_dropdown:
-        if item.head_root not in cash_list:
+        if item.head_root.name not in cash_list:
             all_coa.append(item.title)
 
     # for item in coa_dropdown:
@@ -11698,10 +11802,10 @@ def journal_form(request):
 def cashtocash_form(request):
     all_coa = []
     # db_dropdown = CoASubAccounts.objects.all()
-    cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+    cash_list = ['CASH ACCOUNT']
     coa_dropdown = coa.COA_GROUP_LIST
     # for item in db_dropdown:
-    #     if item.head_root not in cash_list:
+    #     if item.head_root.name not in cash_list:
     #         all_coa.append(item.title)
 
     for item in coa_dropdown:
@@ -11734,10 +11838,14 @@ def add_journal(request):
             data.referenceno = request.POST.get("referenceno")
         else:
             data.referenceno = None
-        credit_account = request.POST.get("creditaccount")
-        debit_account = request.POST.get("debitaccount")
-        data.creditaccount =credit_account
-        data.debitaccount = debit_account
+
+        credit_acc = CoASubAccounts.objects.filter(title=request.POST.get("creditaccount")).first()
+        data.creditaccount = credit_acc
+        # credit_account = request.POST.get("creditaccount")
+        # debit_account = request.POST.get("debitaccount")
+        # data.creditaccount =credit_account
+        debit_acc = CoASubAccounts.objects.filter(title=request.POST.get("debitaccount")).first()
+        data.debitaccount = debit_acc
         data.narration = request.POST.get("narration")
         data.amount = request.POST.get("amount")
         data.branch = currentuser.userprofile.branch
@@ -11745,7 +11853,7 @@ def add_journal(request):
         data.mode = request.POST.get("mode")
         data.save()
 
-        # cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+        # cash_list = ['CASH ACCOUNT']
 
 
         # if credit_account in cash_list:
@@ -11865,21 +11973,21 @@ def add_journal(request):
 
         financial_statement.add_cashbook(transaction_type, cashbook_params)
 
-        journal_ledger = ledgercli.LedgerBook(data.branch)
+        # journal_ledger = ledgercli.LedgerBook(data.branch)
 
-        params = {
-            "journaldate": today_date,
-            "narration": data.narration,
-            "debit_head": debit_coa,
-            "debit_coa_level1": debit_coa_level1,
-            "debit_sub_head": data.debitaccount,
-            "credit_head": credit_coa,
-            "credit_coa_level1": credit_coa_level1,
-            "credit_sub_head": data.creditaccount,
-            "amount": data.amount,
-        }
+        # params = {
+        #     "journaldate": today_date,
+        #     "narration": data.narration,
+        #     "debit_head": debit_coa,
+        #     "debit_coa_level1": debit_coa_level1,
+        #     "debit_sub_head": data.debitaccount,
+        #     "credit_head": credit_coa,
+        #     "credit_coa_level1": credit_coa_level1,
+        #     "credit_sub_head": data.creditaccount,
+        #     "amount": data.amount,
+        # }
 
-        journal_ledger.post_journal(**params)
+        # journal_ledger.post_journal(**params)
 
     return redirect("journal")
 
@@ -11902,15 +12010,17 @@ def receipt(request):
 
 def receipt_form(request):
     credit_dropdown = CoASubAccounts.objects.all()
-    cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+    cash_list = ['CASH ACCOUNT']
     credit_dropdown_new = []
     for item in credit_dropdown:
-        if item.head_root not in cash_list:
+        if item.head_root.name not in cash_list:
             credit_dropdown_new.append(item)
     # Below filter filters only cash related accounts because credits in Receipts are always cash related
-    debit_dropdown = coa.COA_GROUP_LIST
-    debit_dropdown = [account for account in debit_dropdown 
-                if account['name'] in ['CASH ACCOUNT']]
+    # debit_dropdown = coa.COA_GROUP_LIST
+    # debit_dropdown = CoASubAccounts.objects.all()
+    # debit_dropdown = [account for account in debit_dropdown 
+    #             if account.head_root.name in ['CASH ACCOUNT']]
+    debit_dropdown = ['CASH ACCOUNT']
     return render(
         request,
         "receiptform.html",
@@ -11941,8 +12051,12 @@ def add_receipt(request):
             data.referenceno = request.POST.get("referenceno")
         else:
             data.referenceno = None
-        data.creditaccount = request.POST.get("creditaccount")
-        data.debitaccount = request.POST.get("debitaccount")
+
+        credit_acc = CoASubAccounts.objects.filter(title=request.POST.get("creditaccount")).first()
+        data.creditaccount = credit_acc
+
+
+        data.debitaccount = 'CASH ACCOUNT'
         data.narration = request.POST.get("narration")
         data.amount = request.POST.get("receivedamount")
         data.branch = currentuser.userprofile.branch
@@ -11986,23 +12100,23 @@ def add_receipt(request):
 
         financial_statement.add_cashbook(transaction_type, cashbook_params)
 
-        receipt_ledger = ledgercli.LedgerBook(data.branch)
-        debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
-        credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
+        # receipt_ledger = ledgercli.LedgerBook(data.branch)
+        # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
+        # credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
 
-        params = {
-            "receiptdate": today_date,
-            "narration": data.narration,
-            "debit_head": debit_coa,
-            "debit_coa_level1": debit_coa_level1,
-            "debit_sub_head": data.debitaccount,
-            "credit_head": credit_coa,
-            "credit_coa_level1": credit_coa_level1,
-            "credit_sub_head": data.creditaccount,
-            "amount": data.amount,
-        }
+        # params = {
+        #     "receiptdate": today_date,
+        #     "narration": data.narration,
+        #     "debit_head": debit_coa,
+        #     "debit_coa_level1": debit_coa_level1,
+        #     "debit_sub_head": data.debitaccount,
+        #     "credit_head": credit_coa,
+        #     "credit_coa_level1": credit_coa_level1,
+        #     "credit_sub_head": data.creditaccount,
+        #     "amount": data.amount,
+        # }
 
-        receipt_ledger.post_receipt(**params)
+        # receipt_ledger.post_receipt(**params)
 
     return redirect("receipt")
 
@@ -17312,7 +17426,7 @@ def serviceBillingCheckout(request, servicerefnumber):
                     financial_statement.add_cashbook("ServiceCheckout", cashbook_params)
 
 
-    service_ledger = ledgercli.LedgerBook(request.user.userprofile.branch)
+    # service_ledger = ledgercli.LedgerBook(request.user.userprofile.branch)
 
     if received != None:
         service_amount = received - prev_recieved
@@ -17363,18 +17477,18 @@ def serviceBillingCheckout(request, servicerefnumber):
 
 
     ###################################################
-    params = {
-        "invoicedate": date.today(),
-        "mode": paymentmode,
-        "taxamount": round(totalservicetax, 2),
-        "invoiceno": servicerefnumber,
-        "amountreceived": received,
-        "amountprevious_received": prev_recieved,
-        "customer": service_customer,
-        "duebalance": due,
-    }
+    # params = {
+    #     "invoicedate": date.today(),
+    #     "mode": paymentmode,
+    #     "taxamount": round(totalservicetax, 2),
+    #     "invoiceno": servicerefnumber,
+    #     "amountreceived": received,
+    #     "amountprevious_received": prev_recieved,
+    #     "customer": service_customer,
+    #     "duebalance": due,
+    # }
 
-    service_ledger.post_service(**params)
+    # service_ledger.post_service(**params)
     ##################################################################################
     return redirect(
         reverse("serviceupdateform", kwargs={"servicerefnumber": servicerefnumber})
@@ -28855,18 +28969,20 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
   
     # OTHER EXPENSE
 
-    INCOME_SIDE = ['INCOMES',
-    'SALES ACCOUNT',
-    'SERVICE ACCOUNT',
-    'PURCHASE RETURN',
-    ]
-    EXPENSE_SIDE = [
-        'EXPENSES',
-        'PURCHASE ACCOUNTS',
-        'SALARY AND WAGES',
-        'SALES RETURN',
-        'TRADE EXPENSES',
-    ]
+    # INCOME_SIDE = ['INCOMES',
+    # 'SALES ACCOUNT',
+    # 'SERVICE ACCOUNT',
+    # 'PURCHASE RETURN',
+    # ]
+    # EXPENSE_SIDE = [
+    #     'EXPENSES',
+    #     'PURCHASE ACCOUNTS',
+    #     'SALARY AND WAGES',
+    #     'SALES RETURN',
+    #     'TRADE EXPENSES',
+    #     'OTHER INDIRECT EXPENSES'
+        
+    # ]
 
     # Initialize dictionaries to store accumulated values for each account
     income_accounts = {}
@@ -28877,13 +28993,13 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         & Q(paymentdate__lte=enddate))
     for pay in payments_obj:
         debit_acc = pay.debitaccount
-        acc_key = debit_acc.replace(" ", "_")
+        acc_key = debit_acc.title.replace(" ", "_")
 
-        print("\n\ndebit account - ", debit_acc , "\n\n")
-        acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root
+        # print("\n\ndebit account - ", debit_acc , "\n\n")
+        acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
         
         # Process based on account type
-        if acc_head in INCOME_SIDE:
+        if debit_acc.head_root.account_group.account_head.name == 'INCOME':
             # Accumulate amounts for the same account
             if acc_key in income_accounts:
                 income_accounts[acc_key] += pay.amount
@@ -28892,7 +29008,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
                 income_accounts[acc_key] = pay.amount
                 income_total += pay.amount
             
-        elif acc_head in EXPENSE_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == 'EXPENSE':
             if acc_key in expense_accounts:
                 expense_accounts[acc_key] += pay.amount
                 expense_total += pay.amount
@@ -28913,12 +29029,12 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         & Q(receiptdate__lte=enddate))
     for receipt in receipts_obj:
         credit_acc = receipt.creditaccount
-        acc_key = credit_acc.replace(" ", "_")
+        acc_key = credit_acc.title.replace(" ", "_")
         try:
-            acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root
+            acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root.name
             
             # Process based on account type
-            if acc_head in INCOME_SIDE:
+            if credit_acc.head_root.account_group.account_head.name == 'INCOME':
                 # Accumulate amounts for the same account
                 if acc_key in income_accounts:
                     income_accounts[acc_key] += receipt.amount
@@ -28927,7 +29043,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
                     income_accounts[acc_key] = receipt.amount
                     income_total += receipt.amount
                 
-            elif acc_head in EXPENSE_SIDE:
+            elif credit_acc.head_root.account_group.account_head.name == 'EXPENSE':
                 if acc_key in expense_accounts:
                     expense_accounts[acc_key] += receipt.amount
                     expense_total += receipt.amount
@@ -28944,7 +29060,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
     income_accounts = {}
     expense_accounts = {}
 
-    cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+    cash_list = ['CASH ACCOUNT']
 
     # Process all journals
     journals_obj = Journals.objects.filter(Q(branch=branch)& Q(journaldate__gte=startdate)
@@ -28953,26 +29069,26 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
     for journal in journals_obj:
         credit_acc = journal.creditaccount
         debit_acc = journal.debitaccount
-        credit_acc_key = credit_acc.replace(" ", "_")
-        debit_acc_key = debit_acc.replace(" ", "_")
+        credit_acc_key = credit_acc.title.replace(" ", "_")
+        debit_acc_key = debit_acc.title.replace(" ", "_")
 
         # Get account heads
-        if credit_acc in cash_list:
-            credit_acc_head = credit_acc
-        elif CoASubAccounts.objects.filter(title=credit_acc).first():
-            credit_acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root
-        else:
-            credit_acc_head = credit_acc
+        # if credit_acc in cash_list:
+        #     credit_acc_head = credit_acc
+        # elif CoASubAccounts.objects.filter(title=credit_acc).first():
+        #     credit_acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root.name
+        # else:
+        #     credit_acc_head = credit_acc
 
-        if debit_acc in cash_list:
-            debit_acc_head = debit_acc
-        elif CoASubAccounts.objects.filter(title=debit_acc).first():
-            debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root
-        else:
-            debit_acc_head = debit_acc
+        # if debit_acc in cash_list:
+        #     debit_acc_head = debit_acc
+        # elif CoASubAccounts.objects.filter(title=debit_acc).first():
+        #     debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
+        # else:
+        #     debit_acc_head = debit_acc
         
         # Process credit side
-        if credit_acc_head in INCOME_SIDE:
+        if credit_acc.head_root.account_group.account_head.name == "INCOME":
             if credit_acc_key in income_accounts:
                 income_accounts[credit_acc_key] += journal.amount
                 income_total += journal.amount
@@ -28980,7 +29096,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
                 income_accounts[credit_acc_key] = journal.amount
                 income_total += journal.amount
                 
-        elif credit_acc_head in EXPENSE_SIDE:
+        elif credit_acc.head_root.account_group.account_head.name == "EXPENSE":
             if credit_acc_key in expense_accounts:
                 expense_accounts[credit_acc_key] -= journal.amount
                 expense_total -= journal.amount
@@ -28989,7 +29105,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
                 expense_total -= journal.amount
 
         # Process debit side
-        if debit_acc_head in INCOME_SIDE:
+        if debit_acc.head_root.account_group.account_head.name == "INCOME":
             if debit_acc_key in income_accounts:
                 income_accounts[debit_acc_key] -= journal.amount
                 income_total -= journal.amount
@@ -28997,7 +29113,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
                 income_accounts[debit_acc_key] = journal.amount
                 income_total -= journal.amount
                 
-        elif debit_acc_head in EXPENSE_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == "EXPENSE":
             if debit_acc_key in expense_accounts:
                 expense_accounts[debit_acc_key] += journal.amount
                 expense_total += journal.amount
@@ -29494,7 +29610,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
             else:
                 amount_type = ''
                 accounts = ''
-                cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+                cash_list = ['CASH ACCOUNT']
                 
                 if journal.creditaccount in cash_list:
                     amount_type = 'Credit'
@@ -29735,6 +29851,9 @@ def process_account_lists(asset_list, liability_list, equity_list):
     def process_single_list(account_list):
         # Dictionary to store results grouped by head_root
         grouped_accounts = {}
+
+        print("account list",account_list)
+
         
         for account_dict in account_list:
             for key, value in account_dict.items():
@@ -29744,7 +29863,7 @@ def process_account_lists(asset_list, liability_list, equity_list):
                 try:
                     # Query the CoASubAccounts model to get the head_root
                     sub_account = CoASubAccounts.objects.get(title=original_title)
-                    head_root = sub_account.head_root
+                    head_root = sub_account.head_root.name
                     
                     # Initialize the list for this head_root if it doesn't exist
                     if head_root not in grouped_accounts:
@@ -29907,10 +30026,10 @@ def balancesheet(request):
     CASH_IN_UPI = upi_debit-upi_credit
     CASH_IN_CARD = card_debit-card_credit
 
-    balance_sheet_dict['asset'].append({"Cash_Account":format_negative_value(CASH_ACCOUNT)})
-    balance_sheet_dict['asset'].append({"Cash_In_Bank":format_negative_value(CASH_IN_BANK)})
-    balance_sheet_dict['asset'].append({"Cash_In_Upi":format_negative_value(CASH_IN_UPI)})
-    balance_sheet_dict['asset'].append({"Cash_in_Card":format_negative_value(CASH_IN_CARD)})
+    balance_sheet_dict['asset'].append({"CASH_ACCOUNT":format_negative_value(CASH_ACCOUNT)})
+    balance_sheet_dict['asset'].append({"CASH_IN_BANK":format_negative_value(CASH_IN_BANK)})
+    balance_sheet_dict['asset'].append({"CASH_IN_UPI":format_negative_value(CASH_IN_UPI)})
+    balance_sheet_dict['asset'].append({"CASH_IN_CARD":format_negative_value(CASH_IN_CARD)})
 
     
 
@@ -29925,23 +30044,23 @@ def balancesheet(request):
 
     asset_total += ((cash_debit-cash_credit)+(bank_debit-bank_credit)+(upi_debit-upi_credit)+(card_debit-card_credit))
 
-    ASSET_SIDE =[
-        'BRANCH ACCOUNTS',
-    'STOCK IN HAND',
-    'FIXED ASSETS',
-    'INVESTMENTS',
-    'LOAN AND ADVANCES',
-    'OTHER ASSETS',
-    'BRANCH ACCOUNTS'
-    ]
-    LIABILITY_SIDE = ['BORROWINGS',
-    'DEPOSITS',
-    'OTHER LIABILITIES',
-    ]
-    EQUITY_SIDE = [
-        'RESERVES AND SURPLUSES',
-        'SHARE CAPITAL',
-    ]
+    # ASSET_SIDE =[
+    #     'BRANCH ACCOUNTS',
+    # 'STOCK IN HAND',
+    # 'FIXED ASSETS',
+    # 'INVESTMENTS',
+    # 'LOAN AND ADVANCES',
+    # 'OTHER ASSETS',
+    # 'BRANCH ACCOUNTS'
+    # ]
+    # LIABILITY_SIDE = ['BORROWINGS',
+    # 'DEPOSITS',
+    # 'OTHER LIABILITIES',
+    # ]
+    # EQUITY_SIDE = [
+    #     'RESERVES AND SURPLUSES',
+    #     'SHARE CAPITAL',
+    # ]
 
 
     # Initialize dictionaries to store accumulated values for each account
@@ -29958,14 +30077,14 @@ def balancesheet(request):
         & Q(paymentdate__lte=enddate))
     for pay in payments_obj:
         debit_acc = pay.debitaccount
-        acc_key = debit_acc.replace(" ", "_")
+        acc_key = debit_acc.title.replace(" ", "_")
         # try:
        
 
-        acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root
+        # acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
         
         # Process based on account type
-        if acc_head in ASSET_SIDE:
+        if debit_acc.head_root.account_group.account_head.name == 'ASSET':
             # Accumulate amounts for the same account
             if acc_key in asset_accounts:
                 asset_accounts[acc_key] += pay.amount
@@ -29973,14 +30092,14 @@ def balancesheet(request):
                 asset_accounts[acc_key] = pay.amount
             asset_total += pay.amount
             
-        elif acc_head in LIABILITY_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == 'LIABILITY':
             if acc_key in liability_accounts:
                 liability_accounts[acc_key] += pay.amount
             else:
                 liability_accounts[acc_key] = pay.amount
             liability_total -= pay.amount
             
-        elif acc_head in EQUITY_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == 'EQUITY':
             if acc_key in equity_accounts:
                 equity_accounts[acc_key] += pay.amount
             else:
@@ -29999,6 +30118,7 @@ def balancesheet(request):
         payment_list_equity.append({acc_key: amount})
 
 
+
     # Initialize dictionaries to store accumulated values for each account
     asset_accounts = {}
     liability_accounts = {}
@@ -30013,12 +30133,12 @@ def balancesheet(request):
         & Q(receiptdate__lte=enddate))
     for receipt in receipts_obj:
         credit_acc = receipt.creditaccount
-        acc_key = credit_acc.replace(" ", "_")
+        acc_key = credit_acc.title.replace(" ", "_")
         try:
-            acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root
+            acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root.name
             
             # Process based on account type
-            if acc_head in ASSET_SIDE:
+            if credit_acc.head_root.account_group.account_head.name == 'ASSET':
                 # Accumulate amounts for the same account
                 if acc_key in asset_accounts:
                     asset_accounts[acc_key] += receipt.amount
@@ -30026,14 +30146,14 @@ def balancesheet(request):
                     asset_accounts[acc_key] = receipt.amount
                 asset_total -= receipt.amount
                 
-            elif acc_head in LIABILITY_SIDE:
+            elif credit_acc.head_root.account_group.account_head.name == 'LIABILITY':
                 if acc_key in liability_accounts:
                     liability_accounts[acc_key] += receipt.amount
                 else:
                     liability_accounts[acc_key] = receipt.amount
                 liability_total += receipt.amount
                 
-            elif acc_head in EQUITY_SIDE:
+            elif credit_acc.head_root.account_group.account_head.name == 'EQUITY':
                 if acc_key in equity_accounts:
                     equity_accounts[acc_key] += receipt.amount
                 else:
@@ -30053,6 +30173,9 @@ def balancesheet(request):
         receipt_list_equity.append({acc_key: amount})
 
 
+
+
+
     # Initialize dictionaries to store accumulated values for each account
     asset_accounts = {}
     liability_accounts = {}
@@ -30063,7 +30186,7 @@ def balancesheet(request):
     journal_list_liability = []
     journal_list_equity = []
 
-    cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+    cash_list = ['CASH ACCOUNT']
 
     # Process all receipts
     journals_obj = Journals.objects.filter(Q(branch=homebranch)& Q(journaldate__gte=startdate)
@@ -30073,60 +30196,60 @@ def balancesheet(request):
 
         credit_acc = journal.creditaccount
         debit_acc = journal.debitaccount
-        credit_acc_key = credit_acc.replace(" ", "_")
-        debit_acc_key = debit_acc.replace(" ", "_")
+        credit_acc_key = credit_acc.title.replace(" ", "_")
+        debit_acc_key = debit_acc.title.replace(" ", "_")
 
-        if credit_acc in cash_list:
-            credit_acc_head = credit_acc
-        elif CoASubAccounts.objects.filter(title=credit_acc).first():
-            credit_acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root
-        else:
-            credit_acc_head = credit_acc
+        # if credit_acc in cash_list:
+        #     credit_acc_head = credit_acc
+        # elif CoASubAccounts.objects.filter(title=credit_acc).first():
+        #     credit_acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root.name
+        # else:
+        #     credit_acc_head = credit_acc
 
-        if debit_acc in cash_list:
-            debit_acc_head = debit_acc
-        elif CoASubAccounts.objects.filter(title=debit_acc).first():
-            debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root
-        else:
-            debit_acc_head = debit_acc
+        # if debit_acc in cash_list:
+        #     debit_acc_head = debit_acc
+        # elif CoASubAccounts.objects.filter(title=debit_acc).first():
+        #     debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
+        # else:
+        #     debit_acc_head = debit_acc
         
         
-        if credit_acc_head in ASSET_SIDE:
+        if credit_acc.head_root.account_group.account_head.name == 'ASSET':
             if credit_acc_key in asset_accounts:
                 asset_accounts[credit_acc_key] -= journal.amount
             else:
                 asset_accounts[credit_acc_key] = -journal.amount
             asset_total -= journal.amount
 
-        elif credit_acc_head in LIABILITY_SIDE:
+        elif credit_acc.head_root.account_group.account_head.name == 'LIABILITY':
             if credit_acc_key in liability_accounts:
                 liability_accounts[credit_acc_key] += journal.amount
             else:
                 liability_accounts[credit_acc_key] = journal.amount
             liability_total += journal.amount
 
-        elif credit_acc_head in EQUITY_SIDE:
+        elif credit_acc.head_root.account_group.account_head.name == 'EQUITY':
             if credit_acc_key in equity_accounts:
                 equity_accounts[credit_acc_key] += journal.amount
             else:
                 equity_accounts[credit_acc_key] = journal.amount
             equity_total += journal.amount
 
-        if debit_acc_head in ASSET_SIDE:
+        if debit_acc.head_root.account_group.account_head.name == 'ASSET':
             if debit_acc_key in asset_accounts:
                 asset_accounts[debit_acc_key] += journal.amount
             else:
                 asset_accounts[debit_acc_key] = journal.amount
             asset_total += journal.amount
 
-        elif debit_acc_head in LIABILITY_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == 'LIABILITY':
             if debit_acc_key in liability_accounts:
                 liability_accounts[debit_acc_key] -= journal.amount
             else:
                 liability_accounts[debit_acc_key] = -journal.amount
             liability_total -= journal.amount
 
-        elif debit_acc_head in EQUITY_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == 'EQUITY':
             if debit_acc_key in equity_accounts:
                 equity_accounts[debit_acc_key] -= journal.amount
             else:
@@ -30428,6 +30551,55 @@ def balancesheet(request):
     total_tax_receivable = format_negative_value(round(total_tax_receivable,2))
 
 
+
+
+    def transform_ledger_data(ledger_data):
+        # Dictionary to store transformed data
+        transformed_data = {}
+        
+        # Process each ledger
+        for ledger_name, ledger_info in ledger_data.items():
+            # Get the AccountLedger and its group
+            ledger = AccountLedger.objects.get(name=ledger_name)
+            group = ledger.account_group
+            group_name = group.name
+            
+            # Initialize group in transformed data if it doesn't exist
+            if group_name not in transformed_data:
+                transformed_data[group_name] = {
+                    'total': '0.00',
+                    'data': []
+                }
+            
+            # Add ledger data to group
+            transformed_data[group_name]['data'].append({
+                'title': ledger_name,
+                'total': ledger_info['total'],
+                'data': ledger_info['data']
+            })
+            
+            # Update group total
+            group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
+            transformed_data[group_name]['total'] = f"{group_total:.2f}"
+        
+        return transformed_data
+
+
+
+    grouped_assets = transform_ledger_data(grouped_assets)
+    grouped_liabilities = transform_ledger_data(grouped_liabilities)
+    grouped_equity = transform_ledger_data(grouped_equity)
+
+    is_current_assets = False
+    if 'CURRENT ASSETS' in grouped_assets.keys():
+        is_current_assets = True
+
+    is_current_liabilities = False
+    if 'CURRENT LIABILITIES' in grouped_liabilities.keys():
+        is_current_liabilities = True
+
+    
+
     
     context = {'asset':balance_sheet_dict['asset'],'payment_list_asset':payment_list_asset,
     'payment_list_liability':payment_list_liability,
@@ -30463,10 +30635,76 @@ def balancesheet(request):
     'list_equity_total':list_equity_total,
     'grouped_assets':grouped_assets,
     'grouped_liabilities':grouped_liabilities,
-    'grouped_equity':grouped_equity
+    'grouped_equity':grouped_equity,
+    "is_current_assets":is_current_assets,
+    "is_current_liabilities":is_current_liabilities
+
     }
 
     return render(request,'balancesheetnew.html',context)
+
+
+
+
+
+
+
+
+def process_account_lists_placcount(income_list, expense_list):
+    """
+    Process lists of financial accounts, group them by head_root, and sort them.
+    
+    Args:
+        asset_list: List of asset dictionaries
+        liability_list: List of liability dictionaries
+        equity_list: List of equity dictionaries
+    
+    Returns:
+        tuple: Three dictionaries (assets, liabilities, equity) grouped by head_root
+    """
+    def process_single_list(account_list):
+        # Dictionary to store results grouped by head_root
+        grouped_accounts = {}
+
+        print("account list",account_list)
+
+        
+        for account_dict in account_list:
+            for key, value in account_dict.items():
+                # Convert key from underscore format to original title format
+                original_title = key.replace('_', ' ')
+                
+                try:
+                    # Query the CoASubAccounts model to get the head_root
+                    sub_account = CoASubAccounts.objects.get(title=original_title)
+                    head_root = sub_account.head_root.name
+                    
+                    # Initialize the list for this head_root if it doesn't exist
+                    if head_root not in grouped_accounts:
+                        grouped_accounts[head_root] = []
+                    
+                    # Add the account to its head_root group
+                    grouped_accounts[head_root].append({
+                        'title': original_title,
+                        'value': value
+                    })
+                    
+                except CoASubAccounts.DoesNotExist:
+                    print(f"Warning: No CoASubAccounts entry found for title: {original_title}")
+                    continue
+        
+        # Sort accounts within each head_root group by title
+        for head_root in grouped_accounts:
+            grouped_accounts[head_root].sort(key=lambda x: x['title'])
+            
+        return grouped_accounts
+
+    grouped_income = process_single_list(income_list)
+    grouped_expense = process_single_list(expense_list)
+
+    return grouped_income, grouped_expense
+    
+
 
 
 
@@ -30742,18 +30980,19 @@ def placcountnew(request):
   
     # OTHER EXPENSE
 
-    INCOME_SIDE = ['INCOMES',
-    'SALES ACCOUNT',
-    'SERVICE ACCOUNT',
-    'PURCHASE RETURN',
-    ]
-    EXPENSE_SIDE = [
-        'EXPENSES',
-        'PURCHASE ACCOUNTS',
-        'SALARY AND WAGES',
-        'SALES RETURN',
-        'TRADE EXPENSES',
-    ]
+    # INCOME_SIDE = ['INCOMES',
+    # 'SALES ACCOUNT',
+    # 'SERVICE ACCOUNT',
+    # 'PURCHASE RETURN',
+    # ]
+    # EXPENSE_SIDE = [
+    #     'EXPENSES',
+    #     'PURCHASE ACCOUNTS',
+    #     'SALARY AND WAGES',
+    #     'SALES RETURN',
+    #     'TRADE EXPENSES',
+    #      'OTHER INDIRECT EXPENSES'
+    # ]
 
     # Initialize dictionaries to store accumulated values for each account
     income_accounts = {}
@@ -30767,13 +31006,13 @@ def placcountnew(request):
         & Q(paymentdate__lte=enddate))
     for pay in payments_obj:
         debit_acc = pay.debitaccount
-        acc_key = debit_acc.replace(" ", "_")
-        # try:
-        print("\n\ndebit account - 3", debit_acc , "\n\n")
-        acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root
+        acc_key = debit_acc.title.replace(" ", "_")
+
+
+        # acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
         
         # Process based on account type
-        if acc_head in INCOME_SIDE:
+        if debit_acc.head_root.account_group.account_head.name == 'INCOME':
             # Accumulate amounts for the same account
             if acc_key in income_accounts:
                 income_accounts[acc_key] += pay.amount
@@ -30782,7 +31021,7 @@ def placcountnew(request):
                 income_accounts[acc_key] = pay.amount
                 income_total += pay.amount
             
-        elif acc_head in EXPENSE_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == 'EXPENSE':
             if acc_key in expense_accounts:
                 expense_accounts[acc_key] += pay.amount
                 expense_total += pay.amount
@@ -30817,29 +31056,29 @@ def placcountnew(request):
 
     for receipt in receipts_obj:
         credit_acc = receipt.creditaccount
-        acc_key = credit_acc.replace(" ", "_")
-        try:
-            acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root
+        acc_key = credit_acc.title.replace(" ", "_")
+        # try:
+        # acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root.name
+        
+        # Process based on account type
+        if credit_acc.head_root.account_group.account_head.name == 'INCOME':
+            # Accumulate amounts for the same account
+            if acc_key in income_accounts:
+                income_accounts[acc_key] += receipt.amount
+                income_total += receipt.amount
+            else:
+                income_accounts[acc_key] = receipt.amount
+                income_total += receipt.amount
             
-            # Process based on account type
-            if acc_head in INCOME_SIDE:
-                # Accumulate amounts for the same account
-                if acc_key in income_accounts:
-                    income_accounts[acc_key] += receipt.amount
-                    income_total += receipt.amount
-                else:
-                    income_accounts[acc_key] = receipt.amount
-                    income_total += receipt.amount
-                
-            elif acc_head in EXPENSE_SIDE:
-                if acc_key in expense_accounts:
-                    expense_accounts[acc_key] += receipt.amount
-                    expense_total += receipt.amount
-                else:
-                    expense_accounts[acc_key] = receipt.amount
-                    expense_total += receipt.amount
-        except:
-            pass
+        elif credit_acc.head_root.account_group.account_head.name == 'EXPENSE':
+            if acc_key in expense_accounts:
+                expense_accounts[acc_key] += receipt.amount
+                expense_total += receipt.amount
+            else:
+                expense_accounts[acc_key] = receipt.amount
+                expense_total += receipt.amount
+        # except:
+        #     pass
             
     # Convert accumulated accounts to list format
     for acc_key, amount in income_accounts.items():
@@ -30858,7 +31097,7 @@ def placcountnew(request):
     journal_list_income = []
     journal_list_expense = []
 
-    cash_list = ['CASH ACCOUNT', 'CASH AT BANKS']
+    cash_list = ['CASH ACCOUNT']
 
     # Process all journals
     journals_obj = Journals.objects.filter(Q(branch=branch)& Q(journaldate__gte=startdate)
@@ -30867,26 +31106,12 @@ def placcountnew(request):
     for journal in journals_obj:
         credit_acc = journal.creditaccount
         debit_acc = journal.debitaccount
-        credit_acc_key = credit_acc.replace(" ", "_")
-        debit_acc_key = debit_acc.replace(" ", "_")
+        credit_acc_key = credit_acc.title.replace(" ", "_")
+        debit_acc_key = debit_acc.title.replace(" ", "_")
 
-        # Get account heads
-        if credit_acc in cash_list:
-            credit_acc_head = credit_acc
-        elif CoASubAccounts.objects.filter(title=credit_acc).first():
-            credit_acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root
-        else:
-            credit_acc_head = credit_acc
-
-        if debit_acc in cash_list:
-            debit_acc_head = debit_acc
-        elif CoASubAccounts.objects.filter(title=debit_acc).first():
-            debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root
-        else:
-            debit_acc_head = debit_acc
         
         # Process credit side
-        if credit_acc_head in INCOME_SIDE:
+        if credit_acc.head_root.account_group.account_head.name == "INCOME":
             if credit_acc_key in income_accounts:
                 income_accounts[credit_acc_key] += journal.amount
                 income_total += journal.amount
@@ -30894,7 +31119,7 @@ def placcountnew(request):
                 income_accounts[credit_acc_key] = journal.amount
                 income_total += journal.amount
                 
-        elif credit_acc_head in EXPENSE_SIDE:
+        elif credit_acc.head_root.account_group.account_head.name == "EXPENSE":
             if credit_acc_key in expense_accounts:
                 expense_accounts[credit_acc_key] -= journal.amount
                 expense_total -= journal.amount
@@ -30903,7 +31128,7 @@ def placcountnew(request):
                 expense_total -= journal.amount
 
         # Process debit side
-        if debit_acc_head in INCOME_SIDE:
+        if debit_acc.head_root.account_group.account_head.name == "INCOME":
             if debit_acc_key in income_accounts:
                 income_accounts[debit_acc_key] -= journal.amount
                 income_total -= journal.amount
@@ -30911,7 +31136,7 @@ def placcountnew(request):
                 income_accounts[debit_acc_key] = -journal.amount
                 income_total -= journal.amount
                 
-        elif debit_acc_head in EXPENSE_SIDE:
+        elif debit_acc.head_root.account_group.account_head.name == "EXPENSE":
             if debit_acc_key in expense_accounts:
                 expense_accounts[debit_acc_key] += journal.amount
                 expense_total += journal.amount
@@ -30926,9 +31151,94 @@ def placcountnew(request):
     for acc_key, amount in expense_accounts.items():
         journal_list_expense.append({acc_key: amount})
 
+
+
+
+    list_income_total = []
+    income_keys = set()
+
+    for rec_item in receipt_list_income:
+        income_keys.update(rec_item.keys())
+    for pay_item in payment_list_income:
+        income_keys.update(pay_item.keys())
+    for journal_item in journal_list_income:
+        income_keys.update(journal_item.keys())
+
+    for key in income_keys:
+        dict = {}
+        rec_value = next((item[key] for item in receipt_list_income if key in item), 0)
+        pay_value = next((item[key] for item in payment_list_income if key in item), 0)
+        journal_value = next((item[key] for item in journal_list_income if key in item), 0)
+        final = pay_value + rec_value + journal_value
+        dict[key] = format_negative_value(round(final, 2))
+        list_income_total.append(dict)
+
+
+
+    list_expense_total = []
+    expense_keys = set()
+
+    for rec_item in receipt_list_expense:
+        expense_keys.update(rec_item.keys())
+    for pay_item in payment_list_expense:
+        expense_keys.update(pay_item.keys())
+    for journal_item in journal_list_expense:
+        expense_keys.update(journal_item.keys())
+
+    for key in expense_keys:
+        dict = {}
+        rec_value = next((item[key] for item in receipt_list_expense if key in item), 0)
+        pay_value = next((item[key] for item in payment_list_expense if key in item), 0)
+        journal_value = next((item[key] for item in journal_list_expense if key in item), 0)
+        final = pay_value + rec_value + journal_value
+        dict[key] = format_negative_value(round(final, 2))
+        list_expense_total.append(dict)
+
+
+    grouped_income, grouped_expense,  = process_account_lists_placcount(
+                        list_income_total, list_expense_total
+                )
         
+    grouped_income = process_grouped_accounts(grouped_income)
+    grouped_expense = process_grouped_accounts(grouped_expense)
+
+    def transform_ledger_data(ledger_data):
+        # Dictionary to store transformed data
+        transformed_data = {}
+        
+        # Process each ledger
+        for ledger_name, ledger_info in ledger_data.items():
+            # Get the AccountLedger and its group
+            ledger = AccountLedger.objects.get(name=ledger_name)
+            group = ledger.account_group
+            group_name = group.name
+            
+            # Initialize group in transformed data if it doesn't exist
+            if group_name not in transformed_data:
+                transformed_data[group_name] = {
+                    'total': '0.00',
+                    'data': []
+                }
+            
+            # Add ledger data to group
+            transformed_data[group_name]['data'].append({
+                'title': ledger_name,
+                'total': ledger_info['total'],
+                'data': ledger_info['data']
+            })
+            
+            # Update group total
+            group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
+            transformed_data[group_name]['total'] = f"{group_total:.2f}"
+        
+        return transformed_data
 
 
+    grouped_income = transform_ledger_data(grouped_income)
+    grouped_expense = transform_ledger_data(grouped_expense)
+
+
+  
 
     if income_total > expense_total:
         balance = income_total - expense_total
@@ -30940,7 +31250,8 @@ def placcountnew(request):
         balance_text = 'Net Loss (Expenses > Income)'
         pnl = 'Loss'
         final = expense_total
-    # print(startdate_text,enddate_text)
+
+   
     data = {
         # "spare_cost":spare_cost_total,
         'balance':balance,
@@ -30964,6 +31275,8 @@ def placcountnew(request):
     'journal_list_expense':journal_list_expense,
     'startdate_text':startdate_text,
     'enddate_text':enddate_text,
+    "grouped_income":grouped_income,
+    "grouped_expense":grouped_expense
     }
 
     return render(request, "placcountnew.html", data)

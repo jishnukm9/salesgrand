@@ -8,8 +8,8 @@
         <div class="home-tab">
           <div class="d-sm-flex align-items-center justify-content-between border-bottom">
             <nav class="nav nav-borders">
-              <a class="nav-link  ps-0 pe-0 ms-0 me-3" style="color:#444;" href="{% url 'chartofaccounts' %}">Account Heads</a>
-              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="#">Add Account Head</a>  
+              <a class="nav-link  ps-0 pe-0 ms-0 me-3" style="color:#444;" href="{% url 'chartofaccounts' %}">Sub Ledgers</a>
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="#">Add Sub Ledger</a>  
 
              
           </nav>
@@ -34,7 +34,7 @@
         
                 <div class="card card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
                   <div class="card-body" >
-                    <h3 class="nunito-font " style="color:#444;" ><strong>Add Account Head</strong></h3>
+                    <h3 class="nunito-font " style="color:#444;" ><strong>Add Sub Ledger</strong></h3>
                    
                     <div class="horizontal-line-dark mb-2 mt-4"></div>
                     <br />
@@ -47,7 +47,7 @@
                       <div class="form-row row">
                         <div class="form-group col-lg-4">
                           <label for="title" class="fs-6"
-                            >Head Title</label
+                            >Sub Ledger Title</label
                           >
                          
                         </div>
@@ -58,31 +58,73 @@
                       </div>
 
 
+
+                      
+                     
+
+
+
+
+
+                     
+
+
+
+                  
+
                       <div class="form-row row">
                         <div class="form-group col-lg-4">
-                          <label for="category" class="fs-6"
-                            >Head Group</label
-                          >
-                         
+                          <label for="accountledger" class="fs-6">Account Ledger</label>
                         </div>
                         <div class="form-group col-lg-8">
-                        
-                          <select class="form-control selectizefield registrationcategory" style="border:1px solid #cccccc;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);" name="coa" id="category">
-                            <option value="">Head Group</option>
-                            {% for item in root_coa %}
-                            <option value="{{ item.name }}">{{ item.name }}</option>
+                          <select required class="form-control selectizefield accountledger" name="accountledger" id="accountledger">
+                            <option value=""></option>
+                            {% for ledger in account_ledgers %}
+                            <option value="{{ ledger.name }}">{{ ledger.name }}</option>
                             {% endfor %}
                           </select>
-
-
                         </div>
                       </div>
+
+
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="accountgroup" class="fs-6">Account Group</label>
+                        </div>
+                        <div class="form-group col-lg-8">
+                          <select required class="form-control selectizefield accountgroup" name="accountgroup" id="accountgroup">
+                            <option value=""></option>
+                           
+                          </select>
+                        </div>
+                      </div>
+
+
+
+
+                      <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                          <label for="accounthead" class="fs-6">Account Head</label>
+                        </div>
+                        <div class="form-group col-lg-8">
+                          <select required class="form-control selectizefield accounthead" name="accounthead" id="accounthead">
+                            <option value=""></option>
+                          
+                          </select>
+                        </div>
+                      </div>
+
+
+
+
 
 
                       <div class="form-row row">
                         <div class="form-group col-lg-4">
                           <label for="description" class="fs-6"
-                            >Head Description</label
+                            >Description</label
                           >
                          
                         </div>
@@ -116,6 +158,89 @@
     </div>
   </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+  
+$(document).ready(function() {
+  // When ledger is selected, fetch and set group and head
+  // $('#accountledger').change(function() {
+  //     var ledgerName = $(this).val();
+  //     var csrftoken = csrf_token;
+  //     console.log("ledger name",ledgerName)
+  //     if (ledgerName) {
+  //         $.ajax({
+  //             url: '{% url "get_account_details" %}',
+  //             data: {
+  //                 'ledger_name': ledgerName
+  //             },
+  //             success: function(response) {
+  //                 console.log("ledger response..",response);
+  //                 if (response.success) {
+  //                     $('#accountgroup').val(response.account_group).trigger('change');
+  //                     $('#accounthead').val(response.account_head).trigger('change');
+  //                 }
+  //             }
+  //         });
+  //     }
+  // });
+
+
+
+  $('#accountledger').change(function() {
+    var ledgerName = $(this).val();
+    console.log("ledger name", ledgerName);
+    
+    if (ledgerName) {
+        $.ajax({
+            url: '{% url "get_account_details" %}',
+            data: {
+                'ledger_name': ledgerName
+            },
+            success: function(response) {
+                console.log("ledger response..", response);
+                if (response.success) {
+                    // Get Selectize instances
+                    var $accountGroupSelect = $('#accountgroup')[0].selectize;
+                    var $accountHeadSelect = $('#accounthead')[0].selectize;
+
+                    // Clear existing options
+                    $accountGroupSelect.clearOptions();
+                    $accountHeadSelect.clearOptions();
+
+                    
+                    $.each(response, function (index, element) {
+                      console.log(element);
+                      // $expensetypeSelect.addOption({ value: element, text: element });
+                      $accountGroupSelect.addOption({ value: response.account_group, text: response.account_group });
+                      $accountHeadSelect.addOption({ value: response.account_head, text: response.account_head });
+                    });
+                    
+                    // Set values using Selectize
+                    $accountGroupSelect.setValue(response.account_group, true);
+                    $accountHeadSelect.setValue(response.account_head, true);
+                }
+            }
+        });
+    }
+});
+
+
+  // When head is selected, update groups dropdown
+  
+
+  // When group is selected, update ledgers dropdown
+ 
+
+
+
+
+
+});
+</script>
+
+
 <!-- content-wrapper ends -->
 <!-- partial:partials/_footer.html -->
 {% endblock %}

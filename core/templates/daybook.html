@@ -136,7 +136,7 @@
                            <tbody>
                               
                               {% for item in transaction %}
-                              <tr class="search_results  {{ item.accounts | deletespace }} {{ item.invoicenumber }}">
+                              <tr class="search_results   {{ item.invoicenumber }}">
                                  <td>{{ forloop.counter }}</td>
                                  <td>{{ item.createddate }}</td>
                                  <td>{{ item.invoicenumber }}</td>
