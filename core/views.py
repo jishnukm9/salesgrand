@@ -11841,8 +11841,7 @@ def add_journal(request):
 
         credit_acc = CoASubAccounts.objects.filter(title=request.POST.get("creditaccount")).first()
         data.creditaccount = credit_acc
-        # credit_account = request.POST.get("creditaccount")
-        # debit_account = request.POST.get("debitaccount")
+        
         # data.creditaccount =credit_account
         debit_acc = CoASubAccounts.objects.filter(title=request.POST.get("debitaccount")).first()
         data.debitaccount = debit_acc
@@ -11853,12 +11852,12 @@ def add_journal(request):
         data.mode = request.POST.get("mode")
         data.save()
 
+
+        credit_account = request.POST.get("creditaccount")
+        debit_account = request.POST.get("debitaccount")
+
         # cash_list = ['CASH ACCOUNT']
 
-
-        # if credit_account in cash_list:
-        #     credit_account_head_title = credit_account
-        # else:
         credit_account_head_title = CoASubAccounts.objects.filter(
             title=credit_account
         ).first()
@@ -29002,11 +29001,11 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         if debit_acc.head_root.account_group.account_head.name == 'INCOME':
             # Accumulate amounts for the same account
             if acc_key in income_accounts:
-                income_accounts[acc_key] += pay.amount
-                income_total += pay.amount
+                income_accounts[acc_key] -= pay.amount
+                income_total -= pay.amount
             else:
-                income_accounts[acc_key] = pay.amount
-                income_total += pay.amount
+                income_accounts[acc_key] = -pay.amount
+                income_total -= pay.amount
             
         elif debit_acc.head_root.account_group.account_head.name == 'EXPENSE':
             if acc_key in expense_accounts:
@@ -29045,11 +29044,11 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
                 
             elif credit_acc.head_root.account_group.account_head.name == 'EXPENSE':
                 if acc_key in expense_accounts:
-                    expense_accounts[acc_key] += receipt.amount
-                    expense_total += receipt.amount
+                    expense_accounts[acc_key] -= receipt.amount
+                    expense_total -= receipt.amount
                 else:
-                    expense_accounts[acc_key] = receipt.amount
-                    expense_total += receipt.amount
+                    expense_accounts[acc_key] = -receipt.amount
+                    expense_total -= receipt.amount
 
         except:
             pass
@@ -31054,11 +31053,11 @@ def placcountnew(request):
         if debit_acc.head_root.account_group.account_head.name == 'INCOME':
             # Accumulate amounts for the same account
             if acc_key in income_accounts:
-                income_accounts[acc_key] += pay.amount
-                income_total += pay.amount
+                income_accounts[acc_key] -= pay.amount
+                income_total -= pay.amount
             else:
-                income_accounts[acc_key] = pay.amount
-                income_total += pay.amount
+                income_accounts[acc_key] = -pay.amount
+                income_total -= pay.amount
             
         elif debit_acc.head_root.account_group.account_head.name == 'EXPENSE':
             if acc_key in expense_accounts:
@@ -31111,11 +31110,11 @@ def placcountnew(request):
             
         elif credit_acc.head_root.account_group.account_head.name == 'EXPENSE':
             if acc_key in expense_accounts:
-                expense_accounts[acc_key] += receipt.amount
-                expense_total += receipt.amount
+                expense_accounts[acc_key] -= receipt.amount
+                expense_total -= receipt.amount
             else:
-                expense_accounts[acc_key] = receipt.amount
-                expense_total += receipt.amount
+                expense_accounts[acc_key] = -receipt.amount
+                expense_total -= receipt.amount
         # except:
         #     pass
             
@@ -31208,7 +31207,7 @@ def placcountnew(request):
         rec_value = next((item[key] for item in receipt_list_income if key in item), 0)
         pay_value = next((item[key] for item in payment_list_income if key in item), 0)
         journal_value = next((item[key] for item in journal_list_income if key in item), 0)
-        final = pay_value + rec_value + journal_value
+        final =   rec_value + journal_value - pay_value
         dict[key] = format_negative_value(round(final, 2))
         list_income_total.append(dict)
 
@@ -31229,7 +31228,7 @@ def placcountnew(request):
         rec_value = next((item[key] for item in receipt_list_expense if key in item), 0)
         pay_value = next((item[key] for item in payment_list_expense if key in item), 0)
         journal_value = next((item[key] for item in journal_list_expense if key in item), 0)
-        final = pay_value + rec_value + journal_value
+        final = pay_value + journal_value -  rec_value
         dict[key] = format_negative_value(round(final, 2))
         list_expense_total.append(dict)
 
