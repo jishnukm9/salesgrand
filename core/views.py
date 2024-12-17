@@ -30553,9 +30553,45 @@ def balancesheet(request):
 
 
 
+    # def transform_ledger_data(ledger_data):
+    #     transformed_data = {}
+    #     for ledger_name, ledger_info in ledger_data.items():
+    #         ledger = AccountLedger.objects.get(name=ledger_name)
+    #         group = ledger.account_group
+    #         group_name = group.name
+    #         if group_name not in transformed_data:
+    #             transformed_data[group_name] = {
+    #                 'total': '0.00',
+    #                 'data': []
+    #             }
+    #         transformed_data[group_name]['data'].append({
+    #             'title': ledger_name,
+    #             'total': ledger_info['total'],
+    #             'data': ledger_info['data']
+    #         })
+    #         group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
+    #         transformed_data[group_name]['total'] = f"{group_total:.2f}"
+    #     return transformed_data
+
+
+
     def transform_ledger_data(ledger_data):
         # Dictionary to store transformed data
         transformed_data = {}
+        
+        def parse_number(value):
+            # If value is already a number, return it
+            if isinstance(value, (int, float)):
+                return float(value)
+                
+            # If value is string, handle parentheses case
+            if isinstance(value, str):
+                value = value.strip()
+                if value.startswith('(') and value.endswith(')'):
+                    return -float(value[1:-1])
+                return float(value)
+                
+            return 0.0  # fallback for unexpected types
         
         # Process each ledger
         for ledger_name, ledger_info in ledger_data.items():
@@ -30578,12 +30614,15 @@ def balancesheet(request):
                 'data': ledger_info['data']
             })
             
-            # Update group total
-            group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
+            # Update group total using the new parse_number function
+            group_total = sum(parse_number(item['total']) for item in transformed_data[group_name]['data'])
             transformed_data[group_name]['total'] = f"{group_total:.2f}"
         
         return transformed_data
 
+    print("grouped assets",grouped_assets)
+    print("grouped liabilities",grouped_liabilities)
+    print("grouped equity",grouped_equity)
 
 
     grouped_assets = transform_ledger_data(grouped_assets)
@@ -31202,9 +31241,44 @@ def placcountnew(request):
     grouped_income = process_grouped_accounts(grouped_income)
     grouped_expense = process_grouped_accounts(grouped_expense)
 
+    # def transform_ledger_data(ledger_data):
+    #     transformed_data = {}
+    #     for ledger_name, ledger_info in ledger_data.items():
+    #         ledger = AccountLedger.objects.get(name=ledger_name)
+    #         group = ledger.account_group
+    #         group_name = group.name
+    #         if group_name not in transformed_data:
+    #             transformed_data[group_name] = {
+    #                 'total': '0.00',
+    #                 'data': []
+    #             }
+    #         transformed_data[group_name]['data'].append({
+    #             'title': ledger_name,
+    #             'total': ledger_info['total'],
+    #             'data': ledger_info['data']
+    #         })
+    #         group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
+    #         transformed_data[group_name]['total'] = f"{group_total:.2f}"
+    #     return transformed_data
+
+
     def transform_ledger_data(ledger_data):
         # Dictionary to store transformed data
         transformed_data = {}
+        
+        def parse_number(value):
+            # If value is already a number, return it
+            if isinstance(value, (int, float)):
+                return float(value)
+                
+            # If value is string, handle parentheses case
+            if isinstance(value, str):
+                value = value.strip()
+                if value.startswith('(') and value.endswith(')'):
+                    return -float(value[1:-1])
+                return float(value)
+                
+            return 0.0  # fallback for unexpected types
         
         # Process each ledger
         for ledger_name, ledger_info in ledger_data.items():
@@ -31227,18 +31301,15 @@ def placcountnew(request):
                 'data': ledger_info['data']
             })
             
-            # Update group total
-            group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
+            # Update group total using the new parse_number function
+            group_total = sum(parse_number(item['total']) for item in transformed_data[group_name]['data'])
             transformed_data[group_name]['total'] = f"{group_total:.2f}"
         
         return transformed_data
 
-
     grouped_income = transform_ledger_data(grouped_income)
     grouped_expense = transform_ledger_data(grouped_expense)
 
-
-  
 
     if income_total > expense_total:
         balance = income_total - expense_total
@@ -31268,16 +31339,16 @@ def placcountnew(request):
          'sale_income':sale_income,
          'service_income':service_income,
          'payment_list_income':payment_list_income,
-    'payment_list_expense':payment_list_expense,
-    'receipt_list_income':receipt_list_income,
-    'receipt_list_expense':receipt_list_expense,
-    'journal_list_income':journal_list_income,
-    'journal_list_expense':journal_list_expense,
-    'startdate_text':startdate_text,
-    'enddate_text':enddate_text,
-    "grouped_income":grouped_income,
-    "grouped_expense":grouped_expense
-    }
+        'payment_list_expense':payment_list_expense,
+        'receipt_list_income':receipt_list_income,
+        'receipt_list_expense':receipt_list_expense,
+        'journal_list_income':journal_list_income,
+        'journal_list_expense':journal_list_expense,
+        'startdate_text':startdate_text,
+        'enddate_text':enddate_text,
+        "grouped_income":grouped_income,
+        "grouped_expense":grouped_expense
+        }
 
     return render(request, "placcountnew.html", data)
 
