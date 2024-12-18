@@ -3316,6 +3316,7 @@ $(document).ready(function () {
     "input change",
     'input[name^="salequantity"], input[name^="saleprice"], select[name^="salegstsale"]',
     function () {
+      console.log("sale price changed")
       calculateNetAmountsale();
       // calculateDiscountsale();
       dueCalculationsale();
@@ -3380,6 +3381,8 @@ $(document).ready(function () {
         parseInt($(this).find('input[name^="salequantity"]').val()) || 0;
       var price =
         parseFloat($(this).find('input[name^="saleprice"]').val()) || 0;
+      console.log("sale price.....",price)
+      console.log("quantity......",quantity)
       var saleGst =
         parseFloat(
           $(this)
@@ -3507,6 +3510,53 @@ $(document).ready(function () {
 // ##############  Sales Return Section ########
 // #############################################
 
+
+// Modify the form validation to enable tax dropdowns
+const salesReturnFormValidation = function () {
+  $("#salesreturnform").submit(function (event) {
+    event.preventDefault();
+    let status = false;
+
+    if ($("[name^='productcheck']:checked").length === 0) {
+      status = true;
+      alert("Please check at least one product row.");
+      return false;
+    }
+
+    $("[name^='productcheck']:checked").each(function () {
+      var rowIndex = this.name.match(/\d+/)[0];
+      var returnQtyInput = $("#returnqty-sale" + rowIndex);
+      var refundAmountInput = $("#refundamount-sale" + rowIndex);
+
+      if (!returnQtyInput.val() || !refundAmountInput.val()) {
+        status = true;
+        alert("Please fill in return quantity and refund amount for the checked rows.");
+        location.reload();
+        return false;
+      }
+    });
+
+    if (!status) {
+      // Enable tax dropdowns before submission
+      $("[name^='productcheck']:checked").each(function () {
+        var rowIndex = this.name.match(/\d+/)[0];
+        $("#tax-sale" + rowIndex).prop('readonly', false);
+      });
+
+      $("#salesreturnform")[0].submit();
+
+      // Disable tax dropdowns after submission
+      setTimeout(function() {
+        $("[name^='tax-sale']").prop('readonly', true);
+      }, 100);
+    }
+  });
+};
+
+salesReturnFormValidation()
+
+
+
 $(document).ready(function () {
   let totalAmount = 0;
   let taxFinal = 0;
@@ -3517,6 +3567,10 @@ $(document).ready(function () {
 
   // Keep existing checkbox change handler with additions for new field
   $(".sales-return-table tbody tr [name^='productcheck']").change(function () {
+   
+   
+    salesReturnFormValidation()
+   
     let closestTr = $(this).closest("tr");
 
     if ($(this).prop("checked")) {
@@ -3646,46 +3700,7 @@ $(document).ready(function () {
   });
 });
 
-// Modify the form validation to enable tax dropdowns
-const salesReturnFormValidation = function () {
-  $("#salesreturnform").submit(function (event) {
-    event.preventDefault();
-    let status = false;
 
-    if ($("[name^='productcheck']:checked").length === 0) {
-      status = true;
-      alert("Please check at least one product row.");
-      return false;
-    }
-
-    $("[name^='productcheck']:checked").each(function () {
-      var rowIndex = this.name.match(/\d+/)[0];
-      var returnQtyInput = $("#returnqty-sale" + rowIndex);
-      var refundAmountInput = $("#refundamount-sale" + rowIndex);
-
-      if (!returnQtyInput.val() || !refundAmountInput.val()) {
-        status = true;
-        alert("Please fill in return quantity and refund amount for the checked rows.");
-        return false;
-      }
-    });
-
-    if (!status) {
-      // Enable tax dropdowns before submission
-      $("[name^='productcheck']:checked").each(function () {
-        var rowIndex = this.name.match(/\d+/)[0];
-        $("#tax-sale" + rowIndex).prop('readonly', false);
-      });
-
-      $("#salesreturnform")[0].submit();
-
-      // Disable tax dropdowns after submission
-      setTimeout(function() {
-        $("[name^='tax-sale']").prop('readonly', true);
-      }, 100);
-    }
-  });
-};
 
 
 // ########################################################

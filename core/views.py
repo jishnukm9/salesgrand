@@ -3967,6 +3967,8 @@ def purchaseReturnSearch(request):
 
     purchase_data_new = []
     for i in purchasedata:
+        product = i.name
+        purchaseid = i.purchaseid
         dic = {}
         dic["name"] = i.name
         ########################################
@@ -3976,11 +3978,29 @@ def purchaseReturnSearch(request):
             available_qty = BranchStock.objects.filter(Q(branch=branch)&Q(name=i.name)).first().quantity
         dic['availableqty'] = available_qty
         ########################################
+        
+
+        ##############################################################
+        
+        product_exist = PurchaseReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber)&Q(purchaseid=purchaseid)).exists()
+        if product_exist:
+            purchasereturnobj = PurchaseReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber)&Q(purchaseid=purchaseid))
+            returned_qty = 0
+            for j in purchasereturnobj:
+                returned_qty = returned_qty + j.returnquantity
+            balance_qty = i.totalquantity - returned_qty
+            dic['balance_qty'] = balance_qty
+        else:
+            dic['balance_qty'] = i.totalquantity
+
+        #############################################################
+
         dic["totalquantity"] = i.totalquantity
         if available_qty < i.totalquantity:
-            dic['diffqty'] = 'text-danger'
+            dic['diffqty'] = ''
         else:
             dic['diffqty'] = ''
+        
         dic["price"] = i.price
         dic["purchasegstname"] = i.purchasegst
         dic["tax"] = (
@@ -3991,6 +4011,8 @@ def purchaseReturnSearch(request):
             .percentage
         )
         purchase_data_new.append(dic)
+
+
     paymentmode = PaymentMode.objects.all()
     context = {
         "tax": tax,
@@ -4031,7 +4053,7 @@ def addPurchaseReturn(request):
         messages.error(request, "Pending return already exists of this purchase")
         return redirect("purchasereturn")
     purchasereturnid = generate_unique_id("PurchaseReturn", "PRT")
-    for i in range(1, ((len(length_count)+10))):
+    for i in range(1, ((len(length_count)+1))):
         data = PurchaseReturn()
         i = str(i)
 
@@ -4184,6 +4206,35 @@ def changePurchaseReturnStatus(request):
         paymentmode = None
         invoicenumber = None
         supplier = None
+
+        ##### checking available qty before returning ####
+        is_less_than_return_quantity = False
+        for ret in return_obj:
+            productid = ret.product.id
+            ret_qty = ret.returnquantity
+            branch = ret.branch
+            qty = 0
+            if branch.name == "WAREHOUSE":
+                if Stock.objects.filter(name_id=productid):
+                    stock = Stock.objects.filter(name_id=productid).first()
+                    qty = stock.quantity
+                    if qty < ret_qty:
+                        is_less_than_return_quantity = True
+            else:
+                if BranchStock.objects.filter(Q(name_id=productid) & Q(branch=branch)):
+                    stock = BranchStock.objects.filter(
+                        Q(name_id=productid) & Q(branch=branch)
+                    ).first()
+                qty = stock.quantity
+                if qty < ret_qty:
+                    is_less_than_return_quantity = True
+
+        if is_less_than_return_quantity:
+            messages.error(request, f"Only quantity {qty} left. Product id {productid}")
+            return redirect("purchasereturn")
+        ##### checking available qty before returning ######
+
+
         for ret in return_obj:
             ret.status = status
             ret.save()
@@ -4201,7 +4252,6 @@ def changePurchaseReturnStatus(request):
 
             if branch.name == "WAREHOUSE":
                 if Stock.objects.filter(name_id=productid):
-
                     stock = Stock.objects.filter(name_id=productid).first()
                     qty = stock.quantity
                     stock.quantity = int(qty) - int(ret.returnquantity)
@@ -4209,14 +4259,13 @@ def changePurchaseReturnStatus(request):
 
             else:
                 if BranchStock.objects.filter(Q(name_id=productid) & Q(branch=branch)):
-
                     stock = BranchStock.objects.filter(
                         Q(name_id=productid) & Q(branch=branch)
                     ).first()
                     qty = stock.quantity
                     stock.quantity = int(qty) - int(ret.returnquantity)
                     stock.save()
-
+            
 
 
             strans_obj = StockTransaction.objects.filter(
@@ -6223,9 +6272,10 @@ def salesReturnSearch(request):
         ############### checking balance qty ##################
         if already_returned:
             product = i.name
-            product_exist = SaleReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber)).exists()
+            saleid = i.saleid
+            product_exist = SaleReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber)&Q(saleid=saleid)).exists()
             if product_exist:
-                salereturnobj = SaleReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber))
+                salereturnobj = SaleReturn.objects.filter(Q(product=product)&Q(invoicenumber=invoicenumber)&Q(saleid=saleid))
                 returned_qty = 0
                 for j in salereturnobj:
                     returned_qty = returned_qty + j.returnquantity

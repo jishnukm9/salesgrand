@@ -123,7 +123,7 @@
                                                 <th  width="3"></th>
                                                 <th width="41%">Name <span style="color:#e2e6fb3d;">------------------------</span> </th>
                                                 <th width="3%" class="puchase-qty-right ">Initial Qty</th>
-                                                <th width="3%" class="puchase-qty-right ">Available Qty</th>
+                                                <th width="3%" class="puchase-qty-right ">Balane Qty</th>
                                                 <th width="7%">Unit Price<span style="color:#e2e6fb3d;">----</span> </th>
                                                 <th width="7%">Price After Adj.<span style="color:#e2e6fb3d;">----</span></th>
                                                 <th width="3%" >Return Qty<span style="color:#e2e6fb3d;">-</span> </th>
@@ -188,7 +188,7 @@
                                                     name="qtynow{{forloop.counter}}"
                                                     id="qtynow{{forloop.counter}}"
                                                     min="0"
-                                                    value="{{item.availableqty}}"
+                                                    value="{{item.balance_qty}}"
                                                     class="form-control no-spinner {{item.diffqty}}"
                                                     autocomplete="off"
                                              
