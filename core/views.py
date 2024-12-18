@@ -11858,7 +11858,7 @@ def add_journal(request):
 
         # cash_list = ['CASH ACCOUNT']
 
-        credit_account_head_title = CoASubAccounts.objects.filter(
+        credit_account_head_title = credit_account_head_title2 = CoASubAccounts.objects.filter(
             title=credit_account
         ).first()
         if credit_account_head_title:
@@ -11869,7 +11869,8 @@ def add_journal(request):
         # if debit_account in cash_list:
         #     debit_account_head_title = debit_account
         # else:
-        debit_account_head_title = CoASubAccounts.objects.filter(
+
+        debit_account_head_title = debit_account_head_title2 = CoASubAccounts.objects.filter(
             title=debit_account
         ).first()
         if debit_account_head_title:
@@ -11877,12 +11878,10 @@ def add_journal(request):
         else:
             debit_account_head_title = debit_account
 
-        print("debit account title", debit_account_head_title)
-        print("credit account title", credit_account_head_title)
+        # print("debit account title", debit_account_head_title)
+        # print("credit account title", credit_account_head_title)
 
-        # if credit_account_head_title in cash_list or debit_account_head_title in cash_list:
-        # print("debit account title 1", debit_account_head_title)
-        # print("credit account title 1", credit_account_head_title)
+
         transaction = Transaction()
         transaction.transactionid = journalid
         transaction.amount = float(request.POST.get("amount"))
@@ -11906,34 +11905,13 @@ def add_journal(request):
         transaction.remarks = request.POST.get("narration")
         transaction.transactiondate = datetime.now()
         transaction.save()
-        # else:
-        #     transaction = Transaction()
-        #     transaction.transactionid = journalid
-        #     transaction.amount = float(request.POST.get("amount"))
-        #     transaction.transactiontype = "journal"
-        #     transaction.paymentmode = request.POST.get("mode")
-        #     transaction.branch = currentuser.userprofile.branch
-        #     transaction.invoice_number = request.POST.get("referenceno")
-        #     transaction.accounts = credit_account_head_title
-        #     transaction.remarks = request.POST.get("narration")
-        #     transaction.transactiondate = datetime.now()
-        #     transaction.save()
 
-        #     transaction = Transaction()
-        #     transaction.transactionid = journalid
-        #     transaction.amount = float(request.POST.get("amount"))
-        #     transaction.transactiontype = "journal"
-        #     transaction.paymentmode = request.POST.get("mode")
-        #     transaction.branch = currentuser.userprofile.branch
-        #     transaction.invoice_number = request.POST.get("referenceno")
-        #     transaction.accounts = debit_account_head_title
-        #     transaction.remarks = request.POST.get("narration")
-        #     transaction.transactiondate = datetime.now()
-        #     transaction.save()
+        # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
+        # credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
 
+        debit_account_head = credit_account_head_title2.head_root.account_group.account_head
 
-        debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
-        credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
+        credit_account_head = debit_account_head_title2.head_root.account_group.account_head
 
         financial_statement = addaccounts.AccountStatement()
 
@@ -11955,12 +11933,18 @@ def add_journal(request):
         # Below logic is not 100% fool proof
         # Need to correct it
         payment_type = None
-        if debit_coa == "Assets":
-            # Assuming cash Inflow
-            payment_type = "Receipt"
-        elif credit_coa == "Assets":
-            # Assuming Cash Outflow
-            payment_type = "Payment"
+        # if debit_coa == "Assets":
+        #     # Assuming cash Inflow
+        #     payment_type = "Receipt"
+        # elif credit_coa == "Assets":
+        #     # Assuming Cash Outflow
+        #     payment_type = "Payment"
+
+        if debit_account_head == 'ASSET':
+            payment_type = 'Receipt'
+        elif credit_account_head == 'ASSET':
+            payment_type = 'Payment'
+
 
         cashbook_params = {
             "payment_type": payment_type,
@@ -30211,7 +30195,6 @@ def balancesheet(request):
         #     debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
         # else:
         #     debit_acc_head = debit_acc
-        
         
         if credit_acc.head_root.account_group.account_head.name == 'ASSET':
             if credit_acc_key in asset_accounts:
