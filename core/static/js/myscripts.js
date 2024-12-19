@@ -3380,7 +3380,8 @@ $(document).ready(function () {
       var quantity =
         parseInt($(this).find('input[name^="salequantity"]').val()) || 0;
       var price =
-        parseFloat($(this).find('input[name^="saleprice"]').val()) || 0;
+        $(this).find('input[name^="saleprice"]').val()
+      price = price === '' ? 0 : parseFloat(price) || 0;
       console.log("sale price.....",price)
       console.log("quantity......",quantity)
       var saleGst =
@@ -3416,6 +3417,8 @@ $(document).ready(function () {
       netAmount += totalPrice;
       totalTaxAmount += totalTax;
     });
+
+   
     // Set the calculated net amount in the input field and round to two decimal places
     $('input[name="saletotalbillingamount"]').val(netAmount.toFixed(2));
     $('input[name="salerecieved"]').val(netAmount.toFixed(2));
@@ -3447,8 +3450,12 @@ $(document).ready(function () {
 
     // Distribute the discount across products
     $(".sale-entry-table tr:gt(0)").each(function (index) {
-      var price = parseFloat($(this).find('input[name^="saleprice"]').val()) || 0;
+      var price = $(this).find('input[name^="saleprice"]').val();
+      price = price === '' ? 0 : parseFloat(price) || 0;
+      // console.log("price....",price)
+      
       var newPrice = price - price * (discountPercentage / 100);
+      console.log('new price after disc',newPrice)
       $(this).find('input[name^="sale_priceafterdiscount"]').val(newPrice.toFixed(2)); 
     });
   }
@@ -3464,7 +3471,8 @@ $(document).ready(function () {
         var quantity =
         parseInt($(this).find('input[name^="salequantity"]').val()) || 0;
       var price =
-        parseFloat($(this).find('input[name^="saleprice"]').val()) || 0;
+        $(this).find('input[name^="saleprice"]').val()
+      price = price === '' ? 0 : parseFloat(price) || 0;
       var saleGst =
         parseFloat(
           $(this)

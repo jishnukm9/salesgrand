@@ -61,6 +61,7 @@ class CoASubAccounts(models.Model):
     description = models.CharField(max_length=200, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     branch=models.ForeignKey(Branch, on_delete=models.PROTECT,default=None, null=True, blank=True)
+    is_adminonly=models.BooleanField(default=False,null=True,blank=True)
 
     def __str__(self):
         return self.title
@@ -1215,6 +1216,25 @@ class Ledger(models.Model):
 
     def __str__(self):
         return self.account_head
+
+
+class GeneralLedger(models.Model):
+    date = models.DateField()
+    voucher_no = models.CharField(max_length=200)
+    voucher_id = models.CharField(max_length=200)
+    voucher_type = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    amount = models.FloatField()
+    amount_type = models.CharField(max_length=200)
+    ledger = models.ForeignKey(AccountLedger, on_delete=models.PROTECT)
+    subledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT)
+    branch = models.ForeignKey(
+        Branch, on_delete=models.PROTECT, related_name="general_ledger"
+    )
+    created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.voucher_no 
 
 
 class CashBook(models.Model):
