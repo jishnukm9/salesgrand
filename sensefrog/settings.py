@@ -99,6 +99,7 @@ WSGI_APPLICATION = "sensefrog.wsgi.application"
 
 # SQLITE LOCAL
 # if SITE == "DEV":
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",

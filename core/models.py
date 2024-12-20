@@ -512,6 +512,7 @@ class BranchPurchase(models.Model):
     invoice_copy = models.ImageField(
         upload_to="images/", default=None, null=True, blank=True
     )
+    supplier_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="supplier_leger",default=None,null=True,blank=True)
 
 
     def __str__(self):
@@ -676,6 +677,7 @@ class Sale(models.Model):
     installation_tax = models.FloatField(default=0, null=True, blank=True)
     purchase_price = models.FloatField(default=0,null=True,blank=True)
     purchase_tax = models.FloatField(default=0,null=True,blank=True)
+    customer_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="customer_leger",default=None,null=True,blank=True)
 
     def __str__(self):
         return str(self.saleid)

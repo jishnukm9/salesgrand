@@ -82,9 +82,34 @@ from django.db.models import Sum
 import time
 
 
+
 performance_logger = logging.getLogger('performance')
 BASE_DIR = Path(__file__).resolve().parent.parent
 GLOBAL_VARIABLES = custom_variables(None)
+
+
+
+
+
+def fun_create_customer_ledger(data,unique_id,request):
+
+    ########################################
+    #creating ledger for customer
+    data = CoASubAccounts()
+    ledgername = "ACCOUNTS RECEIVABLE"
+    ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+    title = f"{data.firstname} {data.lastname} {unique_id}"
+    data.head_root = ledgerobj
+    gstring = ledgername.replace(" ", "_")
+    data.gstring = gstring
+    data.title = title
+    data.branch = request.user.userprofile.branch
+    data.description = f"{data.firstname} {data.lastname} {unique_id}"
+    if not CoASubAccounts.objects.filter(title=title).first():
+        data.save()
+    #########################################
+
+    return data
 
 
 #for checking length of the items in form
@@ -11626,7 +11651,7 @@ def payment(request):
 
 
 def payment_form(request):
-    debit_dropdown = CoASubAccounts.objects.all()
+    debit_dropdown = CoASubAccounts.objects.filter(is_adminonly=False)
     cash_list = ['CASH ACCOUNT']
     debit_dropdown_new = []
     for item in debit_dropdown:
@@ -11707,6 +11732,20 @@ def add_payment(request):
 
         transaction_type = "Payment"
         financial_statement.add_ledger(transaction_type, ledger_params)
+
+
+        general_ledger_params = {
+            "id": paymentid,
+            "voucherid": paymentid,
+            "description": data.narration,
+            "amount": data.amount,
+            "userbranch": data.branch,
+            "date": today_date,
+            "debitac": data.debitaccount,
+             "paymentmode": request.POST.get("paymentmode"),
+        }
+        financial_statement.add_generalledger(transaction_type, general_ledger_params)
+
 
         cashbook_params = {
             "userbranch": data.branch,
@@ -11979,6 +12018,22 @@ def add_journal(request):
         transaction_type = "Journal"
         financial_statement.add_ledger(transaction_type, ledger_params)
 
+
+        general_ledger_params = {
+            "id": journalid,
+            "voucherid": journalid,
+            "amount": data.amount,
+            "description": data.narration,
+            "userbranch": data.branch,
+            "date": today_date,
+            "debitac": data.debitaccount,
+            "creditac": data.creditaccount,
+            'paymentmode':request.POST.get("mode"),
+        }
+
+        financial_statement.add_generalledger(transaction_type, general_ledger_params)
+
+
         # Determine the cash flow
         # Below logic is not 100% fool proof
         # Need to correct it
@@ -12042,7 +12097,7 @@ def receipt(request):
 
 
 def receipt_form(request):
-    credit_dropdown = CoASubAccounts.objects.all()
+    credit_dropdown = CoASubAccounts.objects.filter(is_adminonly=False)
     cash_list = ['CASH ACCOUNT']
     credit_dropdown_new = []
     for item in credit_dropdown:
@@ -12124,6 +12179,19 @@ def add_receipt(request):
         transaction_type = "Receipt"
         financial_statement.add_ledger(transaction_type, ledger_params)
 
+        general_ledger_params = {
+            "id": receiptid,
+            "voucherid": receiptid,
+            "description": data.narration,
+            "amount": data.amount,
+            "userbranch": data.branch,
+            "date": today_date,
+            "creditac": data.creditaccount,
+            "paymentmode": request.POST.get("paymentmode"),
+        }
+
+        financial_statement.add_generalledger(transaction_type, general_ledger_params)
+
         cashbook_params = {
             "userbranch": data.branch,
             "amount": data.amount,
@@ -12132,6 +12200,9 @@ def add_receipt(request):
         }
 
         financial_statement.add_cashbook(transaction_type, cashbook_params)
+
+
+        
 
         # receipt_ledger = ledgercli.LedgerBook(data.branch)
         # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
@@ -13694,12 +13765,14 @@ def customerform(request):
 # @no_technician
 @login_required
 def addcustomer(request):
+
     data = Customers()
     data.firstname = request.POST["firstname"]
     data.lastname = request.POST["lastname"]
     data.phone = request.POST["phone"]
     data.phonemodel = request.POST["phonemodel"]
-    data.unique_id = generate_unique_id("Customers", "MAGNUS")
+    unique_id = generate_unique_id("Customers", "MAGNUS")
+    data.unique_id = unique_id
     if request.POST["purchasedate"]:
         data.purchasedate = request.POST["purchasedate"]
     if request.POST["dob"]:
@@ -13715,6 +13788,22 @@ def addcustomer(request):
     except:
         messages.error(request, f"An error occured.")
         return redirect("customerform")
+
+    ########################################
+    # data = CoASubAccounts()
+    # ledgername = "ACCOUNTS RECEIVABLE"
+    # ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+    # title = f"{data.firstname} {data.lastname} {unique_id}"
+    # data.head_root = ledgerobj
+    # gstring = ledgername.replace(" ", "_")
+    # data.gstring = gstring
+    # data.title = title
+    # data.branch = request.user.userprofile.branch
+    # data.description = f"{data.firstname} {data.lastname} {unique_id}"
+    # if not CoASubAccounts.objects.filter(title=title).first():
+    #     data.save()
+    fun_create_customer_ledger(data,unique_id,request)
+    #########################################
 
     return HttpResponseRedirect("/customers")
 

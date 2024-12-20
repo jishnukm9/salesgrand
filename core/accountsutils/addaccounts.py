@@ -1,7 +1,8 @@
-from core.models import Ledger, CashBook, CoASubAccounts
+from core.models import Ledger, CashBook, CoASubAccounts,GeneralLedger
 from . import coa
 from datetime import date,datetime
 from django.utils import timezone
+from django.db.models import F, Q
 
 # date_today = date.today()
 date_today = timezone.now().date()
@@ -359,7 +360,6 @@ class AccountStatement():
             ledger.debit_amount = cashpaid
             ledger.credit_amount = 0 
             ledger.account_head = coa.ASSET["name"]
-            # ledger.account_subhead = "Cash"
             ledger.account_subhead  = params['paymentmode']
             ledger.pk = None
             ledger.save()
@@ -392,6 +392,8 @@ class AccountStatement():
 
             ledger.pk = None
             ledger.save()
+
+
         elif type == "Receipt":
 
             try:
@@ -420,6 +422,7 @@ class AccountStatement():
             ledger.account_subhead = params['paymentmode']
             ledger.pk = None
             ledger.save()
+
         elif type == "Journal":
 
             try:
@@ -473,7 +476,7 @@ class AccountStatement():
             ledger.save()
 
     def add_generalledger(self, type, params):
-        ledger = GeneralLedger()
+        
 
         cash_ledger = CoASubAccounts.objects.filter(Q(title = "Cash")&Q(is_adminonly=True)).first().head_root
         cash_subledger = CoASubAccounts.objects.filter(title = "Cash").first()
@@ -510,6 +513,7 @@ class AccountStatement():
             purchase_ledger = CoASubAccounts.objects.filter(title = "Purchase").first().head_root
             purchase_subledger = CoASubAccounts.objects.filter(title = "Purchase").first()
 
+            ledger = GeneralLedger()
             ledger.date          = params['invoicedate']
             ledger.voucher_no    = params["invoicenumber"]
             ledger.voucher_id    = params["voucherid"]
@@ -524,6 +528,7 @@ class AccountStatement():
              
             #CASH ACCOUNT
             if amount_received != 0:
+                ledger = GeneralLedger()
                 ledger.date          = params['invoicedate']
                 ledger.voucher_no    = params["invoicenumber"]
                 ledger.voucher_id    = params["voucherid"]
@@ -550,6 +555,7 @@ class AccountStatement():
 
             #SUPPLIER ACCOUNT
             if params['duebalance'] != 0:
+                ledger = GeneralLedger()
                 ledger.date          = params['invoicedate']
                 ledger.voucher_no    = params["invoicenumber"]
                 ledger.voucher_id    = params["voucherid"]
@@ -570,6 +576,7 @@ class AccountStatement():
                 amount_received  = params["amountreceived"]
 
             #PURCHASE ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -583,6 +590,7 @@ class AccountStatement():
             ledger.save()
 
             #CASH ACCOUNT
+            ledger = GeneralLedger()
             ledger.date          = params['invoicedate']
             ledger.voucher_no    = params["invoicenumber"]
             ledger.voucher_id    = params["voucherid"]
@@ -626,6 +634,7 @@ class AccountStatement():
             sale_ledger = CoASubAccounts.objects.filter(title = "Sales").first().head_root
             sale_subledger = CoASubAccounts.objects.filter(title = "Sales").first()
 
+            ledger = GeneralLedger()
             ledger.date = params['invoicedate']
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -640,13 +649,14 @@ class AccountStatement():
             
             #CASH ACCOUNT
             if amount_received != 0:
+                ledger = GeneralLedger()
                 ledger.date = params['invoicedate']
                 ledger.voucher_no = params['invoicenumber']
                 ledger.voucher_id = params['voucherid']
                 ledger.voucher_type = "Sale Transaction"
                 ledger.description = params['description']
                 ledger.amount = amount_received
-                ledger.amount_type = 'Credit'
+                ledger.amount_type = 'Debit'
                 payment_mode = params['paymentmode']
                 if payment_mode == "Cash":
                     ledger.ledger  = cash_ledger
@@ -666,6 +676,7 @@ class AccountStatement():
             if params['duebalance'] != 0:
 
                 #CUSTOMER ACCOUNT
+                ledger = GeneralLedger()
                 ledger.date = params['invoicedate']
                 ledger.voucher_no = params['invoicenumber']
                 ledger.voucher_id = params['voucherid']
@@ -677,6 +688,7 @@ class AccountStatement():
                 ledger.subledger = params['customer']
                 ledger.branch = params['userbranch']
                 ledger.save()
+
         elif type == "SaleDue":
 
             try:
@@ -685,6 +697,7 @@ class AccountStatement():
                 amount_received = params['amountrecieved']
 
             #SALE TRANSACTION
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['invoicenumber'] 
             ledger.voucher_id = params['voucherid']
@@ -698,6 +711,7 @@ class AccountStatement():
             ledger.save()
 
             #CASH ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -734,6 +748,7 @@ class AccountStatement():
                 net_total  = params['nettotal']
 
             #PURCHASE REURN ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['returnid']
             ledger.voucher_id = params['voucherid']
@@ -747,6 +762,7 @@ class AccountStatement():
             ledger.save()
 
             #CASH ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['returnid']
             ledger.voucher_id = params['voucherid']
@@ -786,6 +802,7 @@ class AccountStatement():
 
 
             #SALE RETURN ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['salereturnid']
             ledger.voucher_id = params['voucherid']
@@ -799,6 +816,7 @@ class AccountStatement():
             ledger.save()
 
             #CASH ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['salereturnid']
             ledger.voucher_id = params['voucherid']
@@ -825,6 +843,9 @@ class AccountStatement():
 
         elif type == "ServiceEntry":
 
+            service_ledger = CoASubAccounts.objects.filter(title = "Service").first().head_root
+            service_subledger = CoASubAccounts.objects.filter(title = "Service").first()
+
             try:
                 total_amount  = round(params['totalamount'],2)
             except:
@@ -840,21 +861,9 @@ class AccountStatement():
             except:
                 due_balance = params['duebalance']
 
-            # Currently service entry transaction is recorded in the ledger.
-            # ledger.refernceno = params['invoicenumber']
-            # ledger.date = params['invoicedate']
-            # ledger.narration = "Service Entry Transaction"
-            # ledger.account_type = coa.INCOME["account_type"]
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = total_amount 
-            # ledger.account_head = coa.INCOME["name"]
-            # ledger.account_subhead = "Service"
-            # ledger.customer_or_vendor = params['customer_or_vendor']
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
 
             #SERVICE ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = params['invoicedate']
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -862,19 +871,13 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = total_amount
             ledger.amount_type = 'Credit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = service_ledger
+            ledger.subledger = service_subledger
             ledger.branch = params['userbranch']
             ledger.save()
 
             #CASH ACCOUNT
-            # ledger.account_type = coa.ASSET["account_type"]
-            # ledger.debit_amount = amount_received
-            # ledger.credit_amount = 0 
-            # ledger.account_head = coa.ASSET["name"]
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
+            ledger = GeneralLedger()
             ledger.date = params['invoicedate']
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -884,31 +887,24 @@ class AccountStatement():
             ledger.amount_type = 'Debit'
             payment_mode = params['paymentmode']
             if payment_mode == "Cash":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = cash_ledger
+                ledger.subledger = cash_subledger
             elif payment_mode == "Card":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = card_ledger
+                ledger.subledger = card_subledger
             elif payment_mode == "Bank":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = bank_ledger
+                ledger.subledger = bank_subledger   
             elif payment_mode == "UPI":
-                ledger.ledger  = "" 
-                ledger.subledger = ""
+                ledger.ledger  = upi_ledger
+                ledger.subledger = upi_subledger    
             ledger.branch = params["userbranch"]
             ledger.save()
    
 
             #CUSTOMER ACCOUNT
             if params['duebalance'] != 0:
-                # ledger.account_type = coa.ASSET["account_type"]
-                # ledger.debit_amount = due_balance
-                # ledger.credit_amount = 0
-                # ledger.account_head = coa.ASSET["name"]
-                # ledger.account_subhead = "Customer" 
-                # ledger.pk = None
-                # ledger.save()
-
+                ledger = GeneralLedger()
                 ledger.date = params['invoicedate']
                 ledger.voucher_no = params['invoicenumber']
                 ledger.voucher_id = params['voucherid']
@@ -916,8 +912,8 @@ class AccountStatement():
                 ledger.description = params['description']
                 ledger.amount = due_balance
                 ledger.amount_type = 'Debit'
-                ledger.ledger = ""
-                ledger.subledger = ""
+                ledger.ledger = params['customer'].head_root
+                ledger.subledger = params['customer']
                 ledger.branch = params['userbranch']
                 ledger.save()
 
@@ -939,35 +935,18 @@ class AccountStatement():
             except:
                 previous_received  = params['previousreceived']
 
-            # Adjust the Service entry during the checkout because the tax and spare added
-
-            # adjustLedger = Ledger.objects.filter(refernceno=params['invoicenumber'])
-            # advanceamount = 0
-            # balanceamount = 0
-            # for item in adjustLedger:
-            #     if item.narration == 'Service Entry Transaction' and item.account_subhead == 'Service':
-            #         item.credit_amount = total_amount
-            #     # ledger cash bank card upi saving 28-11-2024
-            #     # if item.narration == 'Service Entry Transaction' and item.account_subhead == 'Cash':
-            #     #     advanceamount = item.debit_amount
-            #     if item.narration == 'Service Entry Transaction' and (item.account_subhead == 'Cash' or item.account_subhead == 'Bank' or item.account_subhead == 'Card' or item.account_subhead == 'UPI'): 
-            #         advanceamount = item.debit_amount
-            #     if item.narration == 'Service Entry Transaction' and item.account_subhead == 'Customer':
-            #         balanceamount = total_amount - advanceamount
-            #         item.debit_amount = balanceamount
-            #     item.save()
 
             #SERVICE ACCOUNT
             adjustLedger = GeneralLedger.objects.filter(voucher_no=params['invoicenumber'])
             advanceamount = 0
             balanceamount = 0
             for item in adjustLedger:
-                if item.voucher_type == 'Service Entry Transaction' and item.ledger == 'Service':
+                if item.voucher_type == 'Service Entry Transaction' and item.ledger == service_ledger and item.subledger == service_subledger:
                     item.amount = total_amount
                     item.amount_type  = 'Credit'
-                if item.narration == 'Service Entry Transaction' and (item.account_subhead == 'Cash' or item.account_subhead == 'Bank' or item.account_subhead == 'Card' or item.account_subhead == 'UPI'): 
+                if item.voucher_type == 'Service Entry Transaction' and (item.account_subhead == 'Cash' or item.account_subhead == 'Bank' or item.account_subhead == 'Card' or item.account_subhead == 'UPI'): 
                     advanceamount = item.amount
-                if item.narration == 'Service Entry Transaction' and item.account_subhead == 'Customer':
+                if item.voucher_type == 'Service Entry Transaction' and item.account_subhead == 'Customer':
                     balanceamount = total_amount - advanceamount
                     item.amount = balanceamount
                     item.amount_type    = 'Debit'
@@ -975,19 +954,7 @@ class AccountStatement():
 
             cashpaid = amount_received - previous_received 
 
-            # ledger.refernceno = params['invoicenumber']
-            # ledger.date = params['invoicedate']
-            # ledger.narration = "Service Checkout Transaction"
-            # ledger.account_type = coa.ASSET["account_type"]
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = cashpaid
-            # ledger.account_head = coa.ASSET["name"]
-            # ledger.account_subhead = "Customer"
-            # ledger.customer_or_vendor = params['customer_or_vendor']
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
-
+            ledger = GeneralLedger()
             ledger.date = params['invoicedate']
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -995,19 +962,13 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = cashpaid
             ledger.amount_type = 'Credit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = service_ledger
+            ledger.subledger = service_subledger
             ledger.branch = params['userbranch']
             ledger.save()
 
             #CASH ACCOUNT
-            # ledger.account_type = coa.ASSET["account_type"]
-            # ledger.debit_amount = cashpaid
-            # ledger.credit_amount = 0 
-            # ledger.account_head = coa.ASSET["name"]
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
+            ledger = GeneralLedger()
             ledger.date = params['invoicedate']
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -1017,17 +978,17 @@ class AccountStatement():
             ledger.amount_type = 'Debit'
             paymentmode = params['paymentmode']
             if  paymentmode == 'Cash':
-                ledger.ledger =  ""
-                ledger.subledger = ""
+                ledger.ledger =  cash_ledger
+                ledger.subledger = cash_subledger
             elif paymentmode == 'Bank':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  cash_ledger
+                ledger.subledger =  cash_subledger
             elif paymentmode == 'Card':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  card_ledger
+                ledger.subledger =  card_subledger
             elif paymentmode == 'UPI':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  upi_ledger 
+                ledger.subledger =  upi_subledger   
             ledger.branch = params['userbranch']
             ledger.save()
 
@@ -1040,43 +1001,24 @@ class AccountStatement():
             except:
                 amount  = params['amount']
 
-            # ledger.refernceno = params['id']
-            # ledger.date = params['date']
-            # ledger.narration = params['narration']
-            # ledger.account_type = "NA"  # its NA because debit and credit will be entered by user
-            # ledger.debit_amount = amount
-            # ledger.credit_amount = 0 
-            # ledger.account_head = params['debitac']
-            # ledger.account_subhead = params['debitac']
-            # ledger.customer_or_vendor = "NA"
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
-            leger.date = params['date']
+            #PAYMENT ACCOUNT
+            ledger = GeneralLedger()
+            ledger.date = params['date']
             ledger.voucher_no = params['id']
             ledger.voucher_id = params['voucherid']
             ledger.voucher_type = "Payment Transaction"
             ledger.description = params['description']
             ledger.amount = amount
             ledger.amount_type = 'Debit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = params['debitac'].head_root
+            ledger.subledger = params['debitac']
             ledger.branch = params['userbranch']
             ledger.save()
 
 
-
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = amount
-            # ledger.account_head = params['creditac']
-            # # ledger.account_subhead = params['creditac']
-            # ledger.account_subhead = params['paymentmode']
-
-            # ledger.pk = None
-            # ledger.save()
-
             #CASH ACCOUNT
-            leger.date = params['date']
+            ledger = GeneralLedger()
+            ledger.date = params['date']
             ledger.voucher_no = params['id']
             ledger.voucher_id = params['voucherid']
             ledger.voucher_type = "Payment Transaction"
@@ -1085,17 +1027,17 @@ class AccountStatement():
             ledger.amount_type = 'Credit'
             paymentmode = params['paymentmode']
             if  paymentmode == 'Cash':
-                ledger.ledger =  ""
-                ledger.subledger = ""
+                ledger.ledger =  cash_ledger
+                ledger.subledger = cash_subledger
             elif paymentmode == 'Bank':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  bank_ledger
+                ledger.subledger =  bank_subledger
             elif paymentmode == 'Card':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  card_ledger
+                ledger.subledger =  card_subledger
             elif paymentmode == 'UPI':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  upi_ledger
+                ledger.subledger =  upi_subledger
             ledger.branch = params['userbranch']
             ledger.save()
 
@@ -1106,18 +1048,7 @@ class AccountStatement():
             except:
                 amount  = params['amount']
 
-            # ledger.refernceno = params['id']
-            # ledger.date = timezone.now().date()
-            # ledger.narration = params['narration']
-            # ledger.account_type = 'NA'
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = amount
-            # ledger.account_head = params['creditac']
-            # ledger.account_subhead = params['creditac']
-            # ledger.customer_or_vendor = "NA"
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['id']
             ledger.voucher_id = params['voucherid']
@@ -1125,23 +1056,13 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = amount
             ledger.amount_type = 'Credit'
-            ledger.ledger  =   ""
-            ledger.subledger  =   ""    
+            ledger.ledger  =   params['creditac'].head_root
+            ledger.subledger  =   params['creditac']    
             ledger.branch = params['userbranch']
             ledger.save()
 
-
-
-
-            # ledger.account_type = 'NA'
-            # ledger.debit_amount = amount
-            # ledger.credit_amount = 0
-            # ledger.account_head = params['debitac']
-            # # ledger.account_subhead = params['debitac']
-            # ledger.account_subhead = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
             #CASH ACCOUNT
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['id']
             ledger.voucher_id = params['voucherid']
@@ -1151,17 +1072,17 @@ class AccountStatement():
             ledger.amount_type = 'Debit'
             paymentmode = params['paymentmode']
             if  paymentmode == 'Cash':
-                ledger.ledger =  ""
-                ledger.subledger = ""
+                ledger.ledger = cash_ledger
+                ledger.subledger = cash_subledger
             elif paymentmode == 'Bank':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  bank_ledger
+                ledger.subledger =  bank_subledger
             elif paymentmode == 'Card':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  card_ledger
+                ledger.subledger =  card_subledger
             elif paymentmode == 'UPI':
-                ledger.ledger =  ""
-                ledger.subledger =  ""
+                ledger.ledger =  upi_ledger
+                ledger.subledger =  upi_subledger
             ledger.branch = params['userbranch']
             ledger.save()
 
@@ -1172,20 +1093,8 @@ class AccountStatement():
             except:
                 amount  = params['amount']
 
-            # ledger.refernceno = params['id']
-            # ledger.date = timezone.now().date()
-            # ledger.narration = params['narration']
-            # ledger.account_type = 'NA'
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = amount
-            # ledger.account_head = params['creditac']
-            # ledger.account_subhead = params['creditac']
-            # ledger.customer_or_vendor = "NA"
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
-
             #credit side
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['id']
             ledger.voucher_id = params['voucherid']
@@ -1193,13 +1102,14 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = amount
             ledger.amount_type = 'Credit'
-            ledger.ledger  =   ""
-            ledger.subledger  =   ""    
+            ledger.ledger  =   params['creditac'].head_root
+            ledger.subledger  =   params['creditac']    
             ledger.branch = params['userbranch']
             ledger.save()
 
 
             #debit side
+            ledger = GeneralLedger()
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['id']
             ledger.voucher_id = params['voucherid']
@@ -1207,19 +1117,10 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = amount
             ledger.amount_type = 'Debit'
-            ledger.ledger  =   ""
-            ledger.subledger  =   ""    
+            ledger.ledger  =   params['debitac'].head_root 
+            ledger.subledger  =   params['debitac']  
             ledger.branch = params['userbranch']
             ledger.save()
-
-            # ledger.account_type = 'NA'
-            # ledger.debit_amount = amount
-            # ledger.credit_amount = 0
-            # ledger.account_head = params['debitac']
-            # ledger.account_subhead = params['debitac']
-            # ledger.pk = None
-            # ledger.save()
-      
 
 
     def add_cashbook(self, type, params):
