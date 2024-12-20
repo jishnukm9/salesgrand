@@ -10315,7 +10315,7 @@ def search_daybook(request):
 
 
 def ChartofAccounts(request):
-    data = CoASubAccounts.objects.all().order_by("-pk")
+    data = CoASubAccounts.objects.filter(is_adminonly=False).order_by("-pk")
     return render(request, "chartofaccounts.html", {"rootsubcoa": data})
 
 

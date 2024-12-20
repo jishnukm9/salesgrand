@@ -474,11 +474,22 @@ class AccountStatement():
 
     def add_generalledger(self, type, params):
         ledger = GeneralLedger()
+
+        cash_ledger = CoASubAccounts.objects.filter(Q(title = "Cash")&Q(is_adminonly=True)).first().head_root
+        cash_subledger = CoASubAccounts.objects.filter(title = "Cash").first()
+
+        bank_ledger = CoASubAccounts.objects.filter(Q(title = "Bank")&Q(is_adminonly=True)).first().head_root
+        bank_subledger = CoASubAccounts.objects.filter(Q(title = "Bank")&Q(is_adminonly=True)).first()
+
+        upi_ledger = CoASubAccounts.objects.filter(Q(title = "UPI")&Q(is_adminonly=True)).first().head_root
+        upi_subledger = CoASubAccounts.objects.filter(Q(title = "UPI")&Q(is_adminonly=True)).first()
+
+        card_ledger = CoASubAccounts.objects.filter(Q(title = "Card")&Q(is_adminonly=True)).first().head_root
+        card_subledger = CoASubAccounts.objects.filter(Q(title = "Card")&Q(is_adminonly=True)).first()
+
+
         if type == "Purchase":
-
-
-            print("params",params)
-
+            print("purchase params",params)
             try:
                 totalbillingamount = round(params["totalbillingamount"],2)
             except:
@@ -494,19 +505,11 @@ class AccountStatement():
             except:
                 due_balance = params['duebalance']
 
+
             #PURCHASE ACCOUNT
-            # ledger.refernceno    = params["invoicenumber"]
-            # ledger.date          = params['invoicedate']
-            # ledger.narration     = "Purchase Transaction"
-            # ledger.debit_amount  = totalbillingamount
-            # ledger.credit_amount = 0 
-            # ledger.account_subhead = "Purchase"
-            # ledger.account_type  = coa.EXPENSE["account_type"]
-            # ledger.account_head  = coa.EXPENSE["name"]
-            # ledger.customer_or_vendor = params["customer_or_vendor"]
-            # ledger.branch             = str(params["userbranch"])
-            # ledger.pk = None
-            # ledger.save()
+            purchase_ledger = CoASubAccounts.objects.filter(title = "Purchase").first().head_root
+            purchase_subledger = CoASubAccounts.objects.filter(title = "Purchase").first()
+
             ledger.date          = params['invoicedate']
             ledger.voucher_no    = params["invoicenumber"]
             ledger.voucher_id    = params["voucherid"]
@@ -514,20 +517,12 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount  = totalbillingamount
             ledger.amount_type = 'Debit' 
-            ledger.ledger = ''
-            ledger.subledger = ''
+            ledger.ledger = purchase_ledger
+            ledger.subledger = purchase_subledger
             ledger.branch = params["userbranch"]
             ledger.save()
              
             #CASH ACCOUNT
-            # ledger.credit_amount = amount_received 
-            # ledger.debit_amount  = 0
-            # ledger.account_type  = coa.ASSET["account_type"]
-            # ledger.account_head  = coa.ASSET["name"]
-            # # ledger.account_subhead  = "Cash"
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
             if amount_received != 0:
                 ledger.date          = params['invoicedate']
                 ledger.voucher_no    = params["invoicenumber"]
@@ -537,30 +532,24 @@ class AccountStatement():
                 ledger.amount = amount_received 
                 ledger.amount_type = 'Credit'
                 payment_mode = params['paymentmode']
+
                 if payment_mode == "Cash":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""
+                    ledger.ledger  = cash_ledger
+                    ledger.subledger = cash_subledger
                 elif payment_mode == "Card":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""
+                    ledger.ledger  = card_ledger
+                    ledger.subledger = card_subledger
                 elif payment_mode == "Bank":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""
+                    ledger.ledger  = bank_ledger
+                    ledger.subledger = bank_subledger
                 elif payment_mode == "UPI":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""
+                    ledger.ledger  = upi_ledger
+                    ledger.subledger = upi_subledger
                 ledger.branch = params["userbranch"]
                 ledger.save()
 
             #SUPPLIER ACCOUNT
             if params['duebalance'] != 0:
-                # ledger.debit_amount  = 0 
-                # ledger.credit_amount = due_balance
-                # ledger.account_type = coa.LIABILITY["account_type"]
-                # ledger.account_head = coa.LIABILITY["name"]
-                # ledger.account_subhead = "Supplier"
-                # ledger.pk = None
-                # ledger.save()
                 ledger.date          = params['invoicedate']
                 ledger.voucher_no    = params["invoicenumber"]
                 ledger.voucher_id    = params["voucherid"]
@@ -568,32 +557,17 @@ class AccountStatement():
                 ledger.description = params['description']
                 ledger.amount = due_balance
                 ledger.amount_type = 'Credit'
-                ledger.ledger  = ""
+                ledger.ledger  = params['supplier'].head_root
                 ledger.subledger = params['supplier']
                 ledger.branch = params["userbranch"]
                 ledger.save()
 
         elif type == "PurchaseDue":
 
-
             try:
                 amount_received = round(params["amountreceived"],2)
             except:
                 amount_received  = params["amountreceived"]
-
-
-            # ledger.refernceno = params['invoicenumber']
-            # ledger.date = timezone.now().date()
-            # ledger.narration = "Purchase Credit Transaction"
-            # ledger.account_type = "DEBIT" # because liability is decreasing
-            # ledger.debit_amount = amount_received
-            # ledger.credit_amount = 0
-            # ledger.account_head = coa.LIABILITY["name"]
-            # ledger.account_subhead = "Supplier"
-            # ledger.customer_or_vendor = params["customer_or_vendor"]
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
 
             #PURCHASE ACCOUNT
             ledger.date = timezone.now().date()
@@ -603,20 +577,12 @@ class AccountStatement():
             ledger.amount = amount_received
             ledger.description = params['description']
             ledger.amount_type = 'Debit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = purchase_ledger
+            ledger.subledger = purchase_subledger
             ledger.branch = params['userbranch']
             ledger.save()
 
             #CASH ACCOUNT
-            # ledger.account_type = "CREDIT" # because cash is reducing as we are paying to the vendor
-            # ledger.debit_amount = 0 
-            # ledger.credit_amount = amount_received
-            # ledger.account_head = coa.ASSET["name"]
-            # # ledger.account_subhead = "Cash"
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
             ledger.date          = params['invoicedate']
             ledger.voucher_no    = params["invoicenumber"]
             ledger.voucher_id    = params["voucherid"]
@@ -626,17 +592,17 @@ class AccountStatement():
             ledger.amount_type = 'Credit'
             payment_mode = params['paymentmode']
             if payment_mode == "Cash":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = cash_ledger
+                ledger.subledger = cash_subledger
             elif payment_mode == "Card":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = card_ledger
+                ledger.subledger = card_subledger
             elif payment_mode == "Bank":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = bank_ledger
+                ledger.subledger = bank_subledger
             elif payment_mode == "UPI":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = upi_ledger
+                ledger.subledger = upi_subledger
             ledger.branch = params["userbranch"]
             ledger.save()
 
@@ -646,32 +612,20 @@ class AccountStatement():
                 amount_received = round(params["amountrecieved"],2)
             except:
                 amount_received  = params["amountrecieved"]
-
             try:
                 total_amount  = round(params['totalamount'],2)
             except:
                 total_amount  = params['totalamount']
-
             try:
                 due_balance = round(params['duebalance'],2)
             except:
                 due_balance = params['duebalance']
 
-
-            # ledger.refernceno = params['invoicenumber']
-            # ledger.date = params['invoicedate']
-            # ledger.narration = "Sale Transaction"
-            # ledger.account_type = coa.INCOME["account_type"]
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = total_amount
-            # ledger.account_head = coa.INCOME["name"]
-            # ledger.account_subhead = "Sale"
-            # ledger.customer_or_vendor = params['customer_or_vendor']
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
-
             #SALE ACCOUNT
+
+            sale_ledger = CoASubAccounts.objects.filter(title = "Sales").first().head_root
+            sale_subledger = CoASubAccounts.objects.filter(title = "Sales").first()
+
             ledger.date = params['invoicedate']
             ledger.voucher_no = params['invoicenumber']
             ledger.voucher_id = params['voucherid']
@@ -679,8 +633,8 @@ class AccountStatement():
             ledger.amount = total_amount
             ledger.description = params['description']
             ledger.amount_type = 'Credit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = sale_ledger
+            ledger.subledger = sale_subledger
             ledger.branch = params['userbranch']
             ledger.save()
             
@@ -695,37 +649,21 @@ class AccountStatement():
                 ledger.amount_type = 'Credit'
                 payment_mode = params['paymentmode']
                 if payment_mode == "Cash":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""
+                    ledger.ledger  = cash_ledger
+                    ledger.subledger = card_subledger
                 elif payment_mode == "Card":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""
+                    ledger.ledger  = card_ledger
+                    ledger.subledger = card_subledger
                 elif payment_mode == "Bank":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""
+                    ledger.ledger  = bank_ledger
+                    ledger.subledger = bank_subledger
                 elif payment_mode == "UPI":
-                    ledger.ledger  = ""
-                    ledger.subledger = ""            
+                    ledger.ledger  = upi_ledger
+                    ledger.subledger = upi_subledger         
                 ledger.branch = params["userbranch"]
                 ledger.save()
 
-            # ledger.account_type = coa.ASSET["account_type"]
-            # ledger.debit_amount = amount_received
-            # ledger.credit_amount = 0 
-            # ledger.account_head = coa.ASSET["name"]
-            # # ledger.account_subhead = "Cash"
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
-
             if params['duebalance'] != 0:
-                # ledger.account_type = coa.ASSET["account_type"]
-                # ledger.debit_amount = due_balance
-                # ledger.credit_amount = 0
-                # ledger.account_head = coa.ASSET["name"]
-                # ledger.account_subhead = "Customer" 
-                # ledger.pk = None
-                # ledger.save()
 
                 #CUSTOMER ACCOUNT
                 ledger.date = params['invoicedate']
@@ -735,8 +673,8 @@ class AccountStatement():
                 ledger.description = params['description']
                 ledger.amount = due_balance
                 ledger.amount_type = 'Debit'
-                ledger.ledger = ""
-                ledger.subledger = ""
+                ledger.ledger = params['customer'].head_root
+                ledger.subledger = params['customer']
                 ledger.branch = params['userbranch']
                 ledger.save()
         elif type == "SaleDue":
@@ -746,20 +684,6 @@ class AccountStatement():
             except:
                 amount_received = params['amountrecieved']
 
-
-            # ledger.refernceno = params['invoicenumber']
-            # ledger.date = timezone.now().date()
-            # ledger.narration = "Sale Credit Transaction"
-            # ledger.account_type = coa.ASSET["account_type"]
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = amount_received
-            # ledger.account_head = coa.ASSET["name"]
-            # ledger.account_subhead = "Customer"
-            # ledger.customer_or_vendor = params['customer_or_vendor']
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
-
             #SALE TRANSACTION
             ledger.date = timezone.now().date()
             ledger.voucher_no = params['invoicenumber'] 
@@ -768,8 +692,8 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = amount_received
             ledger.amount_type = 'Credit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = sale_ledger
+            ledger.subledger = sale_subledger
             ledger.branch = params['userbranch']
             ledger.save()
 
@@ -783,29 +707,26 @@ class AccountStatement():
             ledger.amount_type = 'Debit'
             payment_mode = params['paymentmode']
             if payment_mode == "Cash":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = cash_ledger
+                ledger.subledger = cash_subledger
             elif payment_mode == "Card":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = card_ledger
+                ledger.subledger = card_subledger
             elif payment_mode == "Bank":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = bank_ledger
+                ledger.subledger = bank_subledger
             elif payment_mode == "UPI":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = upi_ledger
+                ledger.subledger = upi_subledger
             ledger.branch = params["userbranch"]
             ledger.save()
-            # ledger.account_type = "DEBIT" # because cash is increasing
-            # ledger.debit_amount = amount_received
-            # ledger.credit_amount = 0
-            # # ledger.account_subhead = "Cash"
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
+
 
 
         elif type == "PurchaseReturn":
+
+            purchase_return_ledger = CoASubAccounts.objects.filter(title = "Purchase Return").first().head_root
+            purchase_return_subledger = CoASubAccounts.objects.filter(title = "Purchase Return").first()
 
             try:
                 net_total = round(params['nettotal'],2)
@@ -820,21 +741,10 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = net_total
             ledger.amount_type = 'Credit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = purchase_return_ledger
+            ledger.subledger = purchase_return_subledger
             ledger.branch = params['userbranch']
             ledger.save()
-
-            # ledger.narration = "Purchase Return Transaction"
-            # ledger.account_type = coa.EXPENSE['account_type']
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = net_total
-            # ledger.account_head = coa.EXPENSE["name"]
-            # ledger.account_subhead = "Purchase"
-            # ledger.customer_or_vendor = params['customer_or_vendor']
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
 
             #CASH ACCOUNT
             ledger.date = timezone.now().date()
@@ -846,48 +756,34 @@ class AccountStatement():
             ledger.amount_type = 'Debit'
             payment_mode = params['paymentmode']
             if payment_mode == "Cash":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = cash_ledger
+                ledger.subledger = cash_subledger
             elif payment_mode == "Card":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = card_ledger
+                ledger.subledger = card_subledger
             elif payment_mode == "Bank":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = bank_ledger
+                ledger.subledger = bank_subledger
             elif payment_mode == "UPI":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = upi_ledger
+                ledger.subledger = upi_subledger
             ledger.branch = params["userbranch"]
             ledger.save()
 
 
-            # ledger.debit_amount = net_total
-            # ledger.credit_amount = 0
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
+
 
 
         elif type == "SaleReturn":
+
+            sales_return_ledger = CoASubAccounts.objects.filter(title = "Sales Return").first().head_root
+            sales_return_subledger = CoASubAccounts.objects.filter(title = "Sales Return").first()
 
             try:
                 amount = round(params['amount'],2)
             except:
                 amount  = params['amount']
 
-
-            # ledger.refernceno = params['salereturnid']
-            # ledger.date = timezone.now().date()
-            # ledger.narration = "Sale Return Transaction"
-            # ledger.account_type = coa.INCOME["account_type"]
-            # ledger.debit_amount = params['amount']
-            # ledger.credit_amount = 0
-            # ledger.account_head = coa.INCOME["name"]
-            # ledger.account_subhead = "Sale"
-            # ledger.customer_or_vendor = params['customer_or_vendor']
-            # ledger.branch = params['userbranch']
-            # ledger.pk = None
-            # ledger.save()
 
             #SALE RETURN ACCOUNT
             ledger.date = timezone.now().date()
@@ -897,14 +793,10 @@ class AccountStatement():
             ledger.description = params['description']  
             ledger.amount = params['amount']
             ledger.amount_type = 'Debit'
-            ledger.ledger = ""
-            ledger.subledger = ""
+            ledger.ledger = sales_return_ledger
+            ledger.subledger = sales_return_subledger
             ledger.branch = params['userbranch']
             ledger.save()
-
-
-
-
 
             #CASH ACCOUNT
             ledger.date = timezone.now().date()
@@ -916,27 +808,19 @@ class AccountStatement():
             ledger.amount_type = 'Credit'
             payment_mode = params['paymentmode']
             if payment_mode == "Cash":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = cash_ledger
+                ledger.subledger = cash_subledger
             elif payment_mode == "Card":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = card_ledger
+                ledger.subledger = card_subledger
             elif payment_mode == "Bank":
-                ledger.ledger  = ""
-                ledger.subledger = ""
+                ledger.ledger  = bank_ledger
+                ledger.subledger = bank_subledger
             elif payment_mode == "UPI":
-                ledger.ledger  = "" 
-                ledger.subledger = ""
+                ledger.ledger  = upi_ledger
+                ledger.subledger = upi_subledger
             ledger.branch = params["userbranch"]
             ledger.save()
-
-            # ledger.account_type = coa.ASSET["account_type"]
-            # ledger.debit_amount = 0
-            # ledger.credit_amount = params['amount']
-            # ledger.account_head = coa.ASSET["name"]
-            # ledger.account_subhead  = params['paymentmode']
-            # ledger.pk = None
-            # ledger.save()
 
 
         elif type == "ServiceEntry":
