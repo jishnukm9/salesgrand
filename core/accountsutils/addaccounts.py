@@ -1,4 +1,4 @@
-from core.models import Ledger, CashBook, CoASubAccounts,GeneralLedger
+from core.models import Ledger, CashBook, CoASubAccounts,GeneralLedger,AccountLedger
 from . import coa
 from datetime import date,datetime
 from django.utils import timezone
@@ -478,21 +478,201 @@ class AccountStatement():
     def add_generalledger(self, type, params):
         
 
-        cash_ledger = CoASubAccounts.objects.filter(Q(title = "Cash")&Q(is_adminonly=True)).first().head_root
-        cash_subledger = CoASubAccounts.objects.filter(title = "Cash").first()
+        
+        cash_subledger = CoASubAccounts.objects.filter(Q(title="Cash") & Q(is_adminonly=True)).first()
+        if not cash_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Cash"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
 
-        bank_ledger = CoASubAccounts.objects.filter(Q(title = "Bank")&Q(is_adminonly=True)).first().head_root
-        bank_subledger = CoASubAccounts.objects.filter(Q(title = "Bank")&Q(is_adminonly=True)).first()
+            cash_subledger = CoASubAccounts.objects.filter(Q(title="Cash") & Q(is_adminonly=True)).first()
+            cash_ledger = cash_subledger.head_root
+        else:
+            cash_ledger = cash_subledger.head_root
 
-        upi_ledger = CoASubAccounts.objects.filter(Q(title = "UPI")&Q(is_adminonly=True)).first().head_root
-        upi_subledger = CoASubAccounts.objects.filter(Q(title = "UPI")&Q(is_adminonly=True)).first()
+        print("cash_ledger",cash_ledger)
+        print("cash_subledger",cash_subledger)
 
-        card_ledger = CoASubAccounts.objects.filter(Q(title = "Card")&Q(is_adminonly=True)).first().head_root
-        card_subledger = CoASubAccounts.objects.filter(Q(title = "Card")&Q(is_adminonly=True)).first()
+        bank_subledger = CoASubAccounts.objects.filter(Q(title="Bank") & Q(is_adminonly=True)).first()
+        if not bank_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Bank"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
 
+            bank_subledger = CoASubAccounts.objects.filter(Q(title="Bank") & Q(is_adminonly=True)).first()
+            bank_ledger = bank_subledger.head_root
+        else:
+            bank_ledger = bank_subledger.head_root
+
+
+        upi_subledger = CoASubAccounts.objects.filter(Q(title="UPI") & Q(is_adminonly=True)).first()
+        if not upi_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"UPI"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            upi_subledger = CoASubAccounts.objects.filter(Q(title="UPI") & Q(is_adminonly=True)).first()
+            upi_ledger = upi_subledger.head_root
+        else:
+            upi_ledger = upi_subledger.head_root
+
+
+
+        card_subledger = CoASubAccounts.objects.filter(Q(title="Card") & Q(is_adminonly=True)).first()
+        if not card_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Card"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            card_subledger = CoASubAccounts.objects.filter(Q(title="Card") & Q(is_adminonly=True)).first()
+            card_ledger = card_subledger.head_root
+        else:
+            card_ledger = card_subledger.head_root
+
+
+        sale_subledger = CoASubAccounts.objects.filter(Q(title="Sales") & Q(is_adminonly=True)).first()
+        if not sale_subledger:
+            data = CoASubAccounts()
+            ledgername = "SALES ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Sales"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            sale_subledger = CoASubAccounts.objects.filter(Q(title="Sales") & Q(is_adminonly=True)).first()
+            sale_ledger = sale_subledger.head_root
+        else:
+            sale_ledger = sale_subledger.head_root
+
+
+        purchase_subledger = CoASubAccounts.objects.filter(Q(title="Purchase") & Q(is_adminonly=True)).first()
+        if not purchase_subledger:
+            data = CoASubAccounts()
+            ledgername = "PURCHASE ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Purchase"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            purchase_subledger = CoASubAccounts.objects.filter(Q(title="Purchase") & Q(is_adminonly=True)).first()
+            purchase_ledger = purchase_subledger.head_root
+        else:
+            purchase_ledger = purchase_subledger.head_root
+
+
+        service_subledger = CoASubAccounts.objects.filter(Q(title="Service") & Q(is_adminonly=True)).first()
+        if not service_subledger:
+            data = CoASubAccounts()
+            ledgername = "SERVICES ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Service"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            service_subledger = CoASubAccounts.objects.filter(Q(title="Service") & Q(is_adminonly=True)).first()
+            service_ledger = service_subledger.head_root
+        else:
+            service_ledger = service_subledger.head_root
+
+        purchase_return_subledger = CoASubAccounts.objects.filter(Q(title="Purchase Return") & Q(is_adminonly=True)).first()
+        if not purchase_return_subledger:
+            data = CoASubAccounts()
+            ledgername = "PURCHASE ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Purchase Return"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            purchase_return_subledger = CoASubAccounts.objects.filter(Q(title="Purchase Return") & Q(is_adminonly=True)).first()
+            purchase_return_ledger = purchase_return_subledger.head_root
+        else:
+            purchase_return_ledger = purchase_return_subledger.head_root
+
+
+        sales_return_subledger = CoASubAccounts.objects.filter(Q(title="Sales Return") & Q(is_adminonly=True)).first()
+        if not sales_return_subledger:
+            data = CoASubAccounts()
+            ledgername = "SALES ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Sales Return"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = params["userbranch"]
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            sales_return_subledger = CoASubAccounts.objects.filter(Q(title="Sales Return") & Q(is_adminonly=True)).first()
+            sales_return_ledger = sales_return_subledger.head_root
+        else:
+            sales_return_ledger = sales_return_subledger.head_root
+
+            
 
         if type == "Purchase":
-            print("purchase params",params)
+       
             try:
                 totalbillingamount = round(params["totalbillingamount"],2)
             except:
@@ -510,8 +690,7 @@ class AccountStatement():
 
 
             #PURCHASE ACCOUNT
-            purchase_ledger = CoASubAccounts.objects.filter(title = "Purchase").first().head_root
-            purchase_subledger = CoASubAccounts.objects.filter(title = "Purchase").first()
+            
 
             ledger = GeneralLedger()
             ledger.date          = params['invoicedate']
@@ -591,7 +770,7 @@ class AccountStatement():
 
             #CASH ACCOUNT
             ledger = GeneralLedger()
-            ledger.date          = params['invoicedate']
+            ledger.date          = timezone.now().date()
             ledger.voucher_no    = params["invoicenumber"]
             ledger.voucher_id    = params["voucherid"]
             ledger.voucher_type  = "Purchase Transaction"
@@ -630,9 +809,9 @@ class AccountStatement():
                 due_balance = params['duebalance']
 
             #SALE ACCOUNT
+            
 
-            sale_ledger = CoASubAccounts.objects.filter(title = "Sales").first().head_root
-            sale_subledger = CoASubAccounts.objects.filter(title = "Sales").first()
+            
 
             ledger = GeneralLedger()
             ledger.date = params['invoicedate']
@@ -739,8 +918,7 @@ class AccountStatement():
 
         elif type == "PurchaseReturn":
 
-            purchase_return_ledger = CoASubAccounts.objects.filter(title = "Purchase Return").first().head_root
-            purchase_return_subledger = CoASubAccounts.objects.filter(title = "Purchase Return").first()
+            
 
             try:
                 net_total = round(params['nettotal'],2)
@@ -792,8 +970,7 @@ class AccountStatement():
 
         elif type == "SaleReturn":
 
-            sales_return_ledger = CoASubAccounts.objects.filter(title = "Sales Return").first().head_root
-            sales_return_subledger = CoASubAccounts.objects.filter(title = "Sales Return").first()
+            
 
             try:
                 amount = round(params['amount'],2)
@@ -843,8 +1020,7 @@ class AccountStatement():
 
         elif type == "ServiceEntry":
 
-            service_ledger = CoASubAccounts.objects.filter(title = "Service").first().head_root
-            service_subledger = CoASubAccounts.objects.filter(title = "Service").first()
+            
 
             try:
                 total_amount  = round(params['totalamount'],2)
@@ -1043,6 +1219,8 @@ class AccountStatement():
 
         elif type == "Receipt":
 
+            print("receipt params",params)
+
             try:
                 amount = round(params['amount'],2)
             except:
@@ -1071,6 +1249,9 @@ class AccountStatement():
             ledger.amount = amount
             ledger.amount_type = 'Debit'
             paymentmode = params['paymentmode']
+            print("paymentmode",paymentmode)
+            print("cash_ledger",cash_ledger)
+            print("cash_subledger",cash_subledger)
             if  paymentmode == 'Cash':
                 ledger.ledger = cash_ledger
                 ledger.subledger = cash_subledger

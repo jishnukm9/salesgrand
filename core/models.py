@@ -198,6 +198,7 @@ class Suppliers(models.Model):
         blank=True,
     )
     created_date = models.DateTimeField(default=timezone.now)
+    supplier_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="supplier_ledger_supplier",default=None,null=True,blank=True)
 
     class Meta:
         unique_together = ("name", "branch")
@@ -618,6 +619,7 @@ class Customers(models.Model):
     createddate = models.DateField(auto_now_add=True)
     vatnumber = models.CharField(max_length=200, default=None, null=True)
     customertype = models.CharField(max_length=200, default=None, null=True)
+    customer_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="customer_ledger_customer",default=None,null=True,blank=True)
 
     class Meta:
         unique_together = ("phone", "branch")
@@ -935,6 +937,7 @@ class Service(models.Model):
     invoicedate = models.DateTimeField(default=timezone.now, blank=True,null=True)
     discountmethod = models.CharField(max_length=50, default='Flat', blank=True, null=True)
     discountpercentage = models.FloatField(null=True, blank=True, default=None)
+    customer_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="customer_leger_service",default=None,null=True,blank=True)
 
 
 

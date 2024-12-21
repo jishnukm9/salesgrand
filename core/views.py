@@ -91,25 +91,58 @@ GLOBAL_VARIABLES = custom_variables(None)
 
 
 
-def fun_create_customer_ledger(data,unique_id,request):
+def func_create_customer_ledger(cust_data,unique_id,request):
 
     ########################################
     #creating ledger for customer
     data = CoASubAccounts()
     ledgername = "ACCOUNTS RECEIVABLE"
     ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
-    title = f"{data.firstname} {data.lastname} {unique_id}"
+    title = f"{cust_data.firstname} {cust_data.lastname} {unique_id}"
     data.head_root = ledgerobj
     gstring = ledgername.replace(" ", "_")
     data.gstring = gstring
     data.title = title
     data.branch = request.user.userprofile.branch
-    data.description = f"{data.firstname} {data.lastname} {unique_id}"
+    data.description = f"{cust_data.firstname} {cust_data.lastname} {unique_id}"
+    data.is_adminonly = True
     if not CoASubAccounts.objects.filter(title=title).first():
         data.save()
+
+        customer_objects = Customers.objects.filter(unique_id=unique_id).first()
+        customer_objects.customer_ledger = CoASubAccounts.objects.filter(title=title).first()
+        customer_objects.save()
     #########################################
 
-    return data
+    return 0
+
+
+
+
+def func_create_supplier_ledger(supp_data,unique_id,request):
+
+    ########################################
+    #creating ledger for customer
+    data = CoASubAccounts()
+    ledgername = "ACCOUNTS PAYABLE"
+    ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+    title = f"{supp_data.name} {unique_id}"
+    data.head_root = ledgerobj
+    gstring = ledgername.replace(" ", "_")
+    data.gstring = gstring
+    data.title = title
+    data.branch = request.user.userprofile.branch
+    data.description = f"{supp_data.name} {unique_id}"
+    data.is_adminonly = True
+    if not CoASubAccounts.objects.filter(title=title).first():
+        data.save()
+
+        supplier_objects = Suppliers.objects.filter(id=int(unique_id)).first()
+        supplier_objects.supplier_ledger = CoASubAccounts.objects.filter(title=title).first()
+        supplier_objects.save()
+    #########################################
+
+    return 0
 
 
 #for checking length of the items in form
@@ -986,6 +1019,9 @@ def addSupplier(request, page):
         data.branch = request.user.userprofile.branch
         try:
             data.save()
+
+            func_create_supplier_ledger(data, data.id, request)
+
         except IntegrityError as e:
             messages.error(request, "Supplier already exists.")
             if page == "purchase":
@@ -1007,6 +1043,7 @@ def addSupplier(request, page):
                 return render(request, "addpurchase.html", context)
             else:
                 return redirect("supplierform")
+
 
     if page == "purchase":
         products = Products.objects.filter(branch=request.user.userprofile.branch)
@@ -1062,6 +1099,7 @@ def addsupplierfrompurchase(request):
                 "address": address,
                 "id": Suppliers.objects.filter(Q(name=name) & Q(branch=branch)).first().id,
             }
+            func_create_supplier_ledger(data, data.id, request)
         except IntegrityError as e:
             resp = "exist_error"
         except:
@@ -2925,6 +2963,9 @@ def addBulkPurchaseForm(request):
                         "paymentmode": df["Payment Mode"][i],
                     }
                     financial_statement.add_ledger("Purchase", ledger_params)
+
+
+
                     cashbook_params = {
                         "userbranch": request.user.userprofile.branch,
                         "amountrecieved": amount_received,
@@ -3153,7 +3194,8 @@ def addBranchPurchase(request):
         filename = fs.save(copy.name, copy)
         uploaded_file_url = fs.url(filename)
 
-    for i in range(1, ((len(length_count)+10))):
+    supplier_ledger = None
+    for i in range(1, ((len(length_count)+1))):
         i = str(i)
         productname = request.POST.get("name" + i)
 
@@ -3181,6 +3223,20 @@ def addBranchPurchase(request):
         data.externalsupplier = Suppliers.objects.get(
             Q(name=supplierform) & Q(branch=request.user.userprofile.branch)
         )
+
+        try:
+            sup_obj = Suppliers.objects.get(
+            Q(name=supplierform) & Q(branch=request.user.userprofile.branch)
+        )
+            if sup_obj:
+                ledger_title = f"{sup_obj.name} {sup_obj.id}"
+                sup_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                data.supplier_ledger = sup_ledger
+                supplier_ledger = sup_ledger
+        except:
+            pass
+
+
         data.purchaseid = (
             lastPurchaseId  # Purchase ID will get incremented by 1 for each purchase
         )
@@ -3330,6 +3386,9 @@ def addBranchPurchase(request):
 
     financial_statement.add_ledger("Purchase", ledger_params)
 
+
+    
+
     cashbook_params = {
         "userbranch": data.branch,
         "amountrecieved": data.amountrecieved,
@@ -3338,6 +3397,21 @@ def addBranchPurchase(request):
     }
 
     financial_statement.add_cashbook("Purchase", cashbook_params)
+
+    general_ledger_params = {
+        "invoicenumber": data.invoicenumber,
+        "invoicedate": invoicedate,
+        'voucherid':data.purchaseid,
+        "totalbillingamount": data.totalbillingamount,
+        "description": f"Purchase of from {supplierform}",
+        "userbranch": data.branch,
+        "amountrecieved": data.amountrecieved,
+        "duebalance": data.duebalance,
+        "paymentmode":request.POST.get("paymentmode"),
+        "supplier":supplier_ledger
+    }
+
+    financial_statement.add_generalledger("Purchase", general_ledger_params)
 
     # purchase_ledger = ledgercli.LedgerBook(data.branch)
 
@@ -3444,6 +3518,17 @@ def addPurchaseDue(request):
     }
 
     financial_statement.add_ledger("PurchaseDue", ledger_params)
+
+    general_ledger_params = {
+        "invoicenumber": transaction.invoice_number,
+        "voucherid": purchaseid,
+        "amountreceived": float(amountrecieved),
+        "desciption": f"Purchase from {transaction.accounts}",
+        "userbranch": transaction.branch,
+        "paymentmode":request.POST.get("paymentmode")
+    }
+
+    financial_statement.add_generalledger("PurchaseDue", general_ledger_params)
 
     cashbook_params = {
         "userbranch": transaction.branch,
@@ -4367,6 +4452,18 @@ def changePurchaseReturnStatus(request):
     }
 
     financial_statement.add_cashbook("PurchaseReturn", cashbook_params)
+
+
+    general_ledger_params = {
+        "returnid": returnid,
+        "voucherid": returnid,
+        "nettotal": nettotal,
+        "description": f"Purchase Return to {supplier}",
+        "userbranch": branch,
+        "paymentmode": paymentmode,
+    }
+
+    financial_statement.add_generalledger("PurchaseReturn", general_ledger_params)
 
 
     # purchase_return_ledger = ledgercli.LedgerBook(branch)
@@ -6503,6 +6600,8 @@ def addSalesReturn(request):
 
     financial_statement.add_ledger("SaleReturn", ledger_params)
 
+    
+
     cashbook_params = {
         "userbranch": request.user.userprofile.branch,
         "amount": float(request.POST["nettotal-sale"]),
@@ -6514,9 +6613,9 @@ def addSalesReturn(request):
     # sale_return_ledger = ledgercli.LedgerBook(transaction.branch)
   
 
-    ledger_paymentmode = request.POST["paymentmode"]
-    ledger_totaltax = float(request.POST["totaltax-sale"])
-    ledger_invoiceno = request.POST["invno-sale"]
+    # ledger_paymentmode = request.POST["paymentmode"]
+    # ledger_totaltax = float(request.POST["totaltax-sale"])
+    # ledger_invoiceno = request.POST["invno-sale"]
  
     # params = {
     #     "invoicedate": date.today(),
@@ -6527,7 +6626,16 @@ def addSalesReturn(request):
     # }
 
     # sale_return_ledger.post_sale_return(**params)
+    general_ledger_params = {
+        "salereturnid": salereturnid,
+        "voucherid": salereturnid,
+        "amount": float(request.POST["nettotal-sale"]),
+        "description": f"Sale Return from {return_customer}",
+        "userbranch": request.user.userprofile.branch,
+         "paymentmode": request.POST["paymentmode"],
+    }
 
+    financial_statement.add_generalledger("SaleReturn", general_ledger_params)
 
     return redirect("salesreturn")
 
@@ -7020,6 +7128,8 @@ def addSale(request):
         wp_fullname = name
         wp_phone = Branch.objects.get(id=customer).phone
     ####################################
+
+    customer_ledger = None
     for i in range(1, ((len(length_count)+1))):
       
         i = str(i)
@@ -7041,6 +7151,18 @@ def addSale(request):
         
         
         data.customerid = int(customer)
+
+        try:
+            cust_obj = Customers.objects.filter(id=int(customer)).first()
+            if cust_obj:
+                ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
+                cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                data.customer_ledger = cust_ledger
+                customer_ledger = cust_ledger
+        except:
+            pass
+
+
         data.saleid = (
             lastSaleId  # Purchase ID will get incremented by 1 for each purchase
         )
@@ -7199,6 +7321,7 @@ def addSale(request):
         "amountrecieved": data.amountrecieved,
         "duebalance": data.duebalance,
         "paymentmode": sale_paymentmode,
+       
     }
 
     financial_statement.add_ledger("Sale", ledger_params)
@@ -7211,6 +7334,22 @@ def addSale(request):
     }
 
     financial_statement.add_cashbook("Sale", cashbook_params)
+
+
+    general_ledger_params = {
+        "invoicenumber": data.invoicenumber,
+        "invoicedate": invoicedate,
+        "totalamount": float(request.POST["saletotalbillingamount"]),
+        "voucherid": lastSaleId,
+        "description": f"Sale to {data.customer}",
+        "userbranch": data.branch,
+        "amountrecieved": data.amountrecieved,
+        "duebalance": data.duebalance,
+        "paymentmode": sale_paymentmode,
+        "customer": customer_ledger,
+    }
+
+    financial_statement.add_generalledger("Sale", general_ledger_params)
 
     # sale_ledger = ledgercli.LedgerBook(data.branch)
 
@@ -7495,6 +7634,7 @@ def addSaleDue(request):
 
     financial_statement.add_ledger("SaleDue", ledger_params)
 
+    
     cashbook_params = {
         "invoicedate": date.today(),
         "paymentmode": paymentmode,
@@ -7503,6 +7643,19 @@ def addSaleDue(request):
     }
 
     financial_statement.add_cashbook("SaleDue", cashbook_params)
+
+
+
+    general_ledger_params = {
+        "invoicenumber": transaction.invoice_number,
+        "voucherid": saleid,
+        "amountrecieved": amountrecieved,
+        "description": f"Sale Due Payment from {transaction.accounts}",
+        "userbranch": request.user.userprofile.branch,
+        "paymentmode": paymentmode,
+    }
+
+    financial_statement.add_generalledger("SaleDue", general_ledger_params)
 
     # sale_ledger = ledgercli.LedgerBook(request.user.userprofile.branch)
 
@@ -10689,6 +10842,17 @@ def generalLedgerSearch(request):
     return render(request, "generalledger.html", context)
 
 
+
+@login_required
+def general_ledger_new(request):
+
+    gl_obj = GeneralLedger.objects.all().order_by("-pk")
+
+
+    context={"gl_obj":gl_obj}
+    return render(request, "generalledgernew.html", context)
+
+
 @login_required
 def single_ledger(request):
     currentuser = request.user
@@ -11875,9 +12039,9 @@ def journal(request):
 def journal_form(request):
  
     all_coa = []
-    db_dropdown = CoASubAccounts.objects.all()
+    db_dropdown = CoASubAccounts.objects.filter(is_adminonly=False)
     cash_list = ['CASH ACCOUNT']
-    coa_dropdown = coa.COA_GROUP_LIST
+    # coa_dropdown = coa.COA_GROUP_LIST
     for item in db_dropdown:
         if item.head_root.name not in cash_list:
             all_coa.append(item.title)
@@ -12187,7 +12351,7 @@ def add_receipt(request):
             "userbranch": data.branch,
             "date": today_date,
             "creditac": data.creditaccount,
-            "paymentmode": request.POST.get("paymentmode"),
+            "paymentmode": request.POST.get("receiptmode"),
         }
 
         financial_statement.add_generalledger(transaction_type, general_ledger_params)
@@ -13789,21 +13953,10 @@ def addcustomer(request):
         messages.error(request, f"An error occured.")
         return redirect("customerform")
 
-    ########################################
-    # data = CoASubAccounts()
-    # ledgername = "ACCOUNTS RECEIVABLE"
-    # ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
-    # title = f"{data.firstname} {data.lastname} {unique_id}"
-    # data.head_root = ledgerobj
-    # gstring = ledgername.replace(" ", "_")
-    # data.gstring = gstring
-    # data.title = title
-    # data.branch = request.user.userprofile.branch
-    # data.description = f"{data.firstname} {data.lastname} {unique_id}"
-    # if not CoASubAccounts.objects.filter(title=title).first():
-    #     data.save()
-    fun_create_customer_ledger(data,unique_id,request)
-    #########################################
+    cust_obj = Customers.objects.filter(unique_id=unique_id).first()
+    if cust_obj:
+        func_create_customer_ledger(cust_obj,unique_id,request)
+
 
     return HttpResponseRedirect("/customers")
 
@@ -15590,6 +15743,7 @@ def addService(request):
         performance_logger.debug(f'Service entry form submission start {request.POST.get("refnumber")}')
         start_time = time.time()
         
+        customer_ledger = None
         for i in range(1, 2):
 
             product = request.POST.get("product" + str(i))
@@ -15626,6 +15780,16 @@ def addService(request):
                     return redirect(
                                 reverse("serviceform")
                             )
+
+                try:
+                    cust_obj = Customers.objects.filter(phone=phone).first()
+                    if cust_obj:
+                        ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
+                        cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                        customer_ledger = cust_ledger
+                except:
+                    pass
+
             else:
                 cust = Customers()
                 unq_id = generate_unique_id("Customers", "MAGNUS")
@@ -15646,6 +15810,18 @@ def addService(request):
                 cust.customertype = customertype
                 cust.save()
                 newcustomerid = unq_id
+
+                cust_obj = Customers.objects.filter(unique_id=newcustomerid).first()
+                if cust_obj:
+                    func_create_customer_ledger(cust_obj,newcustomerid,request)
+
+
+                try:
+                    if cust_obj:
+                        ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
+                        cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                except:
+                    pass
             # except:
             #     pass
 
@@ -15713,6 +15889,11 @@ def addService(request):
             image6 = request.POST["image6"]
 
             service = Service()
+
+            try:
+                service.customer_ledger = cust_ledger
+            except:
+                pass
 
             if technician:
                 service.technician = User.objects.get(username=technician)
@@ -15957,6 +16138,11 @@ def addService(request):
 
     financial_statement.add_ledger("ServiceEntry", ledger_params)
 
+
+
+
+    
+
     cashbook_params = {
         "userbranch": request.user.userprofile.branch,
         "amountrecieved": request.POST.get("amountrecievedservice"),
@@ -16003,6 +16189,23 @@ def addService(request):
     serv_discount.save()
         
     #######################################################################################
+    if not paymentmode:
+        paymentmode = "Cash"
+    general_ledger_params = {
+        "invoicenumber": servicerefnumber,
+        "voucherid": servicerefnumber,
+        "invoicedate": date.today(),
+        "totalamount": final,
+        "description": f"Service Entry for {firstname} {lastname}",
+        "userbranch": request.user.userprofile.branch,
+        "amountrecieved": request.POST.get("amountrecievedservice"),
+        "duebalance": due,
+        "paymentmode": paymentmode,
+        "customer":customer_ledger
+    }
+
+    financial_statement.add_generalledger("ServiceEntry", general_ledger_params)
+
 
     return redirect(
         reverse("serviceupdateform", kwargs={"servicerefnumber": servicerefnumber})
@@ -17530,6 +17733,22 @@ def serviceBillingCheckout(request, servicerefnumber):
     }
 
     financial_statement.add_ledger("ServiceCheckout", ledger_params)
+
+
+    general_ledger_params = {
+        "invoicenumber": servicerefnumber,
+        "voucherid": servicerefnumber,
+        "invoicedate": date.today(),
+        "totalamount": final,
+        "description": f"Service Checkout for {firstname} {lastname}",
+        "userbranch": request.user.userprofile.branch,
+        "amountrecieved": received,
+        "previousreceived": prev_recieved,
+        "duebalance": due,
+        "paymentmode": paymentmode,
+    }
+
+    financial_statement.add_generalledger("ServiceCheckout", general_ledger_params)
   
 
     ########################## edited on 9-9-2024 #######################
@@ -25163,7 +25382,8 @@ def addcustomer(request):
     data.lastname = request.POST["lastname"]
     data.phone = request.POST["phone"]
     data.phonemodel = request.POST["phonemodel"]
-    data.unique_id = generate_unique_id("Customers", "MAGNUS")
+    unique_id = generate_unique_id("Customers", "MAGNUS")
+    data.unique_id = unique_id
     if request.POST["purchasedate"]:
         data.purchasedate = request.POST["purchasedate"]
     if request.POST["dob"]:
@@ -25183,6 +25403,11 @@ def addcustomer(request):
         return redirect("customerform")
     if data.phone and data.unique_id:
         whatsapp(data.phone, data.unique_id)
+
+    cust_obj = Customers.objects.filter(unique_id=unique_id).first()
+    if cust_obj:
+        func_create_customer_ledger(cust_obj,unique_id,request)
+
     return HttpResponseRedirect("/customers")
 
 
@@ -25202,7 +25427,8 @@ def addcustomerfromsales(request):
     data.firstname = firstname
     data.lastname = lastname
     data.phone = phone
-    data.unique_id = generate_unique_id("Customers", "MAGNUS")
+    unique_id = generate_unique_id("Customers", "MAGNUS")
+    data.unique_id = unique_id
     # if request.POST['purchasedate']:
     #     data.purchasedate = request.POST['purchasedate']
     # if request.POST['dob']:
@@ -25229,6 +25455,10 @@ def addcustomerfromsales(request):
         resp = "exist_error"
     except:
         resp = "error"
+
+    cust_obj = Customers.objects.filter(unique_id=unique_id).first()
+    if cust_obj:
+        func_create_customer_ledger(cust_obj,unique_id,request)
 
     return JsonResponse({"Response": resp})
 

@@ -727,6 +727,7 @@ urlpatterns = [
                   path("get_account_details/", get_account_details, name="get_account_details"),
 path("get_account_groups/", get_account_groups, name="get_account_groups"),
 path("get_account_ledgers/", get_account_ledgers, name="get_account_ledgers"),
+path('general_ledger/',general_ledger_new,name='general_ledger_new'),
 ]
 
 
