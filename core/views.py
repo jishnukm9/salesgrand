@@ -26162,6 +26162,8 @@ def purchasetaxreport(request):
         gsts.append(f"CGST{t['percentage']/2}")
         gsts.append(f"SGST{t['percentage']/2}")
 
+    print("purcase data 2",purchase_data_2)
+
     purchase_data_final = []
 
     for item in purchase_data_2:
@@ -26236,7 +26238,20 @@ def purchasetaxreport(request):
 
             gst_dict["percentage"] = float(tx)
             gst_dict["totaltax"] = float(i.totaltax)
+
+
+            # disc_pad=sub_dict['discount']
+            # finalamnt_pad = i.totalbillingamount
+            # price_pad = i.price
+            # price_after_discount = ((price_pad  - (price_pad  *((disc_pad/(finalamnt_pad+disc_pad))))))
+            # sub_dict["perc_purchase"] = round(float(price_after_discount) * int(i.totalquantity), 2)
+   
+
             sub_dict["perc_purchase"] = round(float(i.price) * int(i.totalquantity), 2)
+
+
+
+
             sub_dict["perc_tax"] = round(
                 round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
             )
@@ -26256,9 +26271,11 @@ def purchasetaxreport(request):
             continue
 
         no_of_products = len(tx_list)
+
         for j in inv_taxes:
             amount_to_deduct = j["discount"] / no_of_products
             j["perc_purchase"] = j["perc_purchase"] - amount_to_deduct
+            
 
         for x in taxes:
             if float(x["percentage"]) not in tx_list:
@@ -26331,6 +26348,9 @@ def purchasetaxreport(request):
         "all_branches": all_branches,
         "search_params": search_params,
     }
+
+
+    print("all data purchase tax report",context)
 
     return render(request, "purchasetaxreport.html", context)
 
@@ -31436,6 +31456,7 @@ def placcountnew(request):
         payment_list_expense.append({acc_key: amount})
 
 
+   
 
     # OTHER INCOME
 
@@ -31548,7 +31569,9 @@ def placcountnew(request):
         journal_list_expense.append({acc_key: amount})
 
 
-
+    print("\n\npayment list income",payment_list_income)
+    print("\n\nreceipt list income",receipt_list_income)
+    print("\n\njournal list income",journal_list_income)
 
     list_income_total = []
     income_keys = set()
@@ -31560,12 +31583,15 @@ def placcountnew(request):
     for journal_item in journal_list_income:
         income_keys.update(journal_item.keys())
 
+    print("\n\nincome keys",income_keys)
+   
+
     for key in income_keys:
         dict = {}
         rec_value = next((item[key] for item in receipt_list_income if key in item), 0)
         pay_value = next((item[key] for item in payment_list_income if key in item), 0)
         journal_value = next((item[key] for item in journal_list_income if key in item), 0)
-        final =   rec_value + journal_value - pay_value
+        final =   rec_value + journal_value + pay_value
         dict[key] = format_negative_value(round(final, 2))
         list_income_total.append(dict)
 
@@ -31586,9 +31612,13 @@ def placcountnew(request):
         rec_value = next((item[key] for item in receipt_list_expense if key in item), 0)
         pay_value = next((item[key] for item in payment_list_expense if key in item), 0)
         journal_value = next((item[key] for item in journal_list_expense if key in item), 0)
-        final = pay_value + journal_value -  rec_value
+        final = pay_value + journal_value +  rec_value
         dict[key] = format_negative_value(round(final, 2))
         list_expense_total.append(dict)
+
+
+    
+
 
 
     grouped_income, grouped_expense,  = process_account_lists_placcount(
