@@ -1120,9 +1120,9 @@ class AccountStatement():
                 if item.voucher_type == 'Service Entry Transaction' and item.ledger == service_ledger and item.subledger == service_subledger:
                     item.amount = total_amount
                     item.amount_type  = 'Credit'
-                if item.voucher_type == 'Service Entry Transaction' and (item.account_subhead == 'Cash' or item.account_subhead == 'Bank' or item.account_subhead == 'Card' or item.account_subhead == 'UPI'): 
+                if item.voucher_type == 'Service Entry Transaction' and (item.subledger.title == 'Cash' or item.subledger.title == 'Bank' or item.subledger.title == 'Card' or item.subledger.title == 'UPI'): 
                     advanceamount = item.amount
-                if item.voucher_type == 'Service Entry Transaction' and item.account_subhead == 'Customer':
+                if item.voucher_type == 'Service Entry Transaction' and item.ledger.name == 'ACCOUNTS RECEIVABLE':
                     balanceamount = total_amount - advanceamount
                     item.amount = balanceamount
                     item.amount_type    = 'Debit'
