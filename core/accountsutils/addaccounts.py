@@ -763,8 +763,8 @@ class AccountStatement():
             ledger.amount = amount_received
             ledger.description = params['description']
             ledger.amount_type = 'Debit'
-            ledger.ledger = purchase_ledger
-            ledger.subledger = purchase_subledger
+            ledger.ledger = params['supplier'].head_root
+            ledger.subledger = params['supplier']
             ledger.branch = params['userbranch']
             ledger.save()
 
@@ -884,8 +884,8 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = amount_received
             ledger.amount_type = 'Credit'
-            ledger.ledger = sale_ledger
-            ledger.subledger = sale_subledger
+            ledger.ledger = params['customer'].head_root
+            ledger.subledger = params['customer']
             ledger.branch = params['userbranch']
             ledger.save()
 

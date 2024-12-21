@@ -29,7 +29,7 @@
                       
               <i id="fa-magnifying-glass-moneyreciept"   data-toggle="modal" data-target="#ledgersearch" class="fa-solid fa-magnifying-glass  fs-4"></i>
 
-              <a class="moneyreciept-clear" href="{% url 'generalledger' %}">Clear</a>
+              <a class="moneyreciept-clear" href="{% url 'general_ledger_new' %}">Clear</a>
            </div>
         </div>
         <div class="card-body">
@@ -80,6 +80,16 @@
                           {% endfor %}
 
                         </tbody>
+                        {% if search == 'Yes' %}
+                        <tfoot style="border-top:none;background-color: #d7dae8;">
+                          <tr>
+                            <td colspan="3"></td>
+                        
+                            <td colspan="2" class="sl fw-bold text-end">Balance</td>
+                            <td colspan="2" class="sl text-end">{{balance}}</td>
+                          </tr>
+                        </tfoot>
+                        {% endif %}
                       </table>
                     </div>
 
@@ -110,33 +120,46 @@
          </button>
       </div>
     
-      <form action="{% url 'generalledgersearch' %}" method="POST">
+      <form action="{% url 'general_ledger_new' %}" method="POST">
         {% csrf_token %}
         <div class="modal-body">
 
+         
           <div class="form-group">
-            <label for="branch" class="fw-bold">Branch</label>
-            <select class="selectizefield" name="branch" id="branch">
-              {% if request.user.is_superuser %}
-              <option value="">Select Branch</option>
-              {% for branch in branch_list %}
-              <option value="{{branch}}">{{branch}}</option>
-              {% endfor %}
-              {% else %}
+            <label for="head" class="fw-bold">Account Group</label>
+            <select class="selectizefield" name="acc_group" id="acc_group">
              
-              <option selected value="{{request.user.userprofile.branch}}">{{request.user.userprofile.branch}}</option>
-              
-              {% endif %}
+              <option value="">Select Account Group</option>
+              {% for item in all_ledgers %}
+              <option value="{{item.id}}">{{item.name}}</option>
+              {% endfor %}
+             
+             
+             
             </select>
           </div>
-          <div class="form-group">
-            <label for="head" class="fw-bold">Account Head</label>
-            <select class="selectizefield" name="head" id="head">
-             
-              <option value="">Select Account Head</option>
-              {% for item in account_heads %}
 
-              <option value="{{item.account_subhead}}">{{item.account_subhead}}</option>
+          <div class="form-group">
+            <label for="head" class="fw-bold">Ledger</label>
+            <select class="selectizefield" name="acc_ledger" id="acc_ledger">
+             
+              <option value="">Select Ledger</option>
+              {% for item in all_subledgers %}
+              <option value="{{item.id}}">{{item.title}}</option>
+              {% endfor %}
+             
+             
+             
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="head" class="fw-bold">Voucher No</label>
+            <select class="selectizefield" name="voucher_nos" id="voucher_nos">
+             
+              <option value="">Select Voucher No</option>
+              {% for item in all_voucher_nos %}
+              <option value="{{item}}">{{item}}</option>
               {% endfor %}
              
              
@@ -154,7 +177,7 @@
               <input class="form-control " 
               name="startdate"
               autocomplete="off" 
-              
+            
                      type="text"  />
               <span class="input-group-addon">
                   <i class="glyphicon glyphicon-calendar"></i>
@@ -170,7 +193,7 @@
              <input class="form-control " 
              name="enddate"
              autocomplete="off" 
-             
+           
                     type="text"  />
              <span class="input-group-addon">
                  <i class="glyphicon glyphicon-calendar"></i>

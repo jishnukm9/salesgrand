@@ -53,7 +53,7 @@
                                   <th>Narration</th>
                                   <th> Amount</th>
                                   <th> Mode</th>
-                                
+                                  <th>View</th>
                                </tr>
                             </thead>
                             <tbody>
@@ -67,7 +67,7 @@
                                   <td>{{ item.amount }}</td>
                                   <td>{{ item.paymentmode }}</td>
 
-                         
+                                  <td><a href="{% url 'paymentdetails' id=item.paymentid %}"><i class="fa-solid fa-eye label-purchase-view " style="font-size:10px;"></i></a></td>
                                  
                                   
                                </tr>

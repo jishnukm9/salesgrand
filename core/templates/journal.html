@@ -53,6 +53,7 @@
                                   <th>Narration</th>
                                   <th> Amount</th>
                                   <th> Mode</th>
+                                  <th>View</th>
                                 
                                </tr>
                             </thead>
@@ -66,7 +67,7 @@
                                   <td>{{item.narration }}</td>
                                   <td>{{ item.amount }}</td>
                                   <td>{{ item.mode }}</td>
-
+                                  <td><a href="{% url 'journaldetails' id=item.journalid %}"><i class="fa-solid fa-eye label-purchase-view " style="font-size:10px;"></i></a></td>
                          
                                  
                                   

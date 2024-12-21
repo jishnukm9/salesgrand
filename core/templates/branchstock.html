@@ -7,14 +7,7 @@
       <div class="col-sm-12">
         <div class="home-tab">
           <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-            <!-- <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active ps-0" id="home-tab" href="{% url 'stock' %}" role="tab" aria-controls="Overview" aria-selected="true">All Stock</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link border-0" id="profile-tab" href="#">My Stock</a>
-              </li>
-            </ul> -->
+          
 
             <nav class="nav nav-borders">
               <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'stock' %}"> Warehouse Stocks </a>
@@ -25,8 +18,8 @@
               <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'stocktransferlist' %}">Stock Transfer List</a>
               <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'transferedstocklist' %}">Transfered Stock List</a>
                
-              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a>
-              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'bulkstocklist' %}">Bulk Stock List</a>
+              <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a>
+              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'bulkstocklist' %}">Bulk Stock List</a> -->
           </nav>
           </div>
           <br>
@@ -45,24 +38,7 @@
               </div>
             <div class="card-body">
 
-              <!-- <div>
-                <div class="row">
-                  <div class="col-lg-4">
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
-                      <p class="m-0 p-0 fw-bold">{% if issearch == True %}Filtered Total Qty{% else %}Total Qty{% endif %}</p>
-                      <p class="m-0 px-1 bg-white"><b>{{ total_quantity }}</b></p>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 yellow-bg-color">
-                      <p class="m-0 p-0 fw-bold">{% if issearch == True %}Filtered Total Stock Value{% else %}Total Stock Value{% endif %}</p>
-                      <p class="m-0 px-1 bg-white"><b>{{ total_value |floatformat:2 }}</b></p>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+            
 
 
 

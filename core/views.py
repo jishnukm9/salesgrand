@@ -3513,6 +3513,8 @@ def addPurchaseDue(request):
         transaction.remarks = ""
         transaction.save()
 
+        supplier_ledger = purchase_obj.supplier_ledger
+
     financial_statement = addaccounts.AccountStatement()
 
     ledger_params = {
@@ -3529,9 +3531,10 @@ def addPurchaseDue(request):
         "invoicenumber": transaction.invoice_number,
         "voucherid": purchaseid,
         "amountreceived": float(amountrecieved),
-        "desciption": f"Purchase from {transaction.accounts}",
+        "description": f"Purchase from {transaction.accounts}",
         "userbranch": transaction.branch,
-        "paymentmode":request.POST.get("paymentmode")
+        "paymentmode":request.POST.get("paymentmode"),
+        "supplier":supplier_ledger
     }
 
     financial_statement.add_generalledger("PurchaseDue", general_ledger_params)
@@ -7628,6 +7631,8 @@ def addSaleDue(request):
             sale.duebalance = float(sale.duebalance) - float(amountrecieved)
             sale.save()
 
+        customer_ledger = sale_obj.customer_ledger
+
     financial_statement = addaccounts.AccountStatement()
 
     ledger_params = {
@@ -7659,6 +7664,8 @@ def addSaleDue(request):
         "description": f"Sale Due Payment from {transaction.accounts}",
         "userbranch": request.user.userprofile.branch,
         "paymentmode": paymentmode,
+        "customer": customer_ledger,
+
     }
 
     financial_statement.add_generalledger("SaleDue", general_ledger_params)
@@ -10854,8 +10861,77 @@ def general_ledger_new(request):
 
     gl_obj = GeneralLedger.objects.all().order_by("-pk")
 
-
     context={"gl_obj":gl_obj}
+
+    all_ledgers = [item.ledger for item in gl_obj]
+    all_subledgers = [item.subledger for item in gl_obj]
+    all_voucher_nos = [item.voucher_no for item in gl_obj]
+    context['all_ledgers'] = all_ledgers 
+    context['all_subledgers'] = all_subledgers
+    context['all_voucher_nos'] = all_voucher_nos
+    context["search"] = "No"
+
+    if request.method == "POST":
+        context["search"] = "Yes"
+        context['all_ledgers'] = all_ledgers 
+        context['all_subledgers'] = all_subledgers
+        context['all_voucher_nos'] = all_voucher_nos
+
+
+
+        startdate = request.POST["startdate"]
+        enddate = request.POST["enddate"]
+        ledger = request.POST["acc_group"]
+        subledger = request.POST["acc_ledger"]
+        voucher_no = request.POST["voucher_nos"]
+
+        filters = Q()
+
+        search_dict = {}
+
+        
+        if ledger:
+            acc_ledger_obj = AccountLedger.objects.filter(id=int(ledger)).first()
+            filters &= Q(ledger=acc_ledger_obj)
+
+            search_dict['ledger'] = acc_ledger_obj.name
+
+        if subledger:
+            sub_ledger_obj = CoASubAccounts.objects.filter(id=int(subledger)).first()
+            filters &= Q(subledger=sub_ledger_obj)
+
+            search_dict['subledger'] = sub_ledger_obj.title
+
+        if voucher_no:
+            filters &= Q(voucher_no=voucher_no)
+
+            search_dict['voucher_no'] = voucher_no
+
+        if startdate:
+            startdate = datetime.strptime(startdate, "%d-%m-%Y")
+            filters &= Q(date__gte=startdate)
+
+            search_dict['startdate'] = startdate
+
+        if enddate:
+            enddate = datetime.strptime(enddate, "%d-%m-%Y")
+            filters &= Q(date__lte=enddate)
+
+            search_dict['enddate'] = enddate
+
+        gl_obj = GeneralLedger.objects.filter(filters).order_by("-pk")
+
+        balance = 0
+        for item in gl_obj:
+            if item.amount_type == "Debit":
+                balance += item.amount
+            else:
+                balance -= item.amount
+
+        context["gl_obj"] = gl_obj
+        context["search_dict"] = search_dict
+        context['balance'] = balance
+
     return render(request, "generalledgernew.html", context)
 
 

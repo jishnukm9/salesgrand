@@ -63,6 +63,7 @@
                                                     <th>Phone Modal</th>
                                                     <th>Purchase Date</th>
                                                     <th>Added By</th>
+                                                    <th>View</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -81,7 +82,7 @@
                                                     {% endif %}
                                                     <td>{{ item.addedby }}</td>
 
-                                            
+                                                    <td><a href="../customerview/{{ item.id }}"><i class="fa-solid fa-eye label-purchase-view " style="font-size:10px;"></i></a></td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
