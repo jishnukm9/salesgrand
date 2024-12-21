@@ -112,7 +112,7 @@
               <div>
                 {% if messages %}
                   {% for message in messages %}
-                    <span class="text-danger" style="font-size: 13px; ">{{ message }}</span>
+                    <span class="text-danger fw-bold" style="font-size: 13px; ">{{ message }}</span>
                   {% endfor %}
                 {% endif %}
               </div>
@@ -765,6 +765,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!quantity) {
                 throw "Quantity is required.";
             }
+
+            if (quantity < 1) {
+                throw "Minimum Quantity Should be 1.";
+            }
+
 
             const mrp = $(this).find('[name^="mrp"]').val();
             if (!mrp) {

@@ -3167,6 +3167,12 @@ def downloadBulkStockFormCsv(request):
 def addBranchPurchase(request):
 
     start_time = time.time()
+
+
+    #checking if invoice number already exists
+    if BranchPurchase.objects.filter(invoicenumber=request.POST["invoicenumber"]).exists():
+        messages.error(request, "Note : Invoice Number Already Exists")
+        return redirect('purchaseform')
     
     check_status_with_constant = partial(check_status_common, attribute="quantity")
     length_count = list(filter(check_status_with_constant, request.POST.keys()))
