@@ -1006,12 +1006,13 @@ def addSupplier(request, page):
         data.name = name
     
         if gst:
-            existing_supplier = Suppliers.objects.filter(gst=gst).exists()
-            if existing_supplier:
-                messages.error(request, "A supplier with this VAT number already exists!")
-                return redirect('supplierform')
-            else:
-                data.gst = gst
+            if gst != '':
+                existing_supplier = Suppliers.objects.filter(gst=gst).exists()
+                if existing_supplier:
+                    messages.error(request, "A supplier with this VAT number already exists!")
+                    return redirect('supplierform')
+                else:
+                    data.gst = gst
         if contact:
             data.contact = contact
         if address:
@@ -1087,7 +1088,7 @@ def addsupplierfrompurchase(request):
     data.branch = branch
 
     existing_supplier = Suppliers.objects.filter(gst=gstin).exists()
-    if existing_supplier:
+    if existing_supplier and gstin != "":
         resp="exist_error_gst"
     else:
         try:
