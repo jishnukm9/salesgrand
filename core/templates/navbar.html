@@ -546,7 +546,7 @@
                         <ul class="nav flex-column sub-menu">
                            <li class="nav-item"><a class="nav-link" href="{% url 'purchaseform' %}">Purchase Entry</a></li>
                            <li class="nav-item"><a class="nav-link" href="{% url 'purchase' %}">Purchase List</a></li>
-             
+                           <li class="nav-item"><a class="nav-link" href="{% url 'purchase_payable' %}">Purchase Payable List</a></li>
                           <li class="nav-item"><a class="nav-link" href="{% url 'purchasereturn' %}">Purchase Retrun</a></li>
                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'addbulkpurchaseform' %}">Bulk Purchase Entry</a></li> -->
                          
@@ -614,7 +614,7 @@
                         <ul class="nav flex-column sub-menu">
                            <li class="nav-item"><a class="nav-link" href="{% url 'saleform' %}">Sales Entry</a></li>
                            <li class="nav-item"><a class="nav-link" href="{% url 'sale' %}">Sales List</a></li>
-                      
+                           <li class="nav-item"><a class="nav-link" href="{% url 'sale_receivable' %}">Sales Receivable List</a></li>
                           <li class="nav-item"><a class="nav-link" href="{% url 'salesreturn' %}">Sales Retrun</a></li>
                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'comingsoon' %}">Sales Settlement</a></li> -->
                           
@@ -645,6 +645,7 @@
             {% endif %}
                            {% if request.user.userprofile.role != "Field Engineer" %}
                            <li class="nav-item"><a class="nav-link" href="{% url 'service' %}">All Service List</a></li>
+                           <li class="nav-item"><a class="nav-link" href="{% url 'service_receivable' %}">Service Receivable</a></li>
                            {% endif %}
                            
                            {% if request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" %}

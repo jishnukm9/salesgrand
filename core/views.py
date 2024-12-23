@@ -1949,6 +1949,96 @@ def purchase(request):
     return render(request, "purchase.html", context)
 
 
+
+
+
+
+# purchase functions starts here
+@user_passes_test(
+    partial(check_permission, page="Purchaselist"),
+    login_url="/accessdenied/",
+    redirect_field_name=None,
+)
+@login_required
+def purchase_payable(request):
+    currentuser = request.user
+    if currentuser.is_superuser:
+        homebranch = Branch.objects.get(name="WAREHOUSE")
+
+        # data_purchase = Purchase.objects.filter(branch=homebranch).order_by('-pk')
+
+        data_purchase = Purchase.objects.filter(
+            Q(branch=homebranch)
+            & ~Q(purchase_type="transfer")
+            & ~Q(purchase_type="stockadd")
+            & Q(amountrecieved__lt=F("totalbillingamount"))
+        ).order_by("-pk")
+
+        # data_branch_purchase = BranchPurchase.objects.all.order_by('-pk')
+
+        data_branch_purchase = BranchPurchase.objects.filter(
+            ~Q(purchase_type="transfer") & ~Q(purchase_type="stockadd")  & Q(amountrecieved__lt=F("totalbillingamount"))
+        ).order_by("-pk")
+        data = []
+        for item in data_purchase:
+            dic = {}
+            dic["purchaseid"] = item.purchaseid
+            dic["invoicenumber"] = item.invoicenumber
+            dic["invoicedate"] = item.invoicedate
+            dic["supplier"] = item.supplier
+            dic["totalbillingamount"] = item.totalbillingamount
+            dic["amountrecieved"] = item.amountrecieved
+            dic["duebalance"] = item.duebalance
+            dic["branch"] = request.user.userprofile.branch
+            dic["createddate"] = item.createddate
+            data.append(dic)
+        for item in data_branch_purchase:
+            dic = {}
+            dic["purchaseid"] = item.purchaseid
+            dic["invoicenumber"] = item.invoicenumber
+            dic["invoicedate"] = item.invoicedate
+            dic["supplier"] = item.supplier
+            dic["externalsupplier"] = item.externalsupplier
+            dic["totalbillingamount"] = item.totalbillingamount
+            dic["amountrecieved"] = item.amountrecieved
+            dic["duebalance"] = item.duebalance
+            dic["branch"] = item.branch
+            dic["createddate"] = item.createddate
+            data.append(dic)
+        purchaseid_set = set()
+        datafinal = [
+            purchase
+            for purchase in data
+            if (
+                purchase["purchaseid"] not in purchaseid_set
+                and not purchaseid_set.add(purchase["purchaseid"])
+            )
+        ]
+        datafinal = sorted(datafinal, key=lambda x: x["createddate"], reverse=True)
+    else:
+        homebranch = UserProfile.objects.get(user=currentuser).branch
+        data = BranchPurchase.objects.filter(
+            Q(branch=homebranch)
+            & ~Q(purchase_type="transfer")
+            & ~Q(purchase_type="stockadd")
+             & Q(amountrecieved__lt=F("totalbillingamount"))
+        ).order_by("-pk")
+        # data = BranchPurchase.objects.filter(branch=homebranch).order_by('-pk')
+        purchaseid_set = set()
+        datafinal = [
+            purchase
+            for purchase in data
+            if (
+                purchase.purchaseid not in purchaseid_set
+                and not purchaseid_set.add(purchase.purchaseid)
+            )
+        ]
+
+    context = {"data": datafinal, "user": currentuser}
+    return render(request, "purchasepayable.html", context)
+
+
+
 @user_passes_test(
     partial(check_permission, page="Purchaselist"),
     login_url="/accessdenied/",
@@ -5969,6 +6059,47 @@ def sale(request):
     }
     return render(request, "sale.html", context)
 
+
+
+
+@user_passes_test(
+    partial(check_permission, page="Salelist"),
+    login_url="/accessdenied/",
+    redirect_field_name=None,
+)
+@login_required
+def sale_receivable(request):
+    currentuser = request.user
+    if currentuser.is_superuser:
+        homebranch = Branch.objects.get(
+            name="WAREHOUSE"
+        )  # warehouse branch is the branch of super user
+        data = Sale.objects.filter(Q(amountrecieved__lt=F("totalbillingamount"))).order_by("-pk")
+    else:
+        homebranch = UserProfile.objects.get(user=currentuser).branch
+        data = Sale.objects.filter(Q(branch=homebranch) & Q(amountrecieved__lt=F("totalbillingamount"))).order_by("-pk")
+
+    saleid_set = set()
+    datafinal = [
+        sale
+        for sale in data
+        if (sale.saleid not in saleid_set and not saleid_set.add(sale.saleid))
+    ]
+
+    if request.user.is_superuser:
+        categories = Catagories.objects.all()
+        brands = Brand.objects.all()
+    else:
+        brands = Brand.objects.filter(branch=request.user.userprofile.branch)
+        categories = Catagories.objects.filter(branch=request.user.userprofile.branch)
+
+    context = {
+        "data": datafinal,
+        "categories": categories,
+        "brands": brands,
+        "user": currentuser,
+    }
+    return render(request, "salereceivable.html", context)
 
 @login_required
 def search_sale(request):
@@ -19647,6 +19778,236 @@ def service(request):
         "search_query":search_query
     }
     return render(request, "service.html", context)
+
+
+
+
+
+
+@user_passes_test(
+    partial(check_permission, page="Servicelist"),
+    login_url="/accessdenied/",
+    redirect_field_name=None,
+)
+@login_required
+def service_receivable(request):
+   
+    currentuser = request.user
+    orders = 0
+    status_filter = None
+
+    # Check if request method is POST and status is in POST data
+    if request.method == "POST":
+        status_filter = request.POST.get("status")
+        startdate = request.POST.get('startdate')
+        enddate = request.POST.get('enddate')
+        serviceinout = request.POST.get("isServiceIn")
+
+        
+
+    if currentuser.is_superuser:
+        data = Service.objects.filter(Q(amountrecieved__lt=F("finalamount"))).order_by("-pk")
+    elif currentuser.userprofile.role == "Technician":
+        if currentuser.userprofile.branch.branchcategory == "Advanced":
+            data = Service.objects.filter(
+                Q(technician=currentuser)
+                & Q(amountrecieved__lt=F("finalamount"))
+                & (
+                    Q(status="Unacknowledged")
+                    | Q(status="In Progress")
+                    | Q(status="Spare Requested")
+                    | Q(status="Spare Allocated")
+                    | Q(status="QC Failed")
+                )
+            ).order_by("-pk")
+            orders = len(
+                Service.objects.filter(
+                    Q(technician=currentuser) & Q(status="Unacknoledged")& Q(amountrecieved__lt=F("finalamount"))
+                )
+            )
+        else:
+            data = Service.objects.filter(
+                Q(technician=currentuser)
+                & Q(amountrecieved__lt=F("finalamount"))
+                & (
+                    Q(status="Unacknowledged")
+                    | Q(status="In Progress")
+                    | Q(status="Spare Requested")
+                    | Q(status="Spare Allocated")
+                    | Q(status="CNP Inprogress(NotOk)")
+                    | Q(status="CNP Inprogress(Ok)")
+                    | Q(status="QC Passed(Ok)")
+                    | Q(status="QC Passed(NotOk)")
+                    | Q(status="Beyond Repair")
+                    | Q(status="QC Failed")
+                    | Q(status="Quality Checking(Ok)")
+                    | Q(status="Quality Checking(NotOk)")
+                    | Q(status="Rejected")
+                )
+            ).order_by("-pk")
+            orders = len(
+                Service.objects.filter(
+                    Q(technician=currentuser) & Q(status="Unacknoledged") & Q(amountrecieved__lt=F("finalamount"))
+                )
+            )
+
+    elif (
+        currentuser.userprofile.role == "Branch Admin"
+        or currentuser.userprofile.role == "Franchise Admin"
+        or currentuser.userprofile.role == "TRC Front Desk"
+    ):
+
+        data = Service.objects.filter(Q(branch=currentuser.userprofile.branch) & Q(amountrecieved__lt=F("finalamount"))).order_by(
+            "-pk"
+        )
+    elif currentuser.userprofile.role == "TRC QC":
+        data = Service.objects.filter(
+            Q(branch=currentuser.userprofile.branch) & Q(amountrecieved__lt=F("finalamount")) & Q(status="Completed")
+            | Q(status="Beyond Repair")
+        ).order_by("-pk")
+    elif currentuser.userprofile.role == "TRC Cleaning and Packing":
+        data = Service.objects.filter(
+            Q(branch=currentuser.userprofile.branch) & Q(amountrecieved__lt=F("finalamount")) & Q(status="QC Passed(Ok)")
+            | Q(status="QC Passed(NotOk)")
+        ).order_by("-pk")
+    elif currentuser.userprofile.role == "Field Engineer":
+        data = Service.objects.filter(Q(booking__assigned_to=currentuser) & Q(amountrecieved__lt=F("finalamount"))).order_by("-pk")
+
+
+
+    search_query ={
+        "type":"GET",
+        "serviceinout":'',
+        "status":'',
+        "startdate":'',
+        "enddate":''    }
+    # Apply additional status filter if provided
+    if request.method == 'POST':
+        search_query['type']='POST'
+        if status_filter and startdate and enddate and serviceinout:
+            search_query['serviceinout']="in"
+            search_query['startdate']=startdate
+            search_query['enddate']=enddate
+            search_query['status']=status_filter
+
+            startdate = datetime.strptime(startdate, "%d-%m-%Y").date()
+            enddate = datetime.strptime(enddate, "%d-%m-%Y").date()
+            data = data.filter(Q(status=status_filter)&Q(memodate__gte=startdate)&Q(memodate__lte=enddate))
+        elif startdate and enddate and not status_filter and not serviceinout:
+            search_query['serviceinout']="out"
+            search_query['startdate']=startdate
+            search_query['enddate']=enddate
+            
+
+            startdate = datetime.strptime(startdate, "%d-%m-%Y").date()
+            enddate = datetime.strptime(enddate, "%d-%m-%Y").date()
+            data = data.filter(Q(status="Delivered(Ok)")&Q(modifieddate__gte=startdate)&Q(modifieddate__lte=enddate))
+        elif startdate and enddate and not status_filter and serviceinout:
+            search_query['serviceinout']="in"
+            search_query['startdate']=startdate
+            search_query['enddate']=enddate
+
+            startdate = datetime.strptime(startdate, "%d-%m-%Y").date()
+            enddate = datetime.strptime(enddate, "%d-%m-%Y").date()
+            data = data.filter(Q(memodate__gte=startdate)&Q(memodate__lte=enddate))
+        elif not startdate and not enddate and status_filter:
+            search_query['serviceinout']="in"
+            search_query['status']=status_filter
+        
+            data = data.filter(Q(status=status_filter))
+   
+
+    servicerefno_set = set()
+    datafinal = [
+        service
+        for service in data
+        if (
+            service.servicerefnumber not in servicerefno_set
+            and not servicerefno_set.add(service.servicerefnumber)
+        )
+    ]
+
+    today = date.today()
+
+    service_final = []
+    for i in datafinal:
+
+        service_dict = {
+            "servicerefnumber": i.servicerefnumber,
+            "customerid": i.customerid,
+            "firstname": i.firstname,
+            "lastname": i.lastname,
+            "address": i.address,
+            "phone": i.phone,
+            "memodate": i.memodate,
+            "expecteddate": i.expecteddate,
+            "product": i.product,
+            "brand": i.brand,
+            "model": i.model,
+            "imei": i.imei,
+            "servicecharge": i.servicecharge,
+            "problem": i.problem,
+            "remarks": i.remarks,
+            "status": i.status,
+            "warrenty": i.warrenty,
+            "totalamount": i.totalamount,
+            "discount": i.discount,
+            "finalamount": i.finalamount,
+            "amountrecieved": i.amountrecieved,
+            "duebalance": i.duebalance,
+            "branch": i.branch,
+            "createddate": i.createddate,
+            "paymentmode": i.paymentmode,
+            "technician": i.technician,
+            "rack_no": i.rack_no,
+            "booking": i.booking,
+        }
+        if i.expecteddate != None and i.expecteddate != "":
+            diff = i.expecteddate - today
+            service_dict["datedifference"] = f"{diff.days} days left"
+            if diff.days < 0:
+                service_dict["datedifferencecolor"] = "red"
+            elif diff.days == 0:
+                service_dict["datedifferencecolor"] = "orange"
+                service_dict["datedifference"] = "Today"
+            elif diff.days >= 1:
+                service_dict["datedifferencecolor"] = "green"
+        else:
+            service_dict["datedifference"] = ""
+            service_dict["datedifferencecolor"] = ""
+
+        service_final.append(service_dict)
+
+
+    status_list = [
+        "Unassigned",
+        "Unacknowledged",
+        "CNP Completed(Ok)",
+        "CNP Completed(NotOk)",
+        "Delivered(Ok)",
+        "Delivered(NotOk)",
+        "Rejected",
+        "Beyond Repair",
+        "In Progress",
+        "Spare Allocated",
+        "Completed",
+        "Quality Checking(Ok)",
+        "Quality Checking(NotOk)",
+        "QC Failed",
+        "CNP Inprogress(Ok)",
+        "CNP Inprogress(NotOk)",
+        "CNP Pending(Ok)",
+        "CNP Pending(NotOk)"
+    ]
+
+    context = {
+        "data": service_final,
+        "orders": orders,
+        "status_list":status_list,
+        "search_query":search_query
+    }
+    return render(request, "service.html", context)
+
 
 
 @login_required

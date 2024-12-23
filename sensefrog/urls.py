@@ -728,6 +728,9 @@ urlpatterns = [
 path("get_account_groups/", get_account_groups, name="get_account_groups"),
 path("get_account_ledgers/", get_account_ledgers, name="get_account_ledgers"),
 path('general_ledger/',general_ledger_new,name='general_ledger_new'),
+path('purchase_payable/',purchase_payable,name='purchase_payable'),
+path('sale_receivable/',sale_receivable,name='sale_receivable'),
+path('service_receivable/',service_receivable,name='service_receivable'),
 ]
 
 

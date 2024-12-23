@@ -1,0 +1,400 @@
+{% extends "navbar.html" %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+   <div class="content-wrapper ">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="home-tab">
+               <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+              
+
+              
+                 <nav class="nav nav-borders">
+                  {% if user.userprofile.role == "TRC Front Desk" %}
+                  <a class="nav-link ps-0 pe-0 ms-0 me-3"style="color:#444;"   href="{% url 'servicecnp' %}">My Service</a>
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="{% url 'service' %}">All Service List </a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'serviceform' %}">Service Entry</a>
+                  <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+                  
+                  {% elif user.userprofile.role == 'TRC Cleaning and Packing' or user.userprofile.role == 'TRC QC' %}
+                  <a class="nav-link ps-0 pe-0 ms-0 me-3"style="color:#444;"   href="{% url 'servicecnp' %}">My Service</a>
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="{% url 'service' %}">All Service List </a>
+                  {% elif user.userprofile.role == "Technician" %}
+                  <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="{% url 'service' %}"> My Service </a>
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color:#444;" href="{% url 'getallservice' %}"> All Service </a>
+          
+               {% elif request.user.userprofile.role == "Franchise Admin" or request.user.userprofile.role == "Branch Admin" or request.user.is_superuser %}
+               <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="{% url 'service' %}">All Service List </a>
+               <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'serviceform' %}">Service Entry</a>
+               <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicecompletedfd' %}">Service Completed</a>
+               <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'sparerequests' %}">Spare Requested</a>
+  
+               <a class="nav-link ps-0 pe-0 ms-3 me-3"style="color:#444;"   href="{% url 'servicechargeestimationlist' %}">Service Charge</a> -->
+               
+               {% elif request.user.userprofile.role == "Field Engineer" %}
+               
+               <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"   href="{% url 'service' %}">My Service</a>
+               
+               <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'serviceform' %}">Service Entry</a>
+               {% endif %}
+
+
+    
+                 
+              </nav>
+
+
+
+               </div>
+               <br>
+           
+           
+
+
+
+               <div class="order">
+                  {% if orders > 0 %}
+                  <button class="gNh4D GXLyg" title="All open work orders assigned to you" type="button" data-cid="badge-item" fdprocessedid="ok22y"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="m9FZB BUee3 XpnWz DMPP_ Lf9ms"><path d="M8.622 1.48A5.054 5.054 0 0 0 3.259.328c-.194.073-.236.32-.09.466l3.659 3.659-2.375 2.383-3.66-3.658a.28.28 0 0 0-.466.09 5.054 5.054 0 0 0 6.905 6.348l5.89 5.89a1.685 1.685 0 1 0 2.384-2.383l-5.899-5.9a5.053 5.053 0 0 0-.985-5.743Z"></path></svg>
+                     <div class="iFRkw ">
+                        {% if orders == 1 %}
+                        <span class="YUtLK font-weight-bold pb-2">{{orders}} work order</span>
+                        {% else %}
+                        <span class="YUtLK font-weight-bold pb-2">{{orders}} work orders</span>
+                        {% endif %}
+
+
+                        <div class="MgtWG">My work orders</div></div></button>
+                        {% endif %}
+                        <!-- <button class="gNh4D rJ0vM" title="Urgent open orders" type="button" data-cid="badge-item" fdprocessedid="eiobv"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="m9FZB BUee3 XpnWz DMPP_ Lf9ms"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.604.208A.8.8 0 0 0 6.267.8c0 2.13-1.305 3.343-2.462 4.42l-.083.077C2.416 6.514 1.6 8.402 1.6 10.117c0 1.587.695 3.091 1.903 4.187C4.708 15.397 6.326 16 8 16s3.293-.603 4.498-1.696c1.207-1.096 1.902-2.6 1.902-4.186 0-.815-.298-1.77-.675-2.599-.38-.835-.893-1.659-1.42-2.197a.8.8 0 0 0-1.24.122c-.828 1.262-1.357 1.69-1.673 1.804a.51.51 0 0 1-.276.026c.638-1.321.562-2.743.239-3.92C8.973 1.962 8.205.752 7.605.208Z"></path></svg><div class="iFRkw"><span class="YUtLK">2 work orders</span><div class="MgtWG">Urgent</div></div></button> -->
+               </div>
+
+
+
+
+              <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+               <div class="card-header py-3 bg-white d-flex justify-content-between">
+                  <div>
+                     <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong>
+                        {% if user.userprofile.role == "Technician" %}
+                        My Service
+                        {% else %}
+                        Service List 
+                        {% endif %}
+                     </strong> </h5>
+                  </div>
+                   
+
+
+
+                  <div class="d-flex align-items-center gap-3">
+                                  <i id="fa-magnifying-glass-moneyreciept" data-toggle="modal" data-target="#dashboardyearlypurchasemodal" class="fa-solid fa-magnifying-glass  fs-4"></i>
+                                  <a class="sales-clear" href="{% url 'service' %}">Clear</a>
+                               </div>
+               </div>
+               <div class="card-body">
+                   <!-- <div class="table-responsive"> -->
+
+                     <div class="">
+                        <div class="mb-3">
+        
+                          
+                          {% if search_query.type == 'POST' %}
+                          {% if search_query.startdate != '' %}
+                          <p> 
+                             {% if search_query.serviceinout == 'in' %}
+                             Service In Date Range:
+                              {% elif search_query.serviceinout == 'out' %}
+                              Service Out Date Range:
+                              {% endif %}
+                              <strong>{{search_query.startdate}} - {{search_query.enddate}}</strong> </p>
+                          {% endif %}
+                          {% if search_query.status != '' %}
+                          <p>Status :  <strong>{{search_query.status}}</strong> </p>
+                          {% endif %}
+                          {% endif %}
+                         
+                      </div>
+        
+                      
+        
+        
+                      </div>
+
+
+
+                     <div class="mt-3">
+                        <div class="table-responsive">
+                           <table class="  add-pagination table-hover table-bordered  table  purchase-list" >
+                              <thead >
+                                 <tr>
+                                    <th>Sl</th>
+                                    <th  style="white-space: normal;">Ref No</th>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <!-- <th>Product</th> -->
+                                    <th>Device</th>
+                                    <th  style="white-space: normal;">Recieved Date</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                    <th  style="white-space: normal;">Amount Recieved</th>
+                                   
+                                    <th>Technician</th>
+                                    <th>Branch</th>
+                                    <th>BK</th>
+                                   <th>Rack</th>
+                                    <th>View</th>
+                                    
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for item in data %}
+                                 {% if item.status == 'Spare Allocated' %}
+                                 <tr style="background-color: #c0eb75;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                    {% elif item.status == 'Spare Requested' %}
+                                    <tr style="background-color: #ffe066;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                       {% elif item.status == 'Unassigned' %}
+                                       <tr style="background-color: #dee2e6;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                          {% elif item.status == 'Beyond Repair' %}
+                                       <tr style="background-color: #868e96;color:#fff;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                          {% elif item.status == 'Unacknowledged' or item.status == 'CNP Pending(NotOk)' or item.status == 'CNP Pending(Ok)' or item.status == 'QC Failed' or item.status == 'QC Failed' %}
+                                          <tr style="background-color: #ffa8a8;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                            {% elif item.status == 'In Progress' or item.status == 'CNP Inprogress(Ok)' or item.status == 'CNP Inprogress(NotOk)' or item.status == 'Quality Checking(Ok)' or item.status == 'Quality Checking(NotOk)' %}
+                                          <tr style="background-color: #74c0fc;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                            {% elif item.status == 'CNP Completed(Ok)' or item.status == 'CNP Completed(NotOk)'  %}
+                                          <tr style="background-color: #63e6be;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                            {% elif item.status == 'Completed' or item.status == 'CNP Completed(Ok)' or item.status == 'CNP Completed(NotOk)' or item.status == 'QC Passed(Ok)' or item.status == 'QC Passed(NotOk)'    %}
+                                            <tr style="background-color: #8ce99a;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                             {% elif item.status == 'Delivered(Ok)'  %}
+                                             <tr style="background-color: #8ce99a;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                            {% elif item.status == 'Delivered(NotOk)' %}
+                                            
+                                            <tr style="background-color: #8ce99a;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                                {% elif item.status == 'Rejected' %}
+                                          <tr style="background-color: #faa2c1;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                       
+                                             {% elif item.status == 'Reassigned' %}
+                                             <tr style="background-color: #ffa8a8;" class="clickable-row" data-href="../serviceupdateform/{{ item.servicerefnumber }}/" >
+                                       
+                                             {% endif %}
+                                       
+                                       
+                                       
+                                       
+                                       
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.servicerefnumber }}</td>
+                                    <td style="white-space: normal;">{{ item.firstname }} {{ item.lastname }}</td>
+                                    <td style="white-space: normal;">{{ item.phone }}</td>
+                                    <!-- <td>{{ item.product }}</td> -->
+                                    <td style="white-space: normal;">{{ item.brand }} {{ item.model }}</td>
+                                    <td style="white-space: normal;">
+                                      {% if item.memodate  != None and item.memodate != '' %}
+                                      {{ item.memodate }}
+                                      {% else %}
+                                      {% endif %}
+
+                                   </td>
+                                    
+                                 
+                                    <td style="white-space: normal;">{{item.status}}</td>
+                                   
+                                    <td>{{ item.finalamount | floatformat:2 }}</td>
+                                    <td>{{ item.amountrecieved | floatformat:2 }}</td>
+                                    
+                                    
+                                    <td  style="white-space: normal;">{{ item.technician }}</td>
+                                    <td  style="white-space: normal;">{{ item.branch }}</td>
+                                   {% if item.booking == None or item.booking == '' %}
+                                          <td>---</td>
+                                   {% else %}
+                                    <td>{{ item.booking }}</td>
+                                    {% endif %}
+
+
+                                    {% if item.rack_no == None or item.rack_no == '' %}
+                                          <td>---</td>
+                                   {% else %}
+                                   <td>{{ item.rack_no|default:'' }}</td>
+                                    {% endif %}
+                                   
+                                    <td><a href="../serviceupdateform/{{ item.servicerefnumber }}/"><i class="fa-solid fa-eye label-purchase-view " style="font-size:10px;"></i></a></td>
+                                    
+                                 </tr>
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+
+
+                   </div>
+                  </div>
+               </div>
+
+
+
+
+
+
+            </div>
+            <div class="row flex-grow">
+               <div class="col-12 grid-margin stretch-card">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="dashboardyearlypurchasemodal">
+   <div class="modal-dialog">
+     <div class="modal-content w-100">
+       <div class="modal-header d-flex justify-content-between align-items-center">
+         <h5 class="modal-title"><strong>Search</strong></h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       
+       <form  id="servicelistsearchform"   action="{% url 'service' %}" method="POST">
+         {% csrf_token %}
+         <div class="modal-body">
+           
+           <!-- New Service Type Checkbox -->
+           <div class="form-group mb-3">
+             <div class="custom-control custom-checkbox">
+               <input type="checkbox" class="custom-control-input" id="serviceTypeCheckbox" name="isServiceIn" checked>
+               <label class="custom-control-label fw-bold s-in" for="serviceTypeCheckbox">Service In</label>
+               <label class="custom-control-label fw-bold d-none s-out" for="serviceTypeCheckbox">Service Out</label>
+             </div>
+           </div>
+ 
+           <div class="form-group">
+             <label for="startDate" class="fw-bold">
+               <span class="service-in-label">Service In Start Date</span>
+               <span class="service-out-label d-none">Service Out Start Date</span>
+             </label>
+             <div id="datepicker" class="input-group date datepicker-nodefault" data-date-format="dd-mm-yyyy">
+               <input
+                 class="form-control"
+                 name="startdate"
+                 autocomplete="off"
+                 id="startDate"
+                 style="text-align:center;"
+                 type="text"
+                 placeholder="Select Date"
+               />
+               <span class="input-group-addon">
+                 <i class="glyphicon glyphicon-calendar"></i>
+               </span>
+             </div>
+           </div>
+ 
+           <div class="form-group">
+             <label for="endDate" class="fw-bold">
+               <span class="service-in-label">Service In End Date</span>
+               <span class="service-out-label d-none">Service Out End Date</span>
+             </label>
+             <div id="datepicker" class="input-group date datepicker-nodefault" data-date-format="dd-mm-yyyy">
+               <input
+                 class="form-control"
+                 name="enddate"
+                 autocomplete="off"
+                 id="endDate"
+                 style="text-align:center;"
+                 type="text"
+                 placeholder="Select Date"
+               />
+               <span class="input-group-addon">
+                 <i class="glyphicon glyphicon-calendar"></i>
+               </span>
+             </div>
+           </div>
+ 
+           <div class="form-group status-div">
+             <label for="status" class="fw-bold">Select Status</label>
+             <select class="form-control selectizefield" name="status" id="status">
+               <option value="">Select Status</option>
+               {% for status in status_list %}
+                 <option value="{{status}}">{{status}}</option>
+               {% endfor %}
+             </select>
+           </div>
+ 
+         </div>
+         <div class="modal-footer">
+           <button type="submit" class="btn btn-primary">Search</button>
+         </div>
+       </form>
+
+      
+       
+     </div>
+
+    
+   </div>
+ </div>
+ 
+ <script>
+   document.getElementById('serviceTypeCheckbox').addEventListener('change', function() {
+     let serviceInLabels = document.querySelectorAll('.service-in-label');
+     let serviceOutLabels = document.querySelectorAll('.service-out-label');
+     let statusDiv = document.querySelector('.status-div')
+     let sIn = document.querySelector('.s-in')
+     let sOut = document.querySelector('.s-out')
+     
+     if (this.checked) {
+       serviceInLabels.forEach(label => label.classList.remove('d-none'));
+       serviceOutLabels.forEach(label => label.classList.add('d-none'));
+       statusDiv.classList.remove('d-none')
+       sIn.classList.remove('d-none')
+       sOut.classList.add('d-none')
+     } else {
+       serviceInLabels.forEach(label => label.classList.add('d-none'));
+       serviceOutLabels.forEach(label => label.classList.remove('d-none'));
+       statusDiv.classList.add('d-none')
+       sOut.classList.remove('d-none')
+       sIn.classList.add('d-none')
+     }
+   });
+ 
+   // New validation function
+   function validateDates() {
+     const startDate = document.getElementById('startDate').value;
+     const endDate = document.getElementById('endDate').value;
+ 
+     if ((startDate && !endDate) || (!startDate && endDate)) {
+       alert('Please select both start and end dates, or leave both empty.');
+       
+       return false;
+       
+     }
+     return true;
+   }
+ 
+   // Add event listener to the form for submission
+   document.querySelector('#servicelistsearchform').addEventListener('submit', function(event) {
+     if (!validateDates()) {
+       event.preventDefault(); 
+      
+     }
+   });
+ </script>
+
+
+
+
+
+{% endblock %}
