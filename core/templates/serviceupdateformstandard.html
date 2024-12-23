@@ -760,7 +760,7 @@ canvas {
 
                                         {% if user.userprofile.role == "Technician" or user.userprofile.role == 'Franchise Admin' or user.userprofile.role == 'Branch Admin' or user.is_superuser %}
                                        
-                                        {% if status != 'Delivered(Ok)' and status != "Delivered(NotOk)" and status != "Unassigned" and status != "Unacknowledged" and status != "CNP Completed(Ok)" and status != "CNP Completed(NotOk)" and status != "Rejected" and status != "Quality Checking(NotOk)" and "QC Failed" and "QC Passed(NotOk)" and "CNP Pending(Ok)" and "CNP Pending(NotOk)" and "CNP Inprogress(NotOk)" %}
+                                        {% if status != 'Delivered(Ok)' and status != "Delivered(NotOk)" and status != "QC Failed" and status != "Beyond Repair" and status != "Unassigned" and status != "Unacknowledged" and status != "CNP Completed(Ok)" and status != "CNP Completed(NotOk)" and status != "Rejected" and status != "Quality Checking(NotOk)" and "QC Failed" and "QC Passed(NotOk)" and "CNP Pending(Ok)" and "CNP Pending(NotOk)" and "CNP Inprogress(NotOk)" %}
 
 
                                         <div class="card mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;">

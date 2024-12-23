@@ -63,7 +63,7 @@
                           </tr>
                           {% for item in sale_cash reversed %}
                           <tr>
-                            <td width="2%">{{ item.date }}</td>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                             <td width="1%">CASH ACCOUNT</td>
                             <td width="5%">SALE</td>
                             <td width="5%">{{ item.receipt }}</td>
@@ -72,7 +72,7 @@
                           {% endfor %}
                           {% for item in purchase_cash reversed %}
                           <tr>
-                            <td width="2%">{{ item.date }}</td>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                             <td width="1%">CASH ACCOUNT</td>
                             <td width="5%">PURCHASE</td>
                             <td width="5%">0</td>
@@ -82,7 +82,7 @@
 
                           {% for item in service_cash reversed %}
                           <tr>
-                            <td width="2%">{{ item.date }}</td>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                             <td width="1%">CASH ACCOUNT</td>
                             <td width="5%">SERVICE</td>
                             <td width="5%">{{ item.receipt }}</td>
@@ -92,7 +92,7 @@
 
                           {% for item in salereturn_cash reversed %}
                           <tr>
-                            <td width="2%">{{ item.date }}</td>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                             <td width="1%">CASH ACCOUNT</td>
                             <td width="5%">SALE RETURN</td>
                             <td width="5%">0</td>
@@ -102,7 +102,7 @@
                           
                           {% for item in purchasereturn_cash reversed %}
                           <tr>
-                            <td width="2%">{{ item.date }}</td>
+                            <td width="2%">{{ item.date|date:"M. d, Y"  }}</td>
                             <td width="1%">CASH ACCOUNT</td>
                             <td width="5%">PURCHASE RETURN</td>
                             <td width="5%">{{ item.receipt }}</td>
@@ -112,7 +112,7 @@
 
                           {% for item in payments_cash reversed %}
                           <tr>
-                            <td width="2%">{{ item.date }}</td>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                             <td width="1%">CASH ACCOUNT</td>
                             <td width="5%">PAYMENT</td>
                             <td width="5%">0</td>
@@ -122,7 +122,7 @@
 
                           {% for item in receipts_cash reversed %}
                           <tr>
-                            <td width="2%">{{ item.date }}</td>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                             <td width="1%">CASH ACCOUNT</td>
                             <td width="5%">RECEIPT</td>
                             <td width="5%">{{ item.receipt }}</td>
@@ -181,7 +181,7 @@
                                     </tr>
                                     {% for item in sale_upi reversed %}
                                     <tr>
-                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                       <td width="1%">CASH IN UPI</td>
                                       <td width="5%">SALE</td>
                                       <td width="5%">{{ item.receipt }}</td>
@@ -190,7 +190,7 @@
                                     {% endfor %}
                                     {% for item in purchase_upi reversed %}
                                     <tr>
-                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                       <td width="1%">CASH IN UPI</td>
                                       <td width="5%">PURCHASE</td>
                                       <td width="5%">0</td>
@@ -200,7 +200,7 @@
           
                                     {% for item in service_upi reversed %}
                                     <tr>
-                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                       <td width="1%">CASH IN UPI</td>
                                       <td width="5%">SERVICE</td>
                                       <td width="5%">{{ item.receipt }}</td>
@@ -210,7 +210,7 @@
           
                                     {% for item in salereturn_upi reversed %}
                                     <tr>
-                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                       <td width="1%">CASH IN UPI</td>
                                       <td width="5%">SALE RETURN</td>
                                       <td width="5%">0</td>
@@ -220,7 +220,7 @@
                                     
                                     {% for item in purchasereturn_upi reversed %}
                                     <tr>
-                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                       <td width="1%">CASH IN UPI</td>
                                       <td width="5%">PURCHASE RETURN</td>
                                       <td width="5%">{{ item.receipt }}</td>
@@ -230,7 +230,7 @@
           
                                     {% for item in payments_upi reversed %}
                                     <tr>
-                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                       <td width="1%">CASH IN UPI</td>
                                       <td width="5%">PAYMENT</td>
                                       <td width="5%">0</td>
@@ -240,7 +240,7 @@
           
                                     {% for item in receipts_upi reversed %}
                                     <tr>
-                                      <td width="2%">{{ item.date }}</td>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                       <td width="1%">CASH IN UPI</td>
                                       <td width="5%">RECEIPT</td>
                                       <td width="5%">{{ item.receipt }}</td>
@@ -292,7 +292,7 @@
                                               </tr>
                                               {% for item in sale_bank reversed %}
                                               <tr>
-                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                 <td width="1%">CASH IN BANK</td>
                                                 <td width="5%">SALE</td>
                                                 <td width="5%">{{ item.receipt }}</td>
@@ -301,7 +301,7 @@
                                               {% endfor %}
                                               {% for item in purchase_bank reversed %}
                                               <tr>
-                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                 <td width="1%">CASH IN BANK</td>
                                                 <td width="5%">PURCHASE</td>
                                                 <td width="5%">0</td>
@@ -311,7 +311,7 @@
                     
                                               {% for item in service_bank reversed %}
                                               <tr>
-                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                 <td width="1%">CASH IN BANK</td>
                                                 <td width="5%">SERVICE</td>
                                                 <td width="5%">{{ item.receipt }}</td>
@@ -321,7 +321,7 @@
                     
                                               {% for item in salereturn_bank reversed %}
                                               <tr>
-                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                 <td width="1%">CASH IN BANK</td>
                                                 <td width="5%">SALE RETURN</td>
                                                 <td width="5%">0</td>
@@ -331,7 +331,7 @@
                                               
                                               {% for item in purchasereturn_bank reversed %}
                                               <tr>
-                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                 <td width="1%">CASH IN BANK</td>
                                                 <td width="5%">PURCHASE RETURN</td>
                                                 <td width="5%">{{ item.receipt }}</td>
@@ -341,7 +341,7 @@
                     
                                               {% for item in payments_bank reversed %}
                                               <tr>
-                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                 <td width="1%">CASH IN BANK</td>
                                                 <td width="5%">PAYMENT</td>
                                                 <td width="5%">0</td>
@@ -351,7 +351,7 @@
                     
                                               {% for item in receipts_bank reversed %}
                                               <tr>
-                                                <td width="2%">{{ item.date }}</td>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                 <td width="1%">CASH IN BANK</td>
                                                 <td width="5%">RECEIPT</td>
                                                 <td width="5%">{{ item.receipt }}</td>
@@ -410,7 +410,7 @@
                                                         </tr>
                                                         {% for item in sale_card reversed %}
                                                         <tr>
-                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                           <td width="1%">CASH IN CARD</td>
                                                           <td width="5%">SALE</td>
                                                           <td width="5%">{{ item.receipt }}</td>
@@ -419,7 +419,7 @@
                                                         {% endfor %}
                                                         {% for item in purchase_card reversed %}
                                                         <tr>
-                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                           <td width="1%">CASH IN CARD</td>
                                                           <td width="5%">PURCHASE</td>
                                                           <td width="5%">0</td>
@@ -429,7 +429,7 @@
                               
                                                         {% for item in service_card reversed %}
                                                         <tr>
-                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                           <td width="1%">CASH IN CARD</td>
                                                           <td width="5%">SERVICE</td>
                                                           <td width="5%">{{ item.receipt }}</td>
@@ -439,7 +439,7 @@
                               
                                                         {% for item in salereturn_card reversed %}
                                                         <tr>
-                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                           <td width="1%">CASH IN CARD</td>
                                                           <td width="5%">SALE RETURN</td>
                                                           <td width="5%">0</td>
@@ -449,7 +449,7 @@
                                                         
                                                         {% for item in purchasereturn_card reversed %}
                                                         <tr>
-                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                           <td width="1%">CASH IN CARD</td>
                                                           <td width="5%">PURCHASE RETURN</td>
                                                           <td width="5%">{{ item.receipt }}</td>
@@ -459,7 +459,7 @@
                               
                                                         {% for item in payments_card reversed %}
                                                         <tr>
-                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                           <td width="1%">CASH IN CARD</td>
                                                           <td width="5%">PAYMENT</td>
                                                           <td width="5%">0</td>
@@ -469,7 +469,7 @@
                               
                                                         {% for item in receipts_card reversed %}
                                                         <tr>
-                                                          <td width="2%">{{ item.date }}</td>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
                                                           <td width="1%">CASH IN CARD</td>
                                                           <td width="5%">RECEIPT</td>
                                                           <td width="5%">{{ item.receipt }}</td>
