@@ -30756,9 +30756,7 @@ def process_grouped_accounts(grouped_accounts):
 def balancesheet(request):
 
     if request.method == 'POST':
-        # startdate = request.POST.get('startdate')
         enddate = request.POST.get('enddate')
-        # startdate = datetime.strptime(startdate, "%d-%m-%Y").date()
         enddate = datetime.strptime(enddate, "%d-%m-%Y").date()
     else:
         # startdate = date.today()
@@ -30842,10 +30840,10 @@ def balancesheet(request):
     CASH_IN_UPI = upi_debit-upi_credit
     CASH_IN_CARD = card_debit-card_credit
 
-    balance_sheet_dict['asset'].append({"CASH_ACCOUNT":format_negative_value(CASH_ACCOUNT)})
-    balance_sheet_dict['asset'].append({"CASH_IN_BANK":format_negative_value(CASH_IN_BANK)})
-    balance_sheet_dict['asset'].append({"CASH_IN_UPI":format_negative_value(CASH_IN_UPI)})
-    balance_sheet_dict['asset'].append({"CASH_IN_CARD":format_negative_value(CASH_IN_CARD)})
+    balance_sheet_dict['asset'].append({"Cash":format_negative_value(CASH_ACCOUNT)})
+    balance_sheet_dict['asset'].append({"Bank":format_negative_value(CASH_IN_BANK)})
+    balance_sheet_dict['asset'].append({"UPI":format_negative_value(CASH_IN_UPI)})
+    balance_sheet_dict['asset'].append({"Card":format_negative_value(CASH_IN_CARD)})
 
     
 
