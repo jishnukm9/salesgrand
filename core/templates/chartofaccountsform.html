@@ -217,14 +217,17 @@ $(document).ready(function() {
                       $accountHeadSelect.addOption({ value: response.account_head, text: response.account_head });
                     });
                     
-                    // Set values using Selectize
+                    // Set values using Selectize and disable dropdown
                     $accountGroupSelect.setValue(response.account_group, true);
+                    $accountGroupSelect.disable();
                     $accountHeadSelect.setValue(response.account_head, true);
+                    $accountHeadSelect.disable();
                 }
             }
         });
     }
 });
+
 
 
   // When head is selected, update groups dropdown

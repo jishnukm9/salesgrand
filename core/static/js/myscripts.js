@@ -2816,6 +2816,13 @@ $(document).ready(function () {
           return false;
         }
 
+        if (unitprice < 1) {
+          submitStatus = true;
+          alert("Unit Price should be greater than 0.");
+          return false;
+        }
+
+
         let finalAmount = $(".saletotalbillingamount").val();
         let amountRecieved = $(".amountrecievedsales").val();
         
@@ -3575,7 +3582,6 @@ $(document).ready(function () {
 
   // Keep existing checkbox change handler with additions for new field
   $(".sales-return-table tbody tr [name^='productcheck']").change(function () {
-   
    
     salesReturnFormValidation()
    
@@ -6051,11 +6057,13 @@ $(document).ready(function () {
         var salename = $(this).find('[name^="salename"]').val();
         if (salename !== "" && salename !== undefined) {
           var price = $(this).find('[name^="saleprice"]').val();
+     
           if (price === "" || price === undefined || price == "") {
             submitStatus = true;
             alert("Unit Price is required.");
             return false;
           }
+         
 
           var salegst = $(this).find('[name^="salegstsale"]').val();
           if (salegst === "" || salegst === undefined || salegst == "") {
