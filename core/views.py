@@ -26135,7 +26135,7 @@ def saletaxreport(request):
         )
     else:
         all_branches = [current_branch]
-        
+
 
     taxes = Tax.objects.values("percentage").distinct()
     taxes = [{"percentage": float(i["percentage"])} for i in taxes]
@@ -31738,9 +31738,6 @@ def placcountnew(request):
 
     # service income
 
-    # service_obj =Service.objects.filter(Q(branch=branch)& Q(memodate__gte=startdate)
-    #     & Q(memodate__lte=enddate) & Q(status='Delivered(Ok)'))
-
     statuses = [
         'Unassigned',
         'Unacknowledged',
@@ -31785,16 +31782,7 @@ def placcountnew(request):
             service_income += (finalamount - total_tax)
     income_total += service_income
 
-    # spare cost
-    # spare_cost_total = 0
-    # for item in service_obj:
-    #     spare_obj = SpareParts.objects.filter(servicerefnumber=item.servicerefnumber)
-    #     if spare_obj:
-    #         for sub_item in spare_obj:
-    #             purchase_price = sub_item.purchase_price 
-    #             purchase_tax = float(sub_item.purchase_tax)
-    #             purchase_total = purchase_price + (purchase_price * (purchase_tax / 100))
-    #             spare_cost_total += purchase_total
+
 
     purchase_return = 0
     data = PurchaseReturn.objects.filter(Q(status='Processed') & Q(branch=branch)& Q(createddate__gte=startdate)
@@ -31811,7 +31799,8 @@ def placcountnew(request):
 
     for ret in purchase_return_obj:
         purchase_return += (ret.nettotal - ret.totaltax)
-    income_total += purchase_return
+    # income_total += purchase_return
+    expense_total -= purchase_return
 
 
     sale_return = 0
@@ -31829,23 +31818,9 @@ def placcountnew(request):
 
     for ret in sale_return_obj:
         sale_return += (ret.nettotal - ret.totaltax)
-    expense_total += sale_return
+    # expense_total += sale_return
+    income_total -= sale_return
   
-    # OTHER EXPENSE
-
-    # INCOME_SIDE = ['INCOMES',
-    # 'SALES ACCOUNT',
-    # 'SERVICE ACCOUNT',
-    # 'PURCHASE RETURN',
-    # ]
-    # EXPENSE_SIDE = [
-    #     'EXPENSES',
-    #     'PURCHASE ACCOUNTS',
-    #     'SALARY AND WAGES',
-    #     'SALES RETURN',
-    #     'TRADE EXPENSES',
-    #      'OTHER INDIRECT EXPENSES'
-    # ]
 
     # Initialize dictionaries to store accumulated values for each account
     income_accounts = {}
@@ -32005,11 +31980,6 @@ def placcountnew(request):
     for acc_key, amount in expense_accounts.items():
         journal_list_expense.append({acc_key: amount})
 
-
-    print("\n\npayment list income",payment_list_income)
-    print("\n\nreceipt list income",receipt_list_income)
-    print("\n\njournal list income",journal_list_income)
-
     list_income_total = []
     income_keys = set()
 
@@ -32019,9 +31989,6 @@ def placcountnew(request):
         income_keys.update(pay_item.keys())
     for journal_item in journal_list_income:
         income_keys.update(journal_item.keys())
-
-    print("\n\nincome keys",income_keys)
-   
 
     for key in income_keys:
         dict = {}
@@ -32065,25 +32032,6 @@ def placcountnew(request):
     grouped_income = process_grouped_accounts(grouped_income)
     grouped_expense = process_grouped_accounts(grouped_expense)
 
-    # def transform_ledger_data(ledger_data):
-    #     transformed_data = {}
-    #     for ledger_name, ledger_info in ledger_data.items():
-    #         ledger = AccountLedger.objects.get(name=ledger_name)
-    #         group = ledger.account_group
-    #         group_name = group.name
-    #         if group_name not in transformed_data:
-    #             transformed_data[group_name] = {
-    #                 'total': '0.00',
-    #                 'data': []
-    #             }
-    #         transformed_data[group_name]['data'].append({
-    #             'title': ledger_name,
-    #             'total': ledger_info['total'],
-    #             'data': ledger_info['data']
-    #         })
-    #         group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
-    #         transformed_data[group_name]['total'] = f"{group_total:.2f}"
-    #     return transformed_data
 
 
     def transform_ledger_data(ledger_data):
@@ -32133,6 +32081,7 @@ def placcountnew(request):
 
     grouped_income = transform_ledger_data(grouped_income)
     grouped_expense = transform_ledger_data(grouped_expense)
+
 
 
     if income_total > expense_total:

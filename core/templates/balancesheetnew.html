@@ -107,7 +107,7 @@
                                         <i class="fas fa-chevron-right me-2 ms-4"></i>
                                         ACCOUNT PAYABLE(Purchase)
                                     </td>
-                                    <td class="py-3 px-4 text-end align-middle">{{ accounts_payable_total }}</td>
+                                    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ accounts_payable_total }}" >{{ accounts_payable_total }}</td>
                                 </tr>
                                 {% for item in account_payable_list %}
                                     {% for key, value in item.items %}
@@ -126,7 +126,7 @@
                                         <i class="fas fa-chevron-right me-2 ms-4"></i>
                                         TAX PAYABLE
                                     </td>
-                                    <td class="py-3 px-4 text-end align-middle">{{ total_tax_payable }}</td>
+                                    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ total_tax_payable }}">{{ total_tax_payable }}</td>
                                 </tr>
                                 <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-taxpayable">
                                     <td class="py-3 px-4 align-middle">
@@ -155,7 +155,7 @@
                                         <i class="fas fa-chevron-right me-2 ms-4"></i>
                                         {{ subcategory.title }}
                                     </td>
-                                    <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                                    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ subcategory.total }}">{{ subcategory.total }}</td>
                                 </tr>
                         
                                 {% for item in subcategory.data %}
@@ -197,7 +197,7 @@
                                 <i class="fas fa-chevron-right me-2 ms-4"></i>
                                 ACCOUNT PAYABLE(Purchase)
                             </td>
-                            <td class="py-3 px-4 text-end align-middle">{{ accounts_payable_total }}</td>
+                            <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ accounts_payable_total }}">{{ accounts_payable_total }}</td>
                         </tr>
                         {% for item in account_payable_list %}
                             {% for key, value in item.items %}
@@ -216,7 +216,7 @@
                                 <i class="fas fa-chevron-right me-2 ms-4"></i>
                                 TAX PAYABLE
                             </td>
-                            <td class="py-3 px-4 text-end align-middle">{{ total_tax_payable }}</td>
+                            <td class="py-3 px-4 text-end align-middle total-amount-main total-amount-main" data-value="{{ total_tax_payable }}">{{ total_tax_payable }}</td>
                         </tr>
                         <tr class="section-content" data-section="currentliabilities-taxpayable">
                             <td class="py-3 px-4 align-middle">
@@ -265,7 +265,7 @@
                                         <i class="fas fa-chevron-right me-2 ms-4"></i>
                                         {{ subcategory.title }}
                                     </td>
-                                    <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                                    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ subcategory.total }}">{{ subcategory.total }}</td>
                                 </tr>
                         
                                 {% for item in subcategory.data %}
@@ -296,7 +296,13 @@
 
                         <tr class="table-light fw-bold">
                           <td class="py-3 px-4 align-middle">Total Liabilities</td>
+                          <!-- <td class="py-3 px-4 text-end align-middle">{{total_liability | floatformat:2}}</td> -->
+
+                          {% if total_liability < 0 %}
+                          <td class="py-3 px-4 text-end align-middle">({{total_liability | absolute | floatformat:2}})</td>
+                          {% else %}
                           <td class="py-3 px-4 text-end align-middle">{{total_liability | floatformat:2}}</td>
+                          {% endif %}
                         </tr>
                       </tbody>
                     </table>
@@ -338,7 +344,7 @@
                               <i class="fas fa-chevron-right me-2 ms-4"></i>
                               {{ subcategory.title }}
                             </td>
-                            <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                            <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ subcategory.total }}">{{ subcategory.total }}</td>
                           </tr>
                       
                           <!-- Individual items -->
@@ -373,25 +379,39 @@
 
 
 
-                        <tr class="section-header" data-section="retEarning">
+                        <tr class="section-headerr" data-section="retEarning">
                           <td class="fw-bold fs-7 py-3">
                             <i class="fas fa-chevron-right me-2"></i>
                             RETAINED EARNINGS ({{retained_earnings.pnl}})
                           </td>
-                          <td class="py-3 px-4 text-end align-middle">{{ retained_earnings.balance }}</td>
+                          <td class="py-3 px-4 text-end align-middle total-amount-main-" data-value="{{ retained_earnings.balance }}">{{ retained_earnings.balance }}</td>
                         </tr>
-                        <tr class="section-content" data-section="retEarning">
+                        <!-- <tr class="section-content" data-section="retEarning">
                           <td class="py-3 px-4 align-middle">RETAINED EARNINGS ({{retained_earnings.pnl}})</td>
                           <td class="py-3 px-4 text-end align-middle">{{ retained_earnings.balance }}</td>
-                        </tr>
+                        </tr> -->
 
                         <tr class="table-light fw-bold">
                           <td class="py-3 px-4 align-middle">Total Equity</td>
+                          <!-- <td class="py-3 px-4 text-end align-middle">{{total_equity | floatformat:2}}</td> -->
+
+                          {% if total_equity < 0 %}
+                          <td class="py-3 px-4 text-end align-middle">({{total_equity | absolute | floatformat:2}})</td>
+                          {% else %}
                           <td class="py-3 px-4 text-end align-middle">{{total_equity | floatformat:2}}</td>
+                          {% endif %}
+                          
                         </tr>
                         <tr class="table-secondary fw-bold">
                           <td class="py-3 px-4 align-middle">Total Liabilities and Equity</td>
+                          <!-- <td class="py-3 px-4 text-end align-middle">{{total_liability_equity | floatformat:2}}</td> -->
+
+                          {% if total_liability_equity < 0 %}
+                          <td class="py-3 px-4 text-end align-middle">({{total_liability_equity | absolute | floatformat:2}})</td>
+                          {% else %}
                           <td class="py-3 px-4 text-end align-middle">{{total_liability_equity | floatformat:2}}</td>
+                          {% endif %}
+
                         </tr>
                       </tbody>
                     </table>
@@ -451,7 +471,7 @@
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         CASH ACCOUNT
     </td>
-    <td class="py-3 px-4 text-end align-middle">{{ total_cash_in_hand }}</td>
+    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ total_cash_in_hand }}">{{ total_cash_in_hand }}</td>
 </tr>
 {% for item in asset %}
     {% for key, value in item.items %}
@@ -470,7 +490,7 @@
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         ACCOUNT RECEIVABLE(Sale,Service)
     </td>
-    <td class="py-3 px-4 text-end align-middle">{{ accounts_receivable_total | floatformat:2 }}</td>
+    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ accounts_receivable_total | floatformat:2 }}">{{ accounts_receivable_total | floatformat:2 }}</td>
 </tr>
 {% for item in account_receivable %}
     {% for key, value in item.items %}
@@ -489,7 +509,7 @@
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         TAX RECEIVABLE
     </td>
-    <td class="py-3 px-4 text-end align-middle">{{ total_tax_receivable }}</td>
+    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ total_tax_receivable }}">{{ total_tax_receivable }}</td>
 </tr>
 <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-taxreceivable">
     <td class="py-3 px-4 align-middle">
@@ -515,7 +535,7 @@
                                 <i class="fas fa-chevron-right me-2 ms-4"></i>
                                 {{ subcategory.title }}
                             </td>
-                            <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                            <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ subcategory.total }}">{{ subcategory.total }}</td>
                             </tr>
 
                             <!-- Individual items -->
@@ -560,7 +580,7 @@
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         CASH ACCOUNT
     </td>
-    <td class="py-3 px-4 text-end align-middle">{{ total_cash_in_hand }}</td>
+    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ total_cash_in_hand }}">{{ total_cash_in_hand }}</td>
 </tr>
 {% for item in asset %}
     {% for key, value in item.items %}
@@ -579,7 +599,7 @@
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         ACCOUNT RECEIVABLE(Sale,Service)
     </td>
-    <td class="py-3 px-4 text-end align-middle">{{ accounts_receivable_total | floatformat:2 }}</td>
+    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ accounts_receivable_total | floatformat:2 }}">{{ accounts_receivable_total | floatformat:2 }}</td>
 </tr>
 {% for item in account_receivable %}
     {% for key, value in item.items %}
@@ -598,7 +618,7 @@
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         TAX RECEIVABLE
     </td>
-    <td class="py-3 px-4 text-end align-middle">{{ total_tax_receivable }}</td>
+    <td class="py-3 px-4 text-end align-middle total-amount-main" data-value="{{ total_tax_receivable }}">{{ total_tax_receivable }}</td>
 </tr>
 <tr class="section-content" data-section="currentassets-taxreceivable">
     <td class="py-3 px-4 align-middle">
@@ -633,7 +653,7 @@
                                 <i class="fas fa-chevron-right me-2 ms-4"></i>
                                 {{ subcategory.title }}
                             </td>
-                            <td class="py-3 px-4 text-end align-middle">{{ subcategory.total }}</td>
+                            <td class="py-3 px-4 text-end align-middle  total-amount-main" data-value="{{ subcategory.total }}">{{ subcategory.total }}</td>
                             </tr>
 
                             <!-- Individual items -->
@@ -678,17 +698,17 @@
 
 
                         
-                          <tr class="section-header" data-section="closeStock">
+                          <tr class="section-headerr" data-section="closeStock">
                             <td class="fw-bold fs-7 py-3">
                               <i class="fas fa-chevron-right me-2"></i>
                            CLOSING STOCK
                             </td>
-                            <td class="py-3 px-4 text-end align-middle">{{ closing_stock_value | floatformat:2 }}</td>
+                            <td class="py-3 px-4 text-end align-middle  total-amount-main-" data-value="{{ closing_stock_value | floatformat:2 }}">{{ closing_stock_value | floatformat:2 }}</td>
                           </tr>
-                          <tr class="section-content" data-section="closeStock">
+                          <!-- <tr class="section-content" data-section="closeStock">
                             <td class="py-3 px-4 align-middle">CLOSING STOCK</td>
                             <td class="py-3 px-4 text-end align-middle">{{ closing_stock_value | floatformat:2 }}</td>
-                          </tr>
+                          </tr> -->
                       
 
 
@@ -696,7 +716,12 @@
 
                         <tr class="table-light fw-bold">
                           <td class="py-3 px-4 align-middle">Total Assets</td>
+                          {% if total_asset < 0 %}
+                          <td class="py-3 px-4 text-end align-middle">({{total_asset | absolute | floatformat:2}})</td>
+                          {% else %}
                           <td class="py-3 px-4 text-end align-middle">{{total_asset | floatformat:2}}</td>
+                          {% endif %}
+                          
                         </tr>
                       </tbody>
                     </table>
@@ -783,6 +808,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const expandAllCheckbox = document.getElementById('expandAllSections');
     const sectionHeaders = document.querySelectorAll('.section-header');
     const sectionContents = document.querySelectorAll('.section-content');
+    let totalMainContent = document.querySelectorAll('.total-amount-main');
 
     // Handle expand all checkbox
     expandAllCheckbox.addEventListener('change', function() {
@@ -793,8 +819,10 @@ document.addEventListener('DOMContentLoaded', function() {
         sectionContents.forEach(content => {
             content.style.display = isExpanded ? 'table-row' : 'none';
         });
+        totalMainContent.forEach(total => {
+            total.textContent = isExpanded ? "" : total.dataset.value;
+        });
     });
-
     // Handle individual section toggles
     sectionHeaders.forEach(header => {
         header.addEventListener('click', function() {

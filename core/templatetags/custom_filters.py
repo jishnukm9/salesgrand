@@ -37,3 +37,8 @@ def get_value(list_of_dicts, key):
         if key in item:
             return item[key]
     return 0
+
+
+@register.filter
+def absolute(value):
+    return abs(value)

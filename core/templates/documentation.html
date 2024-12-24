@@ -111,178 +111,295 @@
         <div class="row">
           <div class="col-lg-3 table-of-content border-end mb-5">
             <ul class="list-group list-group-flush mx-3">
-              <li class="list-group-item  list-active" data-section="accounting">Accounting</li>
+              <li class="list-group-item list-active" data-section="accounting">Accounting</li>
               <li class="list-group-item" data-section="shortcuts">Keyboard Shortcuts</li>
               <li class="list-group-item" data-section="register">Register</li>
               <li class="list-group-item" data-section="customers">Customers</li>
               <li class="list-group-item" data-section="purchase">Purchase</li>
               <li class="list-group-item" data-section="stock">Stock</li>
-              
             </ul>
           </div>
           
           <div class="col-lg-9 content pt-3">
-            <!-- Keyboard Shortcuts Section -->
-            <div class="content-section" id="shortcuts">
-              <div class="content-box mx-5">
-                <h4 class="mb-3 fw-bold">Keyboard Shortcuts</h4>
-                <ul>
-                  <li>
-                    <span class="fw-bold">Control + Alt :</span>
-                    <span>To open the modal to print barcode separately for purchase and service</span>
-                  </li>
-                  <li>
-                    <span class="fw-bold">Control + shift :</span>
-                    <span>To open the modal for searching service details using service barcode</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
             <!-- Accounting Section -->
-            <div class="content-section  active" id="accounting">
+            <div class="content-section active" id="accounting">
               <div class="content-box mx-5">
-                <h4 class="mb-3 fw-bold">Account Heads Classification</h4>
-                
-                <!-- Asset Side -->
+                <h4 class="mb-3 fw-bold">Account Classification System</h4>
+      
+                <!-- Assets -->
                 <div class="mb-4">
-                  <h5 class="fw-bold">Asset Side (Balance Sheet)</h5>
-                  <ul>
-                    <li class="mb-2">
-                      <span class="fw-bold">Branch Accounts:</span>
-                      <span>Money given to branches for operations. Example: Head Office giving ₹10,000 to a branch</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Stock in Hand:</span>
-                      <span>Current inventory value. Example: 100 laptops worth ₹50,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Fixed Assets:</span>
-                      <span>Long-term assets. Example: Office building worth ₹500,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Investments:</span>
-                      <span>Money invested for returns. Example: ₹100,000 in government bonds</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Loan and Advances:</span>
-                      <span>Money to be received back. Example: ₹20,000 employee loan</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Other Assets:</span>
-                      <span>Miscellaneous assets. Example: Prepaid insurance ₹5,000</span>
-                    </li>
-                  </ul>
+                  <h5 class="fw-bold">1. Assets</h5>
+                  
+                  <!-- Current Assets -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Current Assets</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Accounts Receivable:</span>
+                        <span>Amounts owed to the company by customers for goods/services sold on credit. Example: Customer A/R, Trade Receivables</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Accrued Income:</span>
+                        <span>Income earned but not yet received. Example: Interest Accrued, Rent Receivable</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Advance to Suppliers:</span>
+                        <span>Payments made to suppliers before receiving goods/services. Example: Supplier Advance, Contractor Prepayments</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Bills Receivable:</span>
+                        <span>Written promises received from debtors to pay a specified amount. Example: Trade Bills Receivable, Customer Promissory Notes</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Branch Account:</span>
+                        <span>Account maintaining transactions with branch offices. Example: Branch Current Account, Inter-branch Transfers</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Current Assets:</span>
+                        <span>Assets expected to be converted to cash within one year. Example: Tax Refunds Receivable, Insurance Claims Receivable</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Prepaid Expenses:</span>
+                        <span> Expenses paid in advance for future benefits. Example: Prepaid Insurance, Prepaid Rent</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Short-term Investments:</span>
+                        <span> Investments expected to be converted to cash within one year. Example: Treasury Bills, Commercial Paper</span>
+                      </li>
+                    </ul>
+                  </div>
+      
+                  <!-- Non-Current Assets -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Non-Current Assets</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Fixed Assets:</span>
+                        <span>Long-term tangible assets not intended for sale. Example: Machinery, Furniture</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Intangible Assets:</span>
+                        <span>Non-physical assets with long-term value. Example: Patents, Trademarks</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Long-term Investments:</span>
+                        <span>Investments held for more than one year. Example: Long-term Bonds, Investment Properties</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Non-current Assets:</span>
+                        <span>Other long-term assets not classified elsewhere. Example:  Long-term Deposits, Restricted Cash</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Property, Plant, and Equipment:</span>
+                        <span>Tangible assets used in business operations. Example: Buildings, Plant Machinery</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-
-                <!-- Liability Side -->
+      
+                <!-- Liabilities -->
                 <div class="mb-4">
-                  <h5 class="fw-bold">Liability Side (Balance Sheet)</h5>
-                  <ul>
-                    <li class="mb-2">
-                      <span class="fw-bold">Borrowings:</span>
-                      <span>Money owed to others. Example: Bank loan of ₹100,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Deposits:</span>
-                      <span>Money held temporarily. Example: Customer security deposit of ₹1,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Other Liabilities:</span>
-                      <span>Miscellaneous payables. Example: Unpaid electricity bill ₹500</span>
-                    </li>
-                  </ul>
+                  <h5 class="fw-bold">2. Liabilities</h5>
+                  
+                  <!-- Current Liabilities -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Current Liabilities</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Accounts Payable:</span>
+                        <span>Amounts owed to suppliers for goods/services received on credit. Example: Trade Payables, Vendor Accounts</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Accrued Expenses:</span>
+                        <span>Expenses incurred but not yet paid. Example: Accrued Salaries, Accrued Interest</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Advance Received from Customers:</span>
+                        <span>Payments received before delivering goods/services. Example: Customer Advances, Project Advances</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Current Liabilities:</span>
+                        <span>Other obligations due within one year. Example: Tax Payable, Dividend Payable</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Payables:</span>
+                        <span>Miscellaneous amounts owed in short term. Example: Expense Payables, Commission Payable</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Short-term Loans:</span>
+                        <span>Loans payable within one year. Example: Bank Overdraft, Working Capital Loan</span>
+                      </li>
+                    </ul>
+                  </div>
+      
+                  <!-- Non-Current Liabilities -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Non-Current Liabilities</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Advances from Directors or Promoters:</span>
+                        <span>Long-term loans from company directors. Example: Director's Loan Account, Promoter's Advance</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Long-term Loans:</span>
+                        <span>Loans payable after one year. Example: Term Loans, Debentures</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Lease Obligations:</span>
+                        <span>Long-term lease payment commitments. Example: Finance Lease Liability, Operating Lease Liability</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Bills Payable:</span>
+                        <span>Written promises to pay a specified amount. Example: Long-term Bills, Deferred Payment Notes</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Non-current Liabilities:</span>
+                        <span>Other long-term obligations. Example: Security Deposits, Deferred Tax Liability</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-
-                <!-- Equity Side -->
+      
+                <!-- Equity -->
                 <div class="mb-4">
-                  <h5 class="fw-bold">Equity Side (Balance Sheet)</h5>
+                  <h5 class="fw-bold">3. Equity</h5>
                   <ul>
                     <li class="mb-2">
-                      <span class="fw-bold">Reserves and Surpluses:</span>
-                      <span>Accumulated profits. Example: General reserve of ₹50,000</span>
+                      <span class="fw-bold">Reserves and Surplus:</span>
+                      <span>Accumulated profits and special funds. Example: General Reserve, Capital Reserve</span>
                     </li>
                     <li class="mb-2">
                       <span class="fw-bold">Share Capital:</span>
-                      <span>Owner's investment. Example: 1000 shares @ ₹100 each = ₹100,000</span>
+                      <span>Value of shares issued to shareholders. Example: Equity Share Capital, Preference Share Capital</span>
                     </li>
                   </ul>
                 </div>
-
-                <!-- Income Side -->
+      
+                <!-- Income -->
                 <div class="mb-4">
-                  <h5 class="fw-bold">Income Side (Profit & Loss)</h5>
-                  <ul>
-                    <li class="mb-2">
-                      <span class="fw-bold">Incomes:</span>
-                      <span>Money earned. Example: Interest received ₹1,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Sales Account:</span>
-                      <span>Product sales income. Example: Product sales ₹200,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Service Account:</span>
-                      <span>Service income. Example: Consulting fees ₹50,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Purchase Return:</span>
-                      <span>Reduction in purchases. Example: Returned defective purchases ₹2,000</span>
-                    </li>
-                  </ul>
+                  <h5 class="fw-bold">4. Income</h5>
+                  
+                  <!-- Direct Income -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Direct Income</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Sales Account:</span>
+                        <span>Revenue from primary business activities. Example: Product Sales, Service Revenue</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Services Account:</span>
+                        <span>Income from services rendered. Example: Consulting Fees, Professional Services</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Direct Income:</span>
+                        <span>Other income directly related to operations. Example: Commission Earned, Installation Charges</span>
+                      </li>
+                    </ul>
+                  </div>
+      
+                  <!-- Indirect Income -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Indirect Income</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Financial Income:</span>
+                        <span>Income from financial investments. Example: Interest Income, Dividend Income</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Miscellaneous Income:</span>
+                        <span>Income not related to main business. Example: Rent Income, Scrap Sales</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Indirect Income:</span>
+                        <span>Other non-operational income. Example: Foreign Exchange Gain, Insurance Claims</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-
-                <!-- Expense Side -->
+      
+                <!-- Expenses -->
                 <div class="mb-4">
-                  <h5 class="fw-bold">Expense Side (Profit & Loss)</h5>
-                  <ul>
-                    <li class="mb-2">
-                      <span class="fw-bold">Expenses:</span>
-                      <span>Regular costs. Example: Electricity bill ₹1,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Purchase Accounts:</span>
-                      <span>Cost of goods. Example: Purchased goods worth ₹150,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Salary and Wages:</span>
-                      <span>Employee costs. Example: Monthly staff salaries ₹30,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Sales Return:</span>
-                      <span>Reduction in sales. Example: Customer returned goods worth ₹3,000</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-bold">Trade Expenses:</span>
-                      <span>Trading costs. Example: Transportation cost ₹5,000</span>
-                    </li>
-                  </ul>
+                  <h5 class="fw-bold">5. Expenses</h5>
+                  
+                  <!-- Direct Expenses -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Direct Expenses</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Purchase Account:</span>
+                        <span>Cost of goods purchased for resale. Example: Raw Material Purchases, Trading Goods</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Salary and Wages:</span>
+                        <span>Employee compensation directly related to production. Example: Factory Wages, Production Staff Salary</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Direct Expenses:</span>
+                        <span>Other costs directly related to production. Example: Factory Power, Direct Labor</span>
+                      </li>
+                    </ul>
+                  </div>
+      
+                  <!-- Indirect Expenses -->
+                  <div class="mb-3">
+                    <h6 class="fw-bold">Indirect Expenses</h6>
+                    <ul>
+                      <li class="mb-2">
+                        <span class="fw-bold">Administrative Expenses:</span>
+                        <span>Expenses related to general administration. Example: Office Rent, Printing & Stationery</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Financial Expenses:</span>
+                        <span>Costs related to financing activities. Example: Bank Charges, Interest Expense</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Miscellaneous Expenses:</span>
+                        <span>Various other indirect expenses. Example: Insurance, Repairs & Maintenance</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Other Indirect Expense:</span>
+                        <span>Additional overhead costs. Example: Staff Welfare, Training Expenses</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-bold">Selling & Distribution Expenses:</span>
+                        <span>Costs related to sales and distribution. Example: Advertisement, Sales Commission</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <!-- Placeholder sections for other menu items -->
+      
+            <!-- Other Sections (Keyboard Shortcuts, Register, etc.) -->
+            <div class="content-section" id="shortcuts">
+              <div class="content-box mx-5">
+                <h4 class="mb-3 fw-bold">Keyboard Shortcuts</h4>
+                <!-- Add shortcuts content here -->
+              </div>
+            </div>
+      
             <div class="content-section" id="register">
               <div class="content-box mx-5">
                 <h4 class="mb-3 fw-bold">Register</h4>
                 <!-- Add register content here -->
               </div>
             </div>
-
+      
             <div class="content-section" id="customers">
               <div class="content-box mx-5">
                 <h4 class="mb-3 fw-bold">Customers</h4>
                 <!-- Add customers content here -->
               </div>
             </div>
-
+      
             <div class="content-section" id="purchase">
               <div class="content-box mx-5">
                 <h4 class="mb-3 fw-bold">Purchase</h4>
                 <!-- Add purchase content here -->
               </div>
             </div>
-
+      
             <div class="content-section" id="stock">
               <div class="content-box mx-5">
                 <h4 class="mb-3 fw-bold">Stock</h4>
@@ -292,6 +409,8 @@
           </div>
         </div>
       </article>
+
+
     </div>
 
     <!-- Bootstrap Bundle with Popper -->
