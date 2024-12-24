@@ -26135,6 +26135,7 @@ def saletaxreport(request):
         )
     else:
         all_branches = [current_branch]
+        
 
     taxes = Tax.objects.values("percentage").distinct()
     taxes = [{"percentage": float(i["percentage"])} for i in taxes]
