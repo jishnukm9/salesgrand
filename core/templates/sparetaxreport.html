@@ -100,7 +100,7 @@
                 <div class="row">
                   <div class="col-lg-3">
                     <div class="w-100 d-flex justify-content-between border px-3 py-1 mb-3 " style="background-color:#f3f4f6">
-                      <p class="m-0 p-0 fw-bold">Sales Total</p>
+                      <p class="m-0 p-0 fw-bold">Spare Total</p>
                       <p class="m-0 px-1 bg-white text-success fw-bold"><b>{{data.invoice_total|floatformat:2}}</b></p>
                     </div>
                   </div>
@@ -130,10 +130,14 @@
                          <th>Total Amnt</th>
                          <th>Discount</th>
                          <th>Final Amnt</th>
-                         <th> Sales Total</th>
+                         <th> Spare Total</th>
                     
                          {% for tax in taxes %}
-                         <th>{{tax.percentage}}% Sales</th>
+                         <th style="white-space: normal;">{{tax.percentage}}% Spare</th>
+                         {% endfor %}
+
+                         {% for tax in taxes %}
+                         <th style="white-space: normal;">{{tax.percentage}}% Spare Tax</th>
                          {% endfor %}
                          <!-- {% for gst in gsts %}
                          <th>{{gst}}</th>
@@ -169,6 +173,16 @@
 
                         {% endfor %}
                          {% endfor %}
+
+                         {% for tax in taxes %}
+                         {% for tx in item.sale_taxes %}
+ 
+                         {% if tx.percentage == tax.percentage %}
+                                 <td>{{ tx.perc_tax |floatformat:2 }}</td>
+                         {% endif %}
+ 
+                         {% endfor %}
+                          {% endfor %}
 
 
 

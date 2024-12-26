@@ -129,19 +129,24 @@
                       <tr>
                          <th>Sl</th>
                          <th> Date</th>
-                         <th> Invoice Number</th>
+                         <th   style="white-space: normal;"> Invoice Number</th>
                          <th> Supplier</th>
                          <th>Branch</th>
-                         <th> Invoice Total</th>
-                         <th> Value of Goods</th>
-                         <th>Qty</th>
+                         <th   style="white-space: normal;"> Invoice Total</th>
+                         <th   style="white-space: normal;"> Value of Goods</th>
+                         <th   style="white-space: normal;">No.Of Products</th>
                          {% for tax in taxes %}
                          <th>{{tax.percentage}}% Purchase</th>
                          {% endfor %}
+
+                         {% for tax in taxes %}
+                         <th>{{tax.percentage}}% Tax</th>
+                         {% endfor %}
+
                          <!-- {% for gst in gsts %}
                          <th>{{gst}}</th>
                          {% endfor %} -->
-                         <th>Total Tax</th>
+                         <th   style="white-space: normal;">Total Tax</th>
                          <th>Discount</th>
                       
                         
@@ -151,7 +156,7 @@
                       {% for item in data.data %}
                       <tr>
                          <td>{{ forloop.counter }}</td>
-                         <td>{{ item.invoicedate }}</td>
+                         <td   style="white-space: normal;">{{ item.invoicedate }}</td>
                          <td>{{ item.invoicenumber }}</td>
                        
                          <td  style="white-space: normal;">{{ item.supplier }}</td>
@@ -168,6 +173,21 @@
 
                         {% if tx.percentage == tax.percentage %}
                                 <td>{{ tx.perc_purchase | floatformat:2 }}</td>
+                   
+                        
+                                {% endif %}
+
+                        {% endfor %}
+                         {% endfor %}
+
+
+
+
+                         {% for tax in taxes %}
+                        {% for tx in item.purchase_taxes %}
+
+                        {% if tx.percentage == tax.percentage %}
+                                <td>{{ tx.perc_tax | floatformat:2 }}</td>
                    
                         
                                 {% endif %}

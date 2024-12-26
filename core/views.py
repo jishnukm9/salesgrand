@@ -9958,8 +9958,6 @@ def daybook(request):
         elif item["amounttype"] == "Credit":
             total_credit += item["transaction"].amount
 
-    # print(transaction_list)
-
     total_balance = total_debit - total_credit
 
     paymentmodes = PaymentMode.objects.all()
@@ -10764,8 +10762,7 @@ def deleteChartofAccounts(request, id):
 def editChartofAccounts(request, id):
 
     obj = CoASubAccounts.objects.filter(id=int(id)).first()
-    print("obj title",obj.title)
-    print("obj head root",obj.head_root)
+
     all_heads = AccountHead.objects.all()
     all_groups = AccountGroup.objects.all()
     all_ledgers = AccountLedger.objects.all()
@@ -12072,7 +12069,7 @@ def add_payment(request):
             data.referenceno = request.POST.get("referenceno")
         else:
             data.referenceno = None
-        # print("accounts payment :- ",request.POST.get("creditaccount"),request.POST.get("debitaccount"))
+
         data.creditaccount = 'CASH ACCOUNT'
         debit_acc = CoASubAccounts.objects.filter(title=request.POST.get("debitaccount")).first()
         data.debitaccount = debit_acc
@@ -12344,9 +12341,6 @@ def add_journal(request):
             debit_account_head_title = debit_account_head_title.title
         else:
             debit_account_head_title = debit_account
-
-        # print("debit account title", debit_account_head_title)
-        # print("credit account title", credit_account_head_title)
 
 
         transaction = Transaction()
@@ -17595,8 +17589,6 @@ def serviceCheckout(request, servicerefnumber):
 
     # print("-----",sparecostafter_discount_excltax,sparetax_afterdiscount,sparecostafter_discount_incltax)
 
-    print("\n\namount received.....",amountrecieved)
-
 
     context = {
         "sparecostafter_discount_incltax":round(sparecostafter_discount_incltax,2),
@@ -18495,8 +18487,6 @@ def addSpareRequestStandard(request):
     currentuser = request.user
 
     length_count = list(filter(check_status, request.POST.keys()))
-
-    print("\n\nlength count",length_count,request.POST.keys())
 
     serviceref = request.POST["servicereff"]
 
@@ -26189,18 +26179,41 @@ def saletaxreport(request):
             except:
                 sub_dict["discount"] = 0.00
                 gst_dict["discount"] = 0.00
-            # sub_dict['branch'] = i.branch
+
             sub_dict["percentage"] = float(tx)
             gst_dict["percentage"] = float(tx)
             gst_dict["totaltax"] = float(i.totaltax)
-            sub_dict["perc_sale"] = round(float(i.price) * int(i.totalquantity), 2)
+
+
+            disc_pad=sub_dict['discount']
+            finalamnt_pad = i.totalbillingamount
+            price_pad = i.price
+            price_after_discount = ((price_pad  - (price_pad  *((disc_pad/(finalamnt_pad+disc_pad))))))
+
+            # sub_dict["perc_sale"] = round(float(i.price) * int(i.totalquantity), 2)
+            sub_dict["perc_sale"] = round(float(price_after_discount) * int(i.totalquantity), 2)
+
+
+            # sub_dict["perc_tax"] = round(
+            #     round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+            # )
             sub_dict["perc_tax"] = round(
-                round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
             )
+
+
+
             sub_dict["totaltax"] = float(i.totaltax)
+
+            # perc_tx = round(
+            #     round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+            # )
             perc_tx = round(
-                round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
             )
+
+
+
             gst_dict[f"CGST{float(tx)/2}"] = round(perc_tx / 2, 2)
             gst_dict[f"SGST{float(tx)/2}"] = round(perc_tx / 2, 2)
 
@@ -26209,10 +26222,11 @@ def saletaxreport(request):
             gst_split.append(gst_dict)
 
         # calculate the amount tat should be deducted from each product total
+
         no_of_products = len(tx_list)
-        for j in inv_taxes:
-            amount_to_deduct = j["discount"] / no_of_products
-            j["perc_sale"] = j["perc_sale"] - amount_to_deduct
+        # for j in inv_taxes:
+        #     amount_to_deduct = j["discount"] / no_of_products
+        #     j["perc_sale"] = j["perc_sale"] - amount_to_deduct
 
         for x in taxes:
             if float(x["percentage"]) not in tx_list:
@@ -26243,15 +26257,15 @@ def saletaxreport(request):
     for j in sale_data_final:
         for x in j["sale_taxes"]:
             perc = x["percentage"]
-            if f"{perc}% Sales" in dic.keys():
-                dic[f"{perc}% Sales"] += x["perc_sale"]
+            if f"{perc}% Sales Total" in dic.keys():
+                dic[f"{perc}% Sales Total"] += x["perc_sale"]
             else:
-                dic[f"{perc}% Sales"] = x["perc_sale"]
+                dic[f"{perc}% Sales Total"] = x["perc_sale"]
 
-            if f"{perc}% Tax" in dic.keys():
-                dic[f"{perc}% Tax"] += x["perc_tax"]
+            if f"{perc}% Tax Total" in dic.keys():
+                dic[f"{perc}% Tax Total"] += x["perc_tax"]
             else:
-                dic[f"{perc}% Tax"] = x["perc_tax"]
+                dic[f"{perc}% Tax Total"] = x["perc_tax"]
 
             total_tax += x["perc_tax"]
             invoice_total += x["perc_sale"]
@@ -26276,6 +26290,8 @@ def saletaxreport(request):
         "all_branches": all_branches,
         "search_params": search_params,
     }
+
+    # print("sale data final -- ",context)
 
     return render(request, "saletaxreport.html", context)
 
@@ -26359,12 +26375,8 @@ def salereturntaxreport(request):
         tx_list = []
 
         if current_user.is_superuser:
-            # sale_obj = SaleReturn.objects.filter(invoicenumber=item["invoicenumber"])
             sale_obj = SaleReturn.objects.filter(salereturnid=item["salereturnid"])
         else:
-            # sale_obj = SaleReturn.objects.filter(
-            #     Q(branch=current_branch) & Q(invoicenumber=item["invoicenumber"])
-            # )
             sale_obj = SaleReturn.objects.filter(
                 Q(branch=current_branch) & Q(salereturnid=item["salereturnid"])
             )
@@ -26386,14 +26398,37 @@ def salereturntaxreport(request):
             sub_dict["percentage"] = float(tx)
             gst_dict["percentage"] = float(tx)
             gst_dict["totaltax"] = float(i.totaltax)
-            sub_dict["perc_sale"] = round(float(i.rate) * int(i.returnquantity ), 2)
+
+
+            ################################# 26/12/2024 #############################
+            disc_pad=sub_dict['discount']
+            finalamnt_pad = i.nettotal
+            price_pad = i.rate
+            price_after_discount = ((price_pad  - (price_pad  *((disc_pad/(finalamnt_pad+disc_pad))))))
+            ##########################################################################
+
+            # sub_dict["perc_sale"] = round(float(i.rate) * int(i.returnquantity ), 2)
+
+            sub_dict["perc_sale"] = round(float(price_after_discount) * int(i.returnquantity ), 2)
+
+
+            # sub_dict["perc_tax"] = round(
+            #     round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity ), 2
+            # )
             sub_dict["perc_tax"] = round(
-                round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity ), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.returnquantity ), 2
             )
+
             sub_dict["totaltax"] = float(i.totaltax)
+
+            # perc_tx = round(
+            #     round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity ), 2
+            # )
+
             perc_tx = round(
-                round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity ), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.returnquantity ), 2
             )
+
 
             inv_taxes.append(sub_dict)
             tx_list.append(float(tx))
@@ -26402,9 +26437,9 @@ def salereturntaxreport(request):
         # calculate the amount tat should be deducted from each product total
         no_of_products = len(tx_list)
    
-        for j in inv_taxes:
-            amount_to_deduct = j["discount"] / no_of_products
-            j["perc_sale"] = j["perc_sale"] - amount_to_deduct
+        # for j in inv_taxes:
+        #     amount_to_deduct = j["discount"] / no_of_products
+        #     j["perc_sale"] = j["perc_sale"] - amount_to_deduct
 
         for x in taxes:
             if float(x["percentage"]) not in tx_list:
@@ -26429,15 +26464,15 @@ def salereturntaxreport(request):
     for j in sale_data_final:
         for x in j["sale_taxes"]:
             perc = x["percentage"]
-            if f"{perc}% Sales Return" in dic.keys():
-                dic[f"{perc}% Sales Return"] += x["perc_sale"]
+            if f"{perc}% Sales Return Total" in dic.keys():
+                dic[f"{perc}% Sales Return Total"] += x["perc_sale"]
             else:
-                dic[f"{perc}% Sales Return"] = x["perc_sale"]
+                dic[f"{perc}% Sales Return Total"] = x["perc_sale"]
 
-            if f"{perc}% Tax" in dic.keys():
-                dic[f"{perc}% Tax"] += x["perc_tax"]
+            if f"{perc}% Tax Total" in dic.keys():
+                dic[f"{perc}% Tax Total"] += x["perc_tax"]
             else:
-                dic[f"{perc}% Tax"] = x["perc_tax"]
+                dic[f"{perc}% Tax Total"] = x["perc_tax"]
 
             total_tax += x["perc_tax"]
             invoice_total += x["perc_sale"]
@@ -26462,6 +26497,7 @@ def salereturntaxreport(request):
         "all_branches": all_branches,
         "search_params": search_params,
     }
+
 
     return render(request, "salereturntaxreport.html", context)
 
@@ -26601,8 +26637,6 @@ def purchasetaxreport(request):
         gsts.append(f"CGST{t['percentage']/2}")
         gsts.append(f"SGST{t['percentage']/2}")
 
-    print("purcase data 2",purchase_data_2)
-
     purchase_data_final = []
 
     for item in purchase_data_2:
@@ -26679,26 +26713,36 @@ def purchasetaxreport(request):
             gst_dict["totaltax"] = float(i.totaltax)
 
 
-            # disc_pad=sub_dict['discount']
-            # finalamnt_pad = i.totalbillingamount
-            # price_pad = i.price
-            # price_after_discount = ((price_pad  - (price_pad  *((disc_pad/(finalamnt_pad+disc_pad))))))
-            # sub_dict["perc_purchase"] = round(float(price_after_discount) * int(i.totalquantity), 2)
+            disc_pad=sub_dict['discount']
+            finalamnt_pad = i.totalbillingamount
+            price_pad = i.price
+            price_after_discount = ((price_pad  - (price_pad  *((disc_pad/(finalamnt_pad+disc_pad))))))
+            sub_dict["perc_purchase"] = round(float(price_after_discount) * int(i.totalquantity), 2)
    
 
-            sub_dict["perc_purchase"] = round(float(i.price) * int(i.totalquantity), 2)
+            # sub_dict["perc_purchase"] = round(float(i.price) * int(i.totalquantity), 2)
 
 
 
+            # sub_dict["perc_tax"] = round(
+            #     round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+            # )
 
             sub_dict["perc_tax"] = round(
-                round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
             )
+
+
             sub_dict["totaltax"] = float(i.totaltax)
 
+            # perc_tx = round(
+            #     round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+            # )
+
             perc_tx = round(
-                round((float(i.price) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.totalquantity), 2
             )
+
             gst_dict[f"CGST{float(tx)/2}"] = round(perc_tx / 2, 2)
             gst_dict[f"SGST{float(tx)/2}"] = round(perc_tx / 2, 2)
 
@@ -26711,9 +26755,9 @@ def purchasetaxreport(request):
 
         no_of_products = len(tx_list)
 
-        for j in inv_taxes:
-            amount_to_deduct = j["discount"] / no_of_products
-            j["perc_purchase"] = j["perc_purchase"] - amount_to_deduct
+        # for j in inv_taxes:
+        #     amount_to_deduct = j["discount"] / no_of_products
+        #     j["perc_purchase"] = j["perc_purchase"] - amount_to_deduct
             
 
         for x in taxes:
@@ -26743,14 +26787,14 @@ def purchasetaxreport(request):
         for x in j["purchase_taxes"]:
             perc = x["percentage"]
             if f"{perc}% Purchase" in dic.keys():
-                dic[f"{perc}% Purchase"] += x["perc_purchase"]
+                dic[f"{perc}% Purchase Total"] += x["perc_purchase"]
             else:
-                dic[f"{perc}% Purchase"] = x["perc_purchase"]
+                dic[f"{perc}% Purchase Total"] = x["perc_purchase"]
 
-            # if f"{perc}% Tax" in dic.keys():
-            #     dic[f"{perc}% Tax"] += x['perc_tax']
-            # else:
-            #     dic[f"{perc}% Tax"] = x['perc_tax']
+            if f"{perc}% Tax" in dic.keys():
+                dic[f"{perc}% Tax Total"] += x['perc_tax']
+            else:
+                dic[f"{perc}% Tax Total"] = x['perc_tax']
 
             total_tax += x["perc_tax"]
             invoice_total += x["perc_purchase"]
@@ -26788,8 +26832,8 @@ def purchasetaxreport(request):
         "search_params": search_params,
     }
 
+    print("\n\n purchase tax report - ", context)
 
-    print("all data purchase tax report",context)
 
     return render(request, "purchasetaxreport.html", context)
 
@@ -26935,15 +26979,35 @@ def purchasereturntaxreport(request):
 
             gst_dict["percentage"] = float(tx)
             gst_dict["totaltax"] = float(i.totaltax)
-            sub_dict["perc_purchase"] = round(float(i.rate) * int(i.returnquantity), 2)
+
+
+            ################################# 26/12/2024 #############################
+            disc_pad=sub_dict['adjustment']
+            finalamnt_pad = i.nettotal
+            price_pad = i.rate
+            price_after_discount = ((price_pad  - (price_pad  *((disc_pad/(finalamnt_pad+disc_pad))))))
+            ##########################################################################
+
+
+            # sub_dict["perc_purchase"] = round(float(i.rate) * int(i.returnquantity), 2)
+            sub_dict["perc_purchase"] = round(float(price_after_discount) * int(i.returnquantity), 2)
+
+            # sub_dict["perc_tax"] = round(
+            #     round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity), 2
+            # )
             sub_dict["perc_tax"] = round(
-                round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.returnquantity), 2
             )
+
             sub_dict["totaltax"] = float(i.totaltax)
 
+            # perc_tx = round(
+            #     round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity), 2
+            # )
             perc_tx = round(
-                round((float(i.rate) * (int(tx) / 100)), 2) * int(i.returnquantity), 2
+                round((float(price_after_discount) * (int(tx) / 100)), 2) * int(i.returnquantity), 2
             )
+
             gst_dict[f"CGST{float(tx)/2}"] = round(perc_tx / 2, 2)
             gst_dict[f"SGST{float(tx)/2}"] = round(perc_tx / 2, 2)
 
@@ -26952,9 +27016,9 @@ def purchasereturntaxreport(request):
             gst_split.append(gst_dict)
 
         no_of_products = len(tx_list)
-        for j in inv_taxes:
-            amount_to_deduct = j["adjustment"] / no_of_products
-            j["perc_purchase"] = j["perc_purchase"] - amount_to_deduct
+        # for j in inv_taxes:
+        #     amount_to_deduct = j["adjustment"] / no_of_products
+        #     j["perc_purchase"] = j["perc_purchase"] - amount_to_deduct
 
         for x in taxes:
             if float(x["percentage"]) not in tx_list:
@@ -26982,10 +27046,15 @@ def purchasereturntaxreport(request):
     for j in purchase_data_final:
         for x in j["purchase_taxes"]:
             perc = x["percentage"]
-            if f"{perc}% Purchase Return" in dic.keys():
-                dic[f"{perc}% Purchase Return"] += x["perc_purchase"]
+            if f"{perc}% Purchase Return Total" in dic.keys():
+                dic[f"{perc}% Purchase Return Total"] += x["perc_purchase"]
             else:
-                dic[f"{perc}% Purchase Return"] = x["perc_purchase"]
+                dic[f"{perc}% Purchase Return Total"] = x["perc_purchase"]
+
+            if f"{perc}% P-Return Tax Total" in dic.keys():
+                dic[f"{perc}% P-Return Tax Total"] += x["perc_purchase"]
+            else:
+                dic[f"{perc}% P-Return Tax Total"] = x["perc_purchase"]
 
             total_tax += x["perc_tax"]
             invoice_total += x["perc_purchase"]
@@ -27231,15 +27300,15 @@ def servicetaxreport(request):
     for j in service_data_final:
         for x in j["sale_taxes"]:
             perc = x["percentage"]
-            if f"{perc}% Service" in dic.keys():
-                dic[f"{perc}% Service"] += x["perc_sale"]
+            if f"{perc}% Service Total" in dic.keys():
+                dic[f"{perc}% Service Total"] += x["perc_sale"]
             else:
-                dic[f"{perc}% Service"] = x["perc_sale"]
+                dic[f"{perc}% Service Total"] = x["perc_sale"]
 
-            if f"{perc}% Tax" in dic.keys():
-                dic[f"{perc}% Tax"] += x["perc_tax"]
+            if f"{perc}% Tax Total" in dic.keys():
+                dic[f"{perc}% Tax Total"] += x["perc_tax"]
             else:
-                dic[f"{perc}% Tax"] = x["perc_tax"]
+                dic[f"{perc}% Tax Total"] = x["perc_tax"]
 
             total_tax += x["perc_tax"]
             invoice_total += x["perc_sale"]
@@ -27266,7 +27335,7 @@ def servicetaxreport(request):
         "search_params": search_params,
     }
 
-    # context = {}
+
 
     return render(request, "servicetaxreport.html", context)
 
@@ -27431,15 +27500,15 @@ def sparetaxreport(request):
     for j in spare_data_final:
         for x in j["sale_taxes"]:
             perc = x["percentage"]
-            if f"{perc}% Sales" in dic.keys():
-                dic[f"{perc}% Sales"] += x["perc_sale"]
+            if f"{perc}% Spare Total" in dic.keys():
+                dic[f"{perc}% Spare Total"] += x["perc_sale"]
             else:
-                dic[f"{perc}% Sales"] = x["perc_sale"]
+                dic[f"{perc}% Spare Total"] = x["perc_sale"]
 
-            if f"{perc}% Tax" in dic.keys():
-                dic[f"{perc}% Tax"] += x["perc_tax"]
+            if f"{perc}% Tax Total" in dic.keys():
+                dic[f"{perc}% Tax Total"] += x["perc_tax"]
             else:
-                dic[f"{perc}% Tax"] = x["perc_tax"]
+                dic[f"{perc}% Tax Total"] = x["perc_tax"]
 
             total_tax += x["perc_tax"]
             invoice_total += x["perc_sale"]
@@ -27478,6 +27547,9 @@ def sparetaxreport(request):
         "all_branches": all_branches,
         "search_params": search_params,
     }
+
+
+
 
     return render(request, "sparetaxreport.html", context)
 
@@ -30669,7 +30741,7 @@ def process_account_lists(asset_list, liability_list, equity_list):
         # Dictionary to store results grouped by head_root
         grouped_accounts = {}
 
-        print("account list",account_list)
+
 
         
         for account_dict in account_list:
@@ -31434,11 +31506,6 @@ def balancesheet(request):
         
         return transformed_data
 
-    print("grouped assets",grouped_assets)
-    print("grouped liabilities",grouped_liabilities)
-    print("grouped equity",grouped_equity)
-
-
     grouped_assets = transform_ledger_data(grouped_assets)
     grouped_liabilities = transform_ledger_data(grouped_liabilities)
     grouped_equity = transform_ledger_data(grouped_equity)
@@ -31519,9 +31586,7 @@ def process_account_lists_placcount(income_list, expense_list):
         # Dictionary to store results grouped by head_root
         grouped_accounts = {}
 
-        print("account list",account_list)
 
-        
         for account_dict in account_list:
             for key, value in account_dict.items():
                 # Convert key from underscore format to original title format

@@ -136,6 +136,10 @@
                          {% for tax in taxes %}
                          <th>{{tax.percentage}}% Service</th>
                          {% endfor %}
+
+                         {% for tax in taxes %}
+                         <th>{{tax.percentage}}% Tax</th>
+                         {% endfor %}
                          <!-- {% for gst in gsts %}
                          <th>{{gst}}</th>
                          {% endfor %} -->
@@ -148,7 +152,7 @@
                       {% for item in data.data %}
                       <tr>
                          <td>{{ forloop.counter }}</td>
-                         <td>{{ item.memodate }}</td>
+                         <td  style="white-space: normal;">{{ item.memodate }}</td>
                          <td>{{ item.servicerefnumber }}</td>
                          <td>{{ item.invoicenumber }}</td>
                        
@@ -171,6 +175,20 @@
 
                         {% endfor %}
                          {% endfor %}
+
+
+                         {% for tax in taxes %}
+                         {% for tx in item.sale_taxes %}
+ 
+                         {% if tx.percentage == tax.percentage %}
+                                 <td>{{ tx.perc_tax | floatformat:2 }}</td>
+                    
+                         
+                                 {% endif %}
+ 
+                         {% endfor %}
+                          {% endfor %}
+ 
 
 
 

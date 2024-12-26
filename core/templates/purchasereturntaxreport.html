@@ -122,14 +122,17 @@
                       <tr>
                          <th>Sl</th>
                          <th> Date</th>
-                         <th> Invoice Number</th>
+                         <th  style="white-space: normal;"> Invoice Number</th>
                          <th> Supplier</th>
                          <th>Branch</th>
-                         <th> Invoice Total</th>
-                         <th> Value of Goods</th>
+                         <th  style="white-space: normal;"> Invoice Total</th>
+                         <th  style="white-space: normal;"> Value of Goods</th>
                          <th>Qty</th>
                          {% for tax in taxes %}
-                         <th>{{tax.percentage}}% P-Return</th>
+                         <th  style="white-space: normal;">{{tax.percentage}}% P-Return</th>
+                         {% endfor %}
+                         {% for tax in taxes %}
+                         <th style="white-space: normal;">{{tax.percentage}}% P-Return Tax</th>
                          {% endfor %}
                          <!-- {% for gst in gsts %}
                          <th>{{gst}}</th>
@@ -167,6 +170,22 @@
 
                         {% endfor %}
                          {% endfor %}
+
+
+
+
+
+                         {% for tax in taxes %}
+                         {% for tx in item.purchase_taxes %}
+ 
+                         {% if tx.percentage == tax.percentage %}
+                                 <td>{{ tx.perc_tax | floatformat:2 }}</td>
+                    
+                         
+                                 {% endif %}
+ 
+                         {% endfor %}
+                          {% endfor %}
 
 
 

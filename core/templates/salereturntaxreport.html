@@ -126,12 +126,16 @@
                       <tr>
                          <th>Sl</th>
                          <th> Date</th>
-                         <th> Invoice Number</th>
+                         <th style="white-space: normal;"> Invoice Number</th>
                          <th> Customer</th>
-                         <th> Refund Amount</th>
-                         <th>Qty</th>
+                         <th style="white-space: normal;"> Refund Amount</th>
+                         <th style="white-space: normal;">No.Of Products</th>
                          {% for tax in taxes %}
-                         <th>{{tax.percentage}}% S-Return</th>
+                         <th style="white-space: normal;">{{tax.percentage}}% S-Return</th>
+                         {% endfor %}
+
+                         {% for tax in taxes %}
+                         <th style="white-space: normal;">{{tax.percentage}}% S-Return Tax</th>
                          {% endfor %}
                     
                          <th>Total Tax</th>
@@ -144,7 +148,7 @@
                       {% for item in data.data %}
                       <tr>
                          <td>{{ forloop.counter }}</td>
-                         <td>{{ item.createddate }}</td>
+                         <td style="white-space: normal;">{{ item.createddate }}</td>
                          <td>{{ item.invoicenumber }}</td>
                        
                          <td  style="white-space: normal;">{{ item.customer }}</td>
@@ -163,6 +167,19 @@
 
                         {% endfor %}
                          {% endfor %}
+
+
+
+                         {% for tax in taxes %}
+                         {% for tx in item.sale_taxes %}
+ 
+                         {% if tx.percentage == tax.percentage %}
+                                 <td>{{ tx.perc_tax |floatformat:2 }}</td>
+                         {% endif %}
+ 
+                         {% endfor %}
+                          {% endfor %}
+ 
 
 
 
