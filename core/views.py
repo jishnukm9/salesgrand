@@ -29784,7 +29784,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         (
             Q(status='Delivered(Ok)') |
             (
-                Q(amountrecieved__gt=0) &
+                # Q(amountrecieved__gt=0) &
                 Q(finalamount__gt=F('amountrecieved')) &
                 Q(status__in=statuses)
             )
@@ -31256,7 +31256,7 @@ def balancesheet(request):
         (
             Q(status='Delivered(Ok)') |
             (
-                Q(amountrecieved__gt=0) &
+                # Q(amountrecieved__gt=0) &
                 Q(finalamount__gt=F('amountrecieved')) &
                 Q(status__in=statuses)
             )
@@ -31822,7 +31822,7 @@ def placcountnew(request):
         (
             Q(status='Delivered(Ok)') |
             (
-                Q(amountrecieved__gt=0) &
+                # Q(amountrecieved__gt=0) &
                 Q(finalamount__gt=F('amountrecieved')) &
                 Q(status__in=statuses)
             )
