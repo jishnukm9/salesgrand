@@ -731,6 +731,7 @@ path('general_ledger/',general_ledger_new,name='general_ledger_new'),
 path('purchase_payable/',purchase_payable,name='purchase_payable'),
 path('sale_receivable/',sale_receivable,name='sale_receivable'),
 path('service_receivable/',service_receivable,name='service_receivable'),
+path("openingstock/", openingstock, name="openingstock"),
 ]
 
 

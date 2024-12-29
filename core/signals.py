@@ -14,3 +14,6 @@ def update_general_ledger_entries(sender, instance, **kwargs):
 def update_service_entries(sender, instance, **kwargs):
     if instance.customertype:
         Service.objects.filter(customerid=instance.unique_id).update(customertype=instance.customertype)
+        Service.objects.filter(customerid=instance.unique_id).update(firstname=instance.firstname)
+        Service.objects.filter(customerid=instance.unique_id).update(lastname=instance.lastname)
+        Service.objects.filter(customerid=instance.unique_id).update(phone=instance.phone)

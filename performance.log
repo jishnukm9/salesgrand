@@ -442,3 +442,17 @@ DEBUG 2024-12-26 14:45:01,340 views 7600 22880 Form submission took 0.23 seconds
 DEBUG 2024-12-27 13:40:19,240 views 1628 16688 Service entry form submission start SR1
 DEBUG 2024-12-27 13:40:19,781 views 1628 16688 Service entry form submission end
 DEBUG 2024-12-27 13:40:19,781 views 1628 16688 Form submission took 0.54 seconds.
+DEBUG 2024-12-27 15:40:00,237 views 15208 12900 Service entry form submission start SR1
+DEBUG 2024-12-27 15:40:00,554 views 15208 12900 Service entry form submission end
+DEBUG 2024-12-27 15:40:00,554 views 15208 12900 Form submission took 0.32 seconds.
+WARNING 2024-12-28 12:20:14,044 custom_middleware 22104 6380 Slow request: /get_service_booking_count/ took 5.26 seconds.
+WARNING 2024-12-28 12:20:14,044 custom_middleware 22104 15252 Slow request: /get_service_booking_count/ took 5.27 seconds.
+WARNING 2024-12-28 12:21:18,916 custom_middleware 22104 3740 Slow request: /get_service_booking_count/ took 5.08 seconds.
+WARNING 2024-12-28 12:21:23,999 custom_middleware 22104 11688 Slow request: /get_service_booking_count/ took 5.08 seconds.
+WARNING 2024-12-28 12:23:14,043 custom_middleware 8076 7464 Slow request: /get_service_booking_count/ took 5.28 seconds.
+WARNING 2024-12-28 12:25:13,834 custom_middleware 13088 1956 Slow request: /get_service_booking_count/ took 5.07 seconds.
+WARNING 2024-12-28 12:26:14,022 custom_middleware 6720 8692 Slow request: /get_service_booking_count/ took 5.27 seconds.
+WARNING 2024-12-28 12:27:14,020 custom_middleware 16920 19508 Slow request: /get_service_booking_count/ took 5.26 seconds.
+DEBUG 2024-12-28 14:48:19,326 views 16608 17864 Service entry form submission start SR1
+DEBUG 2024-12-28 14:48:19,668 views 16608 17864 Service entry form submission end
+DEBUG 2024-12-28 14:48:19,668 views 16608 17864 Form submission took 0.34 seconds.

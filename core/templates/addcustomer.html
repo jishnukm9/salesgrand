@@ -10,67 +10,13 @@
         <div class="col-sm-12">
           <div class="home-tab">
             <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-              
-          
-
-
-
                 <nav class="nav nav-borders">
                   <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'customers' %}"> Privileged Customers </a>
                   <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'customerform' %}">Customer Entry  </a>
                   <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'addmultiplecustomersform' %}">Mulitiple Entries</a> -->
-               
-                 
               </nav>
-
-
-
-
-            
-           
             </div>
             <br>
-          
-
-
-
-          
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           <div>
             {% if messages %}
               {% for message in messages %}
@@ -78,12 +24,7 @@
               {% endfor %}
             {% endif %}
           </div>
-
-
-
-       
-
-                <form action="{% url 'addcustomer' %}" method="POST" >
+                <form id="addcustomerform" action="{% url 'addcustomer' %}" method="POST" >
                   {% csrf_token %}
                 <div class="row p-0"  >
 
@@ -106,16 +47,12 @@
                        
                       </div>
                       <div class="form-group col-lg-12">
-
-                        <label for="lastname"
-                          ><strong>Last Name</strong></label
-                        >
+                        <label for="lastname"><strong>Last Name</strong></label>
 
                         <input  class="form-control" type="text" name="lastname" placeholder="Last Name" >
                     </div>
 
                     <div class="form-group col-lg-12">
-
                       <label for="dob"
                         ><strong>Date Of Birth</strong></label
                       >
@@ -126,7 +63,6 @@
 
 
                   <div class="form-group col-lg-12">
-
                     <label for="phone"
                     ><strong>Mobile Number</strong></label
                   >
@@ -136,17 +72,16 @@
 
 
                 <div class="form-group col-lg-12">
-
                   <label for="vat"
                   ><strong>VAT Number</strong></label
                 >
-                <input  class="form-control" type="text" name="vatnumber" placeholder="VAT Number">
+                <input  class="form-control" type="text" name="vatnumber" placeholder="VAT Number" >
                
               </div>
 
 
-              <div class="form-group col-lg-12">
 
+              <div class="form-group col-lg-12">
                 <label for="customertype"
                 ><strong>Customer Type</strong></label
               >
@@ -155,37 +90,17 @@
                 <option value="">Select Customer Type</option>
                 <option value="B2C">B2C</option>
                 <option value="B2B">B2B</option>
-
-
-
               </select>
-             
-             
             </div>
-
-
                 <div class="form-group col-lg-12">
-
                   <label for="lastname"
                     ><strong>Address</strong></label
                   >
-
                   <textarea  class="ps-4 pt-2" name="address" rows="4" cols="40"  style="width: 100%; max-width: 100%;"></textarea>
               </div>
-
-
-
-      
-                    
                       </div>
                     </div>
-                    
                   </div>
-
-
-
-      
-      
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="card card-rounded  mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
                       
@@ -197,7 +112,6 @@
                         
 
                         <div class="form-group col-lg-12">
-
                           <label for="phonemodal"
                             ><strong>Phone Modal</strong></label
                           >
@@ -205,7 +119,6 @@
                           <input  class="form-control" type="text" name="phonemodel" value="" placeholder="Phone Model">
                       </div>
                         <div class="form-group col-lg-12">
-
                           <label for="purchasedate"
                             ><strong>Purchase Date</strong></label
                           >
@@ -221,12 +134,9 @@
 
 
 
-
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-
-                      <button type="submit" class="btn btn-primary text-white me-0 mt-3">Add Customer</button>
-                    </div>
-
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <button type="submit" class="btn btn-primary text-white me-0 mt-3">Add Customer</button>
+                  </div>
 
 
 
@@ -256,4 +166,25 @@
     </div>
   </div>
 
+
+
+
+
+  <script>
+    
+    document.getElementById("addcustomerform").addEventListener("submit", function(event) {
+      if (document.getElementById("customertype").value == "B2B" && document.getElementById("vatnumber").value == "") {
+        event.preventDefault();
+        document.getElementById("vatnumber").setCustomValidity("VAT Number is required for B2B customer");
+        document.getElementById("vatnumber").reportValidity();
+      }
+    });
+
+  </script>
+
+
+
+
 {% endblock %}
+
+

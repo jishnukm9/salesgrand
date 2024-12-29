@@ -24,7 +24,7 @@
 
             <div class="card card-rounded " style="border-radius:5px;border:0.5px solid #e2e2e2;">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #fff">
-                <h5 class="m-0 font-weight-bold" style="color:#2c2e2f"> <strong>Purchase Tax Report</strong> 
+                <h5 class="m-0 font-weight-bold" style="color:#2c2e2f"> <strong>Purchase Return Tax Report</strong> 
                 
                 
               
@@ -161,13 +161,9 @@
                          
                          {% for tax in taxes %}
                         {% for tx in item.purchase_taxes %}
-
                         {% if tx.percentage == tax.percentage %}
                                 <td>{{ tx.perc_purchase | floatformat:2 }}</td>
-                   
-                        
                                 {% endif %}
-
                         {% endfor %}
                          {% endfor %}
 
@@ -177,13 +173,9 @@
 
                          {% for tax in taxes %}
                          {% for tx in item.purchase_taxes %}
- 
                          {% if tx.percentage == tax.percentage %}
                                  <td>{{ tx.perc_tax | floatformat:2 }}</td>
-                    
-                         
                                  {% endif %}
- 
                          {% endfor %}
                           {% endfor %}
 

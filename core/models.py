@@ -709,6 +709,8 @@ class Transaction(models.Model):
     accounts = models.CharField(default=None, blank=True, max_length=200, null=True)
     remarks = models.CharField(default=None, blank=True, max_length=200, null=True)
     transactiondate = models.DateField(null=True, blank=True, default=None)
+    subledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT,default=None,null=True,blank=True)
+
 
 
     def __str__(self):
@@ -1244,11 +1246,15 @@ class GeneralLedger(models.Model):
 
 class CashBook(models.Model):
     branch = models.CharField(max_length=200)
+    branch_wid = models.ForeignKey(
+        Branch, on_delete=models.PROTECT, related_name="cash_book",default=None,null=True,blank=True
+    )
     payment = models.FloatField()
     receipt = models.FloatField()
     mode = models.CharField(max_length=200)
     date = models.DateField(default=timezone.now)
     description = models.CharField(max_length=200)
+    subledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT,default=None,null=True,blank=True)
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

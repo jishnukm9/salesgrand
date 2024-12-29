@@ -499,8 +499,6 @@ class AccountStatement():
         else:
             cash_ledger = cash_subledger.head_root
 
-        print("cash_ledger",cash_ledger)
-        print("cash_subledger",cash_subledger)
 
         bank_subledger = CoASubAccounts.objects.filter(Q(title="Bank") & Q(is_adminonly=True)).first()
         if not bank_subledger:
@@ -1319,6 +1317,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             cashbook.date = params['invoicedate'] 
             cashbook.description = 'Purchase'
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "PurchaseReturn":
             try:
@@ -1331,6 +1330,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             # cashbook.date = datetime.now()
             cashbook.description = "Purchase Return"
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "Sale" or type == "SaleDue":
             try:
@@ -1343,6 +1343,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             cashbook.date = params['invoicedate']
             cashbook.description = "Sale"
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "SaleReturn":
 
@@ -1357,6 +1358,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             # cashbook.date = datetime.now()
             cashbook.description = "Sale Return"
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "ServiceEntry" or type == "ServiceCheckout":
 
@@ -1371,6 +1373,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             # cashbook.date = datetime.now()
             cashbook.description = "Service"
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "Expense" or type == "EXPENSE":
 
@@ -1385,6 +1388,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             # cashbook.date = datetime.now()
             cashbook.description = params['category']
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "Payment":
 
@@ -1400,6 +1404,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             # cashbook.date = datetime.now()
             cashbook.description = params['category']
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "Receipt":
 
@@ -1415,6 +1420,7 @@ class AccountStatement():
             cashbook.mode = params['paymentmode']
             # cashbook.date = datetime.now()
             cashbook.description = params['category']
+            cashbook.branch_wid = params['branch_wid']
             cashbook.save()
         elif type == "Journal":
 
@@ -1424,6 +1430,7 @@ class AccountStatement():
                 amount =params['amount']
 
             cashbook.branch = params['userbranch']
+            cashbook.branch_wid = params['branch_wid']
             if params['payment_type'] == "Payment":
                 cashbook.payment = amount
                 cashbook.receipt = 0

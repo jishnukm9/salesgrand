@@ -2293,6 +2293,8 @@ $(document).ready(function () {
     "input change",
     'input[name^="quantity"], input[name^="price"], select[name^="purchasegst"]',
     function () {
+      restoreOriginalPrices(); // Add this line to reset prices first
+      calculateDiscount(); // Then recalculate discount
       calculateNetAmount();
       dueCalculation();
     }
@@ -2376,6 +2378,9 @@ $(document).ready(function () {
       return;
     }
 
+    // First calculate originalTotalAmount
+    restoreOriginalPrices(); // This will update originalTotalAmount with current quantities
+
     var discountPercentage = 0;
     if (discountMethod === "percentage") {
       discountPercentage = discount;
@@ -2399,6 +2404,7 @@ $(document).ready(function () {
         $(this).find('input[name^="purchase_priceafterdiscount"]').val(originalPrice.toFixed(2));
       }
       
+      // Calculate new total with current quantities
       var quantity = parseInt($(this).find('input[name^="quantity"]').val()) || 0;
       var price = parseFloat($(this).find('input[name^="price"]').val()) || 0;
       var purchaseGst = parseFloat(
@@ -2567,7 +2573,14 @@ $(document).ready(function () {
         closestTr.find("[name^='refundamount']").val("");
         closestTr.find("[name^='reason']").attr("disabled", true);
         closestTr.find("[name^='returnqty']").val("");
-        calculateNetAmount()
+        
+        // Add these lines to recalculate adjustment when unchecking
+        restoreOriginalPrices();
+        let adjustmentVal = parseFloat($("#adjustment").val()) || 0;
+        if(adjustmentVal > 0) {
+          applyAdjustment();
+        }
+        calculateNetAmount();
       }
     },
   );
@@ -2604,17 +2617,21 @@ $(document).ready(function () {
       return;
     }
 
+    // Recalculate original total only for checked items
     calculateOriginalTotal();
-    let adjustmentPercentage = (adjustmentVal * 100) / originalTotalAmount;
+    
+    // Only proceed if there are checked items with a total
+    if(originalTotalAmount > 0) {
+      let adjustmentPercentage = (adjustmentVal * 100) / originalTotalAmount;
 
-    $(".purchase-return-table tr:gt(0)").each(function () {
-      if ($(this).find("[name^='productcheck']").prop("checked")) {
-        let originalPrice = parseFloat($(this).find('input[name^="price"]').val()) || 0;
-        let newPrice = originalPrice - (originalPrice * (adjustmentPercentage / 100));
-        $(this).find('input[name^="priceafteradjustment"]').val(newPrice.toFixed(2));
-        // $(this).find('input[name^="rate"]').val(newPrice.toFixed(2));
-      }
-    });
+      $(".purchase-return-table tr:gt(0)").each(function () {
+        if ($(this).find("[name^='productcheck']").prop("checked")) {
+          let originalPrice = parseFloat($(this).find('input[name^="price"]').val()) || 0;
+          let newPrice = originalPrice - (originalPrice * (adjustmentPercentage / 100));
+          $(this).find('input[name^="priceafteradjustment"]').val(newPrice.toFixed(2));
+        }
+      });
+    }
   }
 
   function calculateNetAmount() {
@@ -2650,6 +2667,7 @@ $(document).ready(function () {
     $('input[name="totalqty"]').val(totalQty);
     $('input[name="totaltax"]').val(totalTaxAmount.toFixed(2));
     $("#nettotal").val(netAmount.toFixed(2));
+    $('input[name="totalamount"]').val(netAmount.toFixed(2));
 
     totalAmount = netAmount;
     taxFinal = totalTaxAmount;
@@ -2673,10 +2691,17 @@ $(document).ready(function () {
     }
 
     let avqty = parseInt(closestTr.find("[name^='availablequantity']").val());
+    let balqty = parseInt(closestTr.find("[name^='qtynow']").val());
     let rqty = parseInt($(this).val());
 
     if (rqty > avqty) {
       alert("Quantity Should not be greater than Available Quantity");
+      $(this).val("");
+      return false;
+    }
+    
+    if (rqty > balqty) {
+      alert("Quantity Should not be greater than Balance Quantity");
       $(this).val("");
       return false;
     }
@@ -3570,8 +3595,6 @@ const salesReturnFormValidation = function () {
 
 salesReturnFormValidation()
 
-
-
 $(document).ready(function () {
   let totalAmount = 0;
   let taxFinal = 0;
@@ -3580,22 +3603,30 @@ $(document).ready(function () {
   let originalTotalAmount = 0;
   let isAdjustmentChange = false;
 
-  // Keep existing checkbox change handler with additions for new field
+  // Updated checkbox change handler with more complete cleanup
   $(".sales-return-table tbody tr [name^='productcheck']").change(function () {
-   
-    salesReturnFormValidation()
-   
+    salesReturnFormValidation();
+    
     let closestTr = $(this).closest("tr");
 
     if ($(this).prop("checked")) {
       closestTr.find("[name^='returnqty-sale']").removeAttr("readonly");
       closestTr.find("[name^='reason-sale']").removeAttr("disabled");
     } else {
-      
-      closestTr.find("[name^='returnqty-sale']").val("");
       closestTr.find("[name^='returnqty-sale']").attr("readonly", true);
-      closestTr.find("[name^='reason-sale']").attr("disabled", true);
+      closestTr.find("[name^='rate-sale']").attr("readonly", true);
+      closestTr.find("[name^='tax-sale']").attr("disabled", true);
+      closestTr.find("[name^='refundamount-sale']").attr("readonly", true);
       closestTr.find("[name^='refundamount-sale']").val("");
+      closestTr.find("[name^='reason-sale']").attr("disabled", true);
+      closestTr.find("[name^='returnqty-sale']").val("");
+      
+      // Add recalculation when unchecking
+      restoreOriginalPrices();
+      let discountVal = parseFloat($("#discount-sale").val()) || 0;
+      if(discountVal > 0) {
+        applyAdjustment();
+      }
       calculateNetAmount();
     }
   });
@@ -3606,7 +3637,6 @@ $(document).ready(function () {
         var originalPrice = parseFloat($(this).find('input[name^="price-sale"]').val());
         if (originalPrice) {
           $(this).find('input[name^="priceafteradjustment-sale"]').val(originalPrice.toFixed(2));
-          // $(this).find('input[name^="rate-sale"]').val(originalPrice.toFixed(2));
         }
       }
     });
@@ -3625,45 +3655,6 @@ $(document).ready(function () {
     originalTotalAmount = finalOriginal;
   }
 
-  function calculateNetAmount() {
-    var netAmount = 0;
-    var totalTaxAmount = 0;
-    let totalQty = 0;
-
-    // Calculate amounts after discount
-    $(".sales-return-table tr:gt(0)").each(function () {
-      if ($(this).find("[name^='productcheck']").prop("checked")) {
-        let returnQty = parseInt($(this).find('input[name^="returnqty-sale"]').val()) || 0;
-        // let rate = parseFloat($(this).find('input[name^="rate-sale"]').val()) || 0;
-        let rate = parseFloat($(this).find('input[name^="priceafteradjustment-sale"]').val()) || 0;
-        let tax = parseFloat($(this).find('select[name^="tax-sale"]').find(":selected").data("tax")) || 0;
-        
-        let rowAmount = returnQty * rate;
-        let rowTax = rowAmount * (tax / 100);
-        let totalRowAmount = rowAmount + rowTax;
-
-        $(this).find('input[name^="refundamount-sale"]').val(totalRowAmount.toFixed(2));
-
-        netAmount += totalRowAmount;
-        totalTaxAmount += rowTax;
-        totalQty += returnQty;
-      }
-    });
-
-    // Only update totalamount if it's not an adjustment change
-    if (!isAdjustmentChange) {
-      $('input[name="totalamount-sale"]').val(netAmount.toFixed(2));
-      totalAmount = netAmount;
-    }
-
-    $('input[name="totalqty-sale"]').val(totalQty);
-    $('input[name="totaltax-sale"]').val(totalTaxAmount.toFixed(2));
-    $("#nettotal-sale").val((netAmount - discount).toFixed(2));
-
-    taxFinal = totalTaxAmount;
-    qtyFinal = totalQty;
-  }
-
   function applyAdjustment() {
     let discountVal = parseFloat($("#discount-sale").val()) || 0;
     if (discountVal <= 0) {
@@ -3671,17 +3662,59 @@ $(document).ready(function () {
       return;
     }
 
+    // Recalculate original total only for checked items
     calculateOriginalTotal();
-    let discountPercentage = (discountVal * 100) / originalTotalAmount;
+    
+    // Only proceed if there are checked items with a total
+    if(originalTotalAmount > 0) {
+      let discountPercentage = (discountVal * 100) / originalTotalAmount;
+
+      $(".sales-return-table tr:gt(0)").each(function () {
+        if ($(this).find("[name^='productcheck']").prop("checked")) {
+          let originalPrice = parseFloat($(this).find('input[name^="price-sale"]').val()) || 0;
+          let newPrice = originalPrice - (originalPrice * (discountPercentage / 100));
+          $(this).find('input[name^="priceafteradjustment-sale"]').val(newPrice.toFixed(2));
+        }
+      });
+    }
+  }
+
+  function calculateNetAmount() {
+    var netAmount = 0;
+    var totalTaxAmount = 0;
+    let totalQty = 0;
 
     $(".sales-return-table tr:gt(0)").each(function () {
       if ($(this).find("[name^='productcheck']").prop("checked")) {
-        let originalPrice = parseFloat($(this).find('input[name^="price-sale"]').val()) || 0;
-        let newPrice = originalPrice - (originalPrice * (discountPercentage / 100));
-        $(this).find('input[name^="priceafteradjustment-sale"]').val(newPrice.toFixed(2));
-        // $(this).find('input[name^="rate-sale"]').val(newPrice.toFixed(2));
+        let returnQty = parseInt($(this).find('input[name^="returnqty-sale"]').val()) || 0;
+        let rate = parseFloat($(this).find('input[name^="priceafteradjustment-sale"]').val()) || 0;
+        let tax = parseFloat($(this).find('select[name^="tax-sale"]').find(":selected").data("tax")) || 0;
+        
+        let rowAmount = returnQty * rate;
+        let rowTax = rowAmount * (tax / 100);
+        let totalRowAmount = rowAmount + rowTax;
+
+        netAmount += totalRowAmount;
+        totalTaxAmount += rowTax;
+        totalQty += returnQty;
+
+        $(this).find('input[name^="refundamount-sale"]').val(totalRowAmount.toFixed(2));
       }
     });
+
+    if (!isAdjustmentChange) {
+      $('input[name="totalamount-sale"]').val(netAmount.toFixed(2));
+      totalAmount = netAmount;
+    }
+
+    $('input[name="totalqty-sale"]').val(totalQty);
+    $('input[name="totaltax-sale"]').val(totalTaxAmount.toFixed(2));
+    $("#nettotal-sale").val(netAmount.toFixed(2));
+    $('input[name="totalamount-sale"]').val(netAmount.toFixed(2));
+
+    totalAmount = netAmount;
+    taxFinal = totalTaxAmount;
+    qtyFinal = totalQty;
   }
 
   $("#discount-sale").on("change input", function() {
@@ -3692,7 +3725,7 @@ $(document).ready(function () {
     isAdjustmentChange = false;
   });
 
-  $(".sales-return-table tbody tr [name^='returnqty-sale']").on("change input",function () {
+  $(".sales-return-table tbody tr [name^='returnqty-sale']").on("change input", function () {
     let closestTr = $(this).closest("tr");
     if (!$(this).val()) {
       closestTr.find("[name^='refundamount-sale']").val("");
@@ -3701,6 +3734,7 @@ $(document).ready(function () {
     }
 
     let avqty = parseInt(closestTr.find("[name^='availablequantity-sale']").val());
+    let balqty = parseInt(closestTr.find("[name^='qtynow-sale']").val());
     let rqty = parseInt($(this).val());
 
     if (rqty > avqty) {
@@ -3708,11 +3742,169 @@ $(document).ready(function () {
       $(this).val("");
       return false;
     }
+    
+    if (rqty > balqty) {
+      alert("Quantity Should not be greater than Balance Quantity");
+      $(this).val("");
+      return false;
+    }
 
     applyAdjustment();
     calculateNetAmount();
   });
+
+  // Added handlers for rate and tax changes
+  $(".sales-return-table tbody tr [name^='rate-sale']").on("change input", function () {
+    calculateNetAmount();
+  });
+
+  $(".sales-return-table tbody tr select[name^='tax-sale']").on("change input", function () {
+    calculateNetAmount();
+  });
 });
+
+// $(document).ready(function () {
+//   let totalAmount = 0;
+//   let taxFinal = 0;
+//   let qtyFinal = 0;
+//   let discount = 0;
+//   let originalTotalAmount = 0;
+//   let isAdjustmentChange = false;
+
+//   // Keep existing checkbox change handler with additions for new field
+//   $(".sales-return-table tbody tr [name^='productcheck']").change(function () {
+   
+//     salesReturnFormValidation()
+   
+//     let closestTr = $(this).closest("tr");
+
+//     if ($(this).prop("checked")) {
+//       closestTr.find("[name^='returnqty-sale']").removeAttr("readonly");
+//       closestTr.find("[name^='reason-sale']").removeAttr("disabled");
+//     } else {
+      
+//       closestTr.find("[name^='returnqty-sale']").val("");
+//       closestTr.find("[name^='returnqty-sale']").attr("readonly", true);
+//       closestTr.find("[name^='reason-sale']").attr("disabled", true);
+//       closestTr.find("[name^='refundamount-sale']").val("");
+//       calculateNetAmount();
+//     }
+//   });
+
+//   function restoreOriginalPrices() {
+//     $(".sales-return-table tr:gt(0)").each(function () {
+//       if ($(this).find("[name^='productcheck']").prop("checked")) {
+//         var originalPrice = parseFloat($(this).find('input[name^="price-sale"]').val());
+//         if (originalPrice) {
+//           $(this).find('input[name^="priceafteradjustment-sale"]').val(originalPrice.toFixed(2));
+//           // $(this).find('input[name^="rate-sale"]').val(originalPrice.toFixed(2));
+//         }
+//       }
+//     });
+//   }
+
+//   function calculateOriginalTotal() {
+//     var finalOriginal = 0;
+//     $(".sales-return-table tr:gt(0)").each(function () {
+//       if ($(this).find("[name^='productcheck']").prop("checked")) {
+//         let returnQty = parseInt($(this).find('input[name^="returnqty-sale"]').val()) || 0;
+//         let price = parseFloat($(this).find('input[name^="price-sale"]').val()) || 0;
+//         let tax = parseFloat($(this).find('select[name^="tax-sale"]').find(":selected").data("tax")) || 0;
+//         finalOriginal += ((returnQty * price) + (returnQty * price * (tax / 100)));
+//       }
+//     });
+//     originalTotalAmount = finalOriginal;
+//   }
+
+//   function calculateNetAmount() {
+//     var netAmount = 0;
+//     var totalTaxAmount = 0;
+//     let totalQty = 0;
+
+//     // Calculate amounts after discount
+//     $(".sales-return-table tr:gt(0)").each(function () {
+//       if ($(this).find("[name^='productcheck']").prop("checked")) {
+//         let returnQty = parseInt($(this).find('input[name^="returnqty-sale"]').val()) || 0;
+//         // let rate = parseFloat($(this).find('input[name^="rate-sale"]').val()) || 0;
+//         let rate = parseFloat($(this).find('input[name^="priceafteradjustment-sale"]').val()) || 0;
+//         let tax = parseFloat($(this).find('select[name^="tax-sale"]').find(":selected").data("tax")) || 0;
+        
+//         let rowAmount = returnQty * rate;
+//         let rowTax = rowAmount * (tax / 100);
+//         let totalRowAmount = rowAmount + rowTax;
+
+//         $(this).find('input[name^="refundamount-sale"]').val(totalRowAmount.toFixed(2));
+
+//         netAmount += totalRowAmount;
+//         totalTaxAmount += rowTax;
+//         totalQty += returnQty;
+//       }
+//     });
+
+//     // Only update totalamount if it's not an adjustment change
+//     if (!isAdjustmentChange) {
+//       $('input[name="totalamount-sale"]').val(netAmount.toFixed(2));
+//       totalAmount = netAmount;
+//     }
+
+//     $('input[name="totalqty-sale"]').val(totalQty);
+//     $('input[name="totaltax-sale"]').val(totalTaxAmount.toFixed(2));
+//     $("#nettotal-sale").val((netAmount - discount).toFixed(2));
+
+//     taxFinal = totalTaxAmount;
+//     qtyFinal = totalQty;
+//   }
+
+//   function applyAdjustment() {
+//     let discountVal = parseFloat($("#discount-sale").val()) || 0;
+//     if (discountVal <= 0) {
+//       restoreOriginalPrices();
+//       return;
+//     }
+
+//     calculateOriginalTotal();
+//     let discountPercentage = (discountVal * 100) / originalTotalAmount;
+
+//     $(".sales-return-table tr:gt(0)").each(function () {
+//       if ($(this).find("[name^='productcheck']").prop("checked")) {
+//         let originalPrice = parseFloat($(this).find('input[name^="price-sale"]').val()) || 0;
+//         let newPrice = originalPrice - (originalPrice * (discountPercentage / 100));
+//         $(this).find('input[name^="priceafteradjustment-sale"]').val(newPrice.toFixed(2));
+//         // $(this).find('input[name^="rate-sale"]').val(newPrice.toFixed(2));
+//       }
+//     });
+//   }
+
+//   $("#discount-sale").on("change input", function() {
+//     isAdjustmentChange = true;
+//     restoreOriginalPrices();
+//     applyAdjustment();
+//     calculateNetAmount();
+//     isAdjustmentChange = false;
+//   });
+
+//   $(".sales-return-table tbody tr [name^='returnqty-sale']").on("change input",function () {
+//     let closestTr = $(this).closest("tr");
+//     if (!$(this).val()) {
+//       closestTr.find("[name^='refundamount-sale']").val("");
+//       calculateNetAmount();
+//       return false;
+//     }
+
+//     let avqty = parseInt(closestTr.find("[name^='availablequantity-sale']").val());
+    
+//     let rqty = parseInt($(this).val());
+
+//     if (rqty > avqty) {
+//       alert("Quantity Should not be greater than Available Quantity");
+//       $(this).val("");
+//       return false;
+//     }
+
+//     applyAdjustment();
+//     calculateNetAmount();
+//   });
+// });
 
 
 

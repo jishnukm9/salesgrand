@@ -145,6 +145,207 @@ def func_create_supplier_ledger(supp_data,unique_id,request):
     return 0
 
 
+
+def func_get_sub_ledgers(request,subledgername):
+
+    if subledgername == "Purchase":
+        purchase_subledger = CoASubAccounts.objects.filter(Q(title="Purchase") & Q(is_adminonly=True)).first()
+        if not purchase_subledger:
+            data = CoASubAccounts()
+            ledgername = "PURCHASE ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Purchase"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            purchase_subledger = CoASubAccounts.objects.filter(Q(title="Purchase") & Q(is_adminonly=True)).first()
+            ledger = purchase_subledger
+        else:
+            ledger = purchase_subledger
+
+    elif subledgername == "Sales":
+        sale_subledger = CoASubAccounts.objects.filter(Q(title="Sales") & Q(is_adminonly=True)).first()
+        if not sale_subledger:
+            data = CoASubAccounts()
+            ledgername = "SALES ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Sales"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch =  request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            sale_subledger = CoASubAccounts.objects.filter(Q(title="Sales") & Q(is_adminonly=True)).first()
+            ledger = sale_subledger
+        else:
+            ledger = sale_subledger
+
+    elif subledgername == "Card":
+
+        card_subledger = CoASubAccounts.objects.filter(Q(title="Card") & Q(is_adminonly=True)).first()
+        if not card_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Card"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch =  request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            card_subledger = CoASubAccounts.objects.filter(Q(title="Card") & Q(is_adminonly=True)).first()
+            ledger = card_subledger
+        else:
+            ledger = card_subledger
+
+    elif subledgername == "UPI":
+
+        upi_subledger = CoASubAccounts.objects.filter(Q(title="UPI") & Q(is_adminonly=True)).first()
+        if not upi_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"UPI"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            upi_subledger = CoASubAccounts.objects.filter(Q(title="UPI") & Q(is_adminonly=True)).first()
+            ledger = upi_subledger
+        else:
+            ledger = upi_subledger
+
+    elif subledgername == "Bank":
+
+        bank_subledger = CoASubAccounts.objects.filter(Q(title="Bank") & Q(is_adminonly=True)).first()
+        if not bank_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Bank"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch =  request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            bank_subledger = CoASubAccounts.objects.filter(Q(title="Bank") & Q(is_adminonly=True)).first()
+            ledger = bank_subledger
+        else:
+            ledger = bank_subledger
+
+    elif subledgername == 'Cash':
+        cash_subledger = CoASubAccounts.objects.filter(Q(title="Cash") & Q(is_adminonly=True)).first()
+        if not cash_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Cash"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch =  request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            cash_subledger = CoASubAccounts.objects.filter(Q(title="Cash") & Q(is_adminonly=True)).first()
+            ledger = cash_subledger
+        else:
+            ledger = cash_subledger
+
+    elif subledgername == 'Service':
+        service_subledger = CoASubAccounts.objects.filter(Q(title="Service") & Q(is_adminonly=True)).first()
+        if not service_subledger:
+            data = CoASubAccounts()
+            ledgername = "SERVICES ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Service"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            service_subledger = CoASubAccounts.objects.filter(Q(title="Service") & Q(is_adminonly=True)).first()
+            ledger = service_subledger
+        else:
+            ledger = service_subledger
+
+    elif subledgername == 'Purchase Return':
+        purchase_return_subledger = CoASubAccounts.objects.filter(Q(title="Purchase Return") & Q(is_adminonly=True)).first()
+        if not purchase_return_subledger:
+            data = CoASubAccounts()
+            ledgername = "PURCHASE ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Purchase Return"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch =  request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            purchase_return_subledger = CoASubAccounts.objects.filter(Q(title="Purchase Return") & Q(is_adminonly=True)).first()
+            ledger = purchase_return_subledger
+        else:
+            ledger = purchase_return_subledger
+
+    elif subledgername == 'Sales Return':
+        sales_return_subledger = CoASubAccounts.objects.filter(Q(title="Sales Return") & Q(is_adminonly=True)).first()
+        if not sales_return_subledger:
+            data = CoASubAccounts()
+            ledgername = "SALES ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Sales Return"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch =  request.user.userprofile.branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            sales_return_subledger = CoASubAccounts.objects.filter(Q(title="Sales Return") & Q(is_adminonly=True)).first()
+            ledger = sales_return_subledger
+        else:
+            ledger = sales_return_subledger
+
+    else:
+        ledger = None
+
+    return ledger
+
+
 #for checking length of the items in form
 def check_status(string):
     pattern = re.compile(r"^status")
@@ -2590,6 +2791,14 @@ def compress_image(imagefile):
     return image_content
 
 
+
+
+
+
+
+
+
+
 # This function add purchase details entered by superadmin in (warehouse) Purchase Modal
 @login_required
 def addPurchase(request):
@@ -2777,7 +2986,9 @@ def addPurchase(request):
         transaction.invoice_number = request.POST["invoicenumber"]
         transaction.accounts = request.POST.get("supplier")
         transaction.remarks = ""
+        transaction.subledger = func_get_sub_ledgers(request,'Purchase')
         transaction.transactiondate = invoicedate
+        
         transaction.save()
 
     financial_statement = addaccounts.AccountStatement()
@@ -2801,6 +3012,8 @@ def addPurchase(request):
         "amountrecieved": data.amountrecieved,
         "paymentmode": data.paymentmode,
         "invoicedate": invoicedate,
+        "branch_wid":request.user.userprofile.branch,
+        'subledger' : func_get_sub_ledgers(request,'Purchase')
     }
 
     # purchase_ledger = ledgercli.LedgerBook(data.branch)
@@ -3064,6 +3277,8 @@ def addBulkPurchaseForm(request):
                         "invoicedate": datetime.strptime(
                             df["Bill Date"][i], "%d-%m-%Y"
                         ).strftime("%Y-%m-%d"),
+                        "branch_wid":request.user.userprofile.branch,
+                        'subledger' : func_get_sub_ledgers(request,'Purchase')
                     }
                     financial_statement.add_cashbook("Purchase", cashbook_params)
                     bill_no_list.append(df["Bill Number"][i])
@@ -3466,6 +3681,7 @@ def addBranchPurchase(request):
         transaction.accounts = request.POST.get("supplier")
         transaction.remarks = ""
         transaction.transactiondate = invoicedate
+        transaction.subledger = func_get_sub_ledgers(request,'Purchase')
         transaction.save()
 
     financial_statement = addaccounts.AccountStatement()
@@ -3491,6 +3707,8 @@ def addBranchPurchase(request):
         "amountrecieved": data.amountrecieved,
         "paymentmode": data.paymentmode,
         "invoicedate": invoicedate,
+        "branch_wid":request.user.userprofile.branch,
+         'subledger' : func_get_sub_ledgers(request,'Purchase')
     }
 
     financial_statement.add_cashbook("Purchase", cashbook_params)
@@ -3600,7 +3818,7 @@ def addPurchaseDue(request):
             transaction.accounts = purchase_obj.externalsupplier.name
         else:
             transaction.accounts = purchase_obj.supplier.name
-
+        transaction.subledger = func_get_sub_ledgers(request,'Purchase')
         transaction.remarks = ""
         transaction.save()
 
@@ -3635,6 +3853,8 @@ def addPurchaseDue(request):
         "amountrecieved": float(amountrecieved),
         "paymentmode": paymentmode,
         "invoicedate": date.today(),
+        "branch_wid":request.user.userprofile.branch,
+         'subledger' : func_get_sub_ledgers(request,'Purchase')
     }
 
     financial_statement.add_cashbook("Purchase", cashbook_params)
@@ -4531,6 +4751,7 @@ def changePurchaseReturnStatus(request):
         transaction.accounts = supplier
         transaction.remarks = ""
         transaction.transactiondate = datetime.now()
+        transaction.subledger = func_get_sub_ledgers(request,'Purchase Return')
         transaction.save()
 
     financial_statement = addaccounts.AccountStatement()
@@ -4549,6 +4770,8 @@ def changePurchaseReturnStatus(request):
         "userbranch": branch,
         "nettotal": nettotal,
         "paymentmode": paymentmode,
+        "branch_wid":request.user.userprofile.branch,
+         'subledger' : func_get_sub_ledgers(request,'Purchase Return')
     }
 
     financial_statement.add_cashbook("PurchaseReturn", cashbook_params)
@@ -5840,6 +6063,21 @@ def stockadjustment(request):
     return render(request, "stockadjustment.html", context)
 
 
+
+@login_required
+def openingstock(request):
+
+    if request.user.is_superuser:
+        branches = Branch.objects.filter(Q(branchtype="Own") | Q(name="WAREHOUSE"))
+    else:
+        branches = [request.user.userprofile.branch]
+
+    context = {
+        "branches": branches,
+    }
+    return render(request, "openingstock.html", context)
+
+
 def get_product_list_by_branchid(request):
     received_data = QueryDict(request.body)
     branchid = received_data.get("branchid")
@@ -6725,6 +6963,7 @@ def addSalesReturn(request):
     transaction.accounts = request.POST["cust"]
     transaction.remarks = ""
     transaction.transactiondate = datetime.now()
+    transaction.subledger = func_get_sub_ledgers(request,'Sales Return')
     transaction.save()
 
     financial_statement = addaccounts.AccountStatement()
@@ -6747,6 +6986,8 @@ def addSalesReturn(request):
         "userbranch": request.user.userprofile.branch,
         "amount": float(request.POST["nettotal-sale"]),
         "paymentmode": request.POST["paymentmode"],
+        "branch_wid":request.user.userprofile.branch,
+         'subledger' : func_get_sub_ledgers(request,'Sales Return')
     }
 
     financial_statement.add_cashbook("SaleReturn", cashbook_params)
@@ -7438,6 +7679,7 @@ def addSale(request):
             transaction.accounts = f"{cust_obj.firstname} {cust_obj.lastname}"
         transaction.remarks = ""
         transaction.transactiondate = invoicedate
+        transaction.subledger = func_get_sub_ledgers(request,'Sales')
         transaction.save()
 
     ####################### send whatsapp message #########
@@ -7472,6 +7714,8 @@ def addSale(request):
         "amountrecieved": data.amountrecieved,
         "paymentmode": data.paymentmode,
         "invoicedate": invoicedate,
+        "branch_wid":request.user.userprofile.branch,
+         'subledger' : func_get_sub_ledgers(request,'Sales')
     }
 
     financial_statement.add_cashbook("Sale", cashbook_params)
@@ -7755,6 +7999,7 @@ def addSaleDue(request):
         transaction.accounts = sale_obj.customer
         transaction.remarks = ""
         transaction.transactiondate = datetime.now()
+        transaction.subledger = func_get_sub_ledgers(request,'Sales')
         transaction.save()
 
         sales = Sale.objects.filter(saleid=saleid)
@@ -7783,6 +8028,8 @@ def addSaleDue(request):
         "paymentmode": paymentmode,
         "amountrecieved": amountrecieved,
         "userbranch": request.user.userprofile.branch,
+        "branch_wid":request.user.userprofile.branch,
+         'subledger' : func_get_sub_ledgers(request,'Sales')
     }
 
     financial_statement.add_cashbook("SaleDue", cashbook_params)
@@ -12090,6 +12337,7 @@ def add_payment(request):
         transaction.accounts = "NA"
         transaction.remarks = request.POST.get("description")
         transaction.transactiondate = datetime.now()
+        transaction.subledger = debit_acc
         transaction.save()
 
         financial_statement = addaccounts.AccountStatement()
@@ -12127,6 +12375,8 @@ def add_payment(request):
             "amount": data.amount,
             "paymentmode": data.paymentmode,
             "category": "PAYMENT",
+            "branch_wid":request.user.userprofile.branch,
+             'subledger' : debit_acc
         }
 
         financial_statement.add_cashbook(transaction_type, cashbook_params)
@@ -12325,6 +12575,7 @@ def add_journal(request):
         credit_account_head_title = credit_account_head_title2 = CoASubAccounts.objects.filter(
             title=credit_account
         ).first()
+        cred = credit_account_head_title
         if credit_account_head_title:
             credit_account_head_title = credit_account_head_title.title
         else:
@@ -12337,6 +12588,7 @@ def add_journal(request):
         debit_account_head_title = debit_account_head_title2 = CoASubAccounts.objects.filter(
             title=debit_account
         ).first()
+        deb = debit_account_head_title
         if debit_account_head_title:
             debit_account_head_title = debit_account_head_title.title
         else:
@@ -12353,6 +12605,7 @@ def add_journal(request):
         transaction.accounts = debit_account_head_title
         transaction.remarks = request.POST.get("narration")
         transaction.transactiondate = datetime.now()
+        transaction.subledger = deb
         transaction.save()
 
         transaction = Transaction()
@@ -12365,6 +12618,7 @@ def add_journal(request):
         transaction.accounts = credit_account_head_title
         transaction.remarks = request.POST.get("narration")
         transaction.transactiondate = datetime.now()
+        transaction.subledger = cred
         transaction.save()
 
         # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
@@ -12417,21 +12671,27 @@ def add_journal(request):
         #     # Assuming Cash Outflow
         #     payment_type = "Payment"
 
-        if debit_account_head == 'ASSET':
-            payment_type = 'Receipt'
-        elif credit_account_head == 'ASSET':
-            payment_type = 'Payment'
+        ################ COMMENDED ON 28-12-2024 ###################
+        # if debit_account_head == 'ASSET':
+        #     payment_type = 'Receipt'
+        #     subledger = data.debitaccount
+        # elif credit_account_head == 'ASSET':
+        #     payment_type = 'Payment'
+        #     subledger = data.creditaccount
 
 
-        cashbook_params = {
-            "payment_type": payment_type,
-            "userbranch": data.branch,
-            "amount": data.amount,
-            "mode": data.mode,
-            "category": "JOURNAL",
-        }
+        # cashbook_params = {
+        #     "payment_type": payment_type,
+        #     "userbranch": data.branch,
+        #     "amount": data.amount,
+        #     "mode": data.mode,
+        #     "category": "JOURNAL",
+        #     "branch_wid":request.user.userprofile.branch,
+        #     'subledger' : subledger
+        # }
+        ################ COMMENDED ON 28-12-2024 ###################
 
-        financial_statement.add_cashbook(transaction_type, cashbook_params)
+        # financial_statement.add_cashbook(transaction_type, cashbook_params)
 
         # journal_ledger = ledgercli.LedgerBook(data.branch)
 
@@ -12534,6 +12794,7 @@ def add_receipt(request):
         transaction.accounts = "NA"
         transaction.remarks = request.POST.get("description")
         transaction.transactiondate = datetime.now()
+        transaction.subledger = credit_acc
         transaction.save()
 
         financial_statement = addaccounts.AccountStatement()
@@ -12569,6 +12830,8 @@ def add_receipt(request):
             "amount": data.amount,
             "paymentmode": data.receiptmode,
             "category": "RECEIPT",
+            "branch_wid":request.user.userprofile.branch,
+            "subledger":data.creditaccount
         }
 
         financial_statement.add_cashbook(transaction_type, cashbook_params)
@@ -16319,6 +16582,7 @@ def addService(request):
                 transaction.accounts = f"{firstname} {lastname}"
                 transaction.remarks = ""
                 transaction.transactiondate = datetime.now()
+                transaction.subledger = func_get_sub_ledgers(request,'Service')
                 transaction.save()
 
       
@@ -16356,6 +16620,8 @@ def addService(request):
         "amountrecieved": request.POST.get("amountrecievedservice"),
         "paymentmode": paymentmode,
         "invoicedate": date.today(),
+        "branch_wid":request.user.userprofile.branch,
+        'subledger' : func_get_sub_ledgers(request,'Service')
     }
 
     financial_statement.add_cashbook("ServiceEntry", cashbook_params)
@@ -17868,6 +18134,7 @@ def serviceBillingCheckout(request, servicerefnumber):
                     transaction.accounts = f"{firstname} {lastname}"
                     transaction.remarks = ""
                     transaction.transactiondate = datetime.now()
+                    transaction.subledger = func_get_sub_ledgers(request,'Service')
                     transaction.save()
 
     if total != None:
@@ -17968,6 +18235,8 @@ def serviceBillingCheckout(request, servicerefnumber):
                         "amountrecieved": recieved_amount,
                         "paymentmode": paymentmode,
                         "invoicedate": date.today(),
+                        "branch_wid":request.user.userprofile.branch,
+                        'subledger' : func_get_sub_ledgers(request,'Service')
                     }
 
                     financial_statement.add_cashbook("ServiceCheckout", cashbook_params)
@@ -21398,6 +21667,7 @@ def serviceUpdate_old(request):
             transaction.invoice_number = servicerefnumber
             transaction.accounts = f"{firstname} {lastname}"
             transaction.remarks = ""
+            transaction.subledger = func_get_sub_ledgers(request,'Service')
             transaction.save()
 
         for i in range(1, 11):
@@ -21735,6 +22005,7 @@ def serviceUpdate(request):
                 transaction.invoice_number = servicerefnumber
                 transaction.accounts = f"{firstname} {lastname}"
                 transaction.remarks = ""
+                transaction.subledger = func_get_sub_ledgers(request,'Service')
                 transaction.save()
 
         for i in range(1, 101):
@@ -27092,6 +27363,9 @@ def purchasereturntaxreport(request):
         "all_branches": all_branches,
         "search_params": search_params,
     }
+
+
+    print("purchase return total tax - ",context)
 
     return render(request, "purchasereturntaxreport.html", context)
 
