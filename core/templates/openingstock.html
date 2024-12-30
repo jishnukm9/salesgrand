@@ -1,0 +1,465 @@
+{% extends "navbar.html" %} {% block content %}
+
+<style>
+  #purchaseConfirmModal .modal-body {
+      max-height: calc(100vh - 210px);
+      overflow-y: auto;
+  }
+  
+  #purchaseConfirmModal .table td,
+  #purchaseConfirmModal .table th {
+      padding: 0.5rem;
+      vertical-align: middle;
+  }
+  
+  #purchaseConfirmModal .list-group-item {
+      padding: 0.75rem 1.25rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content {
+      font-size: 0.9rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content h6 {
+      color: #4555B9;
+      font-size: 1rem;
+  }
+  
+  #purchaseConfirmModal .bill-details p {
+      margin-bottom: 0.25rem;
+  }
+  
+  #purchaseConfirmModal .table thead th {
+      background-color: #e2e6fb3d;
+      font-weight: 600;
+  }
+  
+  #purchaseConfirmModal .list-group-item:last-child {
+      font-weight: bold;
+      background-color: #e2e6fb3d;
+  }
+
+
+
+
+
+
+
+
+
+   /* Add to your existing styles */
+   #purchaseConfirmModal .modal-body {
+      max-height: calc(100vh - 210px);
+      overflow-y: auto;
+  }
+  
+  #purchaseConfirmModal .table td,
+  #purchaseConfirmModal .table th {
+      padding: 0.5rem;
+      vertical-align: middle;
+  }
+  
+  #purchaseConfirmModal .list-group-item {
+      padding: 0.75rem 1.25rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content {
+      font-size: 0.9rem;
+  }
+  
+  #purchaseConfirmModal .confirm-content h6 {
+      color: #4555B9;
+      font-size: 1rem;
+  }
+  
+  #purchaseConfirmModal .bill-details p {
+      margin-bottom: 0.25rem;
+  }
+  
+  #purchaseConfirmModal .table thead th {
+      background-color: #e2e6fb3d;
+      font-weight: 600;
+  }
+  
+  #purchaseConfirmModal .list-group-item:last-child {
+      font-weight: bold;
+      background-color: #e2e6fb3d;
+  }
+  </style>
+
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+            class="d-sm-flex align-items-center justify-content-between border-bottom"
+          >
+            <nav class="nav nav-borders">
+              <a class="nav-link active ps-0 pe-0 ms-0 me-3"  style="color: #4555B9 ; border-bottom:2px solid #4555B9;"  href="{% url 'openingstock' %}"> Opening Stock </a>
+            
+          </nav>
+          </div>
+          <br>
+        <div class="card  mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;">
+          <div class="card-header py-3  bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="m-0 font-weight-bold " style="color:#2c2e2f;"> <strong>Opening Stock Entry </strong> </h5>
+
+              <div>
+                {% if messages %}
+                  {% for message in messages %}
+                    <span class="text-danger" style="font-size: 13px; ">{{ message }}</span>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+
+                  <form id="openingstockForm" onsubmit="return false"  action="{% url 'addopeningstock' %}" method="POST" >
+                {% csrf_token %}
+                  
+                        <div class="table-responsive borderr p-4 pt-0 row"> 
+                            
+                          <table
+                        class="table table-bordered   opening-stock-entry-table table-responsive"
+                        
+                      
+                      >
+                        <thead    >
+                          <tr style="background-color: #e2e6fb3d">
+                            <th  width="2%"></th>
+                  
+                            <th width="59%">Produt <span style="color:#e2e6fb3d;">-----------------------</span> </th>
+                            <th width="3%">Adjustment<span style="color:#e2e6fb3d;">----</span></th>
+                            <th width="7%" class="puchase-qty-right ">Quantity</th>
+                           
+                            
+                            <th width="2%" class="puchase-qty-left">
+                             
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody >
+                          <tr style="background-color:#fff;">
+                            <td>1</td>
+                            <td width="20%;"> 
+                              <input
+                                type="text"
+                                id="search-input-name1"
+                                autocomplete="off"
+                                name="name1"
+                                list="name1"
+                                class="form-control no-spinner"
+                                placeholder="Select Product"
+                             
+                              />
+                              <datalist id="name1">
+                                {% for product in products %}
+                                <option value="{{ product.name }}">
+                                  {{ product.name }}
+                                </option>
+                                {% endfor %}
+                              </datalist>
+                            </td>
+                            <td>
+                                              
+
+                              <select  required name="adjustment1" class="form-control border ">
+
+                                <option value="Decrease">Decrease</option>
+                                <option selected value="Increase">Increase</option>
+
+                              </select>
+                            </td>
+                            <td class="puchase-qty-right">
+                              <input
+                                type="number"
+                                name="quantity1"
+                                min="1"
+                                class="form-control no-spinner"
+                                autocomplete="off"
+                         
+                              />
+                            </td>
+                            
+                          
+                           
+
+                            
+                           
+                                               
+                            <td class="puchase-qty-left ">
+                              <span class="deletebtn"><i class="fa-solid fa-minus"></i></span>
+                             
+                            </td>
+                            </tr>
+                        </tbody>
+                      </table>
+
+                      <div class="d-flex justify-content-end">
+                        <span class="addrowbtn fs-7 " style="font-size:14px;"   >Add Row</span>
+                      </div>
+    
+                        </div>
+                  <br>
+
+                  <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary mt-3 float-right text-white fw-bold" type="submit">Save</button>
+                  
+                </div>
+                 
+
+
+                </form>
+              </div>
+              <div>
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+
+
+
+
+$(document).ready(function () {
+  const openingStockFormValidation = function () {
+    $("#openingstockForm").submit(function (event) {
+      event.preventDefault(); // Prevent default form submission
+      
+      var submitStatus = false; // Flag to track validation failures
+      
+      // Check for duplicate products and empty product names
+      var products = [];
+      $(".opening-stock-entry-table tbody tr").each(function () {
+        var product = $(this).find('[name^="name"]').val();
+        
+        // Check if product name is empty
+        if (!product || product.trim() === "") {
+          submitStatus = true;
+          alert("Please select a product for all rows.");
+          return false; // Stop further processing
+        }
+        
+        // Check for duplicates
+        if (products.includes(product)) {
+          submitStatus = true;
+          alert("Duplicate product found. Each product can only be added once.");
+          return false;
+        }
+        products.push(product);
+        
+        // Check quantity
+        var quantity = $(this).find('[name^="quantity"]').val();
+        if (quantity === "" || quantity === undefined || quantity == "") {
+          submitStatus = true;
+          alert("Quantity is required for all products.");
+          return false;
+        }
+        
+        // Validate quantity is greater than 0
+        if (parseInt(quantity) <= 0) {
+          submitStatus = true;
+          alert("Quantity should be greater than 0.");
+          return false;
+        }
+      });
+
+      // If no validation failures found, submit the form
+      if (!submitStatus) {
+        // Remove the onsubmit="return false" from the form
+        $(this).removeAttr('onsubmit');
+        // Submit the form
+        this.submit();
+      }
+    });
+  };
+
+  // Initialize form validation
+  openingStockFormValidation();
+});
+
+
+const productFetchFucntionOpeningStock = function (num) {
+  $(`.opening-stock-entry-table input[name="name${num}"]`).on("change input", function () {
+    const productname = $(this).val();
+
+    let csrftoken = csrf_token;
+
+    $.ajax({
+      url: "/get_product_details/",
+      type: "POST",
+      data: { productname: productname },
+      contentType: "application/json",
+      headers: {
+        "X-CSRFToken": csrftoken,
+      },
+      success: function (response) {
+      
+        if (Object.keys(response).length == 0) {
+          // Clear the product selection
+          $(`.opening-stock-entry-table input[name="name${num}"]`).val("");
+          
+          // Clear other fields
+         
+          $(`.opening-stock-entry-table input[name="quantity${num}"]`).val("");
+    
+
+          // Show error message
+          $.toast({
+            heading: "Error",
+            text: "Product not found!",
+            icon: "error",
+            bgColor: "red",
+            textColor: "white",
+            position: "top-center",
+            hideAfter: 4000,
+          });
+        }
+
+        $('.opening-stock-entry-table input[name^="quantity"]').trigger('change');
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        console.error("Error sending data:", errorThrown);
+        // Clear selection on error
+        $(`.opening-stock-entry-table input[name="name${num}"]`).val("");
+      },
+    });
+  });
+};
+
+
+// This script append new row to purchase table
+
+$(document).ready(function () {
+  
+
+  productFetchFucntionOpeningStock("1");
+
+  // Use event delegation to handle click events for dynamically added buttons
+  $(document).on("click", ".addrowbtn", function () {
+    const lastRow = $(".opening-stock-entry-table tbody tr:last");
+    
+
+      // Check how many rows currently exist
+      let rowCount = $(".opening-stock-entry-table tbody tr").length;
+    // Check if the last row's input with name starting with "name" has a value
+    if (lastRow.find('[name^="name"]').val() !== "") {
+      rowCount++;
+
+      const newRow = lastRow.clone(); // Copy the last row
+
+      // Update the row number in the new row
+      newRow.find("td:first").text(rowCount);
+
+      // Increment the numeric part of input names and IDs in the new row
+      newRow.find('[name^="name"]').attr("name", `name${rowCount}`);
+  
+      newRow.find('[name^="quantity"]').attr("name", `quantity${rowCount}`);
+      newRow.find('[name^="adjustment"]').attr("name", `adjustment${rowCount}`);
+      newRow
+        .find('[id^="search-input-name"]')
+        .attr("id", `search-input-name${rowCount}`);
+      newRow.find('[list^="name"]').attr("list", `name${rowCount}`);
+      newRow.find('[id^="name"]').attr("id", `name${rowCount}`);
+
+      // Clear the input values in the new row (optional)
+      newRow.find('input[type="text"]').val("");
+      newRow.find('input[type="number"]').val("");
+      newRow.find('select[name^="adjustment"]').val("Increase");
+
+      lastRow.find(".addrowbtn").remove();
+
+      lastRow
+        .find(".puchase-qty-left")
+        .html(
+          '<span class="deletebtn"><i class="fa-solid fa-minus"></i></span>',
+        );
+
+      // Append the new row to the table body
+      $(".opening-stock-entry-table tbody").append(newRow);
+
+      productFetchFucntionOpeningStock(`${rowCount}`);
+    }
+  });
+});
+
+
+
+
+$(document).ready(function () {
+  // Function to update the attributes based on the row index
+  function updateAttributes(row) {
+    $(row)
+      .find("td:first")
+      .text(row.index() + 1);
+    $(row)
+      .find('[name^="name"]')
+      .attr("name", `name${row.index() + 1}`);
+
+      $(row).find('[name^="adjustment"]').attr("name", `adjustment${index}`);
+    $(row)
+      .find('[name^="quantity"]')
+      .attr("name", `quantity${row.index() + 1}`);
+    $(row)
+      .find('[id^="search-input-name"]')
+      .attr("id", `search-input-name${row.index() + 1}`);
+    $(row)
+      .find('[list^="name"]')
+      .attr("list", `name${row.index() + 1}`);
+    $(row)
+      .find('[id^="name"]')
+      .attr("id", `name${row.index() + 1}`);
+
+      productFetchFucntionOpeningStock(`${row.index() + 1}`);
+  }
+ 
+
+
+  $(document).on("click", ".deletebtn", function () {
+    var row = $(this).closest("tr");
+    
+    // Check if it's the last row
+    if ($(".opening-stock-entry-table tbody tr").length === 1) {
+        alert("You cannot delete the last row!");
+        return; // Exit the function to prevent deletion
+    }
+
+    // Remove the row
+    row.remove();
+
+
+    // Update attributes for remaining rows
+    $(".opening-stock-entry-table tbody tr").each(function () {
+        updateAttributes($(this));
+    });
+});
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+</script>
+
+{% endblock %}

@@ -2309,10 +2309,19 @@ $(document).ready(function () {
   });
 
   // Calculate discount when discount amount changes
-  $('input[name="discount"]').on("input change", function () {
+  $('input[name="discount"]').on("input", function () {
+    let discount = parseFloat($(this).val()) || 0;
+    let totalAmount = parseFloat($('input[name="totalbillingamount"]').val()) || 0;
+
+    if(discount > totalAmount){
+      alert("Discount cannot be greater than total amount");
+      $(this).val(0);
+      discount = 0;
+    }
+
     restoreOriginalPrices();
     calculateDiscount();
-    calculateNetAmount();
+    calculateNetAmount(); 
     dueCalculation();
   });
 
@@ -6035,13 +6044,13 @@ $(document).ready(function () {
       type: "POST",
       data: { phone: mobile },
       contentType: "application/json",
-
       headers: {
         "X-CSRFToken": csrftoken,
       },
       success: function (response) {
         console.log("Data sent successfully!", response);
 
+        // Set the values
         $("#firstnameservice").val(response.firstname);
         $("#lastnameservice").val(response.lastname);
         $("#addressservice").val(response.address);
@@ -6049,8 +6058,17 @@ $(document).ready(function () {
         $("#mobilenumber").val(response.phone);
         $("#customergst").val(response.vatnumber);
         $("#customertypeservice").val(response.customertype).change();
+
+        // Make input fields readonly and disable select
+        $("#firstnameservice").prop('readonly', true);
+        $("#lastnameservice").prop('readonly', true);
+        $("#addressservice").prop('readonly', true);
+        $("#mobilenumber").prop('readonly', true);
+        $("#customergst").prop('readonly', true);
+        $("#customertypeservice").prop('disabled', true);  // Keep disabled for select
       },
       error: function (xhr, textStatus, errorThrown) {
+        // Clear all fields
         $("#firstnameservice").val("");
         $("#lastnameservice").val("");
         $("#addressservice").val("");
@@ -6058,8 +6076,16 @@ $(document).ready(function () {
         $("#mobilenumber").val("");
         $("#customergst").val("");
         $("#customertypeservice").val("").change();
+
+        // Remove readonly/disabled attributes
+        $("#firstnameservice").prop('readonly', false);
+        $("#lastnameservice").prop('readonly', false);
+        $("#addressservice").prop('readonly', false);
+        $("#mobilenumber").prop('readonly', false);
+        $("#customergst").prop('readonly', false);
+        $("#customertypeservice").prop('disabled', false);
+
         console.error("Error sending data:", errorThrown);
-        // Handle the error case
       },
     });
   });
@@ -6087,13 +6113,7 @@ $(document).ready(function () {
         $("#addressservice").val(response.address);
         // $("#customeridservice").val(response.customerid);
         $("#mobilenumber").val(response.phone);
-        //   $('#sale-search-input-product1 option').each(function() {
-
-        //     if ($(this).val() === response.product) {
-
-        //         $(this).attr('selected', 'selected');
-        //     }
-        // });
+      
       },
       error: function (xhr, textStatus, errorThrown) {
         $("#firstnameservice").val("");
@@ -6107,6 +6127,11 @@ $(document).ready(function () {
     });
   });
 });
+
+
+
+
+
 
 // this is for date picker
 
@@ -6351,6 +6376,9 @@ $(document).ready(function () {
               return false;
           }
       }
+
+
+      $("#customertypeservice").prop('disabled', false);
 
      
 

@@ -6072,10 +6072,129 @@ def openingstock(request):
     else:
         branches = [request.user.userprofile.branch]
 
+    all_products = Products.objects.all()
+
     context = {
         "branches": branches,
+        "products":all_products
     }
     return render(request, "openingstock.html", context)
+
+
+
+
+@login_required
+def addOpeningStock(request):
+
+    check_status_with_constant = partial(check_status_common, attribute="quantity")
+    length_count = list(filter(check_status_with_constant, request.POST.keys()))
+
+    ledger = Ledger()
+    cashbook = CashBook()
+    currentuser = request.user
+
+    branch = UserProfile.objects.get(user=currentuser).branch
+
+
+    for i in range(1, ((len(length_count)+1))):
+        i = str(i)
+
+        productname = request.POST.get("name" + i)
+        adjustment = request.POST.get("adjustment" + i)
+
+        if not productname:
+            continue  # Assuming no product supplied in the html form.4
+
+        product_obj = Products.objects.filter(
+            Q(name=productname) & Q(branch=request.user.userprofile.branch)
+        ).first()
+
+
+        productquantity = request.POST["quantity" + i]
+
+        sellingprice = product_obj.sellingprice
+        price = product_obj.price
+
+        productid = (
+            Products.objects.filter(
+                Q(name=productname) & Q(branch=request.user.userprofile.branch)
+            )
+            .first()
+            .id
+        )
+
+
+
+        print("prod number",i)
+        print("productname",productname)
+        print("productquantity",productquantity)
+        print("sellingprice",sellingprice)
+        print("price",price)
+        print("productid",productid)
+        print("adjustment",adjustment)
+
+
+        def func_add_stock_transaction(tr_type,quantity):
+            stocktr = StockTransaction()
+            stocktr.product = Products.objects.filter(
+                Q(name=productname) & Q(branch=request.user.userprofile.branch)
+            ).first()
+            stocktr.initial_quantity = 0
+            stocktr.quantity = int(quantity)
+            stocktr.transactiontype = tr_type
+            stocktr.branch = request.user.userprofile.branch
+            stocktr.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
+
+            stocktr.reference_number  = 'NA'
+            stocktr.transaction_category  = 'Opening Strock Entry'
+            stocktr.save()
+            return 0
+
+
+        stock = BranchStock()
+        if BranchStock.objects.filter(
+            Q(name_id=productid) & Q(branch=request.user.userprofile.branch)
+        ):
+            stock = BranchStock.objects.filter(
+                Q(name_id=productid) & Q(branch=request.user.userprofile.branch)
+            ).first()
+            qty = stock.quantity
+
+            if adjustment == "Increase":
+                stock.quantity = int(qty) + int(productquantity)
+                func_add_stock_transaction('Add',productquantity)
+
+            elif adjustment == "Decrease":
+                new_qty = int(qty) - int(productquantity)
+                if new_qty < 0:
+                    new_qty = 0
+                    func_add_stock_transaction('Sub',qty)
+                stock.quantity = new_qty
+
+            stock.salerate = float(sellingprice)
+            stock.purchaserate = float(price)
+            stock.save()
+        else:
+            if adjustment == "Increase":
+                stock.name = Products.objects.filter(
+                    Q(name=productname) & Q(branch=request.user.userprofile.branch)
+                ).first()
+                stock.quantity = int(productquantity)
+                stock.branch = request.user.userprofile.branch
+                stock.salerate = float(sellingprice)
+                stock.purchaserate = float(price)
+                stock.save()
+
+                func_add_stock_transaction('Add',productquantity)
+
+
+    return redirect('branchstock')
+
+
+
+
+
+
 
 
 def get_product_list_by_branchid(request):
@@ -6208,14 +6327,20 @@ def confirmstockadjustment(request):
 
     if adjustment == "Decrease":
 
-  
-
-        stock.quantity = current_quantity - quantity
-
+        new_qty = current_quantity - quantity
+        if new_qty < 0:
+            stock.quantity = 0
+        else:
+            stock.quantity = current_quantity - quantity
         stocktr = StockTransaction()
         stocktr.product = product
         stocktr.initial_quantity = 0
-        stocktr.quantity = quantity
+
+        if new_qty < 0:
+            stocktr.quantity = current_quantity
+        else:
+            stocktr.quantity = quantity
+
         stocktr.transactiontype = "Sub"
         stocktr.branch = branch
         try:
@@ -6229,11 +6354,7 @@ def confirmstockadjustment(request):
         stock.save()
 
     elif adjustment == "Increase":
-
-    
-
         stock.quantity = current_quantity + quantity
-
         stocktr = StockTransaction()
         stocktr.product = product
         stocktr.initial_quantity = 0
@@ -16287,14 +16408,13 @@ def addService(request):
                     func_create_customer_ledger(cust_obj,newcustomerid,request)
 
 
-                try:
-                    if cust_obj:
-                        ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
-                        cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
-                except:
-                    pass
-            # except:
-            #     pass
+                # try:
+                if cust_obj:
+                    ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
+                    cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                # except:
+                #     pass
+
 
             if memodate != None and memodate != "":
                 memodate = datetime.strptime(memodate, "%d-%m-%Y").strftime("%Y-%m-%d")
@@ -16361,10 +16481,10 @@ def addService(request):
 
             service = Service()
 
-            try:
-                service.customer_ledger = cust_ledger
-            except:
-                pass
+            # try:
+            service.customer_ledger = cust_ledger
+            # except:
+            #     pass
 
             if technician:
                 service.technician = User.objects.get(username=technician)
@@ -16675,7 +16795,7 @@ def addService(request):
         "amountrecieved": request.POST.get("amountrecievedservice"),
         "duebalance": due,
         "paymentmode": paymentmode,
-        "customer":customer_ledger
+        "customer":cust_ledger
     }
 
     financial_statement.add_generalledger("ServiceEntry", general_ledger_params)
