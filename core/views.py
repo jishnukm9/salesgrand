@@ -6196,12 +6196,14 @@ def addOpeningStock(request):
                 if adjustment == "Increase":
                     new_val = current_val + (float(productquantity) * float(price))
                     opening_stock_value_obj.value = new_val
+                    opening_stock_value_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                     opening_stock_value_obj.save()
                 elif adjustment == 'Decrease':
                     new_val = current_val - (float(productquantity) * float(price))
                     if new_val < 0:
                         new_val = 0
                     opening_stock_value_obj.value = new_val
+                    opening_stock_value_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                     opening_stock_value_obj.save()
             else:
                 if adjustment == "Increase":
@@ -6209,6 +6211,7 @@ def addOpeningStock(request):
                     opening_stock_obj.ledger = ob_ledger
                     opening_stock_obj.value = float(productquantity) * float(price)
                     opening_stock_obj.branch = request.user.userprofile.branch
+                    opening_stock_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                     opening_stock_obj.save()
             #########################################
         else:
@@ -6232,11 +6235,13 @@ def addOpeningStock(request):
                     if adjustment == "Increase":
                         new_val = current_val + (float(productquantity) * float(price))
                         opening_stock_value_obj.value = new_val
+                        opening_stock_value_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                         opening_stock_value_obj.save()
                     elif adjustment == 'Decrease':
                         new_val = current_val - (float(productquantity) * float(price))
                         if new_val < 0:
                             new_val = 0
+                        opening_stock_value_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                         opening_stock_value_obj.value = new_val
                         opening_stock_value_obj.save()
                 else:
@@ -6245,6 +6250,7 @@ def addOpeningStock(request):
                         opening_stock_obj.ledger = ob_ledger
                         opening_stock_obj.value = float(productquantity) * float(price)
                         opening_stock_obj.branch = request.user.userprofile.branch
+                        opening_stock_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                         opening_stock_obj.save()
                 #########################################
 
@@ -31356,9 +31362,15 @@ def balancesheet(request):
     ########################################### 30-12-2024 ################################
 
     opening_stock_list_equity =[]
+    # print("start date",startdate,"enddate",enddate)
+    from datetime import timedelta
+
+    new_enddate = enddate + timedelta(days=1)
 
     opening_stock_obj_new = OpeningStockValue.objects.filter(Q(created_date__gte=startdate)
-        & Q(created_date__lte=enddate)).first()
+        & Q(created_date__lte= new_enddate)).first()
+
+    # print("opening stock balance",opening_stock_obj_new)
     if opening_stock_obj_new:
         acc_key = opening_stock_obj_new.ledger.title.replace(" ","_")
         opening_stock_list_equity.append({acc_key:opening_stock_obj_new.value})
@@ -31523,13 +31535,13 @@ def balancesheet(request):
                 )
 
 
-    print("grouped equity 1",grouped_equity)
+    # print("grouped equity 1",grouped_equity)
 
     grouped_assets = process_grouped_accounts(grouped_assets)
     grouped_liabilities = process_grouped_accounts(grouped_liabilities)
     grouped_equity = process_grouped_accounts(grouped_equity)
 
-    print("grouped equity 2",grouped_equity)
+    # print("grouped equity 2",grouped_equity)
 
     data = Sale.objects.filter(Q(branch=homebranch)& Q(invoicedate__gte=startdate)
         & Q(invoicedate__lte=enddate)).order_by("-pk")

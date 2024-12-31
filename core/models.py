@@ -1667,8 +1667,8 @@ class OpeningStockValue(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     branch = models.ForeignKey(Branch, on_delete=models.PROTECT, related_name="opening_stock_value")
 
-    def __str__(self):
-        return self.ledger.name
+    # def __str__(self):
+    #     return self.ledger
 
 
 
