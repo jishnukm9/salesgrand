@@ -1434,6 +1434,7 @@ class StockTransaction(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     reference_number = models.CharField(max_length=200,default=None,null=True,blank=True)
     transaction_category = models.CharField(max_length=200,default=None,null=True,blank=True)
+    is_opening_stock = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if self.product is not None:
@@ -1658,6 +1659,19 @@ class WhatsappStatus(models.Model):
             return "Active"
         else:
             return "InActive"
+
+
+class OpeningStockValue(models.Model):
+    ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="opening_stock_value")
+    value = models.FloatField()
+    created_date = models.DateTimeField(default=timezone.now)
+    branch = models.ForeignKey(Branch, on_delete=models.PROTECT, related_name="opening_stock_value")
+
+    def __str__(self):
+        return self.ledger.name
+
+
+
 
 
 

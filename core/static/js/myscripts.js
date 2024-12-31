@@ -2302,6 +2302,17 @@ $(document).ready(function () {
 
   // Calculate discount when discount method changes
   $('select[name="discountmethod"]').on("change", function () {
+
+    let discountMethod = $(this).val();
+    if(discountMethod === "percentage"){
+      let discountValue = $('input[name="discount"]').val() || 0;
+      if(discountValue > 100){
+        alert("Discount cannot be greater than 100%");
+        $(this).val("flat");
+        return;
+      }
+    }
+
     restoreOriginalPrices();
     calculateDiscount();
     calculateNetAmount();

@@ -6125,13 +6125,25 @@ def addOpeningStock(request):
 
 
 
-        print("prod number",i)
-        print("productname",productname)
-        print("productquantity",productquantity)
-        print("sellingprice",sellingprice)
-        print("price",price)
-        print("productid",productid)
-        print("adjustment",adjustment)
+        def func_get_opening_balance_value(subledger_title,ledger_name):
+            subledger = CoASubAccounts.objects.filter(title=subledger_title).first()
+            if not subledger:
+                data = CoASubAccounts()
+                # ledgername = "RESERVES AND SURPLUS"
+                ledgername = ledger_name
+                ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+                title = f"{subledger_title}"
+                data.head_root = ledgerobj
+                gstring = ledgername.replace(" ", "_")
+                data.gstring = gstring
+                data.title = title
+                data.branch = request.user.userprofile.branch
+                data.description = title
+                data.save()
+
+                subledger = CoASubAccounts.objects.filter(title=title).first()
+            return subledger
+
 
 
         def func_add_stock_transaction(tr_type,quantity):
@@ -6144,7 +6156,7 @@ def addOpeningStock(request):
             stocktr.transactiontype = tr_type
             stocktr.branch = request.user.userprofile.branch
             stocktr.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
-
+            stocktr.is_opening_stock = True
             stocktr.reference_number  = 'NA'
             stocktr.transaction_category  = 'Opening Strock Entry'
             stocktr.save()
@@ -6174,6 +6186,31 @@ def addOpeningStock(request):
             stock.salerate = float(sellingprice)
             stock.purchaserate = float(price)
             stock.save()
+
+
+            #########################################
+            ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+            opening_stock_value_obj = OpeningStockValue.objects.filter(ledger=ob_ledger).first()
+            if opening_stock_value_obj:
+                current_val = opening_stock_value_obj.value
+                if adjustment == "Increase":
+                    new_val = current_val + (float(productquantity) * float(price))
+                    opening_stock_value_obj.value = new_val
+                    opening_stock_value_obj.save()
+                elif adjustment == 'Decrease':
+                    new_val = current_val - (float(productquantity) * float(price))
+                    if new_val < 0:
+                        new_val = 0
+                    opening_stock_value_obj.value = new_val
+                    opening_stock_value_obj.save()
+            else:
+                if adjustment == "Increase":
+                    opening_stock_obj = OpeningStockValue()
+                    opening_stock_obj.ledger = ob_ledger
+                    opening_stock_obj.value = float(productquantity) * float(price)
+                    opening_stock_obj.branch = request.user.userprofile.branch
+                    opening_stock_obj.save()
+            #########################################
         else:
             if adjustment == "Increase":
                 stock.name = Products.objects.filter(
@@ -6186,6 +6223,30 @@ def addOpeningStock(request):
                 stock.save()
 
                 func_add_stock_transaction('Add',productquantity)
+
+                #########################################
+                ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+                opening_stock_value_obj = OpeningStockValue.objects.filter(ledger=ob_ledger).first()
+                if opening_stock_value_obj:
+                    current_val = opening_stock_value_obj.value
+                    if adjustment == "Increase":
+                        new_val = current_val + (float(productquantity) * float(price))
+                        opening_stock_value_obj.value = new_val
+                        opening_stock_value_obj.save()
+                    elif adjustment == 'Decrease':
+                        new_val = current_val - (float(productquantity) * float(price))
+                        if new_val < 0:
+                            new_val = 0
+                        opening_stock_value_obj.value = new_val
+                        opening_stock_value_obj.save()
+                else:
+                    if adjustment == "Increase":
+                        opening_stock_obj = OpeningStockValue()
+                        opening_stock_obj.ledger = ob_ledger
+                        opening_stock_obj.value = float(productquantity) * float(price)
+                        opening_stock_obj.branch = request.user.userprofile.branch
+                        opening_stock_obj.save()
+                #########################################
 
 
     return redirect('branchstock')
@@ -30013,13 +30074,15 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
     additions_before_start = StockTransaction.objects.filter(
         created_date__lt=start_datetime,
         transactiontype='Add',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).aggregate(total=Sum('quantity'))['total'] or 0
 
     subtractions_before_start = StockTransaction.objects.filter(
         created_date__lt=start_datetime,
         transactiontype='Sub',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).aggregate(total=Sum('quantity'))['total'] or 0
 
     opening_stock = additions_before_start - subtractions_before_start
@@ -30029,14 +30092,16 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         created_date__gte=start_datetime,
         created_date__lte=end_datetime,
         transactiontype='Add',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).aggregate(total=Sum('quantity'))['total'] or 0
 
     subtractions_during_period = StockTransaction.objects.filter(
         created_date__gte=start_datetime,
         created_date__lte=end_datetime,
         transactiontype='Sub',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).aggregate(total=Sum('quantity'))['total'] or 0
 
     stock_change = additions_during_period - subtractions_during_period
@@ -30056,7 +30121,8 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
     additions_before_start_transactions = StockTransaction.objects.filter(
         created_date__lt=start_datetime,
         transactiontype='Add',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).values('purchase_rate', 'quantity')
     
     additions_value_before_start = sum(
@@ -30067,7 +30133,8 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
     subtractions_before_start_transactions = StockTransaction.objects.filter(
         created_date__lt=start_datetime,
         transactiontype='Sub',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).values('purchase_rate', 'quantity')
     
     subtractions_value_before_start = sum(
@@ -30084,7 +30151,8 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         created_date__gte=start_datetime,
         created_date__lte=end_datetime,
         transactiontype='Add',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).values('purchase_rate', 'quantity')
     
     additions_value_during_period = sum(
@@ -30096,7 +30164,8 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         created_date__gte=start_datetime,
         created_date__lte=end_datetime,
         transactiontype='Sub',
-        branch=branch
+        branch=branch,
+        is_opening_stock=False
     ).values('purchase_rate', 'quantity')
     
     subtractions_value_during_period = sum(
@@ -30123,6 +30192,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         & Q(invoicedate__gte=startdate)
         & Q(invoicedate__lte=enddate)
     ).order_by("-pk")
+
     purchaseid_set = set()
     purchase_obj = [
         purchase
@@ -30157,8 +30227,6 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
 
     # service income
 
-    # service_obj =Service.objects.filter(Q(branch=branch)& Q(memodate__gte=startdate)
-    #     & Q(memodate__lte=enddate)& Q(status='Delivered(Ok)'))
     statuses = [
         'Unassigned',
         'Unacknowledged',
@@ -30203,16 +30271,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
             service_income += (finalamount - total_tax)
     income_total += service_income
 
-    # spare cost
-    # spare_cost_total = 0
-    # for item in service_obj:
-    #     spare_obj = SpareParts.objects.filter(servicerefnumber=item.servicerefnumber)
-    #     if spare_obj:
-    #         for sub_item in spare_obj:
-    #             purchase_price = sub_item.purchase_price 
-    #             purchase_tax = float(sub_item.purchase_tax)
-    #             purchase_total = purchase_price + (purchase_price * (purchase_tax / 100))
-    #             spare_cost_total += purchase_total
+
 
     purchase_return = 0
     data = PurchaseReturn.objects.filter(Q(status='Processed') & Q(branch=branch)& Q(createddate__gte=startdate)
@@ -30250,22 +30309,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         sale_return += (ret.nettotal - ret.totaltax)
     expense_total += sale_return
   
-    # OTHER EXPENSE
 
-    # INCOME_SIDE = ['INCOMES',
-    # 'SALES ACCOUNT',
-    # 'SERVICE ACCOUNT',
-    # 'PURCHASE RETURN',
-    # ]
-    # EXPENSE_SIDE = [
-    #     'EXPENSES',
-    #     'PURCHASE ACCOUNTS',
-    #     'SALARY AND WAGES',
-    #     'SALES RETURN',
-    #     'TRADE EXPENSES',
-    #     'OTHER INDIRECT EXPENSES'
-        
-    # ]
 
     # Initialize dictionaries to store accumulated values for each account
     income_accounts = {}
@@ -30356,19 +30400,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         debit_acc_key = debit_acc.title.replace(" ", "_")
 
         # Get account heads
-        # if credit_acc in cash_list:
-        #     credit_acc_head = credit_acc
-        # elif CoASubAccounts.objects.filter(title=credit_acc).first():
-        #     credit_acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root.name
-        # else:
-        #     credit_acc_head = credit_acc
 
-        # if debit_acc in cash_list:
-        #     debit_acc_head = debit_acc
-        # elif CoASubAccounts.objects.filter(title=debit_acc).first():
-        #     debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
-        # else:
-        #     debit_acc_head = debit_acc
         
         # Process credit side
         if credit_acc.head_root.account_group.account_head.name == "INCOME":
@@ -30486,17 +30518,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
                
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase_p.purchaseid)
-                    # is_first = False
-                    # if tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
 
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase_p.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -30536,17 +30558,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
                    
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase_b.purchaseid)
-                    # is_first = False
-                    # if tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
-                   
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase_b.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
+
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -30590,17 +30602,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
                  
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase.purchaseid)
-                    # is_first = False
-                    # if tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
-                   
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
+
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -30643,17 +30645,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
        
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=purchase_p.purchasereturnid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = purchase_p.createddate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30689,17 +30681,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
 
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=sale.saleid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
-
-                # if is_first:
-                #     transaction_dict['createddate'] = sale.invoicedate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
+ 
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30731,17 +30713,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
               
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=sale.salereturnid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = sale.createddate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30775,17 +30747,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
            
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=expense.expenseid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = expense.expensedate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30819,17 +30781,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
              
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=payment.paymentid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = payment.paymentdate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30863,17 +30815,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
       
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=receipt.receiptid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = receipt.receiptdate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30916,17 +30858,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
          
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=journal.journalid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = journal.journaldate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30965,17 +30897,7 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
            
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=service.servicerefnumber)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = service.memodate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -30985,13 +30907,6 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
 
                 transaction_list.append(transaction_dict)
 
-
-    # if request.method == 'POST':
-        # if startdate:
-        #     startdate = datetime.strptime(startdate, "%d-%m-%Y").date()
-
-        # if enddate:
-        #     enddate = datetime.strptime(enddate, "%d-%m-%Y").date()
 
     if startdate and enddate:
         transaction_list  = sorted(
@@ -31325,24 +31240,6 @@ def balancesheet(request):
 
     asset_total += ((cash_debit-cash_credit)+(bank_debit-bank_credit)+(upi_debit-upi_credit)+(card_debit-card_credit))
 
-    # ASSET_SIDE =[
-    #     'BRANCH ACCOUNTS',
-    # 'STOCK IN HAND',
-    # 'FIXED ASSETS',
-    # 'INVESTMENTS',
-    # 'LOAN AND ADVANCES',
-    # 'OTHER ASSETS',
-    # 'BRANCH ACCOUNTS'
-    # ]
-    # LIABILITY_SIDE = ['BORROWINGS',
-    # 'DEPOSITS',
-    # 'OTHER LIABILITIES',
-    # ]
-    # EQUITY_SIDE = [
-    #     'RESERVES AND SURPLUSES',
-    #     'SHARE CAPITAL',
-    # ]
-
 
     # Initialize dictionaries to store accumulated values for each account
     asset_accounts = {}
@@ -31454,7 +31351,20 @@ def balancesheet(request):
         receipt_list_equity.append({acc_key: amount})
 
 
+    
 
+    ########################################### 30-12-2024 ################################
+
+    opening_stock_list_equity =[]
+
+    opening_stock_obj_new = OpeningStockValue.objects.filter(Q(created_date__gte=startdate)
+        & Q(created_date__lte=enddate)).first()
+    if opening_stock_obj_new:
+        acc_key = opening_stock_obj_new.ledger.title.replace(" ","_")
+        opening_stock_list_equity.append({acc_key:opening_stock_obj_new.value})
+        equity_total += opening_stock_obj_new.value
+
+    #######################################################################################
 
 
     # Initialize dictionaries to store accumulated values for each account
@@ -31480,19 +31390,7 @@ def balancesheet(request):
         credit_acc_key = credit_acc.title.replace(" ", "_")
         debit_acc_key = debit_acc.title.replace(" ", "_")
 
-        # if credit_acc in cash_list:
-        #     credit_acc_head = credit_acc
-        # elif CoASubAccounts.objects.filter(title=credit_acc).first():
-        #     credit_acc_head = CoASubAccounts.objects.filter(title=credit_acc).first().head_root.name
-        # else:
-        #     credit_acc_head = credit_acc
 
-        # if debit_acc in cash_list:
-        #     debit_acc_head = debit_acc
-        # elif CoASubAccounts.objects.filter(title=debit_acc).first():
-        #     debit_acc_head = CoASubAccounts.objects.filter(title=debit_acc).first().head_root.name
-        # else:
-        #     debit_acc_head = debit_acc
         
         if credit_acc.head_root.account_group.account_head.name == 'ASSET':
             if credit_acc_key in asset_accounts:
@@ -31600,13 +31498,21 @@ def balancesheet(request):
         equity_keys.update(pay_item.keys())
     for journal_item in journal_list_equity:
         equity_keys.update(journal_item.keys())
+    ############################################
+    for opening_stock_item in opening_stock_list_equity:
+        equity_keys.update(opening_stock_item.keys())
+    ############################################
 
     for key in equity_keys:
         dict = {}
         rec_value = next((item[key] for item in receipt_list_equity if key in item), 0)
         pay_value = next((item[key] for item in payment_list_equity if key in item), 0)
         journal_value = next((item[key] for item in journal_list_equity if key in item), 0)
-        final = rec_value - pay_value + journal_value
+        ############################################
+        opening_stock_value = next((item[key] for item in opening_stock_list_equity if key in item), 0)
+        final = rec_value - pay_value + journal_value + opening_stock_value
+        ############################################
+        # final = rec_value - pay_value + journal_value
         dict[key] = format_negative_value(round(final, 2))
         list_equity_total.append(dict)
 
@@ -31616,9 +31522,14 @@ def balancesheet(request):
                         list_asset_total, list_liability_total, list_equity_total
                 )
 
+
+    print("grouped equity 1",grouped_equity)
+
     grouped_assets = process_grouped_accounts(grouped_assets)
     grouped_liabilities = process_grouped_accounts(grouped_liabilities)
     grouped_equity = process_grouped_accounts(grouped_equity)
+
+    print("grouped equity 2",grouped_equity)
 
     data = Sale.objects.filter(Q(branch=homebranch)& Q(invoicedate__gte=startdate)
         & Q(invoicedate__lte=enddate)).order_by("-pk")
