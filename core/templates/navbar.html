@@ -577,15 +577,15 @@
                            <li class="nav-item"><a class="nav-link" href="{% url 'stock' %}">Warehouse Stocks</a></li>
                            <li class="nav-item"><a class="nav-link" href="{% url 'branchstock' %}">Branch Stocks</a></li>
                            <li class="nav-item"><a class="nav-link" href="{% url 'branchoutofstock' %}">Items Out of Stock</a></li>
-                           <li class="nav-item"><a class="nav-link" href="{% url 'stocktransfer' %}">Stock Transfer</a></li>
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'stocktransfer' %}">Stock Transfer</a></li> -->
                           
-                           <li class="nav-item"><a class="nav-link" href="{% url 'stocktransferlist' %}">Stock Transfer List</a></li>
-                           <li class="nav-item"><a class="nav-link" href="{% url 'transferedstocklist' %}">Transfered Stock List</a></li>
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'stocktransferlist' %}">Stock Transfer List</a></li> -->
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'transferedstocklist' %}">Transfered Stock List</a></li> -->
                            <!-- <li class="nav-item"><a class="nav-link" href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a></li> -->
                            <!-- <li class="nav-item"><a class="nav-link" href="{% url 'bulkstocklist' %}">Bulk Stock List</a></li> -->
 
                            {% if request.user.is_superuser or request.user.userprofile.role == 'Branch Admin' or request.user.userprofile.role == 'Franchise Admin'  %}
-                           <li class="nav-item"><a class="nav-link" href="{% url 'stockadjustment' %}">Stock Adjustment</a></li>
+                           <!-- <li class="nav-item"><a class="nav-link" href="{% url 'stockadjustment' %}">Stock Adjustment</a></li> -->
                           
                            <li class="nav-item"><a class="nav-link" href="{% url 'openingstock' %}">Opening Stock</a></li>
                            {% endif %}

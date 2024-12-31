@@ -6181,6 +6181,10 @@ def addOpeningStock(request):
                 if new_qty < 0:
                     new_qty = 0
                     func_add_stock_transaction('Sub',qty)
+                else:
+                    new_qty = new_qty
+                    func_add_stock_transaction('Sub',productquantity)
+
                 stock.quantity = new_qty
 
             stock.salerate = float(sellingprice)
@@ -6188,7 +6192,7 @@ def addOpeningStock(request):
             stock.save()
 
 
-            #########################################
+            ################## OPENING STOCK VALUE MODEL ENTRY #######################
             ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
             opening_stock_value_obj = OpeningStockValue.objects.filter(ledger=ob_ledger).first()
             if opening_stock_value_obj:
@@ -6213,7 +6217,48 @@ def addOpeningStock(request):
                     opening_stock_obj.branch = request.user.userprofile.branch
                     opening_stock_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                     opening_stock_obj.save()
-            #########################################
+            ###########################################################################
+
+            ################## GENERAL LEDGER ENTRY ###################################
+            os_ledger = func_get_opening_balance_value('OPENING STOCK','OTHER DIRECT EXPENSES')
+            # ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+            gl_obj = GeneralLedger()
+            gl_obj.date = timezone.make_aware(datetime(2025, 1, 1))
+            gl_obj.voucher_no = 'OS1'
+            gl_obj.voucher_id ='OS1'
+            gl_obj.voucher_type ='opening Stock Transaction'
+            gl_obj.description ='opening Stock Transaction'
+            gl_obj.amount = float(productquantity) * float(price)
+            if adjustment == "Increase":
+                gl_obj.amount_type = 'Debit'
+            elif adjustment == 'Decrease':
+                gl_obj.amount_type = 'Credit'
+            gl_obj.ledger = os_ledger.head_root
+            gl_obj.subledger = os_ledger
+            gl_obj.branch = request.user.userprofile.branch
+            gl_obj.created_date = timezone.make_aware(datetime(2025, 1, 1))
+            gl_obj.save()
+
+
+            # os_ledger = func_get_opening_balance_value('OPENING STOCK','OTHER DIRECT EXPENSES')
+            ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+            gl_obj = GeneralLedger()
+            gl_obj.date = timezone.make_aware(datetime(2025, 1, 1))
+            gl_obj.voucher_no = 'OS1'
+            gl_obj.voucher_id ='OS1'
+            gl_obj.voucher_type ='opening Stock Transaction'
+            gl_obj.description ='opening Stock Transaction'
+            gl_obj.amount = float(productquantity) * float(price)
+            if adjustment == "Increase":
+                gl_obj.amount_type = 'Credit'
+            elif adjustment == 'Decrease':
+                gl_obj.amount_type = 'Debit'
+            gl_obj.ledger = ob_ledger.head_root
+            gl_obj.subledger = ob_ledger
+            gl_obj.branch = request.user.userprofile.branch
+            gl_obj.created_date = timezone.make_aware(datetime(2025, 1, 1))
+            gl_obj.save()
+            ###########################################################################
         else:
             if adjustment == "Increase":
                 stock.name = Products.objects.filter(
@@ -6227,7 +6272,7 @@ def addOpeningStock(request):
 
                 func_add_stock_transaction('Add',productquantity)
 
-                #########################################
+                ################## OPENING STOCK VALUE MODEL ENTRY #######################
                 ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
                 opening_stock_value_obj = OpeningStockValue.objects.filter(ledger=ob_ledger).first()
                 if opening_stock_value_obj:
@@ -6252,7 +6297,48 @@ def addOpeningStock(request):
                         opening_stock_obj.branch = request.user.userprofile.branch
                         opening_stock_obj.created_date = timezone.make_aware(datetime(2024, 12, 31, 12, 0, 0))
                         opening_stock_obj.save()
-                #########################################
+                ###########################################################################
+
+                ################## GENERAL LEDGER ENTRY ###################################
+                os_ledger = func_get_opening_balance_value('OPENING STOCK','OTHER DIRECT EXPENSES')
+                # ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+                gl_obj = GeneralLedger()
+                gl_obj.date = timezone.make_aware(datetime(2025, 1, 1))
+                gl_obj.voucher_no = 'OS1'
+                gl_obj.voucher_id ='OS1'
+                gl_obj.voucher_type ='opening Stock Transaction'
+                gl_obj.description ='opening Stock Transaction'
+                gl_obj.amount = float(productquantity) * float(price)
+                if adjustment == "Increase":
+                    gl_obj.amount_type = 'Debit'
+                elif adjustment == 'Decrease':
+                    gl_obj.amount_type = 'Credit'
+                gl_obj.ledger = os_ledger.head_root
+                gl_obj.subledger = os_ledger
+                gl_obj.branch = request.user.userprofile.branch
+                gl_obj.created_date = timezone.make_aware(datetime(2025, 1, 1))
+                gl_obj.save()
+
+
+                # os_ledger = func_get_opening_balance_value('OPENING STOCK','OTHER DIRECT EXPENSES')
+                ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+                gl_obj = GeneralLedger()
+                gl_obj.date = timezone.make_aware(datetime(2025, 1, 1))
+                gl_obj.voucher_no = 'OS1'
+                gl_obj.voucher_id ='OS1'
+                gl_obj.voucher_type ='opening Stock Transaction'
+                gl_obj.description ='opening Stock Transaction'
+                gl_obj.amount = float(productquantity) * float(price)
+                if adjustment == "Increase":
+                    gl_obj.amount_type = 'Credit'
+                elif adjustment == 'Decrease':
+                    gl_obj.amount_type = 'Debit'
+                gl_obj.ledger = ob_ledger.head_root
+                gl_obj.subledger = ob_ledger
+                gl_obj.branch = request.user.userprofile.branch
+                gl_obj.created_date = timezone.make_aware(datetime(2025, 1, 1))
+                gl_obj.save()
+                ###########################################################################
 
 
     return redirect('branchstock')
@@ -11492,6 +11578,15 @@ def general_ledger_new(request):
                 balance += item.amount
             else:
                 balance -= item.amount
+
+        if balance < 0:
+            balancetype = "Cr"
+        elif balance > 0:
+            balancetype = "Dr"
+        else:
+            balancetype = ''
+
+        balance = f"{abs(round(balance,2))} {balancetype}"
 
         context["gl_obj"] = gl_obj
         context["search_dict"] = search_dict

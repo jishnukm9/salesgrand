@@ -1241,7 +1241,7 @@ class GeneralLedger(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.voucher_no 
+        return self.voucher_type 
 
 
 class CashBook(models.Model):

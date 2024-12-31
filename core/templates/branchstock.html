@@ -13,10 +13,10 @@
               <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color:#444;"    href="{% url 'stock' %}"> Warehouse Stocks </a>
               <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color: #4555B9 ; border-bottom:2px solid #4555B9;"    href="{% url 'branchstock' %}">Branch Stocks</a>
               {% if request.user.is_superuser  %}
-              <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'stocktransfer' %}">Stock Transfer</a>
+              <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"  style="color:#444;"    href="{% url 'stocktransfer' %}">Stock Transfer</a> -->
              {% endif %}
-              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'stocktransferlist' %}">Stock Transfer List</a>
-              <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'transferedstocklist' %}">Transfered Stock List</a>
+              <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'stocktransferlist' %}">Stock Transfer List</a> -->
+              <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'transferedstocklist' %}">Transfered Stock List</a> -->
                
               <!-- <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'addbulkstockform' %}">Bulk Stock Entry</a>
               <a class="nav-link ps-0 pe-0 ms-3 me-3"   style="color:#444;"    href="{% url 'bulkstocklist' %}">Bulk Stock List</a> -->
