@@ -2577,7 +2577,6 @@ $(document).ready(function () {
   $(".purchase-return-table tbody tr [name^='productcheck']").change(
     function () {
 
-
       purchaseReturnFormValidation();
 
       let closestTr = $(this).closest("tr");
@@ -2588,7 +2587,7 @@ $(document).ready(function () {
       } else {
         closestTr.find("[name^='returnqty']").attr("readonly", true);
         closestTr.find("[name^='rate']").attr("readonly", true);
-        closestTr.find("[name^='tax']").attr("disabled", true);
+        // closestTr.find("[name^='tax']").attr("disabled", true);
         closestTr.find("[name^='refundamount']").attr("readonly", true);
         closestTr.find("[name^='refundamount']").val("");
         closestTr.find("[name^='reason']").attr("disabled", true);
@@ -3601,6 +3600,8 @@ const salesReturnFormValidation = function () {
       $("[name^='productcheck']:checked").each(function () {
         var rowIndex = this.name.match(/\d+/)[0];
         $("#tax-sale" + rowIndex).prop('readonly', false);
+
+        $("#tax-sale" + rowIndex).prop('disabled', false);
       });
 
       $("#salesreturnform")[0].submit();
@@ -3635,7 +3636,7 @@ $(document).ready(function () {
     } else {
       closestTr.find("[name^='returnqty-sale']").attr("readonly", true);
       closestTr.find("[name^='rate-sale']").attr("readonly", true);
-      closestTr.find("[name^='tax-sale']").attr("disabled", true);
+      // closestTr.find("[name^='tax-sale']").attr("disabled", true);
       closestTr.find("[name^='refundamount-sale']").attr("readonly", true);
       closestTr.find("[name^='refundamount-sale']").val("");
       closestTr.find("[name^='reason-sale']").attr("disabled", true);

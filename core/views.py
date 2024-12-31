@@ -7022,6 +7022,7 @@ def addSalesReturn(request):
     check_status_with_constant = partial(check_status_common, attribute="price-sale")
     length_count = list(filter(check_status_with_constant, request.POST.keys()))
 
+    print("request items -- ",request.POST)
     # return redirect("purchase")
     salereturnid = generate_unique_id("SalesReturn", "SRT")
     return_customer = request.POST["cust"]
