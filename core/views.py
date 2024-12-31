@@ -6139,7 +6139,7 @@ def addOpeningStock(request):
                 data.title = title
                 data.branch = request.user.userprofile.branch
                 data.description = title
-                if subledger_title == "OPENNG STOCK":
+                if subledger_title == "OPENING STOCK":
                     data.is_adminonly = True
                 data.save()
 
