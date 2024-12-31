@@ -425,7 +425,7 @@ class Purchase(models.Model):
     invoicenumber = models.CharField(max_length=200)
     invoicedate = models.DateField(default=datetime.now, blank=True)
     barcodenumber = models.CharField(
-        max_length=200, default=None, blank=True, null=True, unique=True
+        max_length=200, default=None, blank=True, null=True
     )
     totalquantity = models.IntegerField()
     price = models.FloatField()
@@ -482,7 +482,7 @@ class BranchPurchase(models.Model):
     invoicenumber = models.CharField(max_length=200, blank=True, null=True)
     invoicedate = models.DateField(default=datetime.now, blank=True)
     barcodenumber = models.CharField(
-        max_length=200, default=None, blank=True, null=True, unique=True
+        max_length=200, default=None, blank=True, null=True
     )
     totalquantity = models.IntegerField()
     price = models.FloatField()

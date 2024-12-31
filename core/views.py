@@ -6177,6 +6177,13 @@ def addOpeningStock(request):
                 func_add_stock_transaction('Add',productquantity)
 
             elif adjustment == "Decrease":
+
+                if int(productquantity) > int(qty):
+                    messages.error(
+                        request,
+                        f"Product stock quantity is less than {productquantity}.",)
+                    return redirect("openingstock")
+
                 new_qty = int(qty) - int(productquantity)
                 if new_qty < 0:
                     new_qty = 0
@@ -12688,6 +12695,114 @@ def add_payment(request):
 
 
 
+
+
+# @login_required
+# def add_payment(request):
+
+#     if request.method == "POST":
+
+#         data = Payments()
+#         currentuser = request.user
+#         today_date = datetime(2025, 1, 1).date()
+#         paymentdate = today_date.strftime("%Y-%m-%d")
+#         data.paymentdate = paymentdate
+#         paymentid = generate_unique_id("Payments", "PY")
+#         data.paymentid = paymentid
+#         if request.POST.get("referenceno"):
+#             data.referenceno = request.POST.get("referenceno")
+#         else:
+#             data.referenceno = None
+
+#         data.creditaccount = 'CASH ACCOUNT'
+#         debit_acc = CoASubAccounts.objects.filter(title=request.POST.get("debitaccount")).first()
+#         data.debitaccount = debit_acc
+#         data.narration = request.POST.get("narration")
+#         data.amount = request.POST.get("paidamount")
+#         data.branch = currentuser.userprofile.branch
+#         data.description = request.POST.get("description")
+#         data.paymentmode = request.POST.get("paymentmode")
+#         data.save()
+
+#         transaction = Transaction()
+#         transaction.transactionid = paymentid
+#         transaction.amount = float(request.POST.get("paidamount"))
+#         transaction.transactiontype = "payment"
+#         transaction.paymentmode = request.POST.get("paymentmode")
+#         transaction.branch = currentuser.userprofile.branch
+#         transaction.invoice_number = request.POST.get("referenceno")
+#         transaction.accounts = "NA"
+#         transaction.remarks = request.POST.get("description")
+#         transaction.transactiondate = datetime.now()
+#         transaction.subledger = debit_acc
+#         transaction.save()
+
+#         financial_statement = addaccounts.AccountStatement()
+
+#         ledger_params = {
+#             "id": paymentid,
+#             "amount": data.amount,
+#             "narration": data.narration,
+#             "userbranch": data.branch,
+#             "date": today_date,
+#             "debitac": data.debitaccount,
+#             "creditac": data.creditaccount,
+#              "paymentmode": request.POST.get("paymentmode"),
+#         }
+
+#         transaction_type = "Payment"
+#         financial_statement.add_ledger(transaction_type, ledger_params)
+
+
+#         general_ledger_params = {
+#             "id": paymentid,
+#             "voucherid": paymentid,
+#             "description": data.narration,
+#             "amount": data.amount,
+#             "userbranch": data.branch,
+#             "date": today_date,
+#             "debitac": data.debitaccount,
+#              "paymentmode": request.POST.get("paymentmode"),
+#         }
+#         financial_statement.add_generalledger(transaction_type, general_ledger_params)
+
+
+#         cashbook_params = {
+#             "userbranch": data.branch,
+#             "amount": data.amount,
+#             "paymentmode": data.paymentmode,
+#             "category": "PAYMENT",
+#             "branch_wid":request.user.userprofile.branch,
+#              'subledger' : debit_acc
+#         }
+
+#         financial_statement.add_cashbook(transaction_type, cashbook_params)
+
+#         # payment_ledger = ledgercli.LedgerBook(data.branch)
+
+#         # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
+#         # credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
+
+#         # params = {
+#         #     "paymentdate": today_date,
+#         #     "narration": data.narration,
+#         #     "debit_head": debit_coa,
+#         #     "debit_coa_level1": debit_coa_level1,
+#         #     "debit_sub_head": data.debitaccount,
+#         #     "credit_head": credit_coa,
+#         #     "credit_coa_level1": credit_coa_level1,
+#         #     "credit_sub_head": data.creditaccount,
+#         #     "amount": data.amount,
+#         # }
+
+#         # payment_ledger.post_payment(**params)
+
+#     return redirect("payment")
+
+
+
+
+
 @login_required
 def payment_print(request, paymentid):
     
@@ -12996,6 +13111,182 @@ def add_journal(request):
     return redirect("journal")
 
 
+
+
+# @login_required
+# def add_journal(request):
+#     if request.method == "POST":
+
+#         data = Journals()
+#         currentuser = request.user
+#         today_date = datetime(2025, 1, 1).date()
+#         journaldate = today_date.strftime("%Y-%m-%d")
+#         data.journaldate = journaldate
+#         journalid = generate_unique_id("Journals", "JN")
+#         data.journalid = journalid
+#         if request.POST.get("referenceno"):
+#             data.referenceno = request.POST.get("referenceno")
+#         else:
+#             data.referenceno = None
+
+#         credit_acc = CoASubAccounts.objects.filter(title=request.POST.get("creditaccount")).first()
+#         data.creditaccount = credit_acc
+        
+#         # data.creditaccount =credit_account
+#         debit_acc = CoASubAccounts.objects.filter(title=request.POST.get("debitaccount")).first()
+#         data.debitaccount = debit_acc
+#         data.narration = request.POST.get("narration")
+#         data.amount = request.POST.get("amount")
+#         data.branch = currentuser.userprofile.branch
+#         data.description = request.POST.get("description")
+#         data.mode = request.POST.get("mode")
+#         data.save()
+
+
+#         credit_account = request.POST.get("creditaccount")
+#         debit_account = request.POST.get("debitaccount")
+
+#         # cash_list = ['CASH ACCOUNT']
+
+#         credit_account_head_title = credit_account_head_title2 = CoASubAccounts.objects.filter(
+#             title=credit_account
+#         ).first()
+#         cred = credit_account_head_title
+#         if credit_account_head_title:
+#             credit_account_head_title = credit_account_head_title.title
+#         else:
+#             credit_account_head_title = credit_account
+
+#         # if debit_account in cash_list:
+#         #     debit_account_head_title = debit_account
+#         # else:
+
+#         debit_account_head_title = debit_account_head_title2 = CoASubAccounts.objects.filter(
+#             title=debit_account
+#         ).first()
+#         deb = debit_account_head_title
+#         if debit_account_head_title:
+#             debit_account_head_title = debit_account_head_title.title
+#         else:
+#             debit_account_head_title = debit_account
+
+
+#         transaction = Transaction()
+#         transaction.transactionid = journalid
+#         transaction.amount = float(request.POST.get("amount"))
+#         transaction.transactiontype = "journal"
+#         transaction.paymentmode = request.POST.get("mode")
+#         transaction.branch = currentuser.userprofile.branch
+#         transaction.invoice_number = request.POST.get("referenceno")
+#         transaction.accounts = debit_account_head_title
+#         transaction.remarks = request.POST.get("narration")
+#         transaction.transactiondate = datetime.now()
+#         transaction.subledger = deb
+#         transaction.save()
+
+#         transaction = Transaction()
+#         transaction.transactionid = journalid
+#         transaction.amount = float(request.POST.get("amount"))
+#         transaction.transactiontype = "journal"
+#         transaction.paymentmode = request.POST.get("mode")
+#         transaction.branch = currentuser.userprofile.branch
+#         transaction.invoice_number = request.POST.get("referenceno")
+#         transaction.accounts = credit_account_head_title
+#         transaction.remarks = request.POST.get("narration")
+#         transaction.transactiondate = datetime.now()
+#         transaction.subledger = cred
+#         transaction.save()
+
+#         # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
+#         # credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
+
+#         debit_account_head = credit_account_head_title2.head_root.account_group.account_head
+
+#         credit_account_head = debit_account_head_title2.head_root.account_group.account_head
+
+#         financial_statement = addaccounts.AccountStatement()
+
+#         ledger_params = {
+#             "id": journalid,
+#             "amount": data.amount,
+#             "narration": data.narration,
+#             "userbranch": data.branch,
+#             "date": today_date,
+#             "debitac": data.debitaccount,
+#             "creditac": data.creditaccount,
+#             'paymentmode':request.POST.get("mode"),
+#         }
+
+#         transaction_type = "Journal"
+#         financial_statement.add_ledger(transaction_type, ledger_params)
+
+
+#         general_ledger_params = {
+#             "id": journalid,
+#             "voucherid": journalid,
+#             "amount": data.amount,
+#             "description": data.narration,
+#             "userbranch": data.branch,
+#             "date": today_date,
+#             "debitac": data.debitaccount,
+#             "creditac": data.creditaccount,
+#             'paymentmode':request.POST.get("mode"),
+#         }
+
+#         financial_statement.add_generalledger(transaction_type, general_ledger_params)
+
+
+#         # Determine the cash flow
+#         # Below logic is not 100% fool proof
+#         # Need to correct it
+#         payment_type = None
+#         # if debit_coa == "Assets":
+#         #     # Assuming cash Inflow
+#         #     payment_type = "Receipt"
+#         # elif credit_coa == "Assets":
+#         #     # Assuming Cash Outflow
+#         #     payment_type = "Payment"
+
+#         ################ COMMENDED ON 28-12-2024 ###################
+#         # if debit_account_head == 'ASSET':
+#         #     payment_type = 'Receipt'
+#         #     subledger = data.debitaccount
+#         # elif credit_account_head == 'ASSET':
+#         #     payment_type = 'Payment'
+#         #     subledger = data.creditaccount
+
+
+#         # cashbook_params = {
+#         #     "payment_type": payment_type,
+#         #     "userbranch": data.branch,
+#         #     "amount": data.amount,
+#         #     "mode": data.mode,
+#         #     "category": "JOURNAL",
+#         #     "branch_wid":request.user.userprofile.branch,
+#         #     'subledger' : subledger
+#         # }
+#         ################ COMMENDED ON 28-12-2024 ###################
+
+#         # financial_statement.add_cashbook(transaction_type, cashbook_params)
+
+#         # journal_ledger = ledgercli.LedgerBook(data.branch)
+
+#         # params = {
+#         #     "journaldate": today_date,
+#         #     "narration": data.narration,
+#         #     "debit_head": debit_coa,
+#         #     "debit_coa_level1": debit_coa_level1,
+#         #     "debit_sub_head": data.debitaccount,
+#         #     "credit_head": credit_coa,
+#         #     "credit_coa_level1": credit_coa_level1,
+#         #     "credit_sub_head": data.creditaccount,
+#         #     "amount": data.amount,
+#         # }
+
+#         # journal_ledger.post_journal(**params)
+
+#     return redirect("journal")
+
 # Journal function ends here
 
 # Receipt function starts here
@@ -13142,6 +13433,111 @@ def add_receipt(request):
         # receipt_ledger.post_receipt(**params)
 
     return redirect("receipt")
+
+
+
+
+# @login_required
+# def add_receipt(request):
+#     if request.method == "POST":
+#         data = Receipts()
+#         currentuser = request.user
+#         today_date = datetime(2025, 1, 1).date()
+#         receiptdate = today_date.strftime("%Y-%m-%d")
+#         data.receiptdate = receiptdate
+#         receiptid = generate_unique_id("Receipts", "RC")
+#         data.receiptid = receiptid
+#         if request.POST.get("referenceno"):
+#             data.referenceno = request.POST.get("referenceno")
+#         else:
+#             data.referenceno = None
+
+#         credit_acc = CoASubAccounts.objects.filter(title=request.POST.get("creditaccount")).first()
+#         data.creditaccount = credit_acc
+
+
+#         data.debitaccount = 'CASH ACCOUNT'
+#         data.narration = request.POST.get("narration")
+#         data.amount = request.POST.get("receivedamount")
+#         data.branch = currentuser.userprofile.branch
+#         data.description = request.POST.get("description")
+#         data.receiptmode = request.POST.get("receiptmode")
+#         data.save()
+
+#         transaction = Transaction()
+#         transaction.transactionid = receiptid
+#         transaction.amount = float(request.POST.get("receivedamount"))
+#         transaction.transactiontype = "receipt"
+#         transaction.paymentmode = request.POST.get("receiptmode")
+#         transaction.branch = currentuser.userprofile.branch
+#         transaction.invoice_number = request.POST.get("referenceno")
+#         transaction.accounts = "NA"
+#         transaction.remarks = request.POST.get("description")
+#         transaction.transactiondate = datetime.now()
+#         transaction.subledger = credit_acc
+#         transaction.save()
+
+#         financial_statement = addaccounts.AccountStatement()
+#         ledger_params = {
+#             "id": receiptid,
+#             "amount": data.amount,
+#             "narration": data.narration,
+#             "userbranch": data.branch,
+#             "date": today_date,
+#             "debitac": data.debitaccount,
+#             "creditac": data.creditaccount,
+#             "paymentmode":request.POST.get("receiptmode")
+#         }
+
+#         transaction_type = "Receipt"
+#         financial_statement.add_ledger(transaction_type, ledger_params)
+
+#         general_ledger_params = {
+#             "id": receiptid,
+#             "voucherid": receiptid,
+#             "description": data.narration,
+#             "amount": data.amount,
+#             "userbranch": data.branch,
+#             "date": today_date,
+#             "creditac": data.creditaccount,
+#             "paymentmode": request.POST.get("receiptmode"),
+#         }
+
+#         financial_statement.add_generalledger(transaction_type, general_ledger_params)
+
+#         cashbook_params = {
+#             "userbranch": data.branch,
+#             "amount": data.amount,
+#             "paymentmode": data.receiptmode,
+#             "category": "RECEIPT",
+#             "branch_wid":request.user.userprofile.branch,
+#             "subledger":data.creditaccount
+#         }
+
+#         financial_statement.add_cashbook(transaction_type, cashbook_params)
+
+
+        
+
+#         # receipt_ledger = ledgercli.LedgerBook(data.branch)
+#         # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
+#         # credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
+
+#         # params = {
+#         #     "receiptdate": today_date,
+#         #     "narration": data.narration,
+#         #     "debit_head": debit_coa,
+#         #     "debit_coa_level1": debit_coa_level1,
+#         #     "debit_sub_head": data.debitaccount,
+#         #     "credit_head": credit_coa,
+#         #     "credit_coa_level1": credit_coa_level1,
+#         #     "credit_sub_head": data.creditaccount,
+#         #     "amount": data.amount,
+#         # }
+
+#         # receipt_ledger.post_receipt(**params)
+
+#     return redirect("receipt")
 
 
 @login_required
