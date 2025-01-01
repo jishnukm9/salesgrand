@@ -11234,7 +11234,7 @@ def ChartofAccountsForm(request):
     all_ledgers = AccountLedger.objects.all()
     all_ledgers_new = []
     for item in all_ledgers:
-        if item.name != "CASH ACCOUNT":
+        if item.name != "CASH ACCOUNT" and item.name != "SERVICES ACCOUNT" and item.name != "SALES ACCOUNT" and item.name != "PURCHASE ACCOUNT":
             all_ledgers_new.append(item)
     
     context = {
