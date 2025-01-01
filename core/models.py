@@ -198,7 +198,7 @@ class Suppliers(models.Model):
         blank=True,
     )
     created_date = models.DateTimeField(default=timezone.now)
-    supplier_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="supplier_ledger_supplier",default=None,null=True,blank=True)
+    supplier_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.CASCADE, related_name="supplier_ledger_supplier",default=None,null=True,blank=True)
 
     class Meta:
         unique_together = ("name", "branch")
@@ -619,7 +619,7 @@ class Customers(models.Model):
     createddate = models.DateField(auto_now_add=True)
     vatnumber = models.CharField(max_length=200, default=None, null=True)
     customertype = models.CharField(max_length=200, default=None, null=True)
-    customer_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="customer_ledger_customer",default=None,null=True,blank=True)
+    customer_ledger = models.ForeignKey(CoASubAccounts, on_delete=models.CASCADE, related_name="customer_ledger_customer",default=None,null=True,blank=True)
 
     class Meta:
         unique_together = ("phone", "branch")
@@ -994,7 +994,7 @@ class ServiceHistory(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.service
+        return self.service.servicerefnumber
 
 
 class ServiceInformations(models.Model):
@@ -1008,7 +1008,7 @@ class ServiceInformations(models.Model):
     info = models.CharField(max_length=2000, null=True)
 
     def __str__(self):
-        return self.service
+        return self.service.servicerefnumber
 
 
 class ServiceCallLogs(models.Model):
@@ -1019,7 +1019,7 @@ class ServiceCallLogs(models.Model):
     remark = models.CharField(max_length=1000, null=True)
 
     def __str__(self):
-        return self.service
+        return self.service.servicerefnumber
 
 
 class ScheduleCallNotifications(models.Model):
@@ -1393,7 +1393,7 @@ class ServiceChat(models.Model):
     )
 
     def __str__(self):
-        return self.service
+        return self.service.servicerefnumber
 
 
 class ServiceTax(models.Model):
