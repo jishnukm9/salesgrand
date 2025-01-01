@@ -105,10 +105,10 @@ def func_create_customer_ledger(cust_data,unique_id,request):
     data.title = title
     data.branch = request.user.userprofile.branch
     data.description = f"{cust_data.firstname} {cust_data.lastname} {unique_id}"
-    data.is_adminonly = True
+    # data.is_adminonly = True
+    data.is_adminonly = False
     if not CoASubAccounts.objects.filter(title=title).first():
         data.save()
-
         customer_objects = Customers.objects.filter(unique_id=unique_id).first()
         customer_objects.customer_ledger = CoASubAccounts.objects.filter(title=title).first()
         customer_objects.save()
@@ -133,7 +133,8 @@ def func_create_supplier_ledger(supp_data,unique_id,request):
     data.title = title
     data.branch = request.user.userprofile.branch
     data.description = f"{supp_data.name} {unique_id}"
-    data.is_adminonly = True
+    # data.is_adminonly = True
+    data.is_adminonly = False
     if not CoASubAccounts.objects.filter(title=title).first():
         data.save()
 
@@ -3560,7 +3561,8 @@ def addBranchPurchase(request):
         )
             if sup_obj:
                 ledger_title = f"{sup_obj.name} {sup_obj.id}"
-                sup_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                # sup_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                sup_ledger = CoASubAccounts.objects.filter(title=ledger_title).first()
                 data.supplier_ledger = sup_ledger
                 supplier_ledger = sup_ledger
         except:
@@ -7827,7 +7829,8 @@ def addSale(request):
             cust_obj = Customers.objects.filter(id=int(customer)).first()
             if cust_obj:
                 ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
-                cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                # cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                cust_ledger = CoASubAccounts.objects.filter(title=ledger_title).first()
                 data.customer_ledger = cust_ledger
                 customer_ledger = cust_ledger
         except:
@@ -16559,7 +16562,8 @@ def addService(request):
                     cust_obj = Customers.objects.filter(phone=phone).first()
                     if cust_obj:
                         ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
-                        cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                        # cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                        cust_ledger = CoASubAccounts.objects.filter(title=ledger_title).first()
                         customer_ledger = cust_ledger
                 except:
                     pass
@@ -16593,7 +16597,8 @@ def addService(request):
                 # try:
                 if cust_obj:
                     ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
-                    cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                    # cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
+                    cust_ledger = CoASubAccounts.objects.filter(title=ledger_title).first()
                 # except:
                 #     pass
 
@@ -31572,6 +31577,84 @@ def balancesheet(request):
         journal_list_equity.append({acc_key: amount})
 
 
+
+    ################################### ACCOUNT RECEIVABLE  ######################################################
+
+    data = Sale.objects.filter(Q(branch=homebranch)& Q(invoicedate__gte=startdate)
+        & Q(invoicedate__lte=enddate)).order_by("-pk")
+
+    saleid_set = set()
+    sale_obj = [
+        sale
+        for sale in data
+        if (sale.saleid not in saleid_set and not saleid_set.add(sale.saleid))
+    ]
+
+
+    statuses = [
+        'Unassigned',
+        'Unacknowledged',
+        'In Progress',
+        'QC Failed',
+        'Completed',
+        'QC Passed(Ok)',
+        'CNP Inprogress(Ok)',
+        'CNP Pending(Ok)',
+        'CNP Completed(Ok)',
+    ]
+    # Build the query
+    service_obj = Service.objects.filter(
+        Q(branch=homebranch) &
+        Q(memodate__gte=startdate) &
+        Q(memodate__lte=enddate) &
+        (
+            Q(status='Delivered(Ok)') |
+            (
+                # Q(amountrecieved__gt=0) &
+                Q(finalamount__gt=F('amountrecieved')) &
+                Q(status__in=statuses)
+            )
+        )
+    )
+
+    
+
+    accounts_receivable_total = 0
+
+    cust_dict={}
+    for item in sale_obj:
+        if item.duebalance != 0:
+            if item.customerid in cust_dict.keys():
+                cust_dict[item.customerid] += item.duebalance
+                asset_total += item.duebalance
+                accounts_receivable_total += item.duebalance
+            else:
+                cust_dict[item.customerid] = item.duebalance
+                asset_total += item.duebalance
+                accounts_receivable_total += item.duebalance
+
+    for item in service_obj:
+        if item.duebalance != 0:
+            cust_id = Customers.objects.filter(unique_id=item.customerid).first().id
+            if cust_id in cust_dict.keys():
+                cust_dict[cust_id] += item.duebalance
+                asset_total += item.duebalance
+                accounts_receivable_total += item.duebalance
+            else:
+                cust_dict[cust_id] = item.duebalance
+                asset_total += item.duebalance
+                accounts_receivable_total += item.duebalance
+
+    
+
+    accounts_receivable_asset = [{f"{Customers.objects.filter(id=key).first().customer_ledger.title.replace(' ','_')}":value} for key,value in cust_dict.items()]
+
+    accounts_receivable_total = format_negative_value(round(accounts_receivable_total,2))
+
+
+    ######################################################################################
+
+
     # For Assets
     list_asset_total = []
     asset_keys = set()
@@ -31583,34 +31666,90 @@ def balancesheet(request):
         asset_keys.update(pay_item.keys())
     for journal_item in journal_list_asset:
         asset_keys.update(journal_item.keys())
+    #############################################
+    for acc_item in accounts_receivable_asset:
+        asset_keys.update(acc_item.keys())
+    #############################################
 
     for key in asset_keys:
         dict = {}
         rec_value = next((item[key] for item in receipt_list_asset if key in item), 0)
         pay_value = next((item[key] for item in payment_list_asset if key in item), 0)
         journal_value = next((item[key] for item in journal_list_asset if key in item), 0)
-        final = pay_value - rec_value + journal_value
+        #############################################
+        acc_value = next((item[key] for item in accounts_receivable_asset if key in item), 0)
+        final = pay_value - rec_value + journal_value + acc_value
+        #############################################
         dict[key] = format_negative_value(round(final, 2))
         list_asset_total.append(dict)
+
+
+
+    ################################# ACCOUNT PAYABLE ############################################
+
+    data = BranchPurchase.objects.filter(
+        Q(branch=homebranch)
+        & ~Q(purchase_type="transfer")
+        & ~Q(purchase_type="stockadd")
+         & Q(invoicedate__gte=startdate)
+        & Q(invoicedate__lte=enddate)
+    ).order_by("-pk")
+    purchaseid_set = set()
+    purchase_obj = [
+        purchase
+        for purchase in data
+        if (
+            purchase.purchaseid not in purchaseid_set
+            and not purchaseid_set.add(purchase.purchaseid)
+        )
+    ]
+    sup_dict = {}
+    accounts_payable_total = 0
+    for item in purchase_obj:
+        if item.duebalance != 0:
+            sup_id = Suppliers.objects.filter(id=item.externalsupplier.id).first().id
+            if sup_id in sup_dict.keys():
+                sup_dict[sup_id] += item.duebalance
+                liability_total += item.duebalance
+                accounts_payable_total += item.duebalance
+            else:
+                sup_dict[sup_id] = item.duebalance
+                liability_total += item.duebalance
+                accounts_payable_total += item.duebalance
+
+    accounts_payable_liability = [{f"{Suppliers.objects.filter(id=key).first().supplier_ledger.title.replace(' ', '_')}":value} for key,value in sup_dict.items()]
+
+    accounts_payable_total = format_negative_value(round(accounts_payable_total,2))
+
+    ################################################################################################
 
     # For Liabilities
     list_liability_total = []
     liability_keys = set()
 
     # Update liability_keys set to include journal entries
+
     for rec_item in receipt_list_liability:
         liability_keys.update(rec_item.keys())
     for pay_item in payment_list_liability:
         liability_keys.update(pay_item.keys())
     for journal_item in journal_list_liability:
         liability_keys.update(journal_item.keys())
+    #################################################
+    for acc_item in accounts_payable_liability:
+        liability_keys.update(acc_item.keys())
+    #################################################
 
     for key in liability_keys:
         dict = {}
         rec_value = next((item[key] for item in receipt_list_liability if key in item), 0)
         pay_value = next((item[key] for item in payment_list_liability if key in item), 0)
         journal_value = next((item[key] for item in journal_list_liability if key in item), 0)
-        final = rec_value - pay_value + journal_value
+        ######################################
+        acc_value = next((item[key] for item in accounts_payable_liability if key in item), 0)
+        # final = rec_value - pay_value + journal_value
+        final = rec_value - pay_value + journal_value + acc_value
+        ######################################
         dict[key] = format_negative_value(round(final, 2))
         list_liability_total.append(dict)
 
@@ -31656,7 +31795,7 @@ def balancesheet(request):
     grouped_liabilities = process_grouped_accounts(grouped_liabilities)
     grouped_equity = process_grouped_accounts(grouped_equity)
 
-    # print("grouped equity 2",grouped_equity)
+    ################################### ACCOUNT RECEIVABLE  ######################################################
 
     data = Sale.objects.filter(Q(branch=homebranch)& Q(invoicedate__gte=startdate)
         & Q(invoicedate__lte=enddate)).order_by("-pk")
@@ -31695,40 +31834,43 @@ def balancesheet(request):
         )
     )
 
-
-
-    accounts_receivable_total = 0
-
-    cust_dict={}
-    for item in sale_obj:
-        if item.duebalance != 0:
-            if item.customerid in cust_dict.keys():
-                cust_dict[item.customerid] += item.duebalance
-                asset_total += item.duebalance
-                accounts_receivable_total += item.duebalance
-            else:
-                cust_dict[item.customerid] = item.duebalance
-                asset_total += item.duebalance
-                accounts_receivable_total += item.duebalance
-
-    for item in service_obj:
-        if item.duebalance != 0:
-            cust_id = Customers.objects.filter(unique_id=item.customerid).first().id
-            if cust_id in cust_dict.keys():
-                cust_dict[cust_id] += item.duebalance
-                asset_total += item.duebalance
-                accounts_receivable_total += item.duebalance
-            else:
-                cust_dict[cust_id] = item.duebalance
-                asset_total += item.duebalance
-                accounts_receivable_total += item.duebalance
-
-    accounts_receivable_total = format_negative_value(round(accounts_receivable_total,2))
-
-    cust_dict = {f"{Customers.objects.filter(id=key).first().firstname}_{Customers.objects.filter(id=key).first().lastname}":value for key,value in cust_dict.items()}
-
-    account_receivable_list = [cust_dict]
     
+
+    # accounts_receivable_total = 0
+
+    # cust_dict={}
+    # for item in sale_obj:
+    #     if item.duebalance != 0:
+    #         if item.customerid in cust_dict.keys():
+    #             cust_dict[item.customerid] += item.duebalance
+    #             asset_total += item.duebalance
+    #             accounts_receivable_total += item.duebalance
+    #         else:
+    #             cust_dict[item.customerid] = item.duebalance
+    #             asset_total += item.duebalance
+    #             accounts_receivable_total += item.duebalance
+
+    # for item in service_obj:
+    #     if item.duebalance != 0:
+    #         cust_id = Customers.objects.filter(unique_id=item.customerid).first().id
+    #         if cust_id in cust_dict.keys():
+    #             cust_dict[cust_id] += item.duebalance
+    #             asset_total += item.duebalance
+    #             accounts_receivable_total += item.duebalance
+    #         else:
+    #             cust_dict[cust_id] = item.duebalance
+    #             asset_total += item.duebalance
+    #             accounts_receivable_total += item.duebalance
+
+    # accounts_receivable_total = format_negative_value(round(accounts_receivable_total,2))
+
+    # cust_dict = {f"{Customers.objects.filter(id=key).first().firstname}_{Customers.objects.filter(id=key).first().lastname}":value for key,value in cust_dict.items()}
+
+    # account_receivable_list = [cust_dict]
+
+
+    ######################################################################################
+    ################################# ACCOUNT PAYABLE ############################################
     data = BranchPurchase.objects.filter(
         Q(branch=homebranch)
         & ~Q(purchase_type="transfer")
@@ -31746,28 +31888,28 @@ def balancesheet(request):
         )
     ]
 
- 
-    sup_dict = {}
-    accounts_payable_total = 0
-    for item in purchase_obj:
-        if item.duebalance != 0:
-            sup_id = Suppliers.objects.filter(id=item.externalsupplier.id).first().id
-            if sup_id in sup_dict.keys():
-                sup_dict[sup_id] += item.duebalance
-                liability_total += item.duebalance
-                accounts_payable_total += item.duebalance
-            else:
-                sup_dict[sup_id] = item.duebalance
-                liability_total += item.duebalance
-                accounts_payable_total += item.duebalance
+    
 
-    sup_dict = {f"{Suppliers.objects.filter(id=key).first().name}":value for key,value in sup_dict.items()}
-    account_payable_list = [sup_dict]
+    # sup_dict = {}
+    # accounts_payable_total = 0
+    # for item in purchase_obj:
+    #     if item.duebalance != 0:
+    #         sup_id = Suppliers.objects.filter(id=item.externalsupplier.id).first().id
+    #         if sup_id in sup_dict.keys():
+    #             sup_dict[sup_id] += item.duebalance
+    #             liability_total += item.duebalance
+    #             accounts_payable_total += item.duebalance
+    #         else:
+    #             sup_dict[sup_id] = item.duebalance
+    #             liability_total += item.duebalance
+    #             accounts_payable_total += item.duebalance
 
+    # sup_dict = {f"{Suppliers.objects.filter(id=key).first().name}":value for key,value in sup_dict.items()}
+    # account_payable_list = [sup_dict]
 
-    accounts_payable_total = format_negative_value(round(accounts_payable_total,2))
+    # accounts_payable_total = format_negative_value(round(accounts_payable_total,2))
 
-    ###################################################
+    ################################################################################################
 
     sale_tax_payable = 0
     for item in sale_obj:
@@ -31871,28 +32013,6 @@ def balancesheet(request):
 
 
 
-    # def transform_ledger_data(ledger_data):
-    #     transformed_data = {}
-    #     for ledger_name, ledger_info in ledger_data.items():
-    #         ledger = AccountLedger.objects.get(name=ledger_name)
-    #         group = ledger.account_group
-    #         group_name = group.name
-    #         if group_name not in transformed_data:
-    #             transformed_data[group_name] = {
-    #                 'total': '0.00',
-    #                 'data': []
-    #             }
-    #         transformed_data[group_name]['data'].append({
-    #             'title': ledger_name,
-    #             'total': ledger_info['total'],
-    #             'data': ledger_info['data']
-    #         })
-    #         group_total = sum(float(item['total']) for item in transformed_data[group_name]['data'])
-    #         transformed_data[group_name]['total'] = f"{group_total:.2f}"
-    #     return transformed_data
-
-
-
     def transform_ledger_data(ledger_data):
         # Dictionary to store transformed data
         transformed_data = {}
@@ -31962,8 +32082,8 @@ def balancesheet(request):
     'journal_list_asset':journal_list_asset,
     'journal_list_liability':journal_list_liability,
     'journal_list_equity':journal_list_equity,
-    'account_receivable':account_receivable_list,
-    'account_payable_list':account_payable_list,
+    # 'account_receivable':account_receivable_list,
+    # 'account_payable_list':account_payable_list,
     'total_asset':asset_total,
     'total_liability':liability_total,
     'total_equity':equity_total,

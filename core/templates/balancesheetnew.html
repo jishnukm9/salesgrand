@@ -102,7 +102,7 @@
                         
                             {% if main_category == 'CURRENT LIABILITIES' %}
                                 <!-- Account Payable Section -->
-                                <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-accountpayable">
+                                <!-- <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-accountpayable">
                                     <td class="fw-bold fs-7 py-3">
                                         <i class="fas fa-chevron-right me-2 ms-4"></i>
                                         ACCOUNT PAYABLE(Purchase)
@@ -118,7 +118,7 @@
                                         <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
                                     </tr>
                                     {% endfor %}
-                                {% endfor %}
+                                {% endfor %} -->
                         
                                 <!-- Tax Payable Section -->
                                 <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-taxpayable">
@@ -485,7 +485,7 @@
 {% endfor %}
 
 <!-- ACCOUNT RECEIVABLE Section -->
-<tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-accountreceivable">
+<!-- <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-accountreceivable">
     <td class="fw-bold fs-7 py-3">
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         ACCOUNT RECEIVABLE(Sale,Service)
@@ -501,7 +501,7 @@
         <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
     </tr>
     {% endfor %}
-{% endfor %}
+{% endfor %} -->
 
 <!-- TAX RECEIVABLE Section -->
 <tr class="section-header" data-section="{{ main_category|lower|cut:' ' }}-taxreceivable">
