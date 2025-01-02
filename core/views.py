@@ -26389,6 +26389,11 @@ def delete_modal_product_price(request, id):
 
 @login_required
 def addcustomer(request):
+
+
+    print("\n\n\n\nadding customerrrrr........")
+
+
     data = Customers()
     data.firstname = request.POST["firstname"]
     data.lastname = request.POST["lastname"]
@@ -26413,8 +26418,12 @@ def addcustomer(request):
     except:
         messages.error(request, f"An error occured.")
         return redirect("customerform")
+
     if data.phone and data.unique_id:
-        whatsapp(data.phone, data.unique_id)
+        try:
+            whatsapp(data.phone, data.unique_id)
+        except:
+            pass
 
     cust_obj = Customers.objects.filter(unique_id=unique_id).first()
     if cust_obj:
