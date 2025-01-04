@@ -11527,7 +11527,7 @@ def generalLedgerSearch(request):
 @login_required
 def general_ledger_new(request):
 
-    gl_obj = GeneralLedger.objects.all().order_by("-pk")
+    gl_obj = GeneralLedger.objects.all().order_by('-date')
 
     context={"gl_obj":gl_obj}
 

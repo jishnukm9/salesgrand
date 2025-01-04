@@ -30,6 +30,9 @@
     background-color: #fff;
     border-bottom: 1px solid #e9ecef;
 }
+
+
+
 </style>
 
 <div class="main-panel">
@@ -271,7 +274,7 @@
                                 {% for item in subcategory.data %}
                                 <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
                                     <td class="py-3 px-4 align-middle">
-                                        <span class="ms-5">{{ item.title }}</span>
+                                        <span class="ms-5" >{{ item.title }}</span>
                                     </td>
                                     <td class="py-3 px-4 text-end align-middle">
                                         {% if item.value|first == "(" %}
@@ -594,7 +597,7 @@
 {% endfor %}
 
 <!-- ACCOUNT RECEIVABLE Section -->
-<tr class="section-header" data-section="currentassets-accountreceivable">
+<!-- <tr class="section-header" data-section="currentassets-accountreceivable">
     <td class="fw-bold fs-7 py-3">
         <i class="fas fa-chevron-right me-2 ms-4"></i>
         ACCOUNT RECEIVABLE(Sale,Service)
@@ -610,7 +613,7 @@
         <td class="py-3 px-4 text-end align-middle">{{ value | floatformat:2 }}</td>
     </tr>
     {% endfor %}
-{% endfor %}
+{% endfor %} -->
 
 <!-- TAX RECEIVABLE Section -->
 <tr class="section-header" data-section="currentassets-taxreceivable">
@@ -660,7 +663,7 @@
                             {% for item in subcategory.data %}
                             <tr class="section-content" data-section="{{ main_category|lower|cut:' ' }}-{{ subcategory.title|lower|cut:' ' }}">
                                 <td class="py-3 px-4 align-middle">
-                                <span class="ms-5">{{ item.title }}</span>
+                                <span class="ms-5" style="white-space: normal;">{{ item.title }}</span>
                                 </td>
                                 <td class="py-3 px-4 text-end align-middle">
                                 {% if item.value|first == "(" %}

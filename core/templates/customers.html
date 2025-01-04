@@ -71,16 +71,16 @@
                                                 <tr class="search_results  {{ item.branch }} {{ item.addedby }} clickable-row" data-href="../customerview/{{ item.id }}">
                                                     <td class="p-2">{{ forloop.counter }}</td>
                                                     <td>{{ item.unique_id }}</td>
-                                                    <td>{{ item.firstname }}</td>
-                                                    <td>{{ item.lastname }}</td>
+                                                    <td style="white-space: normal;">{{ item.firstname }}</td>
+                                                    <td style="white-space: normal;">{{ item.lastname }}</td>
                                                     <td>{{ item.phone }}</td>
-                                                    <td>{{ item.phonemodel }}</td>
+                                                    <td style="white-space: normal;">{{ item.phonemodel }}</td>
                                                     {% if item.purchasedate != None%}
-                                                    <td>{{ item.purchasedate }}</td>
+                                                    <td style="white-space: normal;">{{ item.purchasedate }}</td>
                                                     {% else %}
                                                     <td></td>
                                                     {% endif %}
-                                                    <td>{{ item.addedby }}</td>
+                                                    <td style="white-space: normal;">{{ item.addedby }}</td>
 
                                                     <td><a href="../customerview/{{ item.id }}"><i class="fa-solid fa-eye label-purchase-view " style="font-size:10px;"></i></a></td>
                                                 </tr>

@@ -42,9 +42,9 @@
                           {% for item in rootsubcoa %}
                           <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{ item.title }} </td>
-                            <td>{{ item.head_root }} </td>
-                            <td>{{ item.description }} </td>
+                            <td style="white-space: normal;">{{ item.title }} </td>
+                            <td style="white-space: normal;">{{ item.head_root }} </td>
+                            <td style="white-space: normal;">{{ item.description }} </td>
                             <td class="d-flex gap-3">
                             <a href="{% url 'editchartofaccounts' id=item.id %}" data-toggle="tooltip" data-placement="top" title="Edit" class="text-decoration-none label-purchase-view"><i class="fa-solid fa-pen-to-square"></i></a>
                             </td>

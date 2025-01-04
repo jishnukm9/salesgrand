@@ -51,7 +51,7 @@
                             <th width="5%">Voucher No</th>
                             <th width="5%">Sub Group</th>
                             <th width="5%">Ledger</th>
-                            <th width="5%">Voucher Type</th>
+                            <th width="5%" style="white-space: normal;">Voucher Type</th>
                             <th width="5%">Debit</th>
                             <th width="5%">Credit</th>
                             <!-- <th width="5%">Customer/Vendor</th> -->
@@ -63,9 +63,9 @@
                           <tr>
                             <td>{{ item.date }} </td>
                             <td>{{ item.voucher_no }} </td>
-                            <td>{{ item.ledger }} </td>
-                            <td>{{ item.subledger }} </td>
-                            <td>{{ item.voucher_type }} </td>
+                            <td style="white-space: normal;">{{ item.ledger }} </td>
+                            <td style="white-space: normal;">{{ item.subledger }} </td>
+                            <td style="white-space: normal;">{{ item.voucher_type }} </td>
                             {% if item.amount_type == "Debit" %}
                             <td>{{ item.amount  | floatformat:2 }} </td>
                             <td></td>
