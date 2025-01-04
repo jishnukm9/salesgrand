@@ -18308,6 +18308,7 @@ def serviceBillingCheckout(request, servicerefnumber):
 
 
     service = Service.objects.filter(servicerefnumber=servicerefnumber).first()
+    cust_ledger = service.customer_ledger
     prev_recieved = float(service.amountrecieved)
     prev_status = service.status
     prev_discount =service.discount
@@ -18526,6 +18527,7 @@ def serviceBillingCheckout(request, servicerefnumber):
         "previousreceived": prev_recieved,
         "duebalance": due,
         "paymentmode": paymentmode,
+        "customer":cust_ledger
     }
 
     financial_statement.add_generalledger("ServiceCheckout", general_ledger_params)
