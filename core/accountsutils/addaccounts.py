@@ -1136,8 +1136,8 @@ class AccountStatement():
             ledger.description = params['description']
             ledger.amount = cashpaid
             ledger.amount_type = 'Credit'
-            ledger.ledger = service_ledger
-            ledger.subledger = service_subledger
+            ledger.ledger = params['customer'].head_root
+            ledger.subledger = params['customer']
             ledger.branch = params['userbranch']
             ledger.save()
 
