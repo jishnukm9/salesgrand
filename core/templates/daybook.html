@@ -16,7 +16,7 @@
                   <nav class="nav nav-borders">
                      <a class="nav-link active ps-0 pe-0 ms-0 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="">Daybook</a>
                      <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'cashbook' %}">Cash book</a>
-                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'generalledger' %}">General Ledger</a>
+                     <a class="nav-link ps-0 pe-0 ms-3 me-3" style="color:#444;"  href="{% url 'general_ledger_new' %}">General Ledger</a>
 
                     
                  </nav>
@@ -153,22 +153,49 @@
                                  <td style="white-space: normal;">{{item.remarks}}</td>
                                  {% elif item.transaction.transactiontype == 'service' %}
                                  <td style="white-space: normal;">Amount Recieved By Service</td>
+                                 {% else %}
+                                 <td></td>
                                  {% endif %}
                                  <td>{{ item.paymentmode }}</td>
 
 
                                 <td  style="white-space: normal;">{{ item.title }}</td>
-                                 <!-- <td>{{ item.transaction.amount | floatformat:2 }}</td> -->
+                          
+                                <!-- {% if item.amounttype == 'Debit' %}
+                                    {% if item.title == 'Opening' %}
+                                        <td></td>
+                                        <td>{{ item.transaction.value | floatformat:2 }}</td>
+                                    {% else %}
+                                        <td>{{ item.transaction.amount | floatformat:2 }}</td>
+                                        <td></td>
+                                    {% endif %}
+                                {% elif item.amounttype == 'Credit' %}
+                                    {% if item.title == 'Opening' %}
+                                        <td></td>
+                                        <td>{{ item.transaction.value | floatformat:2 }}</td>
+                                    {% else %}
+                                        <td></td>
+                                        <td>{{ item.transaction.amount | floatformat:2 }}</td>
+                                    {% endif %}
+                                {% else %}
+                                    <td></td>
+                                    <td></td>
+                                {% endif %} -->
+
                                 {% if item.amounttype == 'Debit' %}
-                                 <td>{{ item.transaction.amount | floatformat:2 }}</td> 
-                                 <td></td>
-                                 {% elif item.amounttype == 'Credit' %}
-                                 <td></td>
-                                 <td>{{ item.transaction.amount | floatformat:2 }}</td> 
-                                 {% else %}
-                                 <td></td>
-                                <td></td>
-                                 {% endif %}
+                                    
+                                        <td>{{ item.transaction.amount | floatformat:2 }}</td>
+                                        <td></td>
+                                   
+                                {% elif item.amounttype == 'Credit' %}
+                                    
+                                        <td></td>
+                                        <td>{{ item.transaction.amount | floatformat:2 }}</td>
+                                
+                                {% else %}
+                                    <td></td>
+                                    <td></td>
+                                {% endif %}
 
 
 
@@ -245,7 +272,7 @@
                       </div>
 
 
-                      <div class="card-footer " style="background-color: #fff">
+                      <!-- <div class="card-footer " style="background-color: #fff">
 
                         <div class="row my-3">
                                             <div class="col-lg-4 col-md-4">
@@ -254,10 +281,6 @@
                                             <div class="col-lg-4 col-md-4">
                         
                                             </div>
-
-
-
-
 
                                             {% if search == "Yes" %}
                                           <div class="col-lg-4 col-md-4 ">
@@ -314,32 +337,9 @@
                                            <hr>
                                            </div>
                                            {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      
-
-
-
-
-
-
-
                                         </div>
                         
-                                        </div>
+                                        </div> -->
 
 
 

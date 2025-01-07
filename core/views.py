@@ -7124,7 +7124,7 @@ def addSalesReturn(request):
     check_status_with_constant = partial(check_status_common, attribute="price-sale")
     length_count = list(filter(check_status_with_constant, request.POST.keys()))
 
-    print("request items -- ",request.POST)
+ 
     # return redirect("purchase")
     salereturnid = generate_unique_id("SalesReturn", "SRT")
     return_customer = request.POST["cust"]
@@ -9897,21 +9897,20 @@ def accounts(request):
 
 
 
+def calculate_balance_upto_date(date_point, branch,request):
+    """
+    Calculate total balance up to (but not including) the given date
+    Returns tuple of (total_debit, total_credit, balance)
+    """
 
-@user_passes_test(
-    partial(check_permission, page="Moneyreciept"),
-    login_url="/accessdenied/",
-    redirect_field_name=None,
-)
-@login_required
-def daybook(request):
-    currentuser = request.user
-    if currentuser.is_superuser:
-        transaction = Transaction.objects.all().order_by("-pk")
-    else:
-        transaction = Transaction.objects.filter(
-            branch=currentuser.userprofile.branch
-        ).order_by("-pk")
+    print("date point",date_point)
+    # transaction = Transaction.objects.filter(transactiondate__lt=date_point)
+    transaction = Transaction.objects.all()
+    if branch:
+        transaction = transaction.filter(branch=branch)
+
+    currentuser=request.user
+
     invoicenumber_list = set()
     accounts_list = set()
     transaction_list = []
@@ -9923,8 +9922,6 @@ def daybook(request):
     total_debit = 0
     total_credit = 0
     
-
-
     for tr in transaction:
         if tr.transactiontype == "purchase":
 
@@ -9955,19 +9952,7 @@ def daybook(request):
                   
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase_p.purchaseid)
-                    # is_first = False
-                    # if len(trans_obj) == 1:
-                    #     is_first = False
-                    # elif tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
-
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase_p.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
+   
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -10008,19 +9993,7 @@ def daybook(request):
                  
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase_b.purchaseid)
-                    # is_first = False
-                    # if len(trans_obj) == 1:
-                    #     is_first = False
-                    # elif tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
-                   
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase_b.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
+  
 
                     transaction_date = tr.transactiondate
                     if transaction_date:
@@ -10065,20 +10038,7 @@ def daybook(request):
                   
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase.purchaseid)
-                    # print("daybook",trans_obj)
-                    # is_first = False
-                    # if len(trans_obj) == 1:
-                    #     is_first = False
-                    # elif tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
-                   
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
+
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -10120,17 +10080,7 @@ def daybook(request):
                
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=purchase_p.purchasereturnid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = purchase_p.createddate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10167,17 +10117,7 @@ def daybook(request):
        
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=sale.saleid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = sale.invoicedate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10210,17 +10150,7 @@ def daybook(request):
              
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=sale.salereturnid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
-
-                # if is_first:
-                #     transaction_dict['createddate'] = sale.createddate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
+    
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10254,17 +10184,7 @@ def daybook(request):
           
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=expense.expenseid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = expense.expensedate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10297,22 +10217,16 @@ def daybook(request):
 
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=payment.paymentid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
-
-                # if is_first:
-                #     transaction_dict['createddate'] = payment.paymentdate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
+  
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
                 else:
                     transaction_dict['createddate'] = tr.createddate
+
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if payment.debitaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
                 ###############
 
                 transaction_list.append(transaction_dict)
@@ -10341,22 +10255,17 @@ def daybook(request):
              
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=receipt.receiptid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
-
-                # if is_first:
-                #     transaction_dict['createddate'] = receipt.receiptdate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
+   
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
                 else:
                     transaction_dict['createddate'] = tr.createddate
+
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if receipt.creditaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
+                
                 ###############
 
                 transaction_list.append(transaction_dict)
@@ -10372,13 +10281,16 @@ def daybook(request):
             else:
                 amount_type = ''
                 accounts = ''
-                # cash_list = ['CASH ACCOUNT']
+                tr_accounts_obj = CoASubAccounts.objects.filter(title=tr.accounts).first()
 
-                if journal.creditaccount == tr.accounts:
+
+                if journal.creditaccount == tr_accounts_obj:
                     amount_type = 'Credit'
-                elif journal.debitaccount == tr.accounts:
+                    
+                elif journal.debitaccount == tr_accounts_obj:
                     amount_type = 'Debit'
 
+                
                 invoicenumber_list.add(journal.referenceno)
                 transaction_dict["invoicenumber"] = journal.referenceno
                 transaction_dict["accounts"] = tr.accounts
@@ -10391,22 +10303,17 @@ def daybook(request):
                 transaction_dict['date'] = journal.journaldate
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=journal.journalid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = journal.journaldate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
                 else:
                     transaction_dict['createddate'] = tr.createddate
+
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if journal.creditaccount.title == 'OPENING BALANCE ADJUSTMENT' or journal.debitaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
+                
                 ###############
 
                 transaction_list.append(transaction_dict)
@@ -10441,17 +10348,7 @@ def daybook(request):
            
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=service.servicerefnumber)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = service.memodate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10461,9 +10358,560 @@ def daybook(request):
 
                 transaction_list.append(transaction_dict)
 
+    # print("transactions list",transaction_list)
+
+    if date_point:
+        transaction_list = [tr for tr in transaction_list if tr['createddate'] < date_point]
+        
+    total_debit = 0
+    total_credit = 0
+    
+    for tr in transaction_list:
+        # try:
+        amount = tr['transaction'].amount
+        # except:
+        #     amount = tr.value
+        if tr['amounttype'] == "Debit":
+            total_debit += amount
+        elif tr['amounttype'] == "Credit":
+            total_credit += amount
+            
+    balance = total_debit - total_credit
+    return total_debit, total_credit, balance
+
+
+
+@user_passes_test(
+    partial(check_permission, page="Moneyreciept"),
+    login_url="/accessdenied/",
+    redirect_field_name=None,
+)
+@login_required
+def daybook(request):
+    currentuser = request.user
+
+    if currentuser.is_superuser:
+        transaction = Transaction.objects.all().order_by("-pk")
+    else:
+        transaction = Transaction.objects.filter(
+            branch=currentuser.userprofile.branch
+        ).order_by("-pk")
+        
+    invoicenumber_list = set()
+    accounts_list = set()
+    transaction_list = []
+    purchase_due_balance = 0
+    sale_due_balance = 0
+    service_due_balance = 0
+
+    search = 'No'
+    total_debit = 0
+    total_credit = 0
+    
+    for tr in transaction:
+        if tr.transactiontype == "purchase":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            if currentuser.is_superuser:
+
+                purchase_p = Purchase.objects.filter(purchaseid=transactionid).first()
+                if not purchase_p:
+                    pass
+                else:
+                    ###########
+                    if purchase_p.duebalance:
+                        purchase_due_balance += purchase_p.duebalance
+                    ###########
+
+                    invoicenumber_list.add(purchase_p.invoicenumber)
+                    accounts_list.add(purchase_p.supplier.name)
+                    transaction_dict["invoicenumber"] = purchase_p.invoicenumber
+                    transaction_dict["accounts"] = purchase_p.supplier.name
+                    transaction_dict["paymentmode"] = tr.paymentmode
+                    transaction_dict["transaction"] = tr
+                    transaction_dict["branch"] = tr.branch
+                    transaction_dict["title"] = "Purchase"
+                    transaction_dict["amounttype"] = "Credit"
+                    total_credit += tr.amount
+                    transaction_dict['date'] = purchase_p.invoicedate
+                  
+
+                    ###############
+   
+                    transaction_date = tr.transactiondate
+                    if transaction_date:
+                        transaction_dict['createddate'] = transaction_date
+                    else:
+                        transaction_dict['createddate'] = tr.createddate
+
+                    
+                    ###############
+
+                    transaction_list.append(transaction_dict)
+                purchase_b = BranchPurchase.objects.filter(
+                    purchaseid=transactionid
+                ).first()
+                if not purchase_b:
+                    pass
+                else:
+                    ###########
+                    if purchase_b.duebalance:
+                        purchase_due_balance += purchase_b.duebalance
+                    ###########
+                    invoicenumber_list.add(purchase_b.invoicenumber)
+                    if purchase_b.supplier == None:
+                        accounts_list.add(purchase_b.externalsupplier.name)
+                    else:
+                        accounts_list.add(purchase_b.supplier.name)
+                    transaction_dict["invoicenumber"] = purchase_b.invoicenumber
+                    if purchase_b.supplier == None:
+                        transaction_dict["accounts"] = purchase_b.externalsupplier.name
+                    else:
+                        transaction_dict["accounts"] = purchase_b.supplier.name
+                    transaction_dict["paymentmode"] = tr.paymentmode
+                    transaction_dict["transaction"] = tr
+                    transaction_dict["branch"] = tr.branch
+                    transaction_dict["title"] = "Purchase"
+                    transaction_dict["amounttype"] = "Credit"
+                    total_credit += tr.amount
+                    transaction_dict['date'] = purchase_b.invoicedate
+                 
+
+                    ###############
+  
+
+                    transaction_date = tr.transactiondate
+                    if transaction_date:
+                        transaction_dict['createddate'] = transaction_date
+                    else:
+                        transaction_dict['createddate'] = tr.createddate
+                    ###############
+
+
+                    transaction_list.append(transaction_dict)
+
+            else:
+                purchase = BranchPurchase.objects.filter(
+                    purchaseid=transactionid
+                ).first()
+                if not purchase:
+                    pass
+                else:
+
+                    ###########
+                    if purchase.duebalance:
+                        purchase_due_balance += purchase.duebalance
+                    ###########
+
+                    invoicenumber_list.add(purchase.invoicenumber)
+                    if purchase.supplier == None:
+                        accounts_list.add(purchase.externalsupplier.name)
+                    else:
+                        accounts_list.add(purchase.supplier.name)
+                    transaction_dict["invoicenumber"] = purchase.invoicenumber
+                    if purchase.supplier == None:
+                        transaction_dict["accounts"] = purchase.externalsupplier.name
+                    else:
+                        transaction_dict["accounts"] = purchase.supplier.name
+                    transaction_dict["paymentmode"] = tr.paymentmode
+                    transaction_dict["transaction"] = tr
+                    transaction_dict["branch"] = tr.branch
+                    transaction_dict["title"] = "Purchase"
+                    transaction_dict["amounttype"] = "Credit"
+                    total_credit += tr.amount
+                    transaction_dict['date'] = purchase.invoicedate
+                  
+
+                    ###############
+
+                    transaction_date = tr.transactiondate
+                    if transaction_date:
+                        transaction_dict['createddate'] = transaction_date
+                    else:
+                        transaction_dict['createddate'] = tr.createddate
+                    ###############
+
+                    transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "purchasereturn":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            # if currentuser.is_superuser:
+
+            purchase_p = PurchaseReturn.objects.filter(
+                purchasereturnid=transactionid
+            ).first()
+            if not purchase_p:
+                pass
+            else:
+                invoicenumber_list.add(purchase_p.invoicenumber)
+                if purchase_p.supplier == None:
+                    accounts_list.add(purchase_p.externalsupplier.name)
+                else:
+                    accounts_list.add(purchase_p.supplier.name)
+                transaction_dict["invoicenumber"] = purchase_p.invoicenumber
+                if purchase_p.supplier == None:
+                    transaction_dict["accounts"] = purchase_p.externalsupplier.name
+                else:
+                    transaction_dict["accounts"] = purchase_p.supplier.name
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Purchase Return"
+                transaction_dict["amounttype"] = "Debit"
+                total_debit += tr.amount
+                transaction_dict['date'] = purchase_p.createddate
+               
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "sale":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            sale = Sale.objects.filter(saleid=transactionid).first()
+            if not sale:
+                pass
+            else:
+                ###########
+                if sale.duebalance:
+                    sale_due_balance += sale.duebalance
+                ###########
+                invoicenumber_list.add(sale.invoicenumber)
+                accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = sale.invoicenumber
+                transaction_dict["accounts"] = sale.customer
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Sale"
+                transaction_dict["amounttype"] = "Debit"
+                total_debit += tr.amount
+                transaction_dict['date'] = sale.invoicedate
+
+       
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "salereturn":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            sale = SaleReturn.objects.filter(salereturnid=transactionid).first()
+            if not sale:
+                pass
+            else:
+                invoicenumber_list.add(sale.invoicenumber)
+                accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = sale.invoicenumber
+                transaction_dict["accounts"] = sale.customer
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Sale Return"
+                transaction_dict["amounttype"] = "Credit"
+                total_credit += tr.amount
+                transaction_dict['date'] = sale.createddate
+
+             
+
+                ###############
+    
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "expense":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            expense = Expenses.objects.filter(expenseid=transactionid).first()
+            if not expense:
+                pass
+            else:
+                invoicenumber_list.add(expense.billnumber)
+                # accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = expense.billnumber
+                transaction_dict["accounts"] = ""
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = expense.remarks
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Expense"
+                transaction_dict["amounttype"] = "Credit"
+                total_credit += tr.amount
+                transaction_dict['date'] = expense.expensedate
+
+          
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "payment":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            payment = Payments.objects.filter(paymentid=transactionid).first()
+            if not payment:
+                pass
+            else:
+                invoicenumber_list.add(payment.referenceno)
+                # accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = payment.referenceno
+                transaction_dict["accounts"] = payment.debitaccount
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = payment.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Payment"
+                transaction_dict["amounttype"] = "Credit"
+                total_credit += tr.amount
+                transaction_dict['date'] = payment.paymentdate
+
+
+                ###############
+  
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if payment.debitaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "receipt":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            receipt = Receipts.objects.filter(receiptid=transactionid).first()
+            if not receipt:
+                pass
+            else:
+                invoicenumber_list.add(receipt.referenceno)
+                # accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = receipt.referenceno
+                transaction_dict["accounts"] =receipt.creditaccount
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = receipt.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Receipt"
+                transaction_dict["amounttype"] = "Debit"
+                total_debit += tr.amount
+                transaction_dict['date'] = receipt.receiptdate
+
+             
+
+                ###############
+   
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if receipt.creditaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
+                
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "journal":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            journal = Journals.objects.filter(journalid=transactionid).first()
+
+            if not journal:
+                pass
+            else:
+                amount_type = ''
+                accounts = ''
+                tr_accounts_obj = CoASubAccounts.objects.filter(title=tr.accounts).first()
+
+
+                if journal.creditaccount == tr_accounts_obj:
+                    amount_type = 'Credit'
+                    
+                elif journal.debitaccount == tr_accounts_obj:
+                    amount_type = 'Debit'
+
+                
+                invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = journal.referenceno
+                transaction_dict["accounts"] = tr.accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = journal.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Journal"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = journal.journaldate
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if journal.creditaccount.title == 'OPENING BALANCE ADJUSTMENT' or journal.debitaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "service":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            # expense =Expenses.objects.filter(expenseid = transactionid).first()
+            service = Service.objects.filter(servicerefnumber=transactionid).first()
+            if not service:
+                pass
+            else:
+
+                ###########
+                if service.duebalance:
+                    service_due_balance += service.duebalance
+                ###########
+
+                invoicenumber_list.add(service.servicerefnumber)
+                accounts_list.add(f"{service.firstname} {service.lastname}")
+                transaction_dict["invoicenumber"] = service.servicerefnumber
+                transaction_dict["accounts"] = f"{service.firstname} {service.lastname}"
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Service"
+                transaction_dict["amounttype"] = "Debit"
+                total_debit += tr.amount
+                transaction_dict['date'] = service.memodate
+
+           
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+    ################### OPENING STOCK ADDED ##############
+
+    # def func_get_opening_balance_value(subledger_title,ledger_name):
+    #     subledger = CoASubAccounts.objects.filter(title=subledger_title).first()
+    #     if not subledger:
+    #         data = CoASubAccounts()
+    #         # ledgername = "RESERVES AND SURPLUS"
+    #         ledgername = ledger_name
+    #         ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+    #         title = f"{subledger_title}"
+    #         data.head_root = ledgerobj
+    #         gstring = ledgername.replace(" ", "_")
+    #         data.gstring = gstring
+    #         data.title = title
+    #         data.branch = request.user.userprofile.branch
+    #         data.description = title
+    #         if subledger_title == "OPENING STOCK":
+    #             data.is_adminonly = True
+    #         data.save()
+
+    #         subledger = CoASubAccounts.objects.filter(title=title).first()
+    #     return subledger
+
+    # os_ledger = func_get_opening_balance_value('OPENING STOCK','OTHER DIRECT EXPENSES')
+    # ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+
+    # opening_stock_Value_object = OpeningStockValue.objects.all().first()
+    # if opening_stock_Value_object:
+    #     os_created_date = date(2025, 1, 1)
+    #     os_ledger_dict ={
+    #         'invoicenumber': None,
+    #         'accounts': os_ledger.title,
+    #         'paymentmode': '',
+    #         'transaction': opening_stock_Value_object,
+    #         'remarks': 'OPENING STOCK ADDED',
+    #         'branch': request.user.userprofile.branch,
+    #         'title': 'Opening',
+    #         'amounttype': 'Debit',
+    #         'date': os_created_date,
+    #         'createddate': os_created_date
+    #     }
+    #     ob_ledger_dict ={
+    #         'invoicenumber': None,
+    #         'accounts': ob_ledger.title,
+    #         'paymentmode': '',
+    #         'transaction': opening_stock_Value_object,
+    #         'remarks': 'OPENING STOCK ADDED',
+    #         'branch': request.user.userprofile.branch,
+    #         'title': 'Opening',
+    #         'amounttype': 'Credit',
+    #         'date': os_created_date,
+    #         'createddate': os_created_date
+    #     }
+
+    #     transaction_list.append(os_ledger_dict)
+    #     transaction_list.append(ob_ledger_dict)
+
+    ####################################################
 
     startdate = date.today()
     enddate = date.today()
+
+    ################ opening balance ###########
+    opening_total_debit, opening_total_credit, opening_balance = calculate_balance_upto_date(
+        startdate,
+        request.user.userprofile.branch if not request.user.is_superuser else None,
+        request
+    )
+    #############################################
+
 
 
     if startdate and enddate:
@@ -10481,25 +10929,68 @@ def daybook(request):
         key=lambda x: x['createddate'],
         reverse=False
     )
-
-    # transaction_list = sorted(
-    #     transaction_list,
-    #     key=lambda x: x['createddate'],
-    #     reverse=True
-    # )
     
     total_debit = 0
     total_credit = 0
 
     for item in transaction_list:
         if item["amounttype"] == "Debit":
-            total_debit += item["transaction"].amount
+            try:
+                total_debit += item["transaction"].amount
+            except:
+                total_debit += item["transaction"].value
+        
         elif item["amounttype"] == "Credit":
-            total_credit += item["transaction"].amount
+            try:
+                total_credit += item["transaction"].amount
+            except:
+                total_credit += item["transaction"].value
+
+    ########### OPENING BALANCE ###############
+    if opening_balance > 0:
+        total_debit += opening_balance
+    else:
+        total_credit += abs(opening_balance)
+
+    print("\n\nopening balance..",opening_balance)
+
+
+
+    opening_entry = {
+        'invoicenumber': None,
+        'accounts': 'Opening Balance',
+        'paymentmode': '',
+        'transaction': {'amount': abs(opening_balance), 'value': abs(opening_balance)},
+        'remarks': 'Opening Balance',
+        'branch': request.user.userprofile.branch,
+        'title': 'Opening Balance',
+        'amounttype': 'Debit' if opening_balance > 0 else 'Credit',
+        'date': startdate,
+        'createddate': startdate
+    }
+    transaction_list.insert(0, opening_entry)
 
     total_balance = total_debit - total_credit
 
+    closing_entry = {
+        'invoicenumber': None,
+        'accounts': 'Closing Balance',
+        'paymentmode': '',
+        'transaction': {'amount': abs(total_balance), 'value': abs(total_balance)},
+        'remarks': 'Closing Balance',
+        'branch': request.user.userprofile.branch,
+        'title': 'Closing Balance',
+        'amounttype': 'Debit' if total_balance > 0 else 'Credit',
+        'date': enddate,
+        'createddate': enddate
+    }
+    transaction_list.append(closing_entry)
+    ###########################################
+
+    
+
     paymentmodes = PaymentMode.objects.all()
+
 
     context = {
         'search':search,
@@ -10613,17 +11104,7 @@ def search_daybook(request):
                
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase_p.purchaseid)
-                    # is_first = False
-                    # if tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
 
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase_p.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -10663,17 +11144,6 @@ def search_daybook(request):
                    
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase_b.purchaseid)
-                    # is_first = False
-                    # if tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
-                   
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase_b.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -10717,17 +11187,7 @@ def search_daybook(request):
                  
 
                     ###############
-                    # trans_obj =Transaction.objects.filter(transactionid=purchase.purchaseid)
-                    # is_first = False
-                    # if tr==trans_obj.first():
-                    #     is_first=True
-                    # else:
-                    #     is_first = False
-                   
-                    # if is_first:
-                    #     transaction_dict['createddate'] = purchase.invoicedate
-                    # else:
-                    #     transaction_dict['createddate'] = tr.createddate
+
                     transaction_date = tr.transactiondate
                     if transaction_date:
                         transaction_dict['createddate'] = transaction_date
@@ -10770,17 +11230,7 @@ def search_daybook(request):
        
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=purchase_p.purchasereturnid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = purchase_p.createddate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10816,17 +11266,7 @@ def search_daybook(request):
 
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=sale.saleid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = sale.invoicedate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10858,17 +11298,7 @@ def search_daybook(request):
               
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=sale.salereturnid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
-
-                # if is_first:
-                #     transaction_dict['createddate'] = sale.createddate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
+    
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10902,17 +11332,7 @@ def search_daybook(request):
            
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=expense.expenseid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
-
-                # if is_first:
-                #     transaction_dict['createddate'] = expense.expensedate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
+    
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -10946,23 +11366,18 @@ def search_daybook(request):
              
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=payment.paymentid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = payment.paymentdate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
                 else:
                     transaction_dict['createddate'] = tr.createddate
-                ###############
+                
+
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if payment.debitaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
+                ##############################################################################################
 
                 transaction_list.append(transaction_dict)
 
@@ -10990,22 +11405,16 @@ def search_daybook(request):
       
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=receipt.receiptid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = receipt.receiptdate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
                 else:
                     transaction_dict['createddate'] = tr.createddate
+
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if receipt.creditaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
                 ###############
 
                 transaction_list.append(transaction_dict)
@@ -11021,11 +11430,12 @@ def search_daybook(request):
 
                 amount_type = ''
                 accounts = ''
+                tr_accounts_obj = CoASubAccounts.objects.filter(title=tr.accounts).first()
                 # cash_list = ['CASH ACCOUNT']
 
-                if journal.creditaccount == tr.accounts:
+                if journal.creditaccount == tr_accounts_obj:
                     amount_type = 'Credit'
-                elif journal.debitaccount == tr.accounts:
+                elif journal.debitaccount == tr_accounts_obj:
                     amount_type = 'Debit'
 
                 invoicenumber_list.add(journal.referenceno)
@@ -11040,36 +11450,18 @@ def search_daybook(request):
                 transaction_dict['date'] = journal.journaldate
 
 
-                # invoicenumber_list.add(journal.referenceno)
-                # # accounts_list.add(sale.customer)
-                # transaction_dict["invoicenumber"] = journal.referenceno
-                # transaction_dict["accounts"] = ""
-                # transaction_dict["paymentmode"] = tr.paymentmode
-                # transaction_dict["transaction"] = tr
-                # transaction_dict["remarks"] = journal.description
-                # transaction_dict["branch"] = tr.branch
-                # transaction_dict["title"] = "Journal"
-                # transaction_dict["amounttype"] = ""
-                # transaction_dict['date'] = journal.journaldate
-         
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=journal.journalid)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
 
-                # if is_first:
-                #     transaction_dict['createddate'] = journal.journaldate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
                 else:
                     transaction_dict['createddate'] = tr.createddate
+
+                ##### reducing one date for opening balance assuming jan 1 is the opening balance entry ######
+                if journal.creditaccount.title == 'OPENING BALANCE ADJUSTMENT' or journal.debitaccount.title == 'OPENING BALANCE ADJUSTMENT':
+                    transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
                 ###############
 
                 transaction_list.append(transaction_dict)
@@ -11103,17 +11495,7 @@ def search_daybook(request):
            
 
                 ###############
-                # trans_obj =Transaction.objects.filter(transactionid=service.servicerefnumber)
-                # is_first = False
-                # if tr==trans_obj.first():
-                #     is_first=True
-                # else:
-                #     is_first = False
-
-                # if is_first:
-                #     transaction_dict['createddate'] = service.memodate
-                # else:
-                #     transaction_dict['createddate'] = tr.createddate
+    
                 transaction_date = tr.transactiondate
                 if transaction_date:
                     transaction_dict['createddate'] = transaction_date
@@ -11124,12 +11506,84 @@ def search_daybook(request):
                 transaction_list.append(transaction_dict)
 
 
+    ################### OPENING STOCK ADDED ##############
+
+    # def func_get_opening_balance_value(subledger_title,ledger_name):
+    #     subledger = CoASubAccounts.objects.filter(title=subledger_title).first()
+    #     if not subledger:
+    #         data = CoASubAccounts()
+    #         ledgername = ledger_name
+    #         ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+    #         title = f"{subledger_title}"
+    #         data.head_root = ledgerobj
+    #         gstring = ledgername.replace(" ", "_")
+    #         data.gstring = gstring
+    #         data.title = title
+    #         data.branch = request.user.userprofile.branch
+    #         data.description = title
+    #         if subledger_title == "OPENING STOCK":
+    #             data.is_adminonly = True
+    #         data.save()
+
+    #         subledger = CoASubAccounts.objects.filter(title=title).first()
+    #     return subledger
+
+    # os_ledger = func_get_opening_balance_value('OPENING STOCK','OTHER DIRECT EXPENSES')
+    # ob_ledger = func_get_opening_balance_value('OPENING BALANCE ADJUSTMENT','RESERVES AND SURPLUS')
+
+    # opening_stock_Value_object = OpeningStockValue.objects.all().first()
+    # if opening_stock_Value_object:
+    #     os_created_date = date(2025, 1, 1)
+
+    #     os_ledger_dict ={
+    #         'invoicenumber': None,
+    #         'accounts': os_ledger.title,
+    #         'paymentmode': '',
+    #         'transaction': opening_stock_Value_object,
+    #         'remarks': 'OPENING STOCK ADDED',
+    #         'branch': request.user.userprofile.branch,
+    #         'title': 'Opening',
+    #         'amounttype': 'Debit',
+    #         'date': os_created_date,
+    #         'createddate': os_created_date
+    #     }
+
+    #     ob_ledger_dict ={
+    #         'invoicenumber': None,
+    #         'accounts': ob_ledger.title,
+    #         'paymentmode': '',
+    #         'transaction': opening_stock_Value_object,
+    #         'remarks': 'OPENING STOCK ADDED',
+    #         'branch': request.user.userprofile.branch,
+    #         'title': 'Opening',
+    #         'amounttype': 'Credit',
+    #         'date': os_created_date,
+    #         'createddate': os_created_date
+    #     }
+
+    #     transaction_list.append(os_ledger_dict)
+    #     transaction_list.append(ob_ledger_dict)
+
+    ####################################################
+
+
+    
+
 
     if startdate:
         startdate = datetime.strptime(startdate, "%d-%m-%Y").date()
 
     if enddate:
         enddate = datetime.strptime(enddate, "%d-%m-%Y").date()
+
+
+    ################ opening balance ###########
+    opening_total_debit, opening_total_credit, opening_balance = calculate_balance_upto_date(
+            startdate,
+            request.user.userprofile.branch,
+            request
+    )
+    #############################################
 
     if startdate and enddate:
         transaction_list  = sorted(
@@ -11147,13 +11601,59 @@ def search_daybook(request):
         reverse=False
     )
 
+    # print("transaction_list",transaction_list)
+
     for transaction in transaction_list:
         if transaction["amounttype"] == "Debit":
-            total_debit += transaction["transaction"].amount
+            try:
+                total_debit += transaction["transaction"].amount
+            except:
+                total_debit += transaction["transaction"].value
         elif transaction["amounttype"] == "Credit":
-            total_credit += transaction["transaction"].amount
+            try:
+                total_credit += transaction["transaction"].amount
+            except:
+                total_credit += transaction["transaction"].value
+
+    ################ opening balance ###########
+    if opening_balance > 0:
+        total_debit += opening_balance
+    else:
+        total_credit += abs(opening_balance)
+
+    print("opening balance",opening_balance)
+
+    opening_entry = {
+        'invoicenumber': None,
+        'accounts': 'Opening Balance',
+        'paymentmode': '',
+        'transaction': {'amount': abs(opening_balance), 'value': abs(opening_balance)},
+        'remarks': 'Opening Balance',
+        'branch': request.user.userprofile.branch,
+        'title': 'Opening Balance',
+        'amounttype': 'Debit' if opening_balance > 0 else 'Credit',
+        'date': startdate,
+        'createddate': startdate
+    }
+    transaction_list.insert(0, opening_entry)
 
     total_balance = total_debit - total_credit
+
+    closing_entry = {
+        'invoicenumber': None,
+        'accounts': 'Closing Balance',
+        'paymentmode': '',
+        'transaction': {'amount': abs(total_balance), 'value': abs(total_balance)},
+        'remarks': 'Closing Balance',
+        'branch': request.user.userprofile.branch,
+        'title': 'Closing Balance',
+        'amounttype': 'Debit' if total_balance > 0 else 'Credit',
+        'date': enddate,
+        'createddate': enddate
+    }
+    transaction_list.append(closing_entry)
+    ###########################################
+
 
     paymentmodes = PaymentMode.objects.all()
 
@@ -26393,8 +26893,6 @@ def delete_modal_product_price(request, id):
 def addcustomer(request):
 
 
-    print("\n\n\n\nadding customerrrrr........")
-
 
     data = Customers()
     data.firstname = request.POST["firstname"]
@@ -27421,7 +27919,7 @@ def purchasetaxreport(request):
         "search_params": search_params,
     }
 
-    print("\n\n purchase tax report - ", context)
+   
 
 
     return render(request, "purchasetaxreport.html", context)
@@ -27683,7 +28181,6 @@ def purchasereturntaxreport(request):
     }
 
 
-    print("purchase return total tax - ",context)
 
     return render(request, "purchasereturntaxreport.html", context)
 
@@ -30374,6 +30871,7 @@ def func_get_placcount_for_balancesheet(startdate,enddate,request):
         'CNP Inprogress(Ok)',
         'CNP Pending(Ok)',
         'CNP Completed(Ok)',
+        'Spare Allocated'
     ]
     # Build the query
     service_obj = Service.objects.filter(
@@ -31601,7 +32099,6 @@ def balancesheet(request):
         if (sale.saleid not in saleid_set and not saleid_set.add(sale.saleid))
     ]
 
-
     statuses = [
         'Unassigned',
         'Unacknowledged',
@@ -31612,6 +32109,7 @@ def balancesheet(request):
         'CNP Inprogress(Ok)',
         'CNP Pending(Ok)',
         'CNP Completed(Ok)',
+        'Spare Allocated'
     ]
     # Build the query
     service_obj = Service.objects.filter(
@@ -31829,6 +32327,7 @@ def balancesheet(request):
         'CNP Inprogress(Ok)',
         'CNP Pending(Ok)',
         'CNP Completed(Ok)',
+        'Spare Allocated'
     ]
     # Build the query
     service_obj = Service.objects.filter(
@@ -32376,6 +32875,7 @@ def placcountnew(request):
         'CNP Inprogress(Ok)',
         'CNP Pending(Ok)',
         'CNP Completed(Ok)',
+        'Spare Allocated'
     ]
     # Build the query
     service_obj = Service.objects.filter(
