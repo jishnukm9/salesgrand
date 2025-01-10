@@ -14118,28 +14118,6 @@ def func_get_transaction_for_contraentry(request):
 
                 transaction_list.append(transaction_dict)
 
-
-    # if startdate and enddate:
-    #     transaction_list  = sorted(
-    #     [
-    #         transaction for transaction in transaction_list 
-    #         if startdate <= transaction['createddate'] <= enddate
-    #     ],
-    #     key=lambda x: x['createddate'],
-    #     reverse=False
-    #     )
-    # else:
-    #     transaction_list = sorted(
-    #     transaction_list,
-    #     key=lambda x: x['createddate'],
-    #     reverse=False
-    # )
-
-    return transaction_list
-
-
-def contraentry_form(request):
-    
     cash_credit=0
     cash_debit = 0
     card_credit = 0 
@@ -14149,9 +14127,8 @@ def contraentry_form(request):
     upi_credit = 0
     upi_debit = 0
 
-    transaction_obj = func_get_transaction_for_contraentry(request)
 
-    for trans in transaction_obj:
+    for trans in transaction_list:
 
         credit_or_debit = 'credit'
         if trans['transaction'].transactiontype == 'purchase':
@@ -14209,12 +14186,31 @@ def contraentry_form(request):
     CASH_IN_UPI = upi_debit-upi_credit
     CASH_IN_CARD = card_debit-card_credit
 
+    out_dict = {
+        "CASH_ACCOUNT":CASH_ACCOUNT,
+        "CASH_IN_BANK":CASH_IN_BANK,
+        "CASH_IN_CARD":CASH_IN_CARD,
+        "CASH_IN_UPI":CASH_IN_UPI
+    }
 
 
-    # print("cash account", CASH_ACCOUNT)
-    # print("cash in bank", CASH_IN_BANK)
-    # print("cash in card", CASH_IN_CARD)
-    # print("cash in upi", CASH_IN_UPI)
+    
+    return out_dict
+
+
+def contraentry_form(request):
+    
+
+
+    cash_dict = func_get_transaction_for_contraentry(request)
+
+
+    CASH_ACCOUNT = cash_dict['CASH_ACCOUNT']
+    CASH_IN_BANK = cash_dict['CASH_IN_BANK']
+    CASH_IN_CARD = cash_dict['CASH_IN_CARD']
+    CASH_IN_UPI = cash_dict['CASH_IN_UPI']
+
+    
 
     debit_side = ['Cash','Card','Bank','UPI']
     credit_side =[]
@@ -14266,6 +14262,11 @@ def addContraEntry(request):
         credit_mode = request.POST.get("creditaccount")
         amount = request.POST.get("amount")
         description = request.POST.get("description")
+
+
+        if credit_mode == debit_mode:
+            messages.error(request, "Debit and credit account should not be same.")
+            return redirect("contraentry_form")
 
 
 
@@ -14353,11 +14354,8 @@ def addContraEntry(request):
         else:
             card_ledger = card_subledger.head_root
 
-        print("amount",amount)
-        print("description",description)
-        print("narration",narration)
-        print("debit_mode",debit_mode)
-        print("credit_mode",credit_mode)
+        
+        
 
         if debit_mode == "Cash":
             debit_account = cash_subledger
@@ -14368,13 +14366,36 @@ def addContraEntry(request):
         elif debit_mode == "UPI":
             debit_account = upi_subledger
 
+        cash_dict = func_get_transaction_for_contraentry(request)
+
+
+        print("cash_dict",cash_dict)
+
+        CASH_ACCOUNT = cash_dict['CASH_ACCOUNT']
+        CASH_IN_BANK = cash_dict['CASH_IN_BANK']
+        CASH_IN_CARD = cash_dict['CASH_IN_CARD']
+        CASH_IN_UPI = cash_dict['CASH_IN_UPI']
+       
+
         if credit_mode == "Cash":
+            if CASH_ACCOUNT < float(amount):
+                messages.error(request, "Insufficient Cash to make this transaction")
+                return redirect("contraentry_form")
             credit_account = cash_subledger
         elif credit_mode == "Bank":
+            if CASH_IN_BANK < float(amount):
+                messages.error(request, "Insufficient Cash to make this transaction")
+                return redirect("contraentry_form")
             credit_account = bank_subledger
         elif credit_mode == "Card":
+            if CASH_IN_CARD < float(amount):
+                messages.error(request, "Insufficient Cash to make this transaction")
+                return redirect("contraentry_form")
             credit_account = card_subledger
         elif credit_mode == "UPI":
+            if CASH_IN_UPI < float(amount):
+                messages.error(request, "Insufficient Cash to make this transaction")
+                return redirect("contraentry_form")
             credit_account = upi_subledger
 
         data = ContraEntry()
