@@ -130,6 +130,26 @@
                           </tr>
                           {% endfor %}
 
+                          {% for item in contra_receipt_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">CONTRA ENTRY</td>
+                            <td width="5%">{{ item.receipt }}</td>
+                            <td width="5%">0</td>
+                          </tr>
+                          {% endfor %}
+
+                          {% for item in contra_payment_cash reversed %}
+                          <tr>
+                            <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                            <td width="1%">CASH ACCOUNT</td>
+                            <td width="5%">CONTRA ENTRY</td>
+                            <td width="5%">0</td>
+                            <td width="5%">{{ item.payment }}</td>
+                          </tr>
+                          {% endfor %}
+
                           <tr>
                             <td width="2%">{{ enddate }}</td>
                             <td width="1%">CASH ACCOUNT</td>
@@ -247,6 +267,26 @@
                                       <td width="5%">0</td>
                                     </tr>
                                     {% endfor %}
+
+                                    {% for item in contra_receipt_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">CONTRA ENTRY</td>
+                                      <td width="5%">{{ item.receipt }}</td>
+                                      <td width="5%">0</td>
+                                    </tr>
+                                    {% endfor %}
+          
+                                    {% for item in contra_payment_upi reversed %}
+                                    <tr>
+                                      <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                                      <td width="1%">CASH IN UPI</td>
+                                      <td width="5%">CONTRA ENTRY</td>
+                                      <td width="5%">0</td>
+                                      <td width="5%">{{ item.payment }}</td>
+                                    </tr>
+                                    {% endfor %}
           
                                     <tr>
                                       <td width="2%">{{ enddate }}</td>
@@ -356,6 +396,26 @@
                                                 <td width="5%">RECEIPT</td>
                                                 <td width="5%">{{ item.receipt }}</td>
                                                 <td width="5%">0</td>
+                                              </tr>
+                                              {% endfor %}
+
+                                              {% for item in contra_receipt_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">CONTRA ENTRY</td>
+                                                <td width="5%">{{ item.receipt }}</td>
+                                                <td width="5%">0</td>
+                                              </tr>
+                                              {% endfor %}
+                    
+                                              {% for item in contra_payment_bank reversed %}
+                                              <tr>
+                                                <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                                                <td width="1%">CASH IN BANK</td>
+                                                <td width="5%">CONTRA ENTRY</td>
+                                                <td width="5%">0</td>
+                                                <td width="5%">{{ item.payment }}</td>
                                               </tr>
                                               {% endfor %}
                     
@@ -474,6 +534,26 @@
                                                           <td width="5%">RECEIPT</td>
                                                           <td width="5%">{{ item.receipt }}</td>
                                                           <td width="5%">0</td>
+                                                        </tr>
+                                                        {% endfor %}
+
+                                                        {% for item in contra_receipt_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">CONTRA ENTRY</td>
+                                                          <td width="5%">{{ item.receipt }}</td>
+                                                          <td width="5%">0</td>
+                                                        </tr>
+                                                        {% endfor %}
+                              
+                                                        {% for item in contra_payment_card reversed %}
+                                                        <tr>
+                                                          <td width="2%">{{ item.date|date:"M. d, Y" }}</td>
+                                                          <td width="1%">CASH IN CARD</td>
+                                                          <td width="5%">CONTRA ENTRY</td>
+                                                          <td width="5%">0</td>
+                                                          <td width="5%">{{ item.payment }}</td>
                                                         </tr>
                                                         {% endfor %}
                               

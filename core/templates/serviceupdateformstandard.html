@@ -865,6 +865,115 @@ canvas {
                                               </div>
 
 {% endif %}
+
+
+{% if status == "CNP Completed(Ok)" and amountrecieved == 0 %}
+
+
+<div class="card mb-4" style="border-radius:5px;border:0.5px solid #e2e2e2;box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;">
+  <div class="card-header py-3" style="background-color: rgba(89, 99, 158, 0.24)">
+      <h5 class="m-0 font-weight-bold " style="color:#2c2e2f"> <strong><i class="fa-solid fa-gear me-2"></i>Request Spare Parts</strong> </h5>
+  
+  
+      <!-- <a href=""></a> -->
+    </div>
+  <div class="card-body ">
+
+
+  {% if service_charge_estimation == None %}
+    {% if requested_spares_number == 0 %}
+    {% if status == 'In Progress' %}
+  <div class="form-group">
+    <input type="checkbox" name="no-spare" class="me-1 mt-1" id="no-spare">
+    <label for="no-spare" class="fw-bold " style="color:#444;">No Spare Parts Required</label>
+  </div>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+
+  <form action="{% url 'addsparerequeststandard' %}" id="sparerequestform" method="post"> 
+    {% csrf_token %}
+    <input type="datetime" name="estimateddate" value="{{expecteddate | date:'Y-m-d'}}" hidden>
+    <input type="datetime" name="servicedate" value="{{memodate | date:'Y-m-d'}}" hidden>
+    <input type="text" hidden value="{{servicerefnumber}}" name="servicereff" hidden>  
+<table class="table spare-request-table table-responsive table-bordered">
+<thead style="background-color: #E8E1D7;">
+<tr >
+<th width="2%"></th>
+<th width="45%;">Spare</th>
+<th width="10%">Avail. Qty</th>
+<th width="10%;">Qty</th>
+<!-- <th>Color</th> -->
+<th width="23%">Status</th>
+<th width="10%">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1</td>
+<td class="">
+
+
+
+
+<input
+type="text"
+id="req-spare1"
+autocomplete="off"
+name="reqspare1"
+list="reqspare1"
+class="form-control no-spinner"
+
+/>
+<datalist id="reqspare1">
+{% for spare in all_spares %}
+<option value="{{spare}}">{{spare}}</option>
+{% endfor %}
+</datalist>
+
+</td>
+<td>
+<input 
+type="number"
+class="form-control no-spinner"
+readonly 
+value="" 
+name="availablereqqty1">
+</td>
+<td class="">
+<input type="number" min="1"  name="reqqty1" class="form-control no-spinner" >
+</td>
+
+<td class="">
+<input type="text" class="form-control" name="status1" value="" readonly>
+</td>
+<td class="reqappendbtn">
+<span class="addbtnsparereq"   ><i class="fa-solid fa-plus"></i></span>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+<button type="submit" class="btn btn-primary text-white fw-bol">Allocate</button>
+
+
+</form> 
+
+<form action="{% url 'addservicechargestandard' %}" id="nospareform" method="post" style="display:none">
+{% csrf_token %}
+<input type="text" hidden value="{{servicerefnumber}}" name="servicereff" hidden> 
+<input type="text" hidden value="Requested" name="status" hidden> 
+<button type="submit" class="btn btn-primary text-white fw-bol service-request-btn" >Save</button>
+</form>  
+</div>
+
+      </div>
+
+      {% endif %}
+
+
 {% endif %}
 
 

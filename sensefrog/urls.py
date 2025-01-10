@@ -722,7 +722,7 @@ urlpatterns = [
                  path("daybook/", daybook, name="daybook"),
                   path("balancesheet_new/", balancesheet, name="balancesheet_new"),
                   path("placcount_new/", placcountnew, name="placcount_new"),
-                  path("cashtocash_form/", cashtocash_form, name="cashtocash_form"),
+                  path("contraentry_form/", contraentry_form, name="contraentry_form"),
 
                   path("get_account_details/", get_account_details, name="get_account_details"),
 path("get_account_groups/", get_account_groups, name="get_account_groups"),
@@ -733,6 +733,9 @@ path('sale_receivable/',sale_receivable,name='sale_receivable'),
 path('service_receivable/',service_receivable,name='service_receivable'),
 path("openingstock/", openingstock, name="openingstock"),
 path("addopeningstock/", addOpeningStock, name="addopeningstock"),
+path("addcontraentry/", addContraEntry, name="addcontraentry"),
+path("contraentry/", contraentry, name="contraentry"),
+path("contra_details/<id>/", contra_entry_details, name="contra_entry_details"),
 ]
 
 

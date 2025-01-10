@@ -1301,6 +1301,43 @@ class AccountStatement():
             ledger.branch = params['userbranch']
             ledger.save()
 
+        elif type == "Contra":
+
+            try:
+                amount = round(params['amount'],2)
+            except:
+                amount  = params['amount']
+
+            #credit side
+            ledger = GeneralLedger()
+            ledger.date = timezone.now().date()
+            ledger.voucher_no = params['id']
+            ledger.voucher_id = params['voucherid']
+            ledger.voucher_type = "Contra Entry Transaction"
+            ledger.description = params['description']
+            ledger.amount = amount
+            ledger.amount_type = 'Credit'
+            ledger.ledger  =   params['creditac'].head_root
+            ledger.subledger  =   params['creditac']    
+            ledger.branch = params['userbranch']
+            ledger.save()
+
+
+            #debit side
+            ledger = GeneralLedger()
+            ledger.date = timezone.now().date()
+            ledger.voucher_no = params['id']
+            ledger.voucher_id = params['voucherid']
+            ledger.voucher_type = "Contra Entry Transaction"
+            ledger.description = params['description']
+            ledger.amount = amount
+            ledger.amount_type = 'Debit'
+            ledger.ledger  =   params['debitac'].head_root 
+            ledger.subledger  =   params['debitac']  
+            ledger.branch = params['userbranch']
+            ledger.save()
+
+
 
     def add_cashbook(self, type, params):
 
@@ -1422,6 +1459,34 @@ class AccountStatement():
             cashbook.description = params['category']
             cashbook.branch_wid = params['branch_wid']
             cashbook.save()
+
+        elif type == "Contra":
+
+            try:
+                amount = round(params['amount'],2)
+            except:
+                amount =params['amount']
+
+
+            cashbook.branch = params['userbranch']
+            cashbook.payment = 0
+            cashbook.receipt = amount
+            cashbook.mode = params['debitmode']
+            # cashbook.date = datetime.now()
+            cashbook.description = params['category']
+            cashbook.branch_wid = params['branch_wid']
+            cashbook.save()
+
+            cashbook = CashBook()
+            cashbook.branch = params['userbranch']
+            cashbook.payment = amount
+            cashbook.receipt = 0
+            cashbook.mode = params['creditmode']
+            # cashbook.date = datetime.now()
+            cashbook.description = params['category']
+            cashbook.branch_wid = params['branch_wid']
+            cashbook.save()
+
         elif type == "Journal":
 
             try:

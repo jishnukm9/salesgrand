@@ -770,6 +770,23 @@ class Journals(models.Model):
         return self.journalid
 
 
+class ContraEntry(models.Model):
+    contraid = models.CharField(blank=True, max_length=200, null=True)
+    contradate = models.DateField(max_length=200, default=None, null=True, blank=True)
+    creditaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="creditaccount_contra")
+    debitaccount = models.ForeignKey(CoASubAccounts, on_delete=models.PROTECT, related_name="debitaccount_contra")
+    narration = models.CharField(blank=True, max_length=2000, null=True)
+    amount = models.FloatField()
+    branch = models.ForeignKey(Branch, on_delete=models.PROTECT, related_name="contra")
+    description = models.CharField(blank=True, max_length=200, null=True)
+    creditmode = models.CharField(blank=True, max_length=200, null=True)
+    debitmode = models.CharField(blank=True, max_length=200, null=True)
+    created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.contraid
+
+
 class Receipts(models.Model):
     receiptid = models.CharField(blank=True, max_length=200, null=True)
     referenceno = models.CharField(blank=True, max_length=200, null=True)

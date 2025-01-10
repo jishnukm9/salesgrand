@@ -13,8 +13,9 @@
               
 
                 <nav class="nav nav-borders">
-                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="">Cah To Cash Entry </a>
-                  <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'journal' %}">Cash To Cash List</a>
+                  <a class="nav-link active ps-0 pe-0 ms-3 me-3" style="color: #4555B9 ; border-bottom:2px solid #4555B9;" href="#">Contra Entry </a>
+                  <!-- <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'journal' %}">Cash To Cash Entry</a> -->
+                  <a class="nav-link ps-0 pe-0 ms-0 me-3" style="color:#444;"  href="{% url 'contraentry' %}">Contra Entry List</a>
         
                    
                 </nav>
@@ -47,13 +48,13 @@
                         
                                 <div class="card card-rounded p-3 mb-4 card-border-dark" style="border-radius:5px;border:0.5px solid #e2e2e2;">
                                   <div class="card-body" >
-                                    <h3 class="nunito-font " style="color:#444;" ><strong>Journal Details</strong></h3>
+                                    <h3 class="nunito-font " style="color:#444;" ><strong>Contra Entry</strong></h3>
                                    
                                     <div class="horizontal-line-dark mb-2 mt-4"></div>
                                     <br />
                   
                                     <form
-                                      action="{% url 'addjournal' %}"
+                                      action="{% url 'addcontraentry' %}"
                                       method="post"
                                       enctype="multipart/form-data"
                                     >
@@ -82,7 +83,7 @@
                                       </div>
 
 
-                                      <div class="form-row row">
+                                      <!-- <div class="form-row row">
                                         <div class="form-group col-lg-4">
                                           <label for="referenceno" class="fs-6"
                                             >Reference Number</label
@@ -101,7 +102,7 @@
 
                                           />
                                         </div>
-                                      </div>
+                                      </div> -->
 
                           
                                       <div class="form-row row">
@@ -115,11 +116,10 @@
           
                                           <select required  style=" border:1px solid #dee2e6;" class="form-control" name="debitaccount" id="debitaccount">
                                             <option selected value="" ></option>
-                                            {% for item in all_dropdown %}
+                                            {% for item in debit_side %}
                                             <option value="{{ item }}" >{{ item }}</option>
                                              {% endfor %}
-                                            <!-- <option value="office" >Office Expenses</option>
-                                            <option value="salary">Network And Communication</option> -->
+                                 
                                           </select>
                                         </div>
                                       </div>
@@ -135,11 +135,9 @@
           
                                           <select required  style=" border:1px solid #dee2e6;" class="form-control" name="creditaccount" id="creditaccount">
                                             <option selected value="" ></option>
-                                            {% for item in all_dropdown %}
+                                            {% for item in credit_side %}
                                             <option value="{{ item }}" >{{ item }}</option>
                                              {% endfor %}
-                                            <!-- <option value="office" >Office Expenses</option>
-                                            <option value="salary">Network And Communication</option> -->
                                           </select>
                                         
                                        
@@ -163,7 +161,7 @@
                                            class="form-control cmp-input "
                                            value=""
                                            step="0.01"
-                                           min="0"
+                                           min="0.01"
                                           
                            
                              
@@ -171,27 +169,7 @@
                                        </div>
                                      </div>
 
-                                     <!-- <div class="form-row row">
-                                        <div class="form-group col-lg-4">
-                                          <label for="mode" class="fs-6"
-                                            >Mode</label
-                                          >
-                                         
-                                        </div>
-                                        <div class="form-group col-lg-8"> -->
-          
-                                          <!-- <select required hidden  style=" border:1px solid #dee2e6;" class="form-control" name="mode" id="mode">
-                                            <option   value=""></option>
-                                            <option value="Bank" >Bank</option>
-                                            <option value="Cash" >Cash</option>
-                                            <option value="Card" >Card</option>
-                                            <option value="UPI" >UPI</option>
-                                          </select> -->
-                                          <input type="text"  name="mode" id="mode" hidden value="">
-                                        
-                                       
-                                        <!-- </div>
-                                      </div> -->
+                              
 
   
                                       <div class="form-row row">
@@ -215,7 +193,7 @@
                                         type="submit"
                                         class="btn btn-primary text-white mb-1 mt-3 fs-6"
                                       >
-                                        Save Journal
+                                        Save Contra Entry
                                       </button>
                                     </form>
                                   </div>

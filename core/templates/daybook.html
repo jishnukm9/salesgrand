@@ -149,7 +149,7 @@
                                  <td style="white-space: normal;">Amount Paid By SalesReturn</td>
                                  {% elif item.transaction.transactiontype == 'purchasereturn'  %}
                                  <td style="white-space: normal;">Amount Recieved By PurchaseReturn</td>
-                                 {% elif item.transaction.transactiontype == 'expense' or item.transaction.transactiontype == 'payment' or item.transaction.transactiontype == 'receipt' or item.transaction.transactiontype == 'journal'  %}
+                                 {% elif item.transaction.transactiontype == 'expense' or item.transaction.transactiontype == 'payment' or item.transaction.transactiontype == 'receipt' or item.transaction.transactiontype == 'journal' or item.transaction.transactiontype == 'contra credit' or item.transaction.transactiontype == 'contra debit'   %}
                                  <td style="white-space: normal;">{{item.remarks}}</td>
                                  {% elif item.transaction.transactiontype == 'service' %}
                                  <td style="white-space: normal;">Amount Recieved By Service</td>
@@ -247,6 +247,20 @@
                                  {% elif item.transaction.transactiontype == 'journal'  %}
                                  <td>
                                     <a class="text-decoration-none fw-bold color-blue" href="{% url 'journaldetails' id=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+
+                                 {% elif item.transaction.transactiontype == 'contra credit'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'contra_entry_details' id=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
+
+                                 
+                                 </td>
+
+                                 {% elif item.transaction.transactiontype == 'contra debit'  %}
+                                 <td>
+                                    <a class="text-decoration-none fw-bold color-blue" href="{% url 'contra_entry_details' id=item.transaction.transactionid  %}">{{item.transaction.transactionid}}</a>
 
                                  
                                  </td>

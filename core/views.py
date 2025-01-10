@@ -10318,6 +10318,64 @@ def calculate_balance_upto_date(date_point, branch,request):
 
                 transaction_list.append(transaction_dict)
 
+
+        if tr.transactiontype == "contra credit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Credit'
+                accounts = contra.creditaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "contra debit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Debit'
+                accounts = contra.debitaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+        
+
         if tr.transactiontype == "service":
 
             transactionid = tr.transactionid
@@ -10800,6 +10858,63 @@ def daybook(request):
                     transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
                 ###############
 
+                transaction_list.append(transaction_dict)
+
+
+        if tr.transactiontype == "contra credit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Credit'
+                accounts = contra.creditaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "contra debit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Debit'
+                accounts = contra.debitaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
                 transaction_list.append(transaction_dict)
 
         if tr.transactiontype == "service":
@@ -11464,6 +11579,63 @@ def search_daybook(request):
                     transaction_dict['createddate'] = transaction_dict['createddate'] - timedelta(days=1)
                 ###############
 
+                transaction_list.append(transaction_dict)
+
+
+        if tr.transactiontype == "contra credit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Credit'
+                accounts = contra.creditaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "contra debit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Debit'
+                accounts = contra.debitaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
                 transaction_list.append(transaction_dict)
 
         if tr.transactiontype == "service":
@@ -12461,12 +12633,15 @@ def cash_book(request):
         "Purchase Return",
         "PAYMENT",
         "RECEIPT",
+        "CONTRA ENTRY"
     ]
     cashbookother_cash = CashBook.objects.exclude(
         Q(branch=branch) & Q(mode="Cash") & Q(date__range=(startdate, enddate)),
         description__in=excluded_value_cash,
     )
     df_cash = pd.DataFrame.from_records(cashbook_cash.values())
+
+
 
     try:
         totalsale_cash = (
@@ -12540,6 +12715,29 @@ def cash_book(request):
     except KeyError:
         totalreceiptqs_cash = None
 
+    try:
+        totalcontra_receipt_cash = (
+            df_cash[df_cash["description"] == "CONTRA ENTRY"]
+            .groupby("date")["receipt"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_receipt_cash = totalcontra_receipt_cash.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_receipt_cash = None
+
+    try:
+        totalcontra_payment_cash = (
+            df_cash[df_cash["description"] == "CONTRA ENTRY"]
+            .groupby("date")["payment"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_payment_cash = totalcontra_payment_cash.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_payment_cash = None
+    
+
     # Calculate the closing balance
     # TBD: add the filter and then identify the opening balance as well
     totalpaymentbalance_cash = 0
@@ -12592,6 +12790,7 @@ def cash_book(request):
     cashbook_upi = CashBook.objects.filter(
         Q(branch=branch) & Q(date__range=(startdate, enddate)) & Q(mode="UPI")
     )
+
     excluded_value_upi = [
         "Purchase",
         "Sale",
@@ -12600,11 +12799,14 @@ def cash_book(request):
         "Purchase Return",
         "PAYMENT",
         "RECEIPT",
+         "CONTRA ENTRY"
     ]
     cashbookother_upi = CashBook.objects.exclude(
         Q(branch=branch) & Q(mode="UPI") & Q(date__range=(startdate, enddate)),
         description__in=excluded_value_upi,
     )
+
+
     df_upi = pd.DataFrame.from_records(cashbook_upi.values())
 
     try:
@@ -12678,6 +12880,27 @@ def cash_book(request):
         totalreceiptqs_upi = totalreceipt_upi.to_dict(orient="records")
     except KeyError:
         totalreceiptqs_upi = None
+    try:
+        totalcontra_receipt_upi = (
+            df_upi[df_upi["description"] == "CONTRA ENTRY"]
+            .groupby("date")["receipt"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_receipt_upi = totalcontra_receipt_upi.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_receipt_upi = None
+
+    try:
+        totalcontra_payment_upi = (
+            df_upi[df_upi["description"] == "CONTRA ENTRY"]
+            .groupby("date")["payment"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_payment_upi = totalcontra_payment_upi.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_payment_upi = None
 
     # Calculate the closing balance
     # TBD: add the filter and then identify the opening balance as well
@@ -12741,6 +12964,7 @@ def cash_book(request):
         "Purchase Return",
         "PAYMENT",
         "RECEIPT",
+         "CONTRA ENTRY"
     ]
     cashbookother_bank = CashBook.objects.exclude(
         Q(branch=branch) & Q(mode="Bank") & Q(date__range=(startdate, enddate)),
@@ -12818,6 +13042,27 @@ def cash_book(request):
         totalreceiptqs_bank = totalreceipt_bank.to_dict(orient="records")
     except KeyError:
         totalreceiptqs_bank = None
+    try:
+        totalcontra_receipt_bank = (
+            df_bank[df_bank["description"] == "CONTRA ENTRY"]
+            .groupby("date")["receipt"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_receipt_bank = totalcontra_receipt_bank.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_receipt_bank = None
+
+    try:
+        totalcontra_payment_bank = (
+            df_bank[df_bank["description"] == "CONTRA ENTRY"]
+            .groupby("date")["payment"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_payment_bank = totalcontra_payment_bank.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_payment_bank = None
 
     # Calculate the closing balance
     # TBD: add the filter and then identify the opening balance as well
@@ -12885,6 +13130,7 @@ def cash_book(request):
         "Purchase Return",
         "PAYMENT",
         "RECEIPT",
+         "CONTRA ENTRY"
     ]
     cashbookother_card = CashBook.objects.exclude(
         Q(branch=branch) & Q(mode="Card") & Q(date__range=(startdate, enddate)),
@@ -12962,6 +13208,30 @@ def cash_book(request):
         totalreceiptqs_card = totalreceipt_card.to_dict(orient="records")
     except KeyError:
         totalreceiptqs_card = None
+    try:
+        totalcontra_receipt_card = (
+            df_card[df_card["description"] == "CONTRA ENTRY"]
+            .groupby("date")["receipt"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_receipt_card = totalcontra_receipt_card.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_receipt_card = None
+
+    try:
+        totalcontra_payment_card = (
+            df_card[df_card["description"] == "CONTRA ENTRY"]
+            .groupby("date")["payment"]
+            .sum()
+            .reset_index()
+        )
+        totalcontraqs_payment_card = totalcontra_payment_card.to_dict(orient="records")
+    except KeyError:
+        totalcontraqs_payment_card = None
+
+
+
 
     # Calculate the closing balance
     # TBD: add the filter and then identify the opening balance as well
@@ -12995,6 +13265,18 @@ def cash_book(request):
     else:
         all_branches = [request.user.userprofile.branch]
 
+
+    print("total contra receipt card",totalcontraqs_receipt_card)
+    print("total contra payment card",totalcontraqs_payment_card)
+    print("total contra receipt bank",totalcontraqs_receipt_bank)
+    print("total contra payment bank",totalcontraqs_payment_bank)
+    print("total contra receipt cash",totalcontraqs_receipt_cash)
+    print("total contra payment cash",totalcontraqs_payment_cash)
+    print("total contra receipt upi",totalcontraqs_receipt_upi)
+    print("total contra payment upi",totalcontraqs_payment_upi)
+    
+
+
     data = {
         "sale_cash": totalsaleqs_cash,
         "purchase_cash": totalpurchaseqs_cash,
@@ -13003,11 +13285,14 @@ def cash_book(request):
         "purchasereturn_cash": totalpurchasereturnqs_cash,
         "payments_cash": totalpaymentqs_cash,
         "receipts_cash": totalreceiptqs_cash,
+        "contra_receipt_cash": totalcontraqs_receipt_cash,
+        "contra_payment_cash": totalcontraqs_payment_cash,
         "other_cash": cashbookother_cash,
         "balancetype_cash": balancetype_cash,
         "closingbalance_cash": closingbalance_cash,
         "opening_cash_balance": opening_cash_balance,
         "opening_cash_balance_type": opening_cash_balance_type,
+
         "sale_upi": totalsaleqs_upi,
         "purchase_upi": totalpurchaseqs_upi,
         "service_upi": totalserviceqs_upi,
@@ -13015,11 +13300,14 @@ def cash_book(request):
         "purchasereturn_upi": totalpurchasereturnqs_upi,
         "payments_upi": totalpaymentqs_upi,
         "receipts_upi": totalreceiptqs_upi,
+        "contra_receipt_upi": totalcontraqs_receipt_upi,
+        "contra_payment_upi": totalcontraqs_payment_upi,
         "other_upi": cashbookother_upi,
         "balancetype_upi": balancetype_upi,
         "closingbalance_upi": closingbalance_upi,
         "opening_upi_balance": opening_upi_balance,
         "opening_upi_balance_type": opening_upi_balance_type,
+
         "sale_bank": totalsaleqs_bank,
         "purchase_bank": totalpurchaseqs_bank,
         "service_bank": totalserviceqs_bank,
@@ -13027,11 +13315,14 @@ def cash_book(request):
         "purchasereturn_bank": totalpurchasereturnqs_bank,
         "payments_bank": totalpaymentqs_bank,
         "receipts_bank": totalreceiptqs_bank,
+        "contra_receipt_bank": totalcontraqs_receipt_bank,
+        "contra_payment_bank": totalcontraqs_payment_bank,
         "other_bank": cashbookother_bank,
         "balancetype_bank": balancetype_bank,
         "closingbalance_bank": closingbalance_bank,
         "opening_bank_balance": opening_bank_balance,
         "opening_bank_balance_type": opening_bank_balance_type,
+
         "sale_card": totalsaleqs_card,
         "purchase_card": totalpurchaseqs_card,
         "service_card": totalserviceqs_card,
@@ -13039,9 +13330,12 @@ def cash_book(request):
         "purchasereturn_card": totalpurchasereturnqs_card,
         "payments_card": totalpaymentqs_card,
         "receipts_card": totalreceiptqs_card,
+        "contra_receipt_card": totalcontraqs_receipt_card,
+        "contra_payment_card": totalcontraqs_payment_card,
         "other_card": cashbookother_card,
         "balancetype_card": balancetype_card,
         "closingbalance_card": closingbalance_card,
+
         ###### added on 4/10/2024 ######
         "opening_card_balance": opening_card_balance,
         "opening_card_balance_type": opening_card_balance_type,
@@ -13308,25 +13602,870 @@ def journal_form(request):
         if item.head_root.name not in cash_list:
             all_coa.append(item.title)
 
-    # for item in coa_dropdown:
-    #     if item["name"] in cash_list:
-    #         all_coa.append(item["name"])
     return render(request, "journalform.html", {"all_dropdown": all_coa})
 
 
-def cashtocash_form(request):
-    all_coa = []
-    # db_dropdown = CoASubAccounts.objects.all()
-    cash_list = ['CASH ACCOUNT']
-    coa_dropdown = coa.COA_GROUP_LIST
-    # for item in db_dropdown:
-    #     if item.head_root.name not in cash_list:
-    #         all_coa.append(item.title)
 
-    for item in coa_dropdown:
-        if item["name"] in cash_list:
-            all_coa.append(item["name"])
-    return render(request, "cashtocashform.html", {"all_dropdown": all_coa})
+
+
+def func_get_transaction_for_contraentry(request):
+
+    currentuser = request.user
+    transaction = []
+
+    filters = Q()
+
+    if not currentuser.is_superuser:
+        filters &= Q(branch=currentuser.userprofile.branch)
+
+    if filters:
+        transaction = Transaction.objects.filter(filters).order_by("-pk")
+
+    invoicenumber_list = set()
+    accounts_list = set()
+
+    if currentuser.is_superuser:
+        transactions_all = Transaction.objects.all().order_by("-pk")
+    else:
+        transactions_all = Transaction.objects.filter(
+            branch=currentuser.userprofile.branch
+        ).order_by("-pk")
+    for trans in transactions_all:
+        accounts_list.add(trans.accounts)
+        invoicenumber_list.add(trans.invoice_number)
+
+    transaction_list = []
+    purchase_due_balance = 0
+    sale_due_balance = 0
+    service_due_balance = 0
+
+    search='Yes'
+    total_debit = 0
+    total_credit = 0
+    
+    for tr in transaction:
+        if tr.transactiontype == "purchase":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            if currentuser.is_superuser:
+
+                purchase_p = Purchase.objects.filter(purchaseid=transactionid).first()
+                if not purchase_p:
+                    pass
+                else:
+                    ###########
+                    if purchase_p.duebalance:
+                        purchase_due_balance += purchase_p.duebalance
+                    ###########
+
+                    invoicenumber_list.add(purchase_p.invoicenumber)
+                    accounts_list.add(purchase_p.supplier.name)
+                    transaction_dict["invoicenumber"] = purchase_p.invoicenumber
+                    transaction_dict["accounts"] = purchase_p.supplier.name
+                    transaction_dict["paymentmode"] = tr.paymentmode
+                    transaction_dict["transaction"] = tr
+                    transaction_dict["branch"] = tr.branch
+                    transaction_dict["title"] = "Purchase"
+                    transaction_dict["amounttype"] = "Credit"
+                  
+                    transaction_dict['date'] = purchase_p.invoicedate
+               
+
+                    ###############
+
+                    transaction_date = tr.transactiondate
+                    if transaction_date:
+                        transaction_dict['createddate'] = transaction_date
+                    else:
+                        transaction_dict['createddate'] = tr.createddate
+                    ###############
+
+                    transaction_list.append(transaction_dict)
+                purchase_b = BranchPurchase.objects.filter(
+                    purchaseid=transactionid
+                ).first()
+                if not purchase_b:
+                    pass
+                else:
+                    ###########
+                    if purchase_b.duebalance:
+                        purchase_due_balance += purchase_b.duebalance
+                    ###########
+                    invoicenumber_list.add(purchase_b.invoicenumber)
+                    if purchase_b.supplier == None:
+                        accounts_list.add(purchase_b.externalsupplier.name)
+                    else:
+                        accounts_list.add(purchase_b.supplier.name)
+                    transaction_dict["invoicenumber"] = purchase_b.invoicenumber
+                    if purchase_b.supplier == None:
+                        transaction_dict["accounts"] = purchase_b.externalsupplier.name
+                    else:
+                        transaction_dict["accounts"] = purchase_b.supplier.name
+                    transaction_dict["paymentmode"] = tr.paymentmode
+                    transaction_dict["transaction"] = tr
+                    transaction_dict["branch"] = tr.branch
+                    transaction_dict["title"] = "Purchase"
+                    transaction_dict["amounttype"] = "Credit"
+                  
+                    transaction_dict['date'] = purchase_b.invoicedate
+
+                   
+
+                    ###############
+
+                    transaction_date = tr.transactiondate
+                    if transaction_date:
+                        transaction_dict['createddate'] = transaction_date
+                    else:
+                        transaction_dict['createddate'] = tr.createddate
+                    ###############
+
+                    transaction_list.append(transaction_dict)
+
+            else:
+                purchase = BranchPurchase.objects.filter(
+                    purchaseid=transactionid
+                ).first()
+                if not purchase:
+                    pass
+                else:
+
+                    ###########
+                    if purchase.duebalance:
+                        purchase_due_balance += purchase.duebalance
+                    ###########
+
+                    invoicenumber_list.add(purchase.invoicenumber)
+                    if purchase.supplier == None:
+                        accounts_list.add(purchase.externalsupplier.name)
+                    else:
+                        accounts_list.add(purchase.supplier.name)
+                    transaction_dict["invoicenumber"] = purchase.invoicenumber
+                    if purchase.supplier == None:
+                        transaction_dict["accounts"] = purchase.externalsupplier.name
+                    else:
+                        transaction_dict["accounts"] = purchase.supplier.name
+                    transaction_dict["paymentmode"] = tr.paymentmode
+                    transaction_dict["transaction"] = tr
+                    transaction_dict["branch"] = tr.branch
+                    transaction_dict["title"] = "Purchase"
+                    transaction_dict["amounttype"] = "Credit"
+               
+                    transaction_dict['date'] = purchase.invoicedate
+
+                 
+
+                    ###############
+
+                    transaction_date = tr.transactiondate
+                    if transaction_date:
+                        transaction_dict['createddate'] = transaction_date
+                    else:
+                        transaction_dict['createddate'] = tr.createddate
+                    ###############
+
+                    transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "purchasereturn":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            # if currentuser.is_superuser:
+
+            purchase_p = PurchaseReturn.objects.filter(
+                purchasereturnid=transactionid
+            ).first()
+            if not purchase_p:
+                pass
+            else:
+                invoicenumber_list.add(purchase_p.invoicenumber)
+                if purchase_p.supplier == None:
+                    accounts_list.add(purchase_p.externalsupplier.name)
+                else:
+                    accounts_list.add(purchase_p.supplier.name)
+                transaction_dict["invoicenumber"] = purchase_p.invoicenumber
+                if purchase_p.supplier == None:
+                    transaction_dict["accounts"] = purchase_p.externalsupplier.name
+                else:
+                    transaction_dict["accounts"] = purchase_p.supplier.name
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Purchase Return"
+                transaction_dict["amounttype"] = "Debit"
+              
+                transaction_dict['date'] = purchase_p.createddate
+
+       
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "sale":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            sale = Sale.objects.filter(saleid=transactionid).first()
+            if not sale:
+                pass
+            else:
+                ###########
+                if sale.duebalance:
+                    sale_due_balance += sale.duebalance
+                ###########
+                invoicenumber_list.add(sale.invoicenumber)
+                accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = sale.invoicenumber
+                transaction_dict["accounts"] = sale.customer
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Sale"
+                transaction_dict["amounttype"] = "Debit"
+              
+                transaction_dict['date'] = sale.invoicedate
+
+
+                ###############
+ 
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "salereturn":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            sale = SaleReturn.objects.filter(salereturnid=transactionid).first()
+            if not sale:
+                pass
+            else:
+                invoicenumber_list.add(sale.invoicenumber)
+                accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = sale.invoicenumber
+                transaction_dict["accounts"] = sale.customer
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Sale Return"
+                transaction_dict["amounttype"] = "Credit"
+               
+                transaction_dict['date'] = sale.createddate
+
+              
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "expense":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            expense = Expenses.objects.filter(expenseid=transactionid).first()
+            if not expense:
+                pass
+            else:
+                invoicenumber_list.add(expense.billnumber)
+                # accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = expense.billnumber
+                transaction_dict["accounts"] = ""
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = expense.remarks
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Expense"
+                transaction_dict["amounttype"] = "Credit"
+             
+                transaction_dict['date'] = expense.expensedate
+
+           
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "payment":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            payment = Payments.objects.filter(paymentid=transactionid).first()
+            if not payment:
+                pass
+            else:
+                invoicenumber_list.add(payment.referenceno)
+                # accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = payment.referenceno
+                transaction_dict["accounts"] = payment.debitaccount
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = payment.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Payment"
+                transaction_dict["amounttype"] = "Credit"
+              
+                transaction_dict['date'] = payment.paymentdate
+
+             
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "receipt":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            receipt = Receipts.objects.filter(receiptid=transactionid).first()
+            if not receipt:
+                pass
+            else:
+                invoicenumber_list.add(receipt.referenceno)
+                # accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = receipt.referenceno
+                transaction_dict["accounts"] =receipt.creditaccount
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = receipt.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Receipt"
+                transaction_dict["amounttype"] = "Debit"
+             
+                transaction_dict['date'] = receipt.receiptdate
+
+      
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "journal":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            journal = Journals.objects.filter(journalid=transactionid).first()
+            if not journal:
+                pass
+            else:
+                amount_type = ''
+                accounts = ''
+                cash_list = ['CASH ACCOUNT']
+                
+                if journal.creditaccount in cash_list:
+                    amount_type = 'Credit'
+                    accounts = journal.debitaccount
+                elif journal.debitaccount in cash_list:
+                    amount_type = 'Debit'
+                    accounts = journal.creditaccount
+
+                invoicenumber_list.add(journal.referenceno)
+                # accounts_list.add(sale.customer)
+                transaction_dict["invoicenumber"] = journal.referenceno
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = journal.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Journal"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = journal.journaldate
+         
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "contra credit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Credit'
+                accounts = contra.creditaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "contra debit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Debit'
+                accounts = contra.debitaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "service":
+
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            # expense =Expenses.objects.filter(expenseid = transactionid).first()
+            service = Service.objects.filter(servicerefnumber=transactionid).first()
+            if not service:
+                pass
+            else:
+
+                ###########
+                if service.duebalance:
+                    service_due_balance += service.duebalance
+                ###########
+
+                invoicenumber_list.add(service.servicerefnumber)
+                accounts_list.add(f"{service.firstname} {service.lastname}")
+                transaction_dict["invoicenumber"] = service.servicerefnumber
+                transaction_dict["accounts"] = f"{service.firstname} {service.lastname}"
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Service"
+                transaction_dict["amounttype"] = "Debit"
+             
+                transaction_dict['date'] = service.memodate
+           
+
+                ###############
+
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+
+                transaction_list.append(transaction_dict)
+
+
+    # if startdate and enddate:
+    #     transaction_list  = sorted(
+    #     [
+    #         transaction for transaction in transaction_list 
+    #         if startdate <= transaction['createddate'] <= enddate
+    #     ],
+    #     key=lambda x: x['createddate'],
+    #     reverse=False
+    #     )
+    # else:
+    #     transaction_list = sorted(
+    #     transaction_list,
+    #     key=lambda x: x['createddate'],
+    #     reverse=False
+    # )
+
+    return transaction_list
+
+
+def contraentry_form(request):
+    
+    cash_credit=0
+    cash_debit = 0
+    card_credit = 0 
+    card_debit = 0
+    bank_credit = 0 
+    bank_debit = 0
+    upi_credit = 0
+    upi_debit = 0
+
+    transaction_obj = func_get_transaction_for_contraentry(request)
+
+    for trans in transaction_obj:
+
+        credit_or_debit = 'credit'
+        if trans['transaction'].transactiontype == 'purchase':
+            credit_or_debit = 'credit'
+        elif trans['transaction'].transactiontype == 'purchasereturn':
+            credit_or_debit = 'debit'
+        elif trans['transaction'].transactiontype == 'sale':
+            credit_or_debit = 'debit'
+        elif trans['transaction'].transactiontype == 'salereturn':
+            credit_or_debit = 'credit'
+        elif trans['transaction'].transactiontype == 'service':
+            credit_or_debit = 'debit'
+        elif trans['transaction'].transactiontype == 'payment':
+            credit_or_debit = 'credit'
+        elif trans['transaction'].transactiontype == 'receipt':
+            credit_or_debit = 'debit'
+        elif trans['transaction'].transactiontype == 'contra credit':
+            credit_or_debit = 'credit'
+        elif trans['transaction'].transactiontype == 'contra debit':
+            credit_or_debit = 'debit'
+        elif trans['transaction'].transactiontype == 'journal':
+            credit_or_debit = trans['amounttype'].lower()
+
+        # All possible combinations
+        if trans['transaction'].paymentmode == 'Cash':
+            if credit_or_debit == 'credit':
+                cash_credit += trans['transaction'].amount
+            elif credit_or_debit == 'debit':
+                cash_debit += trans['transaction'].amount
+
+        elif trans['transaction'].paymentmode == 'Bank':
+            if credit_or_debit == 'credit':
+                bank_credit += trans['transaction'].amount
+            elif credit_or_debit == 'debit':
+                bank_debit += trans['transaction'].amount
+
+        elif trans['transaction'].paymentmode == 'UPI':
+            if credit_or_debit == 'credit':
+                upi_credit += trans['transaction'].amount
+            elif credit_or_debit == 'debit':
+                upi_debit += trans['transaction'].amount
+
+        elif trans['transaction'].paymentmode == 'Card':
+            if credit_or_debit == 'credit':
+                card_credit += trans['transaction'].amount
+            elif credit_or_debit == 'debit':
+                card_debit += trans['transaction'].amount
+
+        else:
+            pass
+
+
+    CASH_ACCOUNT = cash_debit-cash_credit
+    CASH_IN_BANK = bank_debit-bank_credit
+    CASH_IN_UPI = upi_debit-upi_credit
+    CASH_IN_CARD = card_debit-card_credit
+
+
+
+    # print("cash account", CASH_ACCOUNT)
+    # print("cash in bank", CASH_IN_BANK)
+    # print("cash in card", CASH_IN_CARD)
+    # print("cash in upi", CASH_IN_UPI)
+
+    debit_side = ['Cash','Card','Bank','UPI']
+    credit_side =[]
+
+    if CASH_ACCOUNT > 0:
+        credit_side.append('Cash')
+    if CASH_IN_BANK > 0:
+        credit_side.append('Bank')
+    if CASH_IN_CARD > 0:
+        credit_side.append('Card')
+    if CASH_IN_UPI > 0:
+        credit_side.append('UPI')
+
+    context = {
+        "credit_side":credit_side,
+        "debit_side":debit_side
+    }
+
+    return render(request, "contraentryform.html", context)
+    
+
+
+
+
+@login_required
+def contraentry(request):
+    currentuser = request.user
+    if currentuser.is_superuser:
+        contra_data = ContraEntry.objects.all()
+    else:
+        contra_data = ContraEntry.objects.filter(branch=currentuser.userprofile.branch)
+    return render(request, "contraentry.html", {"contra_data": contra_data})
+
+
+
+
+@login_required
+def addContraEntry(request):
+    if request.method == "POST":
+
+        
+        currentuser = request.user
+        branch = currentuser.userprofile.branch
+        today_date = datetime.today().date()
+        contradate = today_date.strftime("%Y-%m-%d")
+
+        narration = request.POST.get("narration")
+        debit_mode = request.POST.get("debitaccount")
+        credit_mode = request.POST.get("creditaccount")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+
+
+
+        cash_subledger = CoASubAccounts.objects.filter(Q(title="Cash") & Q(is_adminonly=True)).first()
+        if not cash_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Cash"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            cash_subledger = CoASubAccounts.objects.filter(Q(title="Cash") & Q(is_adminonly=True)).first()
+            cash_ledger = cash_subledger.head_root
+        else:
+            cash_ledger = cash_subledger.head_root
+
+
+        bank_subledger = CoASubAccounts.objects.filter(Q(title="Bank") & Q(is_adminonly=True)).first()
+        if not bank_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Bank"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            bank_subledger = CoASubAccounts.objects.filter(Q(title="Bank") & Q(is_adminonly=True)).first()
+            bank_ledger = bank_subledger.head_root
+        else:
+            bank_ledger = bank_subledger.head_root
+
+
+        upi_subledger = CoASubAccounts.objects.filter(Q(title="UPI") & Q(is_adminonly=True)).first()
+        if not upi_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"UPI"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            upi_subledger = CoASubAccounts.objects.filter(Q(title="UPI") & Q(is_adminonly=True)).first()
+            upi_ledger = upi_subledger.head_root
+        else:
+            upi_ledger = upi_subledger.head_root
+
+
+
+        card_subledger = CoASubAccounts.objects.filter(Q(title="Card") & Q(is_adminonly=True)).first()
+        if not card_subledger:
+            data = CoASubAccounts()
+            ledgername = "CASH ACCOUNT"
+            ledgerobj = AccountLedger.objects.filter(name=ledgername).first()
+            title = f"Card"
+            data.head_root = ledgerobj
+            gstring = ledgername.replace(" ", "_")
+            data.gstring = gstring
+            data.title = title
+            data.branch = branch
+            data.description = title
+            data.is_adminonly = True
+            data.save()
+
+            card_subledger = CoASubAccounts.objects.filter(Q(title="Card") & Q(is_adminonly=True)).first()
+            card_ledger = card_subledger.head_root
+        else:
+            card_ledger = card_subledger.head_root
+
+        print("amount",amount)
+        print("description",description)
+        print("narration",narration)
+        print("debit_mode",debit_mode)
+        print("credit_mode",credit_mode)
+
+        if debit_mode == "Cash":
+            debit_account = cash_subledger
+        elif debit_mode == "Bank":
+            debit_account = bank_subledger
+        elif debit_mode == "Card":
+            debit_account = card_subledger
+        elif debit_mode == "UPI":
+            debit_account = upi_subledger
+
+        if credit_mode == "Cash":
+            credit_account = cash_subledger
+        elif credit_mode == "Bank":
+            credit_account = bank_subledger
+        elif credit_mode == "Card":
+            credit_account = card_subledger
+        elif credit_mode == "UPI":
+            credit_account = upi_subledger
+
+        data = ContraEntry()
+        contraid =generate_unique_id("ContraEntry", "CE")
+        data.contraid = contraid
+        data.narration = narration
+        data.debitaccount = debit_account
+        data.creditaccount = credit_account
+        data.debitmode = debit_mode
+        data.creditmode = credit_mode
+        data.amount = amount
+        data.description = description
+        data.branch = branch
+        data.contradate = contradate
+        data.save()
+
+
+
+
+        transaction = Transaction()
+        transaction.transactionid = contraid
+        transaction.amount = amount
+        transaction.transactiontype = "contra debit"
+        transaction.paymentmode = debit_mode
+        transaction.branch = currentuser.userprofile.branch
+        # transaction.invoice_number = request.POST.get("referenceno")
+        transaction.accounts = debit_account.head_root.name
+        transaction.remarks = request.POST.get("narration")
+        transaction.transactiondate = datetime.now()
+        transaction.subledger = debit_account
+        transaction.save()
+
+
+
+        transaction = Transaction()
+        transaction.transactionid = contraid
+        transaction.amount = amount
+        transaction.transactiontype = "contra credit"
+        transaction.paymentmode = credit_mode
+        transaction.branch = currentuser.userprofile.branch
+        # transaction.invoice_number = request.POST.get("referenceno")
+        transaction.accounts = credit_account.head_root.name
+        transaction.remarks = request.POST.get("narration")
+        transaction.transactiondate = datetime.now()
+        transaction.subledger = credit_account
+        transaction.save()
+
+   
+        financial_statement = addaccounts.AccountStatement()
+
+
+        transaction_type = 'Contra'
+
+        general_ledger_params = {
+            "id": contraid,
+            "voucherid": contraid,
+            "amount": amount,
+            "description": narration,
+            "userbranch": branch,
+            "date": today_date,
+            "debitac": debit_account,
+            "creditac": credit_account
+        }
+
+        financial_statement.add_generalledger(transaction_type, general_ledger_params)
+
+        cashbook_params = {
+            "userbranch": branch,
+            "amount": amount,
+            "category": "CONTRA ENTRY",
+            "branch_wid":request.user.userprofile.branch,
+            "debitac": debit_account,
+            "creditac": credit_account,
+           'debitmode' : debit_mode,
+            'creditmode' : credit_mode
+        }
+
+        financial_statement.add_cashbook(transaction_type, cashbook_params)
+
+ 
+
+    return redirect("contraentry")
+
+
+def contra_entry_details(request, id):
+
+    data = ContraEntry.objects.filter(contraid=id).first()
+
+    context = {"data": data}
+
+    return render(request, "contradetails.html", context)
 
 
 def journal_details(request, id):
@@ -13357,7 +14496,6 @@ def add_journal(request):
         credit_acc = CoASubAccounts.objects.filter(title=request.POST.get("creditaccount")).first()
         data.creditaccount = credit_acc
         
-        # data.creditaccount =credit_account
         debit_acc = CoASubAccounts.objects.filter(title=request.POST.get("debitaccount")).first()
         data.debitaccount = debit_acc
         data.narration = request.POST.get("narration")
@@ -13367,11 +14505,8 @@ def add_journal(request):
         data.mode = request.POST.get("mode")
         data.save()
 
-
         credit_account = request.POST.get("creditaccount")
         debit_account = request.POST.get("debitaccount")
-
-        # cash_list = ['CASH ACCOUNT']
 
         credit_account_head_title = credit_account_head_title2 = CoASubAccounts.objects.filter(
             title=credit_account
@@ -13382,9 +14517,6 @@ def add_journal(request):
         else:
             credit_account_head_title = credit_account
 
-        # if debit_account in cash_list:
-        #     debit_account_head_title = debit_account
-        # else:
 
         debit_account_head_title = debit_account_head_title2 = CoASubAccounts.objects.filter(
             title=debit_account
@@ -13422,9 +14554,6 @@ def add_journal(request):
         transaction.subledger = cred
         transaction.save()
 
-        # debit_coa, debit_coa_level1 = get_coa_root(data.debitaccount)
-        # credit_coa, credit_coa_level1 = get_coa_root(data.creditaccount)
-
         debit_account_head = credit_account_head_title2.head_root.account_group.account_head
 
         credit_account_head = debit_account_head_title2.head_root.account_group.account_head
@@ -13460,55 +14589,7 @@ def add_journal(request):
 
         financial_statement.add_generalledger(transaction_type, general_ledger_params)
 
-
-        # Determine the cash flow
-        # Below logic is not 100% fool proof
-        # Need to correct it
-        payment_type = None
-        # if debit_coa == "Assets":
-        #     # Assuming cash Inflow
-        #     payment_type = "Receipt"
-        # elif credit_coa == "Assets":
-        #     # Assuming Cash Outflow
-        #     payment_type = "Payment"
-
-        ################ COMMENDED ON 28-12-2024 ###################
-        # if debit_account_head == 'ASSET':
-        #     payment_type = 'Receipt'
-        #     subledger = data.debitaccount
-        # elif credit_account_head == 'ASSET':
-        #     payment_type = 'Payment'
-        #     subledger = data.creditaccount
-
-
-        # cashbook_params = {
-        #     "payment_type": payment_type,
-        #     "userbranch": data.branch,
-        #     "amount": data.amount,
-        #     "mode": data.mode,
-        #     "category": "JOURNAL",
-        #     "branch_wid":request.user.userprofile.branch,
-        #     'subledger' : subledger
-        # }
-        ################ COMMENDED ON 28-12-2024 ###################
-
-        # financial_statement.add_cashbook(transaction_type, cashbook_params)
-
-        # journal_ledger = ledgercli.LedgerBook(data.branch)
-
-        # params = {
-        #     "journaldate": today_date,
-        #     "narration": data.narration,
-        #     "debit_head": debit_coa,
-        #     "debit_coa_level1": debit_coa_level1,
-        #     "debit_sub_head": data.debitaccount,
-        #     "credit_head": credit_coa,
-        #     "credit_coa_level1": credit_coa_level1,
-        #     "credit_sub_head": data.creditaccount,
-        #     "amount": data.amount,
-        # }
-
-        # journal_ledger.post_journal(**params)
+ 
 
     return redirect("journal")
 
@@ -14337,6 +15418,9 @@ def search_money_reciept(request):
         #             transaction_dict['createddate'] = tr.createddate
 
         #         transaction_list.append(transaction_dict)
+
+
+        
 
         if tr.transactiontype == "service":
 
@@ -31503,6 +32587,62 @@ def func_get_transaction_for_balancesheet(startdate,enddate,request):
 
                 transaction_list.append(transaction_dict)
 
+        if tr.transactiontype == "contra credit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Credit'
+                accounts = contra.creditaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+
+        if tr.transactiontype == "contra debit":
+            transactionid = tr.transactionid
+            transaction_dict = {}
+            contra = ContraEntry.objects.filter(contraid=transactionid).first()
+            if not contra:
+                pass
+            else:
+                amount_type = 'Debit'
+                accounts = contra.debitaccount
+                # invoicenumber_list.add(journal.referenceno)
+                transaction_dict["invoicenumber"] = ''
+                transaction_dict["accounts"] = accounts
+                transaction_dict["paymentmode"] = tr.paymentmode
+                transaction_dict["transaction"] = tr
+                transaction_dict["remarks"] = contra.description
+                transaction_dict["branch"] = tr.branch
+                transaction_dict["title"] = "Contra Entry"
+                transaction_dict["amounttype"] = amount_type
+                transaction_dict['date'] = contra.contradate
+                ###############
+                transaction_date = tr.transactiondate
+                if transaction_date:
+                    transaction_dict['createddate'] = transaction_date
+                else:
+                    transaction_dict['createddate'] = tr.createddate
+                ###############
+                transaction_list.append(transaction_dict)
+
         if tr.transactiontype == "service":
 
             transactionid = tr.transactionid
@@ -31820,6 +32960,10 @@ def balancesheet(request):
             credit_or_debit = 'credit'
         elif trans['transaction'].transactiontype == 'receipt':
             credit_or_debit = 'debit'
+        elif trans['transaction'].transactiontype == 'contra credit':
+            credit_or_debit = 'credit'
+        elif trans['transaction'].transactiontype == 'contra debit':
+            credit_or_debit = 'debit'
         elif trans['transaction'].transactiontype == 'journal':
             credit_or_debit = trans['amounttype'].lower()
 
@@ -31847,6 +32991,8 @@ def balancesheet(request):
                 card_credit += trans['transaction'].amount
             elif credit_or_debit == 'debit':
                 card_debit += trans['transaction'].amount
+
+                
 
         else:
             pass

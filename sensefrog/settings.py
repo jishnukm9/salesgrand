@@ -213,6 +213,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://*.salesgrand.com",
     "https://magnusksa.com",
     "http://magnusksa.com",
+    "https://*.ngrok-free.app"
    
 ]
 
