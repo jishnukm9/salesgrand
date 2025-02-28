@@ -1339,25 +1339,90 @@ def updateSupplierForm(request, id):
     return render(request, "supplieredit.html", context)
 
 
+# @login_required
+# def updateSupplier(request, id):
+#     if request.method == "POST":
+#         supplier = Suppliers.objects.get(id=id)
+#         supplier.name = request.POST.get("name")
+#         gst = request.POST.get("gst")
+#         contact = request.POST.get("contact")
+#         address = request.POST.get("address")
+#         if gst:
+#             supplier.gst = gst
+#         if contact:
+#             supplier.contact = contact
+#         if address:
+#             supplier.address = address
+#         try:
+#             supplier.save()
+#         except IntegrityError as e:
+#             messages.error(request, "Supplier already exists.")
+#             return redirect(reverse("updatesupplierform", kwargs={"id": id}))
+#     return redirect("supplier")
+
+
+def func_update_supplier_ledger(supplier_obj):
+    """
+    Update supplier ledger title and description when supplier's name changes
+    
+    Args:
+        supplier_obj: The Suppliers model instance that has been updated
+    
+    Returns:
+        int: 0 on success
+    """
+    # Check if supplier has a ledger to update
+    if supplier_obj.supplier_ledger:
+        ledger = supplier_obj.supplier_ledger
+        
+        # Format the new title using the updated supplier data
+        new_title = f"{supplier_obj.name} {supplier_obj.id}"
+        
+        # Update the ledger title and description
+        ledger.title = new_title
+        ledger.description = new_title
+        
+        # Save the updated ledger
+        ledger.save()
+        
+    return 0
+
+
+
+
 @login_required
 def updateSupplier(request, id):
     if request.method == "POST":
         supplier = Suppliers.objects.get(id=id)
+        
+        # Store original name to check if it's changed
+        original_name = supplier.name
+        
+        # Update supplier fields
         supplier.name = request.POST.get("name")
         gst = request.POST.get("gst")
         contact = request.POST.get("contact")
         address = request.POST.get("address")
+        
         if gst:
             supplier.gst = gst
         if contact:
             supplier.contact = contact
         if address:
             supplier.address = address
+            
         try:
             supplier.save()
+            
+            # Check if name has changed
+            if original_name != supplier.name:
+                # Update the supplier ledger with new name
+                func_update_supplier_ledger(supplier)
+                
         except IntegrityError as e:
             messages.error(request, "Supplier already exists.")
             return redirect(reverse("updatesupplierform", kwargs={"id": id}))
+            
     return redirect("supplier")
 
 
@@ -9903,7 +9968,6 @@ def calculate_balance_upto_date(date_point, branch,request):
     Returns tuple of (total_debit, total_credit, balance)
     """
 
-    print("date point",date_point)
     # transaction = Transaction.objects.filter(transactiondate__lt=date_point)
     transaction = Transaction.objects.all()
     if branch:
@@ -11067,7 +11131,6 @@ def daybook(request):
     else:
         total_credit += abs(opening_balance)
 
-    print("\n\nopening balance..",opening_balance)
 
 
 
@@ -11793,7 +11856,6 @@ def search_daybook(request):
     else:
         total_credit += abs(opening_balance)
 
-    print("opening balance",opening_balance)
 
     opening_entry = {
         'invoicenumber': None,
@@ -13266,14 +13328,6 @@ def cash_book(request):
         all_branches = [request.user.userprofile.branch]
 
 
-    print("total contra receipt card",totalcontraqs_receipt_card)
-    print("total contra payment card",totalcontraqs_payment_card)
-    print("total contra receipt bank",totalcontraqs_receipt_bank)
-    print("total contra payment bank",totalcontraqs_payment_bank)
-    print("total contra receipt cash",totalcontraqs_receipt_cash)
-    print("total contra payment cash",totalcontraqs_payment_cash)
-    print("total contra receipt upi",totalcontraqs_receipt_upi)
-    print("total contra payment upi",totalcontraqs_payment_upi)
     
 
 
@@ -14368,8 +14422,6 @@ def addContraEntry(request):
 
         cash_dict = func_get_transaction_for_contraentry(request)
 
-
-        print("cash_dict",cash_dict)
 
         CASH_ACCOUNT = cash_dict['CASH_ACCOUNT']
         CASH_IN_BANK = cash_dict['CASH_IN_BANK']
@@ -16352,10 +16404,100 @@ def editcustomer(request, id):
     return render(request, "customeredit.html", context)
 
 
+# @login_required
+# def updatecustomer(request, id):
+#     data = Customers.objects.get(id=id)
+
+
+
+#     phonenumber = data.phone
+
+#     # first_name_existing = data.firstname
+#     # last_name_existing = data.lastname
+#     # unique_id_existing = data.unique_id
+
+#     # ledger_title = f"{first_name_existing} {last_name_existing} {unique_id_existing}"
+
+#     print("first name existing",data.firstname)
+#     print("last name existing",data.lastname)
+#     print("unique id existing",data.unique_id)
+
+#     print("first name ",request.POST["firstname"])
+#     print("last name ",request.POST["lastname"])
+
+#     data.firstname = request.POST["firstname"]
+#     data.lastname = request.POST["lastname"]
+#     data.phone = request.POST["phone"]
+#     data.phonemodel = request.POST["phonemodel"]
+#     if request.POST["vatnumber"] != "" and request.POST["vatnumber"] != None:
+#         data.vatnumber = request.POST["vatnumber"]
+
+#     if request.POST["customertype"] != "" and request.POST["customertype"] != None:
+#         data.customertype = request.POST["customertype"]
+
+#     if request.POST["purchasedate"]:
+#         data.purchasedate = request.POST["purchasedate"]
+#     else:
+#         data.purchasedate = None
+#     if request.POST["dob"]:
+#         data.dob = request.POST["dob"]
+#     else:
+#         data.dob = None
+#     data.address = request.POST["address"]
+#     data.addedby = request.user
+#     data.branch = request.user.userprofile.branch
+#     try:
+#         data.save()
+#     except IntegrityError as e:
+#         if phonenumber != request.POST["phone"]:
+#             messages.error(request, "Phone number already exists.")
+#             return redirect(reverse("editcustomer", kwargs={"id": id}))
+#         else:
+#             data.save()
+
+#     return redirect(reverse("customerview", kwargs={"cid": id}))
+
+
+
+def func_update_customer_ledger(customer_obj):
+    """
+    Update customer ledger title and description when customer's name changes
+    
+    Args:
+        customer_obj: The Customers model instance that has been updated
+    
+    Returns:
+        int: 0 on success
+    """
+    # Check if customer has a ledger to update
+    if customer_obj.customer_ledger:
+        ledger = customer_obj.customer_ledger
+        
+        # Format the new title using the updated customer data
+        new_title = f"{customer_obj.firstname} {customer_obj.lastname} {customer_obj.unique_id}"
+        
+        # Update the ledger title and description
+        ledger.title = new_title
+        ledger.description = new_title
+        
+        # Save the updated ledger
+        ledger.save()
+        
+    return 0
+
+
+
 @login_required
 def updatecustomer(request, id):
     data = Customers.objects.get(id=id)
     phonenumber = data.phone
+
+    # Store original name values to check if they've changed
+    original_firstname = data.firstname
+    original_lastname = data.lastname
+
+
+
     data.firstname = request.POST["firstname"]
     data.lastname = request.POST["lastname"]
     data.phone = request.POST["phone"]
@@ -16377,16 +16519,30 @@ def updatecustomer(request, id):
     data.address = request.POST["address"]
     data.addedby = request.user
     data.branch = request.user.userprofile.branch
+    
     try:
         data.save()
+        
+        # Check if first name or last name has changed
+        if original_firstname != data.firstname or original_lastname != data.lastname:
+            # Update the customer ledger with new name
+            func_update_customer_ledger(data)
+            
     except IntegrityError as e:
         if phonenumber != request.POST["phone"]:
             messages.error(request, "Phone number already exists.")
             return redirect(reverse("editcustomer", kwargs={"id": id}))
         else:
             data.save()
+            
+            # Check if first name or last name has changed
+            if original_firstname != data.firstname or original_lastname != data.lastname:
+                # Update the customer ledger with new name
+                func_update_customer_ledger(data)
 
     return redirect(reverse("customerview", kwargs={"cid": id}))
+
+
 
 
 @user_passes_test(
@@ -18122,6 +18278,8 @@ def addService(request):
     
     if request.method == "POST":
 
+
+
         performance_logger.debug(f'Service entry form submission start {request.POST.get("refnumber")}')
         start_time = time.time()
         
@@ -18152,6 +18310,8 @@ def addService(request):
             customer_gst = request.POST.get("customergst", None)
             customertype = request.POST.get("customertypeservice")
 
+
+
             # try:
             newcustomerid=None
             if Customers.objects.filter(phone=phone).first():
@@ -18165,6 +18325,7 @@ def addService(request):
 
                 try:
                     cust_obj = Customers.objects.filter(phone=phone).first()
+
                     if cust_obj:
                         ledger_title = f"{cust_obj.firstname} {cust_obj.lastname} {cust_obj.unique_id}"
                         # cust_ledger = CoASubAccounts.objects.filter(Q(title=ledger_title)&Q(is_adminonly=True)).first()
@@ -18195,6 +18356,8 @@ def addService(request):
                 newcustomerid = unq_id
 
                 cust_obj = Customers.objects.filter(unique_id=newcustomerid).first()
+
+                
                 if cust_obj:
                     func_create_customer_ledger(cust_obj,newcustomerid,request)
 
@@ -18206,6 +18369,7 @@ def addService(request):
                     cust_ledger = CoASubAccounts.objects.filter(title=ledger_title).first()
                 # except:
                 #     pass
+
 
 
             if memodate != None and memodate != "":
@@ -18247,6 +18411,9 @@ def addService(request):
             final = request.POST.get("finalamount")
             recieved = request.POST.get("amountrecievedservice")
             due = request.POST.get("duebalance")
+
+
+
 
             ##### changed on 25-11-2024 #####
             tax_service_tax = ServiceTax.objects.all().first().tax

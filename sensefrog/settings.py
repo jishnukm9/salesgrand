@@ -100,24 +100,24 @@ WSGI_APPLICATION = "sensefrog.wsgi.application"
 # SQLITE LOCAL
 # if SITE == "DEV":
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
-# POSTGRES LOCAL
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'magnusksabackup',
-#         'USER': 'postgres',
-#         'PASSWORD': '1Cat2Fish!',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+
+# POSTGRES LOCAL
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'magnusksafeb2',
+        'USER': 'postgres',
+        'PASSWORD': '1Cat2Fish!',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # Added below lines for production database
 # Comment below lines during development testing

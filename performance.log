@@ -541,3 +541,69 @@ DEBUG 2025-01-09 15:34:27,668 views 19116 16408 Form submission took 0.22 second
 DEBUG 2025-01-10 11:19:06,601 views 19804 1348 Service entry form submission start SR1
 DEBUG 2025-01-10 11:19:06,898 views 19804 1348 Service entry form submission end
 DEBUG 2025-01-10 11:19:06,898 views 19804 1348 Form submission took 0.29 seconds.
+DEBUG 2025-02-28 09:54:06,013 views 25504 17340 Service entry form submission start SR2
+DEBUG 2025-02-28 09:54:06,688 views 25504 17340 Service entry form submission end
+DEBUG 2025-02-28 09:54:06,688 views 25504 17340 Form submission took 0.67 seconds.
+DEBUG 2025-02-28 11:15:14,977 views 24552 26284 Service entry form submission start SR3
+DEBUG 2025-02-28 11:15:15,409 views 24552 26284 Service entry form submission end
+DEBUG 2025-02-28 11:15:15,410 views 24552 26284 Form submission took 0.43 seconds.
+WARNING 2025-02-28 13:10:44,249 custom_middleware 27092 22948 Slow request: /serviceform/ took 2.99 seconds.
+DEBUG 2025-02-28 13:13:12,989 views 27092 9956 Service entry form submission start SN337
+DEBUG 2025-02-28 13:13:13,250 views 27092 9956 Service entry form submission end
+DEBUG 2025-02-28 13:13:13,251 views 27092 9956 Form submission took 0.26 seconds.
+WARNING 2025-02-28 13:13:24,618 custom_middleware 27092 9956 Slow request: /serviceform/ took 2.63 seconds.
+WARNING 2025-02-28 13:13:50,391 custom_middleware 27092 27624 Slow request: /serviceform/ took 2.45 seconds.
+DEBUG 2025-02-28 13:14:19,615 views 27092 27624 Service entry form submission start SN338
+DEBUG 2025-02-28 13:14:19,771 views 27092 27624 Service entry form submission end
+DEBUG 2025-02-28 13:14:19,771 views 27092 27624 Form submission took 0.15 seconds.
+DEBUG 2025-02-28 13:16:56,362 views 27644 17920 Service entry form submission start SN338
+WARNING 2025-02-28 13:17:07,576 custom_middleware 27644 17920 Slow request: /serviceform/ took 2.63 seconds.
+DEBUG 2025-02-28 13:17:33,574 views 27644 27932 Service entry form submission start SN339
+DEBUG 2025-02-28 13:17:33,785 views 27644 27932 Service entry form submission end
+DEBUG 2025-02-28 13:17:33,785 views 27644 27932 Form submission took 0.21 seconds.
+WARNING 2025-02-28 13:20:06,677 custom_middleware 5452 2296 Slow request: /serviceform/ took 2.75 seconds.
+WARNING 2025-02-28 13:20:12,586 custom_middleware 5452 6884 Slow request: /serviceform/ took 3.62 seconds.
+DEBUG 2025-02-28 13:20:30,078 views 5452 19260 Service entry form submission start SN340
+DEBUG 2025-02-28 13:20:30,365 views 5452 19260 Service entry form submission end
+DEBUG 2025-02-28 13:20:30,366 views 5452 19260 Form submission took 0.29 seconds.
+WARNING 2025-02-28 13:20:36,135 custom_middleware 5452 19260 Slow request: /serviceupdateform/SN340/ took 5.63 seconds.
+WARNING 2025-02-28 13:22:50,844 custom_middleware 16808 22104 Slow request: /serviceupdateform/SN340/ took 2.28 seconds.
+WARNING 2025-02-28 13:22:56,709 custom_middleware 16808 12260 Slow request: /serviceform/ took 2.36 seconds.
+DEBUG 2025-02-28 13:23:12,725 views 16808 976 Service entry form submission start SN341
+DEBUG 2025-02-28 13:23:12,920 views 16808 976 Service entry form submission end
+DEBUG 2025-02-28 13:23:12,920 views 16808 976 Form submission took 0.19 seconds.
+WARNING 2025-02-28 13:32:03,286 custom_middleware 1784 25388 Slow request: /serviceform/ took 2.54 seconds.
+DEBUG 2025-02-28 13:32:23,600 views 1784 25388 Service entry form submission start SN342
+DEBUG 2025-02-28 13:32:23,801 views 1784 25388 Service entry form submission end
+DEBUG 2025-02-28 13:32:23,802 views 1784 25388 Form submission took 0.20 seconds.
+WARNING 2025-02-28 13:32:27,583 custom_middleware 1784 25388 Slow request: /serviceupdateform/SN342/ took 3.70 seconds.
+WARNING 2025-02-28 13:36:32,591 custom_middleware 1784 25388 Slow request: /serviceform/ took 2.46 seconds.
+DEBUG 2025-02-28 13:37:29,699 views 1784 26088 Service entry form submission start SN343
+DEBUG 2025-02-28 13:37:29,873 views 1784 26088 Service entry form submission end
+DEBUG 2025-02-28 13:37:29,873 views 1784 26088 Form submission took 0.17 seconds.
+WARNING 2025-02-28 13:39:28,444 custom_middleware 1784 12932 Slow request: /serviceform/ took 3.06 seconds.
+DEBUG 2025-02-28 13:39:49,241 views 1784 10868 Service entry form submission start SN344
+DEBUG 2025-02-28 13:39:49,442 views 1784 10868 Service entry form submission end
+DEBUG 2025-02-28 13:39:49,443 views 1784 10868 Form submission took 0.20 seconds.
+WARNING 2025-02-28 13:39:55,059 custom_middleware 1784 10868 Slow request: /serviceupdateform/SN344/ took 5.49 seconds.
+WARNING 2025-02-28 15:00:36,632 custom_middleware 20092 19812 Slow request: /customers/ took 3.99 seconds.
+WARNING 2025-02-28 15:01:06,384 custom_middleware 20092 15772 Slow request: /serviceform/ took 6.64 seconds.
+DEBUG 2025-02-28 15:01:33,298 views 20092 15772 Service entry form submission start SN345
+DEBUG 2025-02-28 15:01:33,803 views 20092 15772 Service entry form submission end
+DEBUG 2025-02-28 15:01:33,805 views 20092 15772 Form submission took 0.51 seconds.
+WARNING 2025-02-28 15:01:43,600 custom_middleware 20092 15772 Slow request: /serviceform/ took 7.44 seconds.
+WARNING 2025-02-28 15:04:12,648 custom_middleware 15372 15544 Slow request: /customers/ took 3.71 seconds.
+WARNING 2025-02-28 15:04:20,843 custom_middleware 15372 15544 Slow request: /chartofaccounts/ took 2.47 seconds.
+WARNING 2025-02-28 15:09:48,961 custom_middleware 10576 13692 Slow request: /chartofaccounts/ took 2.55 seconds.
+WARNING 2025-02-28 15:09:59,197 custom_middleware 10576 20072 Slow request: /customers/ took 3.44 seconds.
+WARNING 2025-02-28 15:10:11,723 custom_middleware 10576 21948 Slow request: /serviceform/ took 5.96 seconds.
+DEBUG 2025-02-28 15:10:28,050 views 10576 21948 Service entry form submission start SN346
+DEBUG 2025-02-28 15:10:28,388 views 10576 21948 Service entry form submission end
+DEBUG 2025-02-28 15:10:28,388 views 10576 21948 Form submission took 0.34 seconds.
+WARNING 2025-02-28 15:10:38,038 custom_middleware 10576 21948 Slow request: /serviceupdateform/SN346/ took 9.51 seconds.
+WARNING 2025-02-28 15:10:45,794 custom_middleware 10576 10852 Slow request: /customers/ took 3.15 seconds.
+WARNING 2025-02-28 15:11:20,192 custom_middleware 10576 26988 Slow request: /serviceform/ took 5.90 seconds.
+DEBUG 2025-02-28 15:11:33,388 views 10576 13692 Service entry form submission start SN347
+DEBUG 2025-02-28 15:11:33,670 views 10576 13692 Service entry form submission end
+DEBUG 2025-02-28 15:11:33,670 views 10576 13692 Form submission took 0.28 seconds.
+WARNING 2025-02-28 15:11:42,721 custom_middleware 10576 13692 Slow request: /serviceupdateform/SN347/ took 8.90 seconds.
