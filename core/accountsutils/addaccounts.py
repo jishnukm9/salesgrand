@@ -1155,8 +1155,8 @@ class AccountStatement():
                 ledger.ledger =  cash_ledger
                 ledger.subledger = cash_subledger
             elif paymentmode == 'Bank':
-                ledger.ledger =  cash_ledger
-                ledger.subledger =  cash_subledger
+                ledger.ledger =  bank_ledger
+                ledger.subledger =  bank_subledger
             elif paymentmode == 'Card':
                 ledger.ledger =  card_ledger
                 ledger.subledger =  card_subledger
